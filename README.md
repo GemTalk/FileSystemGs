@@ -14,7 +14,7 @@ installServerClient
 # create a filesystem stone
 #
 export stone_name=filesystem_3215
-createStone -f $stone_name 3.2.15
+createStone -fg $stone_name 3.2.15
 
 # clone Rowan
 #
@@ -30,15 +30,15 @@ git clone <TBD>
 # setup custom_stone.env for netldi and FileSystemGs build script
 #
 cat -- >> $GS_HOME/server/stones/$stone_name/custom_stone.env << EOF
-export ROWAN_PROJECTS/HOME=\$GS_HOME/shared/repos
+export ROWAN_PROJECTS_HOME=\$GS_HOME/shared/repos
 EOF
 
 stopNetldi $stone_name
 startNetldi $stone_name
 
-ln -s $GS_HOME/shared/repos/FileSystemGs/platforms/gemstone/gsdevkit/stones/newBuild_SystemUser_filesystem\
+ln -s $GS_HOME/shared/repos/FileSystemGs/platforms/gemstone/gsdevkit/stones/newBuild_SystemUser_rowan_filesystem \
 	$GS_HOME//server/stones/$stone_name/
 
 # install Rowan and FileSystemGs into a fresh stone
 #
-$GS_HOME/server/stones/$stone_name/newBuild_SystemUser_filesystem
+$GS_HOME/server/stones/$stone_name/newBuild_SystemUser_rowan_filesystem
