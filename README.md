@@ -24,7 +24,7 @@ git clone git@github.com:dalehenrich/Rowan.git
 #clone FileSystemGs
 #
 cd $GS_HOME/shared/repos
-git clone <TBD>
+git clone git@git.gemtalksystems.com:FileSystemGs.git
 
 
 # setup custom_stone.env for netldi and FileSystemGs build script
