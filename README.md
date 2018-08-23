@@ -42,3 +42,12 @@ ln -s $GS_HOME/shared/repos/FileSystemGs/platforms/gemstone/gsdevkit/stones/newB
 # install Rowan and FileSystemGs into a fresh stone
 #
 $GS_HOME/server/stones/$stone_name/newBuild_SystemUser_rowan_filesystem
+
+## Useful Smalltalk expressions
+```smalltalk
+Rowan projectTools load
+    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
+Rowan projectTools delete 
+	deleteProjectNamed: 'FileSystemGs'.
+```
+

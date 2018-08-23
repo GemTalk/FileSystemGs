@@ -4,5 +4,7 @@
 	#configsPath : 'rowan/configs',
 	#repoPath : 'rowan/src',
 	#specsPath : 'rowan/specs',
+	#defaultConfigurationNames : [ 'Default' ],
+	#defaultGroupNames : [ 'core' ],
 	#comment : 'Load spec for installing FileSystem into GemStone/S'
 }
