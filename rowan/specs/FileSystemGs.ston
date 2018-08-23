@@ -1,0 +1,8 @@
+ RwSimpleProjectSpecification{
+	#specName : 'FileSystemGs',
+	#projectUrl : 'https://github.com/GemTalk/FileSystemGs',
+	#configsPath : 'rowan/configs',
+	#repoPath : 'rowan/src',
+	#specsPath : 'rowan/specs',
+	#comment : 'Load spec for installing FileSystem into GemStone/S'
+}

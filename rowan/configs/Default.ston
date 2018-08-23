@@ -1,0 +1,34 @@
+RwProjectLoadConfiguration {
+	#name : 'Default',
+	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded int Globals by SystemUser',
+	#version : '0.1.0',
+	#conditionalPackages : {
+		[
+			'gemstone'
+		] : {
+			'core' : {
+				#packageNames : [
+					'FileSystem-Core',
+					'FileSystem-Disk',
+					'FileSystem-Memory',
+					'FileSystem-Path',
+					'FileSystem-Tests-Attributes',
+					'FileSystem-Tests-Core',
+					'FileSystem-Tests-Disk',
+					'FileSystem-Tests-Memory',
+					'FileSystem-Zip'
+				]
+			}
+		}
+	},
+	#conditionalPackageMapSpecs : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'Globals'
+			}
+		}
+	},
+	#definedGroupNames : {
+		'core' : [ ]
+	}
+}
