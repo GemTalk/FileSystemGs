@@ -12,11 +12,15 @@ RwProjectLoadConfiguration {
 					'FileSystem-Disk',
 					'FileSystem-Memory',
 					'FileSystem-Path',
+					'FileSystem-Zip'
+				]
+			},
+			'tests' : {
+				#packageNames : [
 					'FileSystem-Tests-Attributes',
 					'FileSystem-Tests-Core',
 					'FileSystem-Tests-Disk',
-					'FileSystem-Tests-Memory',
-					'FileSystem-Zip'
+					'FileSystem-Tests-Memory'
 				]
 			}
 		}
@@ -29,6 +33,7 @@ RwProjectLoadConfiguration {
 		}
 	},
 	#definedGroupNames : {
-		'core' : [ ]
+		'core' : [ ],
+		'tests' : [ 'core' ]
 	}
 }
