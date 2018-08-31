@@ -1,0 +1,67 @@
+
+  iferr 1 stk
+  iferr 2 stack
+  iferr 3 exit 1
+
+  set u SystemUser p swordfish
+  login
+
+	run
+	|blk eblk list |
+	blk := [:name|
+	  Object subclass: name instVarNames: #() classVars: #() classInstVars: #() poolDictionaries: #() inDictionary: Globals options: #()].
+	eblk := [:name|
+	  Exception subclass: name instVarNames: #() classVars: #() classInstVars: #() poolDictionaries: #() inDictionary: Globals options: #()].
+	
+	Transcript cr; show: 'Install exception subclasses'.
+	{
+		'FileDoesNotExistException' .
+		'NotFound' }
+	do: [:exSubclassName |
+		Transcript cr; tab; show: exSubclassName, '...'.
+		eblk value: exSubclassName ].
+
+	list := {
+	'PackageManifest' .
+	'SessionManager' .
+	'Smalltalk' .
+	'File' .
+	'CodeImporter' .
+	'ZnMimeType' .
+	'ZnBufferedReadStream' .
+	'ZnCharacterReadStream' .
+	'UIManager' .
+	'UUID' .
+	'OSPlatform' .
+	'ZnBufferedReadWriteStream' .
+	'ZnCharacterWriteStream' .
+	'Message' .
+	'WeakRegistry' .
+	'ZipArchive' .
+	'UUIDGenerator' .
+	'Stdio' } .
+	
+	Transcript cr; show: 'Install Object subclasses'.
+	list do:[:e| 
+		Transcript cr; tab; show: e, '...'.
+		blk value: e] .
+	true
+%
+	commit
+
+	run
+	Transcript cr: show: 'Loading FileSystemGs, skipping class initialization for the following classes:'.
+	[
+		Rowan projectTools load
+    	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston ]
+		on: RwExecuteClassInitializeMethodsAfterLoadNotification
+		do: [ :ex | 
+			"bypass class initialization until we are further along in the port"
+			Transcript cr; tab; show: candidateClass name.
+			ex resume: false ]. 
+	true
+%
+	commit
+
+	logout
+	errorCount

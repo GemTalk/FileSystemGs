@@ -6,20 +6,7 @@ rm -rf *.log *.out
 
 startTopaz $GEMSTONE_NAME -l << EOF
 
-  iferr 1 stk
-  iferr 2 stack
-  iferr 3 exit
-
-  set user SystemUser p swordfish
-  login
-
-  run
-  Rowan projectTools load
-    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
-%
-  commit
-
-  logout
+  input $ROWAN_PROJECTS_HOME/FileSystemGs/topaz/installFileSystemGs.tpz
 
   exit
 EOF
