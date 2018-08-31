@@ -736,7 +736,7 @@ FileReferenceTest >> testReadStreamDoNotFound [
 	| ref |
 	ref := filesystem / 'plonk'.
 	self
-		should: [ref readStreamDo: [:s]]
+		should: [ref readStreamDo: [:s|]]
 		raise: FileDoesNotExistException
 ]
 
@@ -756,7 +756,7 @@ FileReferenceTest >> testReadStreamDoifAbsentNot [
 	pass := false.
 	ref := filesystem * 'plonk'.
 	ref 
-		readStreamDo: [:stream]
+		readStreamDo: [:stream|]
 		ifAbsent: [pass := true].
 	self assert: pass
 ]
