@@ -22,7 +22,6 @@
 		eblk value: exSubclassName ].
 
 	list := {
-	'PackageManifest' .
 	'SessionManager' .
 	'Smalltalk' .
 	'File' .
