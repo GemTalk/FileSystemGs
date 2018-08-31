@@ -11,7 +11,7 @@ $GS_HOME/shared/repos/Rowan/platforms/gemstone/topaz/3.2.15/installRowan $GEMSTO
 
 startTopaz $GEMSTONE_NAME -l << EOF
 
-	input $ROWAN_PROJECTS_HOME/FileSystemGs/topaz/installFileSystemGs.tpz
+	input $ROWAN_PROJECTS_HOME/FileSystemGs/platforms/gemstone/topaz/installFileSystemGs.tpz
 
   exit
 EOF

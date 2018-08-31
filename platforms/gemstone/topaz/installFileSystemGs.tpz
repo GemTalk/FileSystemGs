@@ -50,15 +50,20 @@
 	commit
 
 	run
-	Transcript cr: show: 'Loading FileSystemGs, skipping class initialization for the following classes:'.
+	| skipInitializationClassNames |
+	skipInitializationClassNames := { 'MemoryStore' . 'FileLocator' . 'DiskStore' }.
 	[
 		Rowan projectTools load
-    	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston ]
+    	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston' ]
 		on: RwExecuteClassInitializeMethodsAfterLoadNotification
-		do: [ :ex | 
-			"bypass class initialization until we are further along in the port"
-			Transcript cr; tab; show: candidateClass name.
-			ex resume: false ]. 
+		do: [ :ex |
+			(skipInitializationClassNames includes: ex candidateClass name asString) 
+				ifTrue: [ 
+					"bypass class initialization until we are further along in the port"
+					Transcript cr; tab; show: 'Skipping initialize for: ', ex candidateClass name asString.
+					ex resume: false ]
+				ifFalse: [
+					ex resume: true ] ]. 
 	true
 %
 	commit

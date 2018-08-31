@@ -6,7 +6,7 @@ rm -rf *.log *.out
 
 startTopaz $GEMSTONE_NAME -l << EOF
 
-  input $ROWAN_PROJECTS_HOME/FileSystemGs/topaz/installFileSystemGs.tpz
+  input $ROWAN_PROJECTS_HOME/FileSystemGs/platforms/gemstone/topaz/installFileSystemGs.tpz
 
   exit
 EOF
