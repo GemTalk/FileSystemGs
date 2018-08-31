@@ -2,6 +2,7 @@
 
 Port of Pharo FileSystem implementation derived from [pharo-project/pharo](https://github.com/pharo-project/pharo).
 
+```
 ## GsDevKit_home installation for GemStone3.2.15
 
 # GsDevKit_home installation
@@ -42,6 +43,7 @@ ln -s $GS_HOME/shared/repos/FileSystemGs/platforms/gemstone/gsdevkit/stones/newB
 # install Rowan and FileSystemGs into a fresh stone
 #
 $GS_HOME/server/stones/$stone_name/newBuild_SystemUser_rowan_filesystem
+```
 
 ## Useful Smalltalk expressions
 ```smalltalk
