@@ -20,6 +20,14 @@ MemoryFileSystemEntry class >> named: aFileName [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+MemoryFileSystemEntry class >> new [
+
+	^ self basicNew
+		initialize;
+		yourself
+]
+
 { #category : 'accessing' }
 MemoryFileSystemEntry >> basename [
 	^ basename
@@ -44,7 +52,6 @@ MemoryFileSystemEntry >> fileSize [
 { #category : 'initialization' }
 MemoryFileSystemEntry >> initialize [ 
 	creationTime := modificationTime := DateAndTime now.
-	super initialize
 ]
 
 { #category : 'testing' }

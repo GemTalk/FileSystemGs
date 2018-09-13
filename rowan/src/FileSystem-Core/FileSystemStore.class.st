@@ -24,17 +24,17 @@ FileSystemStore class >> isCaseSensitive [
 	^ self shouldBeImplemented
 ]
 
-{ #category : 'accessing' }
-FileSystemStore class >> separator [
-	self shouldBeImplemented
-]
-
 { #category : 'instance creation' }
 FileSystemStore class >> new [
 
 	^self basicNew
 		initialize;
 		yourself
+]
+
+{ #category : 'accessing' }
+FileSystemStore class >> separator [
+	self shouldBeImplemented
 ]
 
 { #category : 'public' }

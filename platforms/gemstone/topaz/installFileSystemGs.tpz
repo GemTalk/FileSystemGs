@@ -49,7 +49,7 @@
 
 	run
 	| skipInitializationClassNames |
-	skipInitializationClassNames := { 'MemoryStore' . 'FileLocator' . 'DiskStore' }.
+	skipInitializationClassNames := { 'FileLocator' . 'DiskStore' }.
 	[
 		Rowan projectTools load
     	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston' ]
