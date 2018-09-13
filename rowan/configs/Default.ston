@@ -10,9 +10,11 @@ RwProjectLoadConfiguration {
 				#packageNames : [
 					'FileSystem-Core',
 					'FileSystem-Disk',
+					'FileSystem-GemStone-Kernel',
 					'FileSystem-Memory',
 					'FileSystem-Path',
-					'FileSystem-Zip'
+					'FileSystem-Zip',
+					'SessionManager-GemStone'
 				]
 			},
 			'tests' : {

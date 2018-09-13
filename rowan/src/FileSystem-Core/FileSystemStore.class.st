@@ -29,6 +29,14 @@ FileSystemStore class >> separator [
 	self shouldBeImplemented
 ]
 
+{ #category : 'instance creation' }
+FileSystemStore class >> new [
+
+	^self basicNew
+		initialize;
+		yourself
+]
+
 { #category : 'public' }
 FileSystemStore >> basenameFromEntry: aNode [
 	"Used to extract the basename from the low-level representation (node / entry) from the store."

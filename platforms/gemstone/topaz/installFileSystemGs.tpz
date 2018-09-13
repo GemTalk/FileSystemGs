@@ -22,7 +22,6 @@
 		eblk value: exSubclassName ].
 
 	list := {
-	'SessionManager' .
 	'Smalltalk' .
 	'File' .
 	'CodeImporter' .
