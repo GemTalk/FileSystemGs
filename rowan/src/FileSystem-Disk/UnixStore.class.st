@@ -2,39 +2,39 @@
 I'm a specific store for Unix file systems
 "
 Class {
-	#name : #UnixStore,
-	#superclass : #DiskStore,
-	#category : #'FileSystem-Disk-Store'
+	#name : 'UnixStore',
+	#superclass : 'DiskStore',
+	#category : 'FileSystem-Disk-Store'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 UnixStore class >> isActiveClass [
 	^ Smalltalk os isUnix and: [ super isActiveClass ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> isCaseSensitive [
 	"except for OSX the default is case sensitive"
 	^ Smalltalk os isMacOSX not
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> maxFileNameLength [
 
 	^ 255
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore class >> separator [ 
 	^ $:
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 UnixStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
 	| fName |

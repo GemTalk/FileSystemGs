@@ -2,12 +2,12 @@
 SUnit tests for class CollectVisitor
 "
 Class {
-	#name : #CollectVisitorTest,
-	#superclass : #AbstractEnumerationVisitorTest,
-	#category : #'FileSystem-Tests-Core-Visitors'
+	#name : 'CollectVisitorTest',
+	#superclass : 'AbstractEnumerationVisitorTest',
+	#category : 'FileSystem-Tests-Core-Visitors'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectVisitorTest >> testBreadthFirst [
 	| entries |
 	entries := CollectVisitor breadthFirst: self root.
@@ -23,7 +23,7 @@ CollectVisitorTest >> testBreadthFirst [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectVisitorTest >> testPostorder [
 	| entries |
 	entries := CollectVisitor postorder: self root.
@@ -39,7 +39,7 @@ CollectVisitorTest >> testPostorder [
 			)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CollectVisitorTest >> testPreorder [
 	| entries |
 	entries := CollectVisitor preorder: self root.

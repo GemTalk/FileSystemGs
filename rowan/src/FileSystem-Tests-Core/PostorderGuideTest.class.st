@@ -2,12 +2,12 @@
 SUnit tests for class PostorderGuide
 "
 Class {
-	#name : #PostorderGuideTest,
-	#superclass : #GuideTest,
-	#category : #'FileSystem-Tests-Core-Guide'
+	#name : 'PostorderGuideTest',
+	#superclass : 'GuideTest',
+	#category : 'FileSystem-Tests-Core-Guide'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PostorderGuideTest >> testAll [
 	guide := PostorderGuide for: self.
 	guide show: (filesystem / 'alpha').

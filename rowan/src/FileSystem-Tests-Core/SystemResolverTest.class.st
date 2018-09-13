@@ -2,32 +2,32 @@
 SUnit tests for SystemResolver
 "
 Class {
-	#name : #SystemResolverTest,
-	#superclass : #FileSystemResolverTest,
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#name : 'SystemResolverTest',
+	#superclass : 'FileSystemResolverTest',
+	#category : 'FileSystem-Tests-Core-Resolver'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 SystemResolverTest >> createResolver [
 	^ SystemResolver new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testChanges [
 	self assertOriginResolves: #changes
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testImage [
 	self assertOriginResolves: #image
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testImageDirectory [
 	self assertOriginResolves: #imageDirectory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testLocalDirectory [
 	| reference |
 	reference := resolver resolve: #localDirectory.
@@ -35,12 +35,12 @@ SystemResolverTest >> testLocalDirectory [
 	^ reference
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testVmBinary [
 	self assertOriginResolves: #vmBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SystemResolverTest >> testVmDirectory [
 	self assertOriginResolves: #vmDirectory
 ]

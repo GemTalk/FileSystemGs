@@ -1,12 +1,12 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 Integer >> humanReadableSIByteSize [
 	^ String streamContents: [ :s|
 		self humanReadableSIByteSizeOn: s ]
 ]
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 Integer >> humanReadableSIByteSizeOn: s [
 	| exponent base |
 	"Print a string with an SI binary unit represation of myself."

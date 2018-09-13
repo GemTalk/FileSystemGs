@@ -19,8 +19,8 @@ size
 
 "
 Class {
-	#name : #FileSystemDirectoryEntry,
-	#superclass : #Object,
+	#name : 'FileSystemDirectoryEntry',
+	#superclass : 'Object',
 	#instVars : [
 		'reference',
 		'creation',
@@ -30,15 +30,15 @@ Class {
 		'size',
 		'posixPermissions'
 	],
-	#category : #'FileSystem-Core-Public'
+	#category : 'FileSystem-Core-Public'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry class >> allPosixPermissions [ 
 	^8r777
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBooleam [
 	"Create a directory entry given a filesystem and a path in such filesystem. In addition, the creation and modification time are required as well as a boolean that indicates whether the entry is a folder or a file and its size."
 
@@ -52,7 +52,7 @@ FileSystemDirectoryEntry class >> fileSystem: aFilesystem path: aPath creation: 
 		isSymlink: symlinkBooleam
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: mTime isDir: aBoolean size: anInteger posixPermissions: posixNumber isSymlink: symlinkBoolean [
 	"Create a directory entry for the file reference ref, with the creation time, cTime, the modification time, mTime. aBoolean indicates if the entry represents a directory or a file of size given by anInteger"
 	
@@ -66,47 +66,47 @@ FileSystemDirectoryEntry class >> reference: ref creation: cTime modification: m
 		isSymlink: symlinkBoolean
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileSystemDirectoryEntry >> asFileReference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> basename [
 
 	^ reference basename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> creation [
 	^ self creationTime 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> creationSeconds [
 	"Return the creation date and time of the entry receiver in seconds."
 		
 	^ creation asSeconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> creationTime [
 	"Return the creation date and time of the entry receiver."
 	
 	^ creation
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> extension [
 	^ reference extension
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> fullName [
 	^ reference fullName
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FileSystemDirectoryEntry >> initializeWithRef: ref 
 	creation: cTime 
 	modification: mTime 
@@ -124,83 +124,83 @@ FileSystemDirectoryEntry >> initializeWithRef: ref
 	isSymlink := symlinkBoolean.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isDirectory [
 	"Return whether the receiver is a directory"
 	
 	^ isDirectory
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isFile [
 	"Return whether the receiver is a file"
 	
 	^ isDirectory not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemDirectoryEntry >> isSymlink [ 
 	^isSymlink
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> modification [
 	^ self modificationTime 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> modificationSeconds [
 	"Return the modification date and time of the entry receiver in seconds."
 	^ modification
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> modificationTime [
 	"Return the modification date and time of the entry receiver."
 
 	^  modification
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> pathSegments [
 	^ reference pathSegments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> permissions [ 
 	^self posixPermissions
 		ifNotNil: [ FileSystemPermission posixPermissions: self posixPermissions ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> posixPermissions [ 
 	^posixPermissions
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileSystemDirectoryEntry >> printOn: aStream [
 
 	aStream nextPutAll: 'DirectoryEntry: '.
 	reference ifNotNil: [:ref | aStream nextPutAll: reference printString].
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> readStream [
 	^ reference readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> reference [
 	^ reference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> size [
 	"Returns the receiver size"
 	^ size
 ]
 
-{ #category : #delegate }
+{ #category : 'delegate' }
 FileSystemDirectoryEntry >> writeStream [
 	^ reference writeStream
 ]

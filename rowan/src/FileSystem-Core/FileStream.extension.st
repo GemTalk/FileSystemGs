@@ -1,6 +1,6 @@
-Extension { #name : #FileStream }
+Extension { #name : 'FileStream' }
 
-{ #category : #'*FileSystem-Core' }
+{ #category : '*FileSystem-Core' }
 FileStream class >> onHandle: aFileSystemHandle [
 	^ self concreteStream new
 		open: aFileSystemHandle fullName

@@ -2,39 +2,39 @@
 I'm a specific store for Windows file systems
 "
 Class {
-	#name : #WindowsStore,
-	#superclass : #DiskStore,
+	#name : 'WindowsStore',
+	#superclass : 'DiskStore',
 	#instVars : [
 		'disk'
 	],
 	#classVars : [
 		'Disks'
 	],
-	#category : #'FileSystem-Disk-Store'
+	#category : 'FileSystem-Disk-Store'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowsStore class >> delimiter [
 	^ $\
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowsStore class >> isCaseSensitive [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowsStore class >> maxFileNameLength [
 	self flag: 'TODO: more tests needed here!'.
 	^ 255
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowsStore class >> separator [ 
 	^ $\
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"
 	
@@ -53,12 +53,12 @@ WindowsStore >> checkName: aFileName fixErrors: fixing [
 				ifFalse: [char]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WindowsStore >> currentDisk [
 	^ disk ifNil: [  disk := FileSystem workingDirectory path segments first ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WindowsStore >> pathFromString: aString [
 	"Need to distinguish '' and '/' , so tag latter with invalid character ':'  "
 	| normalized pathClass pathElements |
@@ -72,7 +72,7 @@ WindowsStore >> pathFromString: aString [
 	^pathClass withAll: pathElements
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WindowsStore >> printPath: aPath on: aStream [
 	| hasDrive |
 	aPath isRoot
@@ -91,7 +91,7 @@ WindowsStore >> printPath: aPath on: aStream [
 		ifTrue: [ aStream nextPut: self delimiter ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WindowsStore >> stripDrive: pathElements [
 	pathElements ifNotEmpty: [ pathElements at: 1 put: ( ($: split: pathElements first) last)  ]
 ]

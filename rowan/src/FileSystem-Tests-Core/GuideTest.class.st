@@ -2,28 +2,28 @@
 Common superclass for tests of guidance through the filesystem
 "
 Class {
-	#name : #GuideTest,
-	#superclass : #SingleTreeTest,
+	#name : 'GuideTest',
+	#superclass : 'SingleTreeTest',
 	#instVars : [
 		'guide',
 		'visited'
 	],
-	#category : #'FileSystem-Tests-Core-Guide'
+	#category : 'FileSystem-Tests-Core-Guide'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GuideTest class >> isAbstract [
 	^ self name = #GuideTest
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 GuideTest >> assertVisitedIs: anArray [
 	visited with: anArray do:
 		[:entry :basename | 
 		self assert: entry reference basename = basename]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 GuideTest >> setUp [
 	super setUp.
 	visited := OrderedCollection new.
@@ -31,12 +31,12 @@ GuideTest >> setUp [
 	self setUpGreek
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 GuideTest >> visitDirectory: aReference [
 	visited add: aReference.
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 GuideTest >> visitFile: aReference [
 	visited add: aReference.
 ]

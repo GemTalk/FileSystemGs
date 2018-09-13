@@ -2,61 +2,61 @@
 I am an expert on Unix filesystem conventions. I resolve origins according to these conventions.
 "
 Class {
-	#name : #UnixResolver,
-	#superclass : #PlatformResolver,
-	#category : #'FileSystem-Core-Base-Resolver'
+	#name : 'UnixResolver',
+	#superclass : 'PlatformResolver',
+	#category : 'FileSystem-Core-Base-Resolver'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixResolver class >> platformName [
 	^  'unix'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> cache [
 	"http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html"
 
 	^ self directoryFromEnvVariableNamed: 'XDG_CACHE_HOME' or: [ self home / '.cache' ]
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> desktop [
 	^ (self xdgUserDir: 'DESKTOP') ifNil: [ self home / 'Desktop' ]
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> documents [
 	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ self home / 'Documents' ]
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> home [
 	^ self directoryFromEnvVariableNamed: 'HOME'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> preferences [
 	"http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html"
 
 	^ self directoryFromEnvVariableNamed: 'XDG_CONFIG_HOME' or: [ self home / '.config' ]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 UnixResolver >> supportedOrigins [
 	^ super supportedOrigins , #( userData )
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> temp [
 	^ '/tmp' asFileReference
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 UnixResolver >> userData [
 	^ self directoryFromEnvVariableNamed: 'XDG_DATA_HOME' or: [ self home / '.local' / 'share' ]
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 UnixResolver >> xdgParseUserDirLine: aStream [
 	"Format is XDG_xxx_DIR=""$HOME/yyy"", where yyy is a shell-escaped homedir-relative path, or XDG_xxx_DIR=""/yyy"", where /yyy is an absolute path. No other format is supported."
 	| path firstChar |
@@ -70,7 +70,7 @@ UnixResolver >> xdgParseUserDirLine: aStream [
 	^ path
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 UnixResolver >> xdgUserDir: userDirName [
 	"Read ~/.config/user-dirs.dirs to find the directory of userDirName (e.g., 'DESKTOP')"
 	"http://freedesktop.org/wiki/Software/xdg-user-dirs"

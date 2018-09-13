@@ -11,28 +11,28 @@ disk root.                               	""a reference to the root directory""
 disk working.                         	""a reference to the working directory""
 "
 Class {
-	#name : #FileReference,
-	#superclass : #AbstractFileReference,
+	#name : 'FileReference',
+	#superclass : 'AbstractFileReference',
 	#instVars : [
 		'filesystem',
 		'path'
 	],
-	#category : #'FileSystem-Core-Public'
+	#category : 'FileSystem-Core-Public'
 }
 
-{ #category : #'cross platform' }
+{ #category : 'cross platform' }
 FileReference class >> / aString [
 	"Answer a reference to the argument resolved against the root of the current disk filesystem."
 	
 	^ FileSystem disk / aString
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileReference class >> fileSystem: aFilesystem path: aPath [
 	^ self new setFileSystem: aFilesystem path: aPath
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	| tmpDir random fileName |
 	
@@ -44,12 +44,12 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	^ tmpDir / fileName
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FileReference >> , extension [
 	^ self withPath: self path, extension
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FileReference >> = other [
 	"Two FileReferences are considered equal if they refer to the same file / directory.
 	As paths can have multiple relative representations, compare the absolute paths."
@@ -60,7 +60,7 @@ FileReference >> = other [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> absolutePath [
 	"Return the absolute of the receiver"
 	^ self path isRelative
@@ -68,7 +68,7 @@ FileReference >> absolutePath [
 		ifTrue: [ filesystem resolve: self path ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileReference >> asAbsolute [
 	"Return the receiver as an absolute file reference."
 	
@@ -77,54 +77,54 @@ FileReference >> asAbsolute [
 		ifFalse: [ filesystem referenceTo: (filesystem resolve: path) ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileReference >> asFileReference [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileReference >> asPath [
 	"Answer the receivers path"
 
 	^path
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileReference >> binaryReadStream [
 	
 	^ filesystem binaryReadStreamOn: self path
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	^ ZnBufferedReadWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FileReference >> containsReference: aReference [
 	^  aReference fileSystem = filesystem and: [path contains: aReference path]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> copyTo: aReference [
 	self isDirectory
 		ifTrue: [ aReference ensureCreateDirectory ]
 		ifFalse: [ filesystem copy: path toReference: aReference ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FileReference >> copyWithPath: newPath [
 	^ filesystem referenceTo: newPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> creationTime [ 
 	^ filesystem creationTimeOf: self path
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> delete [
 	"Deletes the referenced file or directory. If the directory is not empty, 
 	raises an error. Use #deleteAll to delete with the children."
@@ -134,55 +134,55 @@ FileReference >> delete [
 	filesystem delete: path
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> deleteIfAbsent: aBlock [
 	self exists 
 		ifTrue: [ self delete ]
 		ifFalse: aBlock
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> ensureCreateDirectory [
 	"Create if necessary a directory for the receiver."
 	filesystem ensureCreateDirectory: path
 	
 ]
 
-{ #category : #navigating }
+{ #category : 'navigating' }
 FileReference >> entries [
 	"Return the entries (meta data - file description) of the direct children of the receiver"
 	^ self fileSystem entriesAt: self path 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> entry [
 	"Return the entry (meta data) describing the receiver."
 	^ filesystem entryAt: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> exists [
 	^ filesystem exists: path
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> fileSystem [
 	"Return the filesystem to which the receiver belong."
 	^ filesystem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> fullName [
 	"Return the full path name of the receiver."
 	^ filesystem stringFromPath: (filesystem resolve: path)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> fullPath [
 	^ self path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> hasChildren [
 	"Return whether the receiver has any children."
 	"FileSystem workingDirectory hasChildren"
@@ -190,7 +190,7 @@ FileReference >> hasChildren [
 	^ filesystem hasChildren: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> hasDirectories [
 	"Return whether the receiver has children that are directories."
 	"FileSystem workingDirectory hasDirectories"
@@ -198,7 +198,7 @@ FileReference >> hasDirectories [
 	^ filesystem hasDirectories: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> hasFiles [
 	"Return whether the receiver has children that are files."
 	"FileSystem workingDirectory hasFiles"
@@ -206,52 +206,52 @@ FileReference >> hasFiles [
 	^ filesystem hasFiles: path
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FileReference >> hash [
 	^ path hash bitXor: filesystem hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isAbsolute [
 	^ path isAbsolute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isDirectory [
 	^ filesystem isDirectory: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isFile [
 	^ filesystem isFile: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isReadable [
 	^ filesystem isReadable: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isRelative [
 	^ path isRelative
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isRoot [
 	^ path isRoot
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isSymlink [ 
 	^ filesystem isSymlink: path
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileReference >> isWritable [
 	^ filesystem isWritable: path
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileReference >> lastFileFor: baseFileName extension: extension [
   "Assumes a file is named using a version number encoded as '.' followed by digits
   preceding the file extension, e.g., games.22.ston
@@ -267,19 +267,19 @@ FileReference >> lastFileFor: baseFileName extension: extension [
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> mimeTypes [
 	"Return the possible mime types for the given path."
 	^ filesystem mimeTypesAt: path
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> modificationTime [ 
 	"Returns the last date of modification of self"
 	^ filesystem modificationTimeOf: self path
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> moveTo: aReference [
 	
 	| result |
@@ -290,7 +290,7 @@ FileReference >> moveTo: aReference [
 		self setFileSystem: result fileSystem path: result path ].		
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileReference >> nextNameFor: baseFileName extension: extension [
   "Assumes a file name includes a version number encoded as '.' followed by digits 
    preceding the file extension, e.g., games.22.ston
@@ -312,7 +312,7 @@ FileReference >> nextNameFor: baseFileName extension: extension [
 	^ baseFileName , '.' , version asString , '.' , extension
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FileReference >> nextVersion [
 	"Assumes a file (or folder) name includes a version number encoded as '.' followed by digits 
 	preceding the file extension.  Increment the version number and answer the new file name.
@@ -338,42 +338,42 @@ FileReference >> nextVersion [
 	^ parent / (nameWithoutExtension , '.', version asString) , self extension
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileReference >> openWritable: aBoolean [ 
 	^ filesystem open: path writable: aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> path [
 	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
 	^ path
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileReference >> pathString [
 	"Return the full path name of the receiver."
 	
 	^ filesystem stringFromPath: (filesystem resolve: path)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> permissions [
 	^ filesystem permissions: self path
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FileReference >> printOn: aStream [
 	filesystem forReferencePrintOn: aStream.
 	filesystem printPath: path on: aStream
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileReference >> readStream [
 
 	^ self readStreamEncoded: 'utf8'
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 FileReference >> renameTo: newBasename [
 	
 	| destinationPath |
@@ -389,17 +389,17 @@ FileReference >> renameTo: newBasename [
 		
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> resolve [
 	^ self
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileReference >> resolvePath: anObject [
 	^ self withPath: (path resolve: anObject)
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileReference >> resolveReference: aReference [
 	
 	^ (filesystem = aReference fileSystem or: [aReference isRelative])
@@ -407,25 +407,25 @@ FileReference >> resolveReference: aReference [
 		ifFalse: [aReference]
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FileReference >> resolveString: aString [ 
 	| thePath |
 	thePath := filesystem pathFromString: aString.
 	^ filesystem referenceTo: (path resolve: thePath)
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 FileReference >> setFileSystem: aFilesystem path: aPath [
 	filesystem := aFilesystem.
 	path := aPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileReference >> size [
 	^ filesystem sizeOf: path
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 FileReference >> writeStream [
 	
 	^ self writeStreamEncoded: 'utf8'

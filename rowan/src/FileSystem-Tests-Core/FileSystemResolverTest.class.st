@@ -2,20 +2,20 @@
 SUnit tests for FileSystemResolver
 "
 Class {
-	#name : #FileSystemResolverTest,
-	#superclass : #TestCase,
+	#name : 'FileSystemResolverTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'resolver'
 	],
-	#category : #'FileSystem-Tests-Core-Resolver'
+	#category : 'FileSystem-Tests-Core-Resolver'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemResolverTest class >> isAbstract [
 	^ self name = #FileSystemResolverTest
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 FileSystemResolverTest >> assertOriginResolves: aSymbol [
 	| reference |
 	reference := resolver resolve: aSymbol.
@@ -25,12 +25,12 @@ FileSystemResolverTest >> assertOriginResolves: aSymbol [
 	^ reference
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileSystemResolverTest >> createResolver [
 	self subclassResponsibility 
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FileSystemResolverTest >> setUp [
 	super setUp.
 	resolver := self createResolver.

@@ -2,12 +2,12 @@
 SUnit tests for memory handles, the tests may be found in superclass
 "
 Class {
-	#name : #MemoryHandleTest,
-	#superclass : #FileSystemHandleTest,
-	#category : #'FileSystem-Tests-Memory-Base'
+	#name : 'MemoryHandleTest',
+	#superclass : 'FileSystemHandleTest',
+	#category : 'FileSystem-Tests-Memory-Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MemoryHandleTest >> createFileSystem [
 	^ FileSystem memory
 ]

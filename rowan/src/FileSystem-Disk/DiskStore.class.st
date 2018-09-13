@@ -3,8 +3,8 @@ I am an abstract superclass for disk store implementations. My subclasses provid
 
 "
 Class {
-	#name : #DiskStore,
-	#superclass : #FileSystemStore,
+	#name : 'DiskStore',
+	#superclass : 'FileSystemStore',
 	#instVars : [
 		'maxFileNameLength'
 	],
@@ -12,17 +12,17 @@ Class {
 		'CurrentFS',
 		'DefaultWorkingDirectory'
 	],
-	#category : #'FileSystem-Disk-Store'
+	#category : 'FileSystem-Disk-Store'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> activeClass [
 	self allSubclassesDo: [:ea | 
 		ea isActiveClass ifTrue: [^ ea]].
 	^ self
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> checkVMVersion [
 	"Display a warning if the VM is too old"
 	| displayError |
@@ -32,23 +32,23 @@ DiskStore class >> checkVMVersion [
 	] on: Error do: [ :e| displayError value ].
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> createDefault [
 	^ self new
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> current [
 	^ self currentFileSystem store
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> currentFileSystem [
 	^ CurrentFS ifNil: [
 		CurrentFS := FileSystem store: self activeClass createDefault]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore class >> defaultWorkingDirectory [
 	"Ask the VM for the default working directory.
 	Clients should normally use the instance side method which caches this value."
@@ -58,40 +58,40 @@ DiskStore class >> defaultWorkingDirectory [
 	^(Path from: pathString delimiter: self delimiter).
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> delimiter [
 	^ self current delimiter
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DiskStore class >> initialize [
 	SessionManager default
 		registerSystemClassNamed: self name
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> isActiveClass [
 	^ self delimiter = File delimiter
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore class >> maxFileNameLength [
 	self subclassResponsibility 
 ]
 
-{ #category : #current }
+{ #category : 'current' }
 DiskStore class >> reset [
 	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> shutDown: quitting [
 	"Force to detect filesystem after image restart"
 	self reset
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 DiskStore class >> startUp: resuming [
 	self checkVMVersion.
 	resuming 
@@ -99,23 +99,23 @@ DiskStore class >> startUp: resuming [
 	DefaultWorkingDirectory := self defaultWorkingDirectory.
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiskStore >> = other [
 	^ self species = other species
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basenameFromEntry: entry [
 	^ entry at: 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicCreationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
 	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	| encodedPathString index entry pathString |
 		
@@ -133,7 +133,7 @@ DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 			entry := File lookupEntryIn: encodedPathString index: index ].
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> basicEntryAt: aPath [
 	| encodedPath encodedBasename |
 	
@@ -145,30 +145,30 @@ DiskStore >> basicEntryAt: aPath [
 	
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicIsDirectory: anEntry [
 	^ anEntry at: 4
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicIsFile: anEntry [
 	^ (anEntry at: 4) not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicIsSymlink: anEntry [
 	^(anEntry size >= 7)
 		ifTrue: [ anEntry at: 7 ]
 		ifFalse: [ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicModificationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
 	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> basicOpen: aPath writable: aBoolean [
 	| string encoded |
 	string := self stringFromPath: aPath.
@@ -176,19 +176,19 @@ DiskStore >> basicOpen: aPath writable: aBoolean [
 	^ File open: encoded writable: aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicPosixPermissions: anEntry [
 	^ (anEntry size >= 6)
 		ifTrue: [ anEntry at: 6 ]
 		ifFalse: [ nil ].
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> basicSizeOf: anEntry [
 	^ (anEntry at: 5)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	"Check a string aFileName for validity as a file name. Answer the original file name if it is valid. If the name is not valid (e.g., it is too long or contains illegal characters) and fixing is false, raise an error. If fixing is true, fix the name (usually by truncating and/or tranforming characters), and answer the corrected name. The default behavior is just to truncate the name to the maximum length for this platform. Subclasses can do any kind of checking and correction appropriate for their platform."
 	
@@ -202,7 +202,7 @@ DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	^ aFileName
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> createDirectory: path [
 	"Create a directory for the argument path. 
 	If the path refers to an existing file, raise FileExists.
@@ -227,7 +227,7 @@ DiskStore >> createDirectory: path [
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> defaultWorkingDirectory [
 	"Answer the default working directory, which is defined as the directory where the image resides."
 
@@ -235,7 +235,7 @@ DiskStore >> defaultWorkingDirectory [
 		ifNil: [ self class defaultWorkingDirectory ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> delete: path [
 	| pathString encodedPathString |
 	
@@ -251,28 +251,28 @@ DiskStore >> delete: path [
 			(File named: pathString) delete ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiskStore >> handleClass [
 	^ FileHandle
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiskStore >> hash [
 	^ self species hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiskStore >> initialize [
 	super initialize.
 	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isDirectory: aPath [
 	| entry |
 	
@@ -286,12 +286,12 @@ DiskStore >> isDirectory: aPath [
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiskStore >> isDiskFileSystem [
 	^ true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isFile: aPath [
 	| entry |
 	
@@ -305,7 +305,7 @@ DiskStore >> isFile: aPath [
 	
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isReadable: aPath [
 	(self exists: aPath) ifFalse: [ ^ false ].
 	self flag: 'TODO: we need a decent primitive for this...'.
@@ -316,7 +316,7 @@ DiskStore >> isReadable: aPath [
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isSymlink: aPath [
 	| entry |
 	
@@ -330,7 +330,7 @@ DiskStore >> isSymlink: aPath [
 	
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> isWritable: aPath [
 	(self exists: aPath) ifFalse: [ ^ false ].
 	self flag: 'TODO: we need a decent primitive for this...'.
@@ -341,12 +341,12 @@ DiskStore >> isWritable: aPath [
 	^ false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> maxFileNameLength [
 	^ maxFileNameLength
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	
 	| entry |
@@ -362,7 +362,7 @@ DiskStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 			presentBlock value: entry ].
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> openFileStream: path writable: writable [
 	| fullPath |
 	fullPath := self stringFromPath: path.
@@ -372,7 +372,7 @@ DiskStore >> openFileStream: path writable: writable [
 		ifTrue: [ FileStream fileNamed: fullPath ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
@@ -383,7 +383,7 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	^ File rename: encodedSourcePathString to: encodedTargetPathString.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
 ]

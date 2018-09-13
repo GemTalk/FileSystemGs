@@ -2,17 +2,17 @@
 A file write stream - but within memory
 "
 Class {
-	#name : #MemoryFileWriteStream,
-	#superclass : #Object,
+	#name : 'MemoryFileWriteStream',
+	#superclass : 'Object',
 	#instVars : [
 		'file',
 		'writeStream',
 		'stream'
 	],
-	#category : #'FileSystem-Memory-Streams'
+	#category : 'FileSystem-Memory-Streams'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MemoryFileWriteStream class >> on: aFile [
 
 	^ self new
@@ -20,58 +20,58 @@ MemoryFileWriteStream class >> on: aFile [
 		yourself
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 MemoryFileWriteStream >> close [
 	self stream close.
 	file close
 ]
 
-{ #category : #'opening-closing' }
+{ #category : 'opening-closing' }
 MemoryFileWriteStream >> closed [
 	^ file closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileWriteStream >> file: aMemoryFileSystemFile [ 
 	file := aMemoryFileSystemFile
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MemoryFileWriteStream >> flush [
 	file updateContents: self stream contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryFileWriteStream >> isBinary [
 	^ self stream isBinary
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MemoryFileWriteStream >> nextPut: aCollection [
 	^ self stream nextPut: aCollection
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MemoryFileWriteStream >> nextPutAll: aCollection [
 	^ self stream nextPutAll: aCollection
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 MemoryFileWriteStream >> position [
 	^ self stream position
 ]
 
-{ #category : #positioning }
+{ #category : 'positioning' }
 MemoryFileWriteStream >> setToEnd [
 	^ self stream setToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileWriteStream >> size [
 	^ file size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileWriteStream >> stream [
 	^ stream ifNil: [ stream := WriteStream on: file bytes from: 1 to: file size ]
 ]

@@ -5,24 +5,24 @@ As Pharo doesn't provide a mechanism to set the attributes, pick a few well know
 
 "
 Class {
-	#name : #FileReferenceAttributeTests,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Attributes'
+	#name : 'FileReferenceAttributeTests',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Attributes'
 }
 
-{ #category : #resources }
+{ #category : 'resources' }
 FileReferenceAttributeTests class >> resources [
 
 	^Array with: DiskFileAttributesTestsResources.
 ]
 
-{ #category : #'helper methods' }
+{ #category : 'helper methods' }
 FileReferenceAttributeTests >> tempFileResource [
 
 	^DiskFileAttributesTestsResources current
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testCreationTime [
 
 	| resource creationTime |
@@ -33,69 +33,69 @@ FileReferenceAttributeTests >> testCreationTime [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testExists [
 
 	self assert: self tempFileResource file exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testFileSize [
 
 	self assert: self tempFileResource file size equals: 72.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsBlock [
 
 	self deny: self tempFileResource file isBlock
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsDirectory [
 
 	self deny: self tempFileResource file isDirectory.
 	self assert: FileLocator temp isDirectory.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsFile [
 
 	self assert: self tempFileResource file isFile.
 	self deny: FileLocator temp isFile.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsReadable [
 
 	self assert: self tempFileResource file isReadable.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsSymlink [
 
 	self deny: self tempFileResource file isSymlink.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsWriteable [
 
 	self assert: self tempFileResource file isWritable.
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testModificationTime [
 
 	| resource modificationTime |

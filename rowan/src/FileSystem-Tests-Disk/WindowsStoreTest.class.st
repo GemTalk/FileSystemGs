@@ -2,12 +2,12 @@
 SUnit tests for class WindowsStore
 "
 Class {
-	#name : #WindowsStoreTest,
-	#superclass : #TestCase,
-	#category : #'FileSystem-Tests-Disk-Base'
+	#name : 'WindowsStoreTest',
+	#superclass : 'TestCase',
+	#category : 'FileSystem-Tests-Disk-Base'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testAbsoluteFullName [
 	| filesystem |
 	filesystem := FileSystem store: WindowsStore new.
@@ -23,7 +23,7 @@ WindowsStoreTest >> testAbsoluteFullName [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testAbsolutePath [
 
 	#('c:\' 'C:\temp' 'A:\temp\test' '\test\bar' '\') do: [:each |
@@ -31,7 +31,7 @@ WindowsStoreTest >> testAbsolutePath [
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testPrintString [
 	| filesystem |
 	filesystem := FileSystem store: WindowsStore new.
@@ -52,7 +52,7 @@ WindowsStoreTest >> testPrintString [
 	self assert: (filesystem referenceTo: '.\') printString equals: 'File @ .'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testRelativeFullName [
 
 	"FIleSystem currently does not support MS Windows concept of each drive having its own working directory.
@@ -65,7 +65,7 @@ WindowsStoreTest >> testRelativeFullName [
 	self assert: (filesystem referenceTo: 'C:tmp') fullName equals: (filesystem referenceTo: 'tmp') fullName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowsStoreTest >> testRelativePath [
 
 	#('a' 'bin\foo' 'temp\test' 'C:temp\test') do: [:each |
