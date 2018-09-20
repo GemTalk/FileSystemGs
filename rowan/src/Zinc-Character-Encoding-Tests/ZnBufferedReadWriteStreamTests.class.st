@@ -78,10 +78,7 @@ ZnBufferedReadWriteStreamTests >> testReadIntoLarger [
 ZnBufferedReadWriteStreamTests >> testReadThenWrite [
 	| stream stringStream |
 	
-	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
-		ifTrue: [ ^ self skip ].
-
-	stringStream := ReadWriteStream with: '0123456789'.
+	stringStream := ReadWriteStreamPortable with: '0123456789' copy.
 	stringStream reset.
 	stream := ZnBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.
@@ -125,10 +122,7 @@ ZnBufferedReadWriteStreamTests >> testReadUpToEnd [
 ZnBufferedReadWriteStreamTests >> testWriteThenRead [
 	| stream stringStream |
 	
-	((SystemVersion current major < 7) or: [ SystemVersion current build < 690 ])
-		ifTrue: [ ^ self skip ].
-
-	stringStream := ReadWriteStream with: '0123456789'.
+	stringStream := ReadWriteStreamPortable with: '0123456789' copy.
 	stringStream reset.
 	stream := ZnBufferedReadWriteStream on: stringStream.
 	stream sizeBuffer: 8.

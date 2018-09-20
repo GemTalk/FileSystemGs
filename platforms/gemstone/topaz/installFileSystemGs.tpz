@@ -36,8 +36,7 @@
 	'ZipArchive' .
 	'UUIDGenerator' .
 	'Stdio' .
-	'DomainError' .
-	'SystemVersion' } .
+	'DomainError' } .
 	
 	Transcript cr; show: 'Install Object subclasses'.
 	list do:[:e| 

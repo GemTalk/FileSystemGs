@@ -193,8 +193,8 @@ ZnBufferedWriteStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndi
 	unsignedValue := (signed and: [ value negative ])
 		ifTrue: [ (1 << (numberOfBytes * 8)) + value ] 
 		ifFalse: [ value ].
-	(unsignedValue between: 0 and: (2 ** (numberOfBytes * 8)) - 1)
-		ifFalse: [ DomainError signalFrom: 0 to: (2 ** (numberOfBytes * 8)) - 1 ].
+	(unsignedValue between: 0 and: (2 raisedTo: (numberOfBytes * 8)) - 1)
+		ifFalse: [ DomainError signalFrom: 0 to: (2 raisedTo: (numberOfBytes * 8)) - 1 ].
 	bigEndian
 		ifTrue: [ 
 			numberOfBytes to: 1 by: -1 do: [ :index |
