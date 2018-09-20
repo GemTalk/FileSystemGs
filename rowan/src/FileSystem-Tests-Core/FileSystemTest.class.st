@@ -597,9 +597,9 @@ FileSystemTest >> testReadingAfterWriting [
 FileSystemTest >> testReadStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self should: [ reference readStreamPortable ] raise: FileDoesNotExistException.
+	self should: [ reference readStream ] raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	stream := reference readStreamPortable.
+	stream := reference readStream.
 	self assert: stream contents asString equals: 'griffle'.
 	stream close
 

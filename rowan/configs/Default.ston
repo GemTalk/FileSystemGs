@@ -15,7 +15,8 @@ RwProjectLoadConfiguration {
 					'FileSystem-Path',
 					'FileSystem-Zip',
 					'SessionManager-GemStone',
-					'Zinc-Character-Encoding-Core'
+					'Zinc-Character-Encoding-Core',
+					'Files'
 				]
 			},
 			'tests' : {
@@ -24,7 +25,8 @@ RwProjectLoadConfiguration {
 					'FileSystem-Tests-Core',
 					'FileSystem-Tests-Disk',
 					'FileSystem-Tests-Memory',
-					'Zinc-Character-Encoding-Tests'
+					'Zinc-Character-Encoding-Tests',
+					'Files-Tests'
 				]
 			}
 		}
