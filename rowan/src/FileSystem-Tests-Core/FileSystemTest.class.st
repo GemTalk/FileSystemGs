@@ -178,9 +178,10 @@ FileSystemTest >> testCopy [
 	[ out nextPutAll: 'gooly' ] ensure: [ out close ].
 	filesystem copy: 'gooly' to: 'plonk'.
 	
-	in := (filesystem workingDirectory / 'plonk') readStream.
+	in := (filesystem workingDirectory / 'plonk') readStreamPortable.
 	contents := [ in contents asString ] ensure: [ in close ].
 	self assert: contents equals: 'gooly'
+
 ]
 
 { #category : 'tests' }
@@ -586,20 +587,22 @@ FileSystemTest >> testReadingAfterWriting [
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
 	self deny: reference exists.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	stream := reference readStream.
+	stream := reference readStreamPortable.
 	self assert: stream contents equals: 'griffle'.
 	stream close
+
 ]
 
 { #category : 'tests-streams' }
 FileSystemTest >> testReadStream [
 	| reference stream |
 	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self should: [ reference readStream ] raise: FileDoesNotExistException.
+	self should: [ reference readStreamPortable ] raise: FileDoesNotExistException.
 	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	stream := reference readStream.
+	stream := reference readStreamPortable.
 	self assert: stream contents asString equals: 'griffle'.
 	stream close
+
 ]
 
 { #category : 'tests-streams' }

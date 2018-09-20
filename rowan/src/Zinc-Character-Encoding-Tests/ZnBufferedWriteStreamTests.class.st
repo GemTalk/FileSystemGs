@@ -1,10 +1,10 @@
 Class {
-	#name : #ZnBufferedWriteStreamTests,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedWriteStreamTests',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStreamTests >> testNextPutAllStartingAt [
 	| string |
 	string := String streamContents: [ :stringStream | 
@@ -17,7 +17,7 @@ ZnBufferedWriteStreamTests >> testNextPutAllStartingAt [
 	self assert: string equals: '01234567890123456789'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStreamTests >> testWriting [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |
@@ -27,7 +27,7 @@ ZnBufferedWriteStreamTests >> testWriting [
 	self assert: string = '0123456789'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedWriteStreamTests >> testWritingOverflow [
 	| string |
 	string := String streamContents: [ :stringStream | | bufferedStream |

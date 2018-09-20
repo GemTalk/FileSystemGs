@@ -17,7 +17,8 @@ MemoryWriteStream >> isReadOnly [
 { #category : 'accessing' }
 MemoryWriteStream >> readOnlyCopy [
 	
-	^ collection readStream
+	^ collection readStreamPortable
+
 ]
 
 { #category : 'positioning' }

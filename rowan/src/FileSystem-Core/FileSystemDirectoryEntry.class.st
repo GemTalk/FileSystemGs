@@ -186,7 +186,14 @@ FileSystemDirectoryEntry >> printOn: aStream [
 
 { #category : 'delegate' }
 FileSystemDirectoryEntry >> readStream [
-	^ reference readStream
+	^ reference readStreamPortable
+
+]
+
+{ #category : 'delegate' }
+FileSystemDirectoryEntry >> readStreamPortable [
+	^ reference readStreamPortable
+
 ]
 
 { #category : 'accessing' }

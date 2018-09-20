@@ -656,9 +656,10 @@ AbstractFileReference >> readStream [
 { #category : 'streams' }
 AbstractFileReference >> readStreamDo: aBlock [
 	| stream |
-	stream := self readStream.
+	stream := self readStreamPortable.
 	^ [ aBlock value: stream ] 
 		ensure: [ stream close ]
+
 ]
 
 { #category : 'streams' }
@@ -687,8 +688,9 @@ AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 { #category : 'streams' }
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
-		ifTrue: [ self readStream ]
+		ifTrue: [ self readStreamPortable ]
 		ifFalse: absentBlock
+
 ]
 
 { #category : 'navigating' }

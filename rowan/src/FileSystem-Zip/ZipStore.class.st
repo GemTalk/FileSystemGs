@@ -60,7 +60,7 @@ ZipStore >> open [
 	archive := ZipArchive new.
 	self reference
 		binaryReadStreamDo: [ :input | 
-			archive readFrom: input contents readStream.
+			archive readFrom: input contents readStreamPortable.
 			archive members
 				do: [ :member | 
 					| path |
@@ -71,6 +71,7 @@ ZipStore >> open [
 							self ensureCreateDirectory: path parent.
 							(self createFile: path) member: member ] ] ].
 	^ self
+
 ]
 
 { #category : 'private' }

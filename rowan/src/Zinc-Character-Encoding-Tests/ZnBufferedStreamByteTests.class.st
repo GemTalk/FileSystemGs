@@ -9,12 +9,12 @@ https://en.wikipedia.org/wiki/Endianness
 https://en.wikipedia.org/wiki/Two%27s_complement
 "
 Class {
-	#name : #ZnBufferedStreamByteTests,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnBufferedStreamByteTests',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedStreamByteTests >> integerEncodingSpec [
 	^ #(
 "<hex-bytes> <integer> <u|s> <be|le> unsigned|signed big-endian|little-endian"
@@ -75,59 +75,61 @@ ZnBufferedStreamByteTests >> integerEncodingSpec [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedStreamByteTests >> testInt16Aliases [
 	| input writer |
 	writer := [ :block | 
 		ByteArray streamContents: [ :out | 
 			ZnBufferedWriteStream on: out do: block ] ].
 	input := ByteArray readHexFrom: '04D2'.
-	self assert: (ZnBufferedReadStream on: input readStream) int16 equals: 1234.
-	self assert: (ZnBufferedReadStream on: input readStream) uint16 equals: 1234.
-	self assert: (ZnBufferedReadStream on: input readStream) nextWord equals: 1234.
-	self assert: ((ZnBufferedReadStream on: input readStream) nextNumber: 2) equals: 1234.
-	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 2) equals: 1234.	
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) int16 equals: 1234.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) uint16 equals: 1234.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) nextWord equals: 1234.
+	self assert: ((ZnBufferedReadStream on: input readStreamPortable) nextNumber: 2) equals: 1234.
+	self assert: ((ZnBufferedReadStream on: input reversed readStreamPortable) nextLittleEndianNumber: 2) equals: 1234.	
 	self assert: (writer value: [ :out | out int16: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out uint16: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out nextWordPut: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out nextNumber: 2 put: 1234 ]) equals: input.
 	self assert: (writer value: [ :out | out nextLittleEndianNumber: 2 put: 1234 ]) equals: input reversed.
 	input := ByteArray readHexFrom: 'FB2E'.
-	self assert: (ZnBufferedReadStream on: input readStream) int16 equals: -1234.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) int16 equals: -1234.
 	self assert: (writer value: [ :out | out int16: -1234 ]) equals: input
+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedStreamByteTests >> testInt32Aliases [
 	| input writer |
 	writer := [ :block | 
 		ByteArray streamContents: [ :out | 
 			ZnBufferedWriteStream on: out do: block ] ].
 	input := ByteArray readHexFrom: '499602D2'.
-	self assert: (ZnBufferedReadStream on: input readStream) int32 equals: 1234567890.
-	self assert: (ZnBufferedReadStream on: input readStream) uint32 equals: 1234567890.
-	self assert: (ZnBufferedReadStream on: input readStream) nextInt32 equals: 1234567890.
-	self assert: ((ZnBufferedReadStream on: input readStream) nextNumber: 4) equals: 1234567890.
-	self assert: ((ZnBufferedReadStream on: input reversed readStream) nextLittleEndianNumber: 4) equals: 1234567890.	
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) int32 equals: 1234567890.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) uint32 equals: 1234567890.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) nextInt32 equals: 1234567890.
+	self assert: ((ZnBufferedReadStream on: input readStreamPortable) nextNumber: 4) equals: 1234567890.
+	self assert: ((ZnBufferedReadStream on: input reversed readStreamPortable) nextLittleEndianNumber: 4) equals: 1234567890.	
 	self assert: (writer value: [ :out | out int32: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out uint32: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out nextInt32Put: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out nextNumber: 4 put: 1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out nextLittleEndianNumber: 4 put: 1234567890 ]) equals: input reversed.
 	input := ByteArray readHexFrom: 'B669FD2E'.
-	self assert: (ZnBufferedReadStream on: input readStream) int32 equals: -1234567890.
-	self assert: (ZnBufferedReadStream on: input readStream) nextInt32 equals: -1234567890.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) int32 equals: -1234567890.
+	self assert: (ZnBufferedReadStream on: input readStreamPortable) nextInt32 equals: -1234567890.
 	self assert: (writer value: [ :out | out int32: -1234567890 ]) equals: input.
 	self assert: (writer value: [ :out | out nextInt32Put: -1234567890 ]) equals: input
+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedStreamByteTests >> testInt8 [
 	| bytes readStream |
 	bytes := ByteArray streamContents: [ :out |
 		ZnBufferedWriteStream on: out do: [ :bout |
 			bout int8: 123; uint8: 123; int8: -123 ] ].
-	readStream := ZnBufferedReadStream on: bytes readStream.
+	readStream := ZnBufferedReadStream on: bytes readStreamPortable.
 	self assert: readStream peek equals: 123.
 	self assert: readStream int8 equals: 123.
 	self assert: readStream peek equals: 123.
@@ -135,21 +137,23 @@ ZnBufferedStreamByteTests >> testInt8 [
 	self deny: readStream peek = 123.
 	self deny: readStream peek = -123.
 	self assert: readStream int8 equals: -123
+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedStreamByteTests >> testNextIntegerOfSizeSignedBigEndian [
 	self integerEncodingSpec do: [ :spec |
 		| input integer |
 		input := ByteArray readHexFrom: spec first.
-		integer := (ZnBufferedReadStream on: input readStream) 
+		integer := (ZnBufferedReadStream on: input readStreamPortable) 
 			nextIntegerOfSize: input 
 			size signed: spec third = #s 
 			bigEndian: spec fourth = #be.
 		self assert: integer equals: spec second ]
+
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedStreamByteTests >> testNextIntegerOfSizeSignedBigEndianPut [
 	self integerEncodingSpec do: [ :spec |
 		| input output |

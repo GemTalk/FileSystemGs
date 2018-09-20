@@ -229,7 +229,8 @@ MemoryStore >> openFileStream: path writable: isWriteStream [
 	entry := self basicOpen: path writable: isWriteStream.
 	^ isWriteStream 
 		ifTrue: [ entry writeStream ]
-		ifFalse: [ entry readStream ]
+		ifFalse: [ entry readStreamPortable ]
+
 ]
 
 { #category : 'public' }

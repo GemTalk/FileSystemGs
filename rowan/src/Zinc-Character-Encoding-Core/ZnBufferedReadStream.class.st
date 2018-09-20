@@ -10,25 +10,33 @@ I can wrap both binary or character streams and act accordingly.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBufferedReadStream,
-	#superclass : #Object,
+	#name : 'ZnBufferedReadStream',
+	#superclass : 'Object',
 	#instVars : [
 		'stream',
 		'buffer',
 		'position',
 		'limit'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+ZnBufferedReadStream class >> new [
+
+	^ self basicNew
+		initialize;
+		yourself
+]
+
+{ #category : 'instance creation' }
 ZnBufferedReadStream class >> on: readStream [
 	^ self new
 		on: readStream;
 		yourself
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnBufferedReadStream class >> on: readStream do: block [
 	"Execute block with as argument a ZnBufferedReadStream on readStream.
 	Return the value of block."
@@ -36,79 +44,79 @@ ZnBufferedReadStream class >> on: readStream do: block [
 	^ block value: (self on: readStream)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadStream >> atEnd [
 	^ position > limit and: [ stream atEnd ]
 	
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedReadStream >> close [
 	stream close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadStream >> closed [
 	^ stream closed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> collectionSpecies [
 	^ stream isBinary
 		ifTrue: [ ByteArray ]
 		ifFalse: [ String ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> contents [
 	
 	^ self upToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> defaultBufferSize [
 	^ 2 raisedToInteger: 16
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedReadStream >> discardBuffer [
 	limit := 0.
 	position := 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnBufferedReadStream >> initialize [
-	super initialize.
+
 	position := 1.
 	limit := 0
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> int16 [
 	^ self nextIntegerOfSize: 2 signed: true bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> int32 [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> int8 [
 	^ self nextIntegerOfSize: 1 signed: true bigEndian: true 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> isBinary [
 	^ stream isBinary
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBufferedReadStream >> isStream [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> next [
 	"Return the next element and move over it"
 	
@@ -123,7 +131,7 @@ ZnBufferedReadStream >> next [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> next: requestedCount [ 
 	"Read requestedCount elements and return them as a collection.
 	If less are available, a smaller collection will be returned."
@@ -133,7 +141,7 @@ ZnBufferedReadStream >> next: requestedCount [
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
@@ -144,7 +152,7 @@ ZnBufferedReadStream >> next: requestedCount into: collection [
 		startingAt: 1   
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
@@ -159,18 +167,18 @@ ZnBufferedReadStream >> next: requestedCount into: collection startingAt: offset
 		ifFalse: [ collection copyFrom: 1 to: offset + read - 1 ]     
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedReadStream >> nextBuffer [
 	limit := stream readInto: buffer startingAt: 1 count: buffer size.
 	position := 1
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextInt32 [
 	^ self nextIntegerOfSize: 4 signed: true bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
 	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first, 
@@ -192,7 +200,7 @@ ZnBufferedReadStream >> nextIntegerOfSize: numberOfBytes signed: signed bigEndia
 		ifFalse: [ value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
@@ -202,28 +210,28 @@ ZnBufferedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextLittleEndianNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: true
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextWord [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedReadStream >> on: readStream [
 	stream := readStream.
 	self sizeBuffer: self defaultBufferSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> peek [
 	"Return the next element but do not move over it"
 	
@@ -234,7 +242,7 @@ ZnBufferedReadStream >> peek [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> peekFor: object [
 	"Answer false and do not move over the next element if it is not equal to object, or if the receiver is at the end. 
 	Answer true and move over the next element when it is equal to object."
@@ -246,7 +254,7 @@ ZnBufferedReadStream >> peekFor: object [
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> position [
 	
 	"If the buffer advanced, we need to check the original stream position, minus what we have read.
@@ -254,7 +262,7 @@ ZnBufferedReadStream >> position [
 	^ stream position - limit + position - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> position: anInteger [ 
 	
 	| bufferEnd bufferStart |
@@ -269,7 +277,7 @@ ZnBufferedReadStream >> position: anInteger [
 			stream position: anInteger ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedReadStream >> readFromBufferInto: collection startingAt: offset count: requestedCount [
 	"Read up to requestedCount elements into collection starting at offset,
 	from my buffer, answering the number of elements read.
@@ -288,7 +296,7 @@ ZnBufferedReadStream >> readFromBufferInto: collection startingAt: offset count:
 	^ read
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	answering the number of elements read, there could be fewer elements available."
@@ -311,31 +319,31 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 	^ countRead
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> setToEnd [
 	
 	stream setToEnd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnBufferedReadStream >> shouldBufferReadOfCount: elementCount [
 	"For larger read requests, buffering fails to give an advantage."
 
 	^ elementCount < (buffer size / 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> size [
 
 	^ stream size
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnBufferedReadStream >> sizeBuffer: size [
 	buffer := self collectionSpecies new: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> skip: count [
 	"Skip over count elements.
 	This could be further optimzed."
@@ -343,22 +351,22 @@ ZnBufferedReadStream >> skip: count [
 	count timesRepeat: [ self next ]
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> uint16 [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> uint32 [
 	^ self nextIntegerOfSize: 4 signed: false bigEndian: true 
 ]
 
-{ #category : #'accessing-bytes' }
+{ #category : 'accessing-bytes' }
 ZnBufferedReadStream >> uint8 [
 	^ self nextIntegerOfSize: 1 signed: false bigEndian: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> upTo: value [ 
 	"Read upto but not including value and return them as a collection.
 	If value is not found, return the entire contents of the stream.
@@ -370,7 +378,7 @@ ZnBufferedReadStream >> upTo: value [
 				writeStream nextPut: element ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> upToEnd [
 	"Read elements until the stream is atEnd and return them as a collection."
 
@@ -383,7 +391,7 @@ ZnBufferedReadStream >> upToEnd [
 				position := limit + 1 ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBufferedReadStream >> wrappedStream [
 	^ stream
 ]
