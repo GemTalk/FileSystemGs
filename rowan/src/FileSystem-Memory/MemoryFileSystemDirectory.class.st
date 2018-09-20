@@ -53,7 +53,8 @@ MemoryFileSystemDirectory >> fileEntryAt: aFileName ifAbsent: aBlock [
 
 { #category : 'accessing' }
 MemoryFileSystemDirectory >> fileEntryAt: aFileName ifPresent: aBlock [
-	^ entries at: aFileName ifPresent: aBlock
+	^ (entries at: aFileName ifAbsent: [])
+			ifNotNil: [:entry | aBlock value: entry ]
 ]
 
 { #category : 'accessing' }

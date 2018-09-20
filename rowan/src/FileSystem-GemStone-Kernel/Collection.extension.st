@@ -6,3 +6,20 @@ Collection >> ifEmpty: aBlock [
     ifTrue: [ ^ aBlock value ]
 
 ]
+
+{ #category : '*filesystem-gemstone-kernel' }
+Collection >> isEmptyOrNil [
+  "Answer whether the receiver contains any elements, or is nil.  Useful in numerous situations where one wishes the same reaction to an empty collection or to nil"
+
+  ^ self size == 0
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+Collection >> sort [
+
+	"Sort this array into ascending order using the '<=' operator."
+
+	^ self sort: [ :a :b | a <= b ]
+
+]
