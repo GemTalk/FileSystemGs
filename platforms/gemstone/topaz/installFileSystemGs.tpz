@@ -26,18 +26,18 @@
 	'File' .
 	'CodeImporter' .
 	'ZnMimeType' .
-	'ZnBufferedReadStream' .
 	'ZnCharacterReadStream' .
 	'UIManager' .
 	'UUID' .
 	'OSPlatform' .
-	'ZnBufferedReadWriteStream' .
 	'ZnCharacterWriteStream' .
 	'Message' .
 	'WeakRegistry' .
 	'ZipArchive' .
 	'UUIDGenerator' .
-	'Stdio' } .
+	'Stdio' .
+	'DomainError' .
+	'SystemVersion' } .
 	
 	Transcript cr; show: 'Install Object subclasses'.
 	list do:[:e| 
