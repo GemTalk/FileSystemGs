@@ -514,14 +514,16 @@ FileSystem >> openFileStream: aResolvable writable: aBoolean [
 ]
 
 { #category : 'private' }
-FileSystem >> openStreamDescription: aResolvable writable: aBoolean [
+FileSystem >> openStreamDescription: aResolvable writable: writeMode [
 	"I am  a helper method to delegate basicOpen:writable: to the store.
 	 I am called from FileSystemHandle implementations."
 	
+	"writeMode - #read, #append, #write"
+
 	| path |
 	
 	path := self resolve: aResolvable.
-	^ store basicOpen: path writable: aBoolean
+	^ store basicOpen: path writable: writeMode
 ]
 
 { #category : 'converting' }

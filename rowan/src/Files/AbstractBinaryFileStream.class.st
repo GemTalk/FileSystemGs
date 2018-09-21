@@ -176,7 +176,7 @@ AbstractBinaryFileStream >> next: amount putAll: aByteArray [
 		startingAt: 1
 		count: amount ]
 		on: Error
-		do: [ (FileWriteError fileName: self name)
+		do: [:ex | (FileWriteError fileName: self name)
 				signal:
 					(self close
 						ifTrue: [ 'File ' , self name , ' is closed' ]

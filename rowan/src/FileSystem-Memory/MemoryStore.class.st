@@ -224,13 +224,15 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 ]
 
 { #category : 'public' }
-MemoryStore >> openFileStream: path writable: isWriteStream [
+MemoryStore >> openFileStream: path writable: writeMode [
+
+	"writeMode - #read, #append, #write"
+
 	| entry |
-	entry := self basicOpen: path writable: isWriteStream.
-	^ isWriteStream 
+	entry := self basicOpen: path writable: writeMode.
+	^ writeMode == #write
 		ifTrue: [ entry writeStream ]
 		ifFalse: [ entry readStreamPortable ]
-
 ]
 
 { #category : 'public' }

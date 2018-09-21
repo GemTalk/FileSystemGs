@@ -167,10 +167,13 @@ DiskStore >> basicModificationTimeOf: anEntry [
 ]
 
 { #category : 'public' }
-DiskStore >> basicOpen: aPath writable: aBoolean [
+DiskStore >> basicOpen: aPath writable: writeMode [
+
+	"writeMode - #read, #append, #write"
+
 	| string encoded |
 	string := self stringFromPath: aPath.
-	^ File open: string writable: aBoolean
+	^ File open: string writable: writeMode
 ]
 
 { #category : 'private' }
@@ -304,7 +307,7 @@ DiskStore >> isFile: aPath [
 DiskStore >> isReadable: aPath [
 	(self exists: aPath) ifFalse: [ ^ false ].
 	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: false) 
+	(self basicOpen: aPath writable: #read) 
 		ifNotNil: [ :id|
 			File close: id.
 			^ true].
@@ -329,7 +332,7 @@ DiskStore >> isSymlink: aPath [
 DiskStore >> isWritable: aPath [
 	(self exists: aPath) ifFalse: [ ^ false ].
 	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: true) 
+	(self basicOpen: aPath writable: #write) 
 		ifNotNil: [ :id|
 			File close: id.
 			^ true].

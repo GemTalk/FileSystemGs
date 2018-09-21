@@ -142,7 +142,7 @@ File class >> deleteFile: aFileName [
 	"Delete the file of the given name. 
 	Return self if the primitive succeeds, nil otherwise."
 
-	GsFile _removeFile: aFileName onClient: false
+	^ GsFile _removeFile: aFileName onClient: false
 ]
 
 { #category : 'primitives-path' }
@@ -220,14 +220,10 @@ self error: 'not yet implmented'
 ]
 
 { #category : 'primitives-file' }
-File class >> getPosition: id [
+File class >> getPosition: aGsFile [
 	"Get this files current position."
-"
-	<primitive: 'primitiveFileGetPosition' module: 'FilePlugin'>
-	self primitiveFailed
-"
-self error: 'not yet implmented'
 
+	^ aGsFile position
 ]
 
 { #category : 'primitives-path' }
@@ -297,7 +293,7 @@ File class >> named: fileName [
 ]
 
 { #category : 'primitives-file' }
-File class >> open: fileName writable: writableFlag [
+File class >> open: fileName writable: writeMode [
 	"Open a file of the given name, and return the GsFile obtained.
 	If writableFlag is true, then
 		if there is none with this name, then create one
@@ -306,8 +302,15 @@ File class >> open: fileName writable: writableFlag [
 		if the file exists, open it read-only
 		else return nil"
 
+	"writeMode - #read, #append, #write"
+
 	| mode |
-	mode := writableFlag ifTrue: [ 'w' ] ifFalse: [ 'r' ].
+	mode := writeMode == #write 
+		ifTrue: [ 'w' ] 
+		ifFalse: [ 
+			writeMode = #read
+				ifTrue: [ 'r' ]
+				ifFalse: [ 'a' ] ].
 	^ GsFile
 		open: fileName 
 		mode: mode 
@@ -363,26 +366,17 @@ self error: 'not yet implmented'
 ]
 
 { #category : 'primitives-file' }
-File class >> setPosition: id to: anInteger [
+File class >> setPosition: aGsFile to: anInteger [
 	"Set this file to the given position."
 
-"
-	<primitive: 'primitiveFileSetPosition' module: 'FilePlugin'>
-	self primitiveFailed
-"
-self error: 'not yet implmented'
-
+	aGsFile position: anInteger
 ]
 
 { #category : 'primitives-file' }
-File class >> sizeOf: id [
+File class >> sizeOf: aGsFile [
 	"Answer the size of this file."
-"
-	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
-	self primitiveFailed
-"
-self error: 'not yet implmented'
 
+	^ aGsFile fileSize
 ]
 
 { #category : 'primitives-file' }
@@ -443,15 +437,13 @@ self error: 'not yet implmented'
 ]
 
 { #category : 'primitives-file' }
-File class >> write: id from: stringOrByteArray startingAt: startIndex count: count [
+File class >> write: aGsFile from: stringOrByteArray startingAt: startIndex count: count [
 	"Write count bytes onto this file from the given string or byte array starting at the given index. 	Answer the number of bytes written."
 
-"
-	<primitive: 'primitiveFileWrite' module: 'FilePlugin'>
-	self primitiveFailed
-"
-self error: 'not yet implmented'
- 
+	| written |
+	written := aGsFile nextPutAll: (stringOrByteArray copyFrom: startIndex to: startIndex + count - 1).
+	written ifNil: [ self error: 'failed write' ].
+	^ written
 ]
 
 { #category : 'accessing' }
@@ -462,6 +454,9 @@ File >> basename [
 { #category : 'open/close' }
 File >> basicOpenForWrite: writeMode [ 
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
+
+	"writeMode - #read, #append, #write"
+
 	^ self class open: name writable: writeMode
 ]
 
@@ -514,25 +509,27 @@ File >> named: fileName [
 File >> openForAppend [
 
 	| stream |
-	stream := self openForWrite: true.
+	stream := self openForWrite: #append.
 	^ stream setToEnd; yourself
 ]
 
 { #category : 'open/close' }
 File >> openForRead [
 
-	^ self openForWrite: false
+	^ self openForWrite: #read
 ]
 
 { #category : 'open/close' }
 File >> openForWrite [
 
-	^ self openForWrite: true
+	^ self openForWrite: #write
 ]
 
 { #category : 'open/close' }
 File >> openForWrite: writeMode [
 	"Open the file with the given name. If writeMode is true, allow writing, otherwise open the file in read-only mode."
+
+	"writeMode - #read, #append, #write"
 
 	| fileHandle |
 	fileHandle := self basicOpenForWrite: writeMode.
@@ -545,7 +542,7 @@ File >> openForWrite: writeMode [
 		CannotDeleteFileException signal: name
 	].
 
-	^ BinaryFileStream handle: fileHandle file: self forWrite: writeMode
+	^ BinaryFileStream handle: fileHandle file: self forWrite: writeMode ~~ #read
 ]
 
 { #category : 'streaming' }
