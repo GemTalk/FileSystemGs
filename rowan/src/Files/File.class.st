@@ -118,12 +118,6 @@ self error: 'not yet implmented'
 
 ]
 
-{ #category : 'primitives-encoding' }
-File class >> decodePathString: aString [
-
-	^ (ZnCharacterEncoder newForEncoding: 'utf8') decodeBytes: aString asByteArray
-]
-
 { #category : 'primitives-path' }
 File class >> deleteDirectory: fullPath [
 	"Delete the directory named by the given path. 
@@ -152,13 +146,6 @@ File class >> delimiter [
 	"Was a primitive ... only needed to resolve whether or not we're on Windows"
 
 	^ $/
-]
-
-{ #category : 'primitives-encoding' }
-File class >> encodePathString: aString [
-
-	"Should not return a string"
-	^ ((ZnCharacterEncoder newForEncoding: 'utf8') encodeString: aString) asString
 ]
 
 { #category : 'primitives-file' }
