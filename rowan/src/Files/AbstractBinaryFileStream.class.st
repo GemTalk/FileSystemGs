@@ -167,7 +167,7 @@ AbstractBinaryFileStream >> next: n into: aString startingAt: startIndex [
 
 { #category : 'writing' }
 AbstractBinaryFileStream >> next: amount putAll: aByteArray [
-"
+
 	forWrite
 		ifFalse: [ ^ self error: 'Cannot write a read-only file' ].
 	[ File
@@ -175,16 +175,13 @@ AbstractBinaryFileStream >> next: amount putAll: aByteArray [
 		from: aByteArray
 		startingAt: 1
 		count: amount ]
-		on: PrimitiveFailed
+		on: Error
 		do: [ (FileWriteError fileName: self name)
 				signal:
 					(self close
 						ifTrue: [ 'File ' , self name , ' is closed' ]
 						ifFalse: [ 'File ' , self name , ' write failed' ]) ].
 	^ aByteArray
-"
-self error: 'not yet implemented'
-
 ]
 
 { #category : 'accessing' }

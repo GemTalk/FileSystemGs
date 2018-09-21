@@ -60,14 +60,10 @@ self error: 'not yet implemented'
 ]
 
 { #category : 'primitives-file' }
-File class >> close: id [
+File class >> close: aGsFile [
 	"Close this file."
 
-"	<primitive: 'primitiveFileClose' module: 'FilePlugin'>"
-
-self error: 'not yet implemented'
-
-	
+	aGsFile close
 ]
 
 { #category : 'primitives-file' }
