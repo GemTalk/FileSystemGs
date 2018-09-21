@@ -14,7 +14,7 @@ UnixStore class >> delimiter [
 
 { #category : 'current' }
 UnixStore class >> isActiveClass [
-	^ Smalltalk os isUnix and: [ super isActiveClass ]
+	^ ((System gemVersionAt: 'osName') = 'Linux') and: [ super isActiveClass ]
 ]
 
 { #category : 'public' }

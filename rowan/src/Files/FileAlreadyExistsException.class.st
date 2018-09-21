@@ -2,15 +2,15 @@
 I am an exception that notifies that a file already exists.
 "
 Class {
-	#name : #FileAlreadyExistsException,
-	#superclass : #FileException,
+	#name : 'FileAlreadyExistsException',
+	#superclass : 'FileException',
 	#instVars : [
 		'file'
 	],
-	#category : #'Files-Core'
+	#category : 'Files-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FileAlreadyExistsException class >> signalOnFile: aFile [ 
 	
 	self new
@@ -18,18 +18,18 @@ FileAlreadyExistsException class >> signalOnFile: aFile [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileAlreadyExistsException >> file [
 	^ file
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileAlreadyExistsException >> file: aFile [
 	
 	file := aFile
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileAlreadyExistsException >> messageText [
 
 	^ 'File already exists: ', file basename

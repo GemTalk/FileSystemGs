@@ -16,12 +16,6 @@ Class {
 }
 
 { #category : 'registry' }
-FileHandle class >> register: aFileHandle [
-	"properly register the given FileHandle for being closed on garbage collection"
-	^self registry add: aFileHandle
-]
-
-{ #category : 'registry' }
 FileHandle class >> registry [
 	^Registry ifNil: [Registry := WeakRegistry new]
 
@@ -108,12 +102,6 @@ FileHandle >> open [
 	id ifNil: 	[
 		reference exists ifFalse: [FileDoesNotExist signalWith: reference].
 		self error: 'Unable to open file ' , reference printString]"
-]
-
-{ #category : 'finalization' }
-FileHandle >> register [
-	"register the instance for proper clreanup on garbage collection"
-	^self class register: self
 ]
 
 { #category : 'public' }

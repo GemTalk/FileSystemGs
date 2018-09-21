@@ -247,6 +247,10 @@ FileSystemStore >> filename: aByteString matches: aByteString2 [
 	^ aByteString = aByteString2
 ]
 
+{ #category : 'initialization' }
+FileSystemStore >> initialize [
+]
+
 { #category : 'accessing' }
 FileSystemStore >> isCaseSensitive [
 	^ self class isCaseSensitive

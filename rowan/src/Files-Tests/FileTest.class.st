@@ -2,19 +2,19 @@
 Unit tests for file operations
 "
 Class {
-	#name : #FileTest,
-	#superclass : #TestCase,
-	#category : #'Files-Tests-Core'
+	#name : 'FileTest',
+	#superclass : 'TestCase',
+	#category : 'Files-Tests-Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FileTest >> tearDown [
 
 	'asd.txt' asFileReference ensureDelete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testCheckExistenceOfExistingFileThrowsException [
 
 	| file |
@@ -23,7 +23,7 @@ FileTest >> testCheckExistenceOfExistingFileThrowsException [
 	self should: [file checkDoesNotExist] raise: FileAlreadyExistsException.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 
 	| file |
@@ -31,7 +31,7 @@ FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 	self shouldnt: [file checkDoesNotExist] raise: Error.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testFileDelete [
 
 	| file |
@@ -41,7 +41,7 @@ FileTest >> testFileDelete [
 	self deny: file exists.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testFileExists [
 
 	| file |
@@ -51,16 +51,7 @@ FileTest >> testFileExists [
 	file delete.
 ]
 
-{ #category : #tests }
-FileTest >> testFilesAreRegisteredInWeakRegistry [
-
-	|  f |
-	[f := (File named: 'asd.txt') writeStream.
-	self assert: (File registry keys includes: f)]
-		ensure: [ f ifNotNil: [ f close ] ]
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 
 	| size |
@@ -70,7 +61,7 @@ FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 	self assert: size equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 
 	| size |
@@ -80,7 +71,7 @@ FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 	self assert: size equals: 3.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileObjectCreatesFile [
 
 	(File named: 'asd.txt') writeStream close.
@@ -89,7 +80,7 @@ FileTest >> testOpeningFileObjectCreatesFile [
 	self assert: (File named: 'asd.txt') exists.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileSetsPositionAtBeggining [
 
 	| file |
@@ -99,7 +90,7 @@ FileTest >> testOpeningFileSetsPositionAtBeggining [
 		] ensure: [ file ifNotNil: [ file close ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningForAppendSetsPositionAtEnd [
 
 	| file |
@@ -107,18 +98,4 @@ FileTest >> testOpeningForAppendSetsPositionAtEnd [
 	file := (File named: 'asd.txt') openForAppend.
 	self assert: file position equals: 3
 		] ensure: [ file ifNotNil: [ file close ] ]
-]
-
-{ #category : #tests }
-FileTest >> testRegistryShouldBeCleaned [
-
-	| oldSize |
-	"We force some garbage collection to avoid noise in the test"
-	3 timesRepeat: [Smalltalk garbageCollect].
-	oldSize := File registry size.
-
-	(File named: 'asd.txt') writeStream.
-	3 timesRepeat: [Smalltalk garbageCollect].
-	
-	self assert: oldSize equals: File registry size.
 ]

@@ -17,7 +17,7 @@ Class {
 
 { #category : 'current' }
 DiskStore class >> activeClass [
-	self allSubclassesDo: [:ea | 
+	self allSubclasses do: [:ea | 
 		ea isActiveClass ifTrue: [^ ea]].
 	^ self
 ]
@@ -54,7 +54,7 @@ DiskStore class >> defaultWorkingDirectory [
 	Clients should normally use the instance side method which caches this value."
 	| pathString |
 
-	pathString := OSPlatform current currentWorkingDirectoryPath.
+	pathString := (GsFile _expandEnvVariable: 'PWD' isClient:false).
 	^(Path from: pathString delimiter: self delimiter).
 ]
 
@@ -117,32 +117,30 @@ DiskStore >> basicCreationTimeOf: anEntry [
 
 { #category : 'private' }
 DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
-	| encodedPathString index entry pathString |
+	| index entry pathString |
 		
 	index := 1.
 	pathString := self stringFromPath: aPath.
-	encodedPathString := File encodePathString: pathString.
-	entry := File lookupEntryIn: encodedPathString index: index.
+	entry := File lookupEntryIn: pathString index: index.
 	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
 	
 	[ entry isNil ]
 		whileFalse: [ 
-			entry at: 1 put: (File decodePathString: entry first).
+			entry at: 1 put:entry first.
 			aBlock value: entry.
 			index := index + 1.
-			entry := File lookupEntryIn: encodedPathString index: index ].
+			entry := File lookupEntryIn: pathString index: index ].
 ]
 
 { #category : 'public' }
 DiskStore >> basicEntryAt: aPath [
-	| encodedPath encodedBasename |
+	| path basename |
 	
-	encodedPath := File encodePathString: (self stringFromPath: aPath parent).
-	encodedBasename := File encodePathString: aPath basename.
+	path := self stringFromPath: aPath parent.
+	basename := aPath basename.
 	
-	^ (File lookupDirectory: encodedPath filename: encodedBasename)
+	^ (File lookupDirectory: path filename: basename)
 		ifNil: [ #badDirectoryPath ].
-	
 ]
 
 { #category : 'private' }
@@ -172,8 +170,7 @@ DiskStore >> basicModificationTimeOf: anEntry [
 DiskStore >> basicOpen: aPath writable: aBoolean [
 	| string encoded |
 	string := self stringFromPath: aPath.
-	encoded := File encodePathString: string.
-	^ File open: encoded writable: aBoolean
+	^ File open: string writable: aBoolean
 ]
 
 { #category : 'private' }
@@ -209,10 +206,9 @@ DiskStore >> createDirectory: path [
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
 
-	| parent encodedPathString pathString result |
+	| parent pathString result |
 	pathString := self stringFromPath: path.
-	encodedPathString := File encodePathString: pathString.
-	result := File createDirectory: encodedPathString.
+	result := File createDirectory: pathString.
 	result
 		ifNil: [ 
 			parent := path parent.
@@ -237,16 +233,15 @@ DiskStore >> defaultWorkingDirectory [
 
 { #category : 'public' }
 DiskStore >> delete: path [
-	| pathString encodedPathString |
+	| pathString |
 	
 	(self exists: path)
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 		
 	pathString := self stringFromPath: path.
-	encodedPathString := File encodePathString: pathString.
 	
 	(self isDirectory: path)
-		ifTrue: [ File deleteDirectory: encodedPathString ]
+		ifTrue: [ File deleteDirectory: pathString ]
 		ifFalse: [ 
 			(File named: pathString) delete ]
 ]
@@ -269,7 +264,7 @@ DiskStore >> hash [
 { #category : 'initialization' }
 DiskStore >> initialize [
 	super initialize.
-	maxFileNameLength := Smalltalk vm maxFilenameLength ifNil: [ 255 ].
+	maxFileNameLength := 255.
 ]
 
 { #category : 'public' }
@@ -375,12 +370,10 @@ DiskStore >> openFileStream: path writable: writable [
 { #category : 'public' }
 DiskStore >> rename: sourcePath to: destinationPath [
 
-	| sourcePathString encodedSourcePathString targetPathString encodedTargetPathString |
+	| sourcePathString targetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
-	encodedSourcePathString := File encodePathString: sourcePathString.
 	targetPathString := self stringFromPath: destinationPath.
-	encodedTargetPathString := File encodePathString: targetPathString.
-	^ File rename: encodedSourcePathString to: encodedTargetPathString.
+	^ File rename: sourcePathString to: targetPathString.
 ]
 
 { #category : 'private' }
