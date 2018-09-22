@@ -178,7 +178,7 @@ FileSystemTest >> testCopy [
 	[ out nextPutAll: 'gooly' ] ensure: [ out close ].
 	filesystem copy: 'gooly' to: 'plonk'.
 	
-	in := (filesystem workingDirectory / 'plonk') readStreamPortable.
+	in := (filesystem workingDirectory / 'plonk') readStream.
 	contents := [ in contents asString ] ensure: [ in close ].
 	self assert: contents equals: 'gooly'
 

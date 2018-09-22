@@ -67,7 +67,7 @@ MemoryFileSystemFile >> basicOpen [
 
 { #category : 'streams-compatibility' }
 MemoryFileSystemFile >> binaryReadStream [
-	^ ReadStream on: self bytes from: 1 to: size
+	^ ReadStreamPortable on: self bytes from: 1 to: size
 ]
 
 { #category : 'streams' }
@@ -114,9 +114,10 @@ MemoryFileSystemFile >> grownBy: length [
 { #category : 'initialization' }
 MemoryFileSystemFile >> initialize [
 	super initialize.
-	bytes := #[].
+	bytes := ByteArray new.
 	size := 0.
 	closed := false
+
 ]
 
 { #category : 'accessing' }

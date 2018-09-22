@@ -73,5 +73,5 @@ MemoryFileWriteStream >> size [
 
 { #category : 'accessing' }
 MemoryFileWriteStream >> stream [
-	^ stream ifNil: [ stream := WriteStream on: file bytes from: 1 to: file size ]
+	^ stream ifNil: [ stream := WriteStreamPortable on: file bytes from: 1 to: file size ]
 ]
