@@ -1,6 +1,18 @@
 Extension { #name : 'SequenceableCollection' }
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> grownBy: length [
+	"Answer a copy of receiver collection with size grown by length"
+
+	| newCollection size |
+	size := self size.
+	newCollection := self species new: size + length.
+	newCollection replaceFrom: 1 to: size with: self startingAt: 1.
+	^ newCollection
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> readStreamPortable [
 
 	^ ReadStreamPortable on: self
