@@ -656,7 +656,7 @@ AbstractFileReference >> readStream [
 { #category : 'streams' }
 AbstractFileReference >> readStreamDo: aBlock [
 	| stream |
-	stream := self readStreamPortable.
+	stream := self readStream.
 	^ [ aBlock value: stream ] 
 		ensure: [ stream close ]
 

@@ -143,10 +143,11 @@ FileSystemTest >> testChildrenSorting [
 	self markForCleanup: directory / 'beta'.
 	self markForCleanup: directory.
 	
-	sorted := (filesystem childrenAt: directory) sorted.
+	sorted := (filesystem childrenAt: directory) sort.
 	self assert: sorted size = 2.
 	self assert: (sorted at: 1) basename = 'alfa'.
 	self assert: (sorted at: 2) basename = 'beta'.
+
 ]
 
 { #category : 'tests' }
@@ -163,7 +164,8 @@ FileSystemTest >> testChildrenSortingRoot [
 	self markForCleanup: directory1.
 	self markForCleanup: directory2.
 	
-	self assert: filesystem workingDirectory children sorted size = filesystem workingDirectory children size
+	self assert: filesystem workingDirectory children sort size = filesystem workingDirectory children size
+
 ]
 
 { #category : 'tests' }
