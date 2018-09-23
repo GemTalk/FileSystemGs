@@ -9,15 +9,15 @@ Part of Zinc HTTP Components.
 I use the ICU library to encode strings and decode ByteArray and Utf8 instances ... 
 "
 Class {
-	#name : #ZnUTF8Encoder,
-	#superclass : #Object,
+	#name : 'ZnUTF8Encoder',
+	#superclass : 'Object',
 	#classVars : [
 		'Default'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder class >> default [
 	"Return a cached instance of the most commonly used encoder,
 	which is faster than going via #newForEncoding: that does a subclass search"
@@ -25,29 +25,27 @@ ZnUTF8Encoder class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUTF8Encoder class >> newForEncoding: string [
 	"No further parametrization needed"
 	
 	^ self new
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTF8Encoder >> decodeBytes: bytes [
 	"Decode bytes and return the resulting string"
 	self error: 'not yet implemented'
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnUTF8Encoder >> encodeString: string [
 	"Encode string and return the resulting Utf8 instance"
 	
 	self error: 'not yet implemented'
 ]
 
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUTF8Encoder >> identifier [
 	^ #utf8
 ]
-

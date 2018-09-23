@@ -15,7 +15,7 @@ Class {
 
 { #category : 'accessing' }
 ZnEncodedStream class >> defaultEncoder [
-	^ ZnCharacterEncoder utf8
+	^ ZnUTF8Encoder default
 ]
 
 { #category : 'instance creation' }

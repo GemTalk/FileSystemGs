@@ -44,39 +44,6 @@ ZnCharacterEncoderTests >> encodeString: string with: encoder [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testAllByteEncoderDomains [
-	| encoder characterDomain byteDomain encoded |
-	ZnByteEncoder knownEncodingIdentifiers do: [ :identifier |
-		encoder := ZnCharacterEncoder newForEncoding: identifier.
-		self assert: encoder identifier equals: identifier.
-		self assert: encoder isStrict.
-		self assert: encoder isLenient not.
-		self assert: (encoder encodeString: 'hello') equals: #[104 101 108 108 111] .
-		self assert: (encoder decodeBytes: #[104 101 108 108 111] ) equals: 'hello'.
-		characterDomain := encoder characterDomain.
-		byteDomain := encoder byteDomain.
-		characterDomain do: [ :each |
-			self assert: (encoder encodedByteCountFor: each) equals: 1.
-			encoded := ByteArray streamContents: [ :out | encoder nextPut: each toStream: out ].
-			self assert: encoded size equals: 1.
-			self assert: (byteDomain includes: encoded first) ].
-		byteDomain do: [ :each |
-			self assert: (characterDomain includes: (encoder nextFromStream: (ByteArray with: each) readStream)) ] ]
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testBeLenient [
-	| encoder unmapped |
-	encoder := ZnCharacterEncoder newForEncoding: 'iso-8859-1'.
-	unmapped := (128 to: 159) asByteArray.
-	self should: [ encoder encodeString: unmapped asString ] raise: ZnCharacterEncodingError.
-	self should: [ encoder decodeBytes: unmapped ] raise: ZnCharacterEncodingError.
-	encoder beLenient.
-	self assert: (encoder encodeString: unmapped asString) equals: unmapped.
-	self assert: (encoder decodeBytes: unmapped) equals: unmapped asString.
-]
-
-{ #category : 'testing' }
 ZnCharacterEncoderTests >> testByteDecoding [
 	| encoder bytes |
 	encoder := ZnUTF8Encoder new.
@@ -84,24 +51,6 @@ ZnCharacterEncoderTests >> testByteDecoding [
 	self assert: (bytes decodeWith: encoder) equals: (encoder decodeBytes: bytes).
 	self assert: (bytes decodeWith: #utf8) equals: (encoder decodeBytes: bytes).
 	self assert: bytes utf8Decoded equals: (encoder decodeBytes: bytes)
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testByteEncoderFromUrl [
-	| encoderFromUrl iso88592 bytes characters |
-	encoderFromUrl := ZnByteEncoder newFromUrl: 'http://files.pharo.org/extra/unicode/8859-2.TXT'.
-	iso88592 := ZnCharacterEncoder newForEncoding: #iso88592.
-	self assert: encoderFromUrl byteDomain equals: iso88592 byteDomain.
-	self assert: encoderFromUrl characterDomain equals: iso88592 characterDomain.
-	bytes := encoderFromUrl byteDomain.
-	self 
-		assert: (encoderFromUrl decodeBytes: bytes)
-		equals: (iso88592 decodeBytes: bytes).
-	characters := String withAll: encoderFromUrl characterDomain asArray.
-	self 
-		assert: (encoderFromUrl encodeString: characters)
-		equals: (iso88592 encodeString: characters).
-		
 ]
 
 { #category : 'testing' }
@@ -146,81 +95,6 @@ ZnCharacterEncoderTests >> testConvencienceMethods [
 	
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' ) do: [ :each |
 		self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testDefault [
-	| string bytes |
-	self assert: ZnCharacterEncoder default equals: ZnUTF8Encoder new.
-	string := 'Der Weg zur Hölle ist mit guten Vorsätzen gepflastert.'.
-	bytes := ZnUTF8Encoder new encodeString: string.
-	ZnDefaultCharacterEncoder 
-		value: ZnUTF8Encoder new
-		during: [ 
-			self 
-				assert: (ZnCharacterEncoder default decodeBytes: bytes) 
-				equals: string ].
-	ZnDefaultCharacterEncoder 
-		value: ZnUTF8Encoder new
-		during: [ 
-			self 
-				assert: ((ZnCharacterEncoder newForEncoding: 'unknown') decodeBytes: bytes) 
-				equals: string ]
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testDetectEncoding [
-	| bytes |
-	bytes := 'abc' asByteArray.
-	self assert: (ZnCharacterEncoder detectEncoding: bytes) equals: ZnCharacterEncoder ascii.
-	bytes := ZnCharacterEncoder iso88591 encodeString: 'Les élèves Français'.
-	self assert: (ZnCharacterEncoder detectEncoding: bytes) equals: ZnCharacterEncoder iso88591.
-	bytes := ZnCharacterEncoder utf8 encodeString: 'Les élèves Français'.
-	self assert: (ZnCharacterEncoder detectEncoding: bytes) equals: ZnCharacterEncoder utf8.
-
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
-	| all minimal asciiString |
-	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
-	minimal := #(utf8 latin1 null ascii iso88591) asSet.
-	"make sure at least a minimal set is present"
-	self assert: (all intersection: minimal) equals: minimal.
-	asciiString := String withAll: ($a to: $z) , ($A to: $Z) , ($0 to: $9).
-	"make sure that each identifier can be used to instanciate a decoder,
-	and that those decoders at least work on a ASCII string in both directions"
-	all do: [ :each |
-		| encoder bytes |
-		encoder := ZnCharacterEncoder newForEncoding: each.
-		bytes := encoder encodeString: asciiString.
-		self assert: (encoder decodeBytes: bytes) equals: asciiString ]
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testLatin1Encoder [
-	| encoder string bytes |
-	encoder := ZnCharacterEncoder newForEncoding: 'latin1'.
-	string := 'élève en Français'.
-	bytes := #(233 108 232 118 101 32 101 110 32 70 114 97 110 231 97 105 115) asByteArray.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testLatin2Encoder [
-	"Example characters taken from http://en.wikipedia.org/wiki/Latin2"
-	
-	| encoder inputBytes outputBytes inputString outputString |
-	encoder := ZnCharacterEncoder newForEncoding: 'latin2'.
-	inputString := String 
-		with: (16r0154 asCharacter) with: (16r0110 asCharacter) 
-		with: ( 16r0155 asCharacter) with: (16r0111 asCharacter).
-	inputBytes := #(192 208 224 240) asByteArray.
-	outputBytes := self encodeString: inputString with: encoder.
-	self assert: outputBytes = inputBytes.
-	outputString := self decodeBytes: inputBytes with: encoder.
-	self assert: outputString = inputString 
 ]
 
 { #category : 'testing' }

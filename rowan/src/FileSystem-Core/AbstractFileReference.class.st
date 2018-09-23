@@ -672,7 +672,9 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 { #category : 'streams' }
 AbstractFileReference >> readStreamEncoded: anEncoding [
 
-	^ self binaryReadStream
+	^ ZnCharacterReadStream
+		on: self binaryReadStream
+		encoding: anEncoding
 ]
 
 { #category : 'streams' }
@@ -810,7 +812,9 @@ AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
 { #category : 'streams' }
 AbstractFileReference >> writeStreamEncoded: anEncoding [
 
-	^ self binaryWriteStream
+	^ ZnCharacterWriteStream
+		on: self binaryWriteStream
+		encoding: anEncoding
 ]
 
 { #category : 'streams' }
