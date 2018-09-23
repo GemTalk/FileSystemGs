@@ -33,7 +33,6 @@
 	'Stdio' .
 	'DomainError' .
 	'ZnByteStringBecameWideString' .
-	'ZnUTF8Encoder' .
 	'ZnDefaultCharacterEncoder' .
 	'ZnByteEncoder' .
 	'ZnIncomplete' .
