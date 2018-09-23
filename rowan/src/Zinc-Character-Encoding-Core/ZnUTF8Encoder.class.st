@@ -50,3 +50,25 @@ ZnUTF8Encoder >> encodeString: string [
 ZnUTF8Encoder >> identifier [
 	^ #utf8
 ]
+
+{ #category : 'convenience' }
+ZnUTF8Encoder >> readInto: aCollection startingAt: offset count: requestedCount fromStream: stream [
+	"Read requestedCount characters into string starting at offset,
+	returning the number read, there could be less available when stream is atEnd"
+
+	"For the time being, we are expecting that the requestedCount is ALWAYS greater than the
+		size of stream ... we cannot encode/decode partial streams"
+
+	| decodedCollection |
+	offset > 1
+		ifTrue: [ self error: 'decode operation not supported for large collections' ].
+	
+	decodedCollection := self decodeBytes: stream collection.
+	aCollection 
+		replaceFrom: offset 
+		to: offset + (requestedCount min: decodedCollection size) - 1
+		with: decodedCollection
+		startingAt: 1.
+	stream setToEnd.
+	^ 	requestedCount
+]

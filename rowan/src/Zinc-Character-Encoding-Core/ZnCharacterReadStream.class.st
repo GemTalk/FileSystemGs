@@ -46,16 +46,8 @@ ZnCharacterReadStream >> nextLine [
 	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
 	
 	self atEnd ifTrue: [ ^ nil ].
-	^ self collectionSpecies streamContents: [ :out | | eol char |
-		eol := false.
-		[ eol ] whileFalse: [ 
-			char := self next.
-			(char isNil or: [ char = Character lf ])
-				ifTrue: [ eol := true ]
-				ifFalse: [ 
-					char = Character cr 
-						ifTrue: [ eol := true. self peekFor: Character lf ]
-						ifFalse: [ out nextPut: char ] ] ] ]
+	^ self collectionSpecies streamContents: [ :out |
+		out nextPutAll: (self encoder decodeBytes: stream nextLine) ]
 ]
 
 { #category : 'accessing' }
@@ -65,14 +57,11 @@ ZnCharacterReadStream >> readInto: collection startingAt: offset count: requeste
 	
 	^ peeked 
 		ifNil: [ | readCount |
-			[ readCount := self encoder 
+			readCount := self encoder 
 					readInto: collection 
 					startingAt: offset 
 					count: requestedCount 
-					fromStream: stream ]
-				on: ZnByteStringBecameWideString 
-				do: [ :byteStringBecameWideString | 
-					byteStringBecameWideString becomeForward; resume ].
+					fromStream: stream.
 			readCount ]
 		ifNotNil: [ 
 			collection at: offset put: peeked.
@@ -81,6 +70,7 @@ ZnCharacterReadStream >> readInto: collection startingAt: offset count: requeste
 				readInto: collection 
 				startingAt: offset + 1
 				count: requestedCount - 1) + 1 ]
+
 ]
 
 { #category : 'accessing' }

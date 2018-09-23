@@ -169,6 +169,7 @@ ZnBufferedReadStream >> next: requestedCount into: collection startingAt: offset
 
 { #category : 'private' }
 ZnBufferedReadStream >> nextBuffer [
+	stream atEnd ifTrue: [ ^ self ].
 	limit := stream readInto: buffer startingAt: 1 count: buffer size.
 	position := 1
 ]
