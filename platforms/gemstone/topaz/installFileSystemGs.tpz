@@ -24,16 +24,26 @@
 	'Smalltalk' .
 	'CodeImporter' .
 	'ZnMimeType' .
-	'ZnCharacterReadStream' .
 	'UIManager' .
 	'UUID' .
 	'OSPlatform' .
-	'ZnCharacterWriteStream' .
 	'WeakRegistry' .
 	'ZipArchive' .
 	'UUIDGenerator' .
 	'Stdio' .
-	'DomainError' } .
+	'DomainError' .
+	'ZnByteStringBecameWideString' .
+	'ZnUTF8Encoder' .
+	'ZnDefaultCharacterEncoder' .
+	'ZnByteEncoder' .
+	'ZnIncomplete' .
+	'ZnInvalidUTF8' .
+	'ZnNullEncoder' .
+	'ZnUTF16Encoder' .
+	'ZnCodePointReadStream' .
+	'ZnCodePointWriteStream' .
+	'WideString' .
+	'ZnUTF32Encoder' } .
 	
 	Transcript cr; show: 'Install Object subclasses'.
 	list do:[:e| 
