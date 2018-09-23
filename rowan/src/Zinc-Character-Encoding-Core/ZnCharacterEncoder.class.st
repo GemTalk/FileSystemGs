@@ -35,22 +35,22 @@ Additionally, I can encode Integer code points to a binary stream as well as rea
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnCharacterEncoder,
-	#superclass : #Object,
-	#category : #'Zinc-Character-Encoding-Core'
+	#name : 'ZnCharacterEncoder',
+	#superclass : 'Object',
+	#category : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder class >> ascii [
 	^ self newForEncoding: 'ASCII'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoder class >> canonicalEncodingIdentifier: string [
 	^ (string select: [ :each | each isAlphaNumeric ]) asLowercase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoder class >> default [
 	"Return the default ZnCharacterEncoder to be used 
 	when none is otherwise specified."
@@ -58,7 +58,7 @@ ZnCharacterEncoder class >> default [
 	^ ZnDefaultCharacterEncoder value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnCharacterEncoder class >> detectEncoding: bytes [
 	"Return one of my instances capable of decoding bytes.
 	This is done by successively trying known encodings in a specific order.
@@ -77,19 +77,19 @@ ZnCharacterEncoder class >> detectEncoding: bytes [
 	ZnCharacterEncodingError signal: 'No suitable encoder found'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoder class >> handlesEncoding: string [
 	"Return true when my instances handle the encoding described by string"
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder class >> iso88591 [
 	^ self newForEncoding: 'iso-8859-1'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoder class >> knownEncodingIdentifiers [
 	"Return a collection of all known encoding identifiers in the system"
 	
@@ -99,12 +99,12 @@ ZnCharacterEncoder class >> knownEncodingIdentifiers [
 			all nextPutAll: subClass knownEncodingIdentifiers ] ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder class >> latin1 [
 	^ self newForEncoding: 'latin1'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnCharacterEncoder class >> newForEncoding: string [
 	"Return a new character encoder object for an encoding described by string.
 	Search for a subclass that handles it and delegate (subclassResponsibility)."
@@ -116,34 +116,34 @@ ZnCharacterEncoder class >> newForEncoding: string [
 	^ concreteSubclass newForEncoding: string
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder class >> utf8 [
 	^ ZnUTF8Encoder default
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnCharacterEncoder >> = anObject [
 	^ self class == anObject class
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> asZnCharacterEncoder [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> backOnStream: stream [
 	"Move back one character on stream, assuming stream understands #back"
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialize-release' }
 ZnCharacterEncoder >> beLenient [
 	"Don't be strict, which is the default"
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> decodeAsCodePoints: bytes [
 	"Decode bytes and return the resulting code points"
 	
@@ -154,7 +154,7 @@ ZnCharacterEncoder >> decodeAsCodePoints: bytes [
 			stream nextPut: (self nextCodePointFromStream: byteStream) ] ] 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> decodeBytes: bytes [
 	"Decode bytes and return the resulting string"
 	
@@ -165,7 +165,7 @@ ZnCharacterEncoder >> decodeBytes: bytes [
 			stream nextPut: (self nextFromStream: byteStream) ] ] 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> encodeCodePoints: codePoints [
 	"Encode codePoints and return the resulting byte array"
 	
@@ -174,15 +174,7 @@ ZnCharacterEncoder >> encodeCodePoints: codePoints [
 			self nextPutCodePoint: each toStream: stream ] ]
 ]
 
-{ #category : #convenience }
-ZnCharacterEncoder >> encodeString: string [
-	"Encode string and return the resulting byte array"
-	
-	^ ByteArray streamContents: [ :stream |
-		self next: string size putAll: string startingAt: 1 toStream: stream ]
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> encodedByteCountFor: character [
 	"Return how many bytes are needed to encode character"
 	
@@ -191,14 +183,14 @@ ZnCharacterEncoder >> encodedByteCountFor: character [
 	^ self encodedByteCountForCodePoint: character asInteger
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> encodedByteCountForCodePoint: codePoint [
 	"Return how many bytes are needed to encode integer code point"
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> encodedByteCountForCodePoints: codePoints [
 	"Return the exact number of bytes it would take to encode codePoints as a byte array"
 
@@ -208,7 +200,7 @@ ZnCharacterEncoder >> encodedByteCountForCodePoints: codePoints [
 			sum + (self encodedByteCountForCodePoint: each) ]
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> encodedByteCountForString: string [
 	"Return the exact number of bytes it would take to encode string as a byte array"
 
@@ -218,32 +210,40 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 			sum + (self encodedByteCountFor: each) ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'convenience' }
+ZnCharacterEncoder >> encodeString: string [
+	"Encode string and return the resulting byte array"
+	
+	^ ByteArray streamContents: [ :stream |
+		self next: string size putAll: string startingAt: 1 toStream: stream ]
+]
+
+{ #category : 'error handling' }
 ZnCharacterEncoder >> error: message [
 	^ ZnCharacterEncodingError signal: message
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnCharacterEncoder >> errorIncomplete [
 	^ ZnIncomplete signal: 'Incomplete input for character decoding'
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 ZnCharacterEncoder >> errorOutsideRange [
 	^ self error: 'Character Unicode code point outside encoder range'
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ZnCharacterEncoder >> hash [
 	^ self class hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoder >> identifier [
 	^ self subclassResponsibility
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> next: count putAll: string startingAt: offset toStream: stream [
 	"Write count characters from string starting at offset to stream."
 	
@@ -251,14 +251,14 @@ ZnCharacterEncoder >> next: count putAll: string startingAt: offset toStream: st
 		self nextPut: (string at: index) toStream: stream ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> nextFromStream: stream [
 	"Read and return the next character from stream"
 	
@@ -267,7 +267,7 @@ ZnCharacterEncoder >> nextFromStream: stream [
 	^ Character value: (self nextCodePointFromStream: stream)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> nextPut: character toStream: stream [
 	"Write the encoding for character to stream"
 	
@@ -276,14 +276,14 @@ ZnCharacterEncoder >> nextPut: character toStream: stream [
 	self nextPutCodePoint: character asInteger toStream: stream  
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnCharacterEncoder >> nextPutCodePoint: codePoint toStream: stream [
 	"Write the encoding for Integer code point to stream"
 	
 	self subclassResponsibility 
 ]
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 ZnCharacterEncoder >> readInto: string startingAt: offset count: requestedCount fromStream: stream [
 	"Read requestedCount characters into string starting at offset,
 	returning the number read, there could be less available when stream is atEnd"

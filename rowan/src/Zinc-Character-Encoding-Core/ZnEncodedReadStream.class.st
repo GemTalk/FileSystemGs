@@ -4,38 +4,38 @@ I am ZnEncodedReadStream, an abstract support class for read streams on a binary
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnEncodedReadStream,
-	#superclass : #ZnEncodedStream,
+	#name : 'ZnEncodedReadStream',
+	#superclass : 'ZnEncodedStream',
 	#instVars : [
 		'peeked'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEncodedReadStream >> atEnd [
 	^ peeked isNil and: [ stream atEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 	
 	^ self upToEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEncodedReadStream >> isBinary [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEncodedReadStream >> isReadOnly [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> next [
 	^ peeked
 		ifNil: [ 
@@ -46,7 +46,7 @@ ZnEncodedReadStream >> next [
 			character ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> next: requestedCount [ 
 	"Read requestedCount elements into new collection and return it,
 	 it could be that less elements were available"
@@ -56,7 +56,7 @@ ZnEncodedReadStream >> next: requestedCount [
 		into: (self collectionSpecies new: requestedCount)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> next: requestedCount into: collection [
 	"Read requestedCount elements into collection,
 	returning a copy if less elements are available"
@@ -67,7 +67,7 @@ ZnEncodedReadStream >> next: requestedCount into: collection [
 		startingAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> next: requestedCount into: collection startingAt: offset [
 	"Read requestedCount elements into collection starting at offset,
 	returning a copy if less elements are available"
@@ -82,12 +82,12 @@ ZnEncodedReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEncodedReadStream >> nextElement [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> nextInto: collection [
 	"Read the next elements of the receiver into collection,
 	returning a copy if less elements are available"
@@ -97,14 +97,14 @@ ZnEncodedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> peek [
 	^ peeked
 		ifNil: [
 			stream atEnd ifFalse: [ peeked := self nextElement ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> peekFor: object [
 	^ self peek = object
 		ifTrue: [ 
@@ -113,19 +113,19 @@ ZnEncodedReadStream >> peekFor: object [
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> position [
 
 	^ super position - (peeked ifNil: [ 0 ] ifNotNil: [ 1 ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> position: anInteger [
 	super position: anInteger.
 	peeked := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read, there could be less elements available.
@@ -137,12 +137,12 @@ ZnEncodedReadStream >> readInto: collection startingAt: offset count: requestedC
 	^ requestedCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> skip: count [
 	count timesRepeat: [ self next ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> upTo: anObject [ 	
 	^ self collectionSpecies 
 		streamContents: [ :out | | element |
@@ -150,7 +150,7 @@ ZnEncodedReadStream >> upTo: anObject [
 				out nextPut: element ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEncodedReadStream >> upToEnd [
 	^ self collectionSpecies
 		streamContents: [ :collectionStream | 

@@ -1,20 +1,20 @@
 Class {
-	#name : #ZnCharacterEncoderTests,
-	#superclass : #TestCase,
-	#category : #'Zinc-Character-Encoding-Tests'
+	#name : 'ZnCharacterEncoderTests',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Character-Encoding-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoderTests class >> asciiCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '    '
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoderTests class >> latin1CharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '       ', 'éèçüäßñ'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
 	"self stringOfSize: 1024 fromSource: self unicodeCharacterSource"
 	
@@ -22,12 +22,12 @@ ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
 		size timesRepeat: [ out nextPut: source atRandom ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnCharacterEncoderTests class >> unicodeCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '         ', 'éèçüäßñα', '€∏'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
 	| input |
 	input := bytes readStream.
@@ -36,14 +36,14 @@ ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
 			stream nextPut: (encoder nextFromStream: input) ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnCharacterEncoderTests >> encodeString: string with: encoder [
 	^ ByteArray streamContents: [ :stream |
 		string do: [ :each |
 			encoder nextPut: each toStream: stream ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testAllByteEncoderDomains [
 	| encoder characterDomain byteDomain encoded |
 	ZnByteEncoder knownEncodingIdentifiers do: [ :identifier |
@@ -64,7 +64,7 @@ ZnCharacterEncoderTests >> testAllByteEncoderDomains [
 			self assert: (characterDomain includes: (encoder nextFromStream: (ByteArray with: each) readStream)) ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testBeLenient [
 	| encoder unmapped |
 	encoder := ZnCharacterEncoder newForEncoding: 'iso-8859-1'.
@@ -76,7 +76,7 @@ ZnCharacterEncoderTests >> testBeLenient [
 	self assert: (encoder decodeBytes: unmapped) equals: unmapped asString.
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testByteDecoding [
 	| encoder bytes |
 	encoder := ZnUTF8Encoder new.
@@ -86,7 +86,7 @@ ZnCharacterEncoderTests >> testByteDecoding [
 	self assert: bytes utf8Decoded equals: (encoder decodeBytes: bytes)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testByteEncoderFromUrl [
 	| encoderFromUrl iso88592 bytes characters |
 	encoderFromUrl := ZnByteEncoder newFromUrl: 'http://files.pharo.org/extra/unicode/8859-2.TXT'.
@@ -104,7 +104,7 @@ ZnCharacterEncoderTests >> testByteEncoderFromUrl [
 		
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
 	| encoder input output |
 	input := 'Düsseldorf Königsallee' collect: #codePoint as: Array.
@@ -119,7 +119,7 @@ ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
 		self assert: (encoder decodeAsCodePoints: output) equals: input ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testCodePointStreams [
 	| string codePoints bytes result |
 	string := 'Düsseldorf Königsallee'.
@@ -136,7 +136,7 @@ ZnCharacterEncoderTests >> testCodePointStreams [
 		self assert: (codePoints collect: #asCharacter as: String) equals: string ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testConvencienceMethods [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
@@ -148,7 +148,7 @@ ZnCharacterEncoderTests >> testConvencienceMethods [
 		self assert: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testDefault [
 	| string bytes |
 	self assert: ZnCharacterEncoder default equals: ZnUTF8Encoder new.
@@ -168,7 +168,7 @@ ZnCharacterEncoderTests >> testDefault [
 				equals: string ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testDetectEncoding [
 	| bytes |
 	bytes := 'abc' asByteArray.
@@ -180,7 +180,7 @@ ZnCharacterEncoderTests >> testDetectEncoding [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
 	| all minimal asciiString |
 	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
@@ -197,7 +197,7 @@ ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
 		self assert: (encoder decodeBytes: bytes) equals: asciiString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testLatin1Encoder [
 	| encoder string bytes |
 	encoder := ZnCharacterEncoder newForEncoding: 'latin1'.
@@ -207,7 +207,7 @@ ZnCharacterEncoderTests >> testLatin1Encoder [
 	self assert: (encoder decodeBytes: bytes) equals: string
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testLatin2Encoder [
 	"Example characters taken from http://en.wikipedia.org/wiki/Latin2"
 	
@@ -223,7 +223,7 @@ ZnCharacterEncoderTests >> testLatin2Encoder [
 	self assert: outputString = inputString 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -241,17 +241,7 @@ ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
 				self assert: (encoder decodeBytes: bytes) equals: each ] ]
 ]
 
-{ #category : #testing }
-ZnCharacterEncoderTests >> testNullEncoder [
-	| encoder bytes string |
-	encoder := ZnNullEncoder new.
-	bytes := self encodeString: 'abc' with: encoder.
-	self assert: bytes = #(97 98 99) asByteArray.
-	string := self decodeBytes: #(65 66 67) asByteArray with: encoder.
-	self assert: string = 'ABC' 
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -271,7 +261,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 				self assert: read equals: string size ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
@@ -284,7 +274,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 	self assert: read equals: 5
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWide [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -305,7 +295,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWide [
 			self assert: read equals: each size ] 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
@@ -327,7 +317,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 	self assert: read equals: 8
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testStringEncoding [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
@@ -338,150 +328,7 @@ ZnCharacterEncoderTests >> testStringEncoding [
 
 ]
 
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF16Back [
-	| encoder stream |
-	encoder := ZnUTF16Encoder new.
-	stream := (encoder encodeString: 'Les élèves Françaises') readStream.
-	self should: [ encoder backOnStream: stream ] raise: Error.
-	4 timesRepeat: [ encoder nextFromStream: stream ].
-	self assert: (encoder nextFromStream: stream) equals: $é.
-	encoder backOnStream: stream.
-	self assert: (encoder nextFromStream: stream) equals: $é.
-	10 timesRepeat: [ encoder nextFromStream: stream ].
-	13 timesRepeat: [ encoder backOnStream: stream ].
-	self assert: (encoder nextFromStream: stream) equals: $s
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderBigEndian [
-	| string bytes encoder |
-	string := 'élève en Français'.
-	bytes := ByteArray readHexFrom:
-		'00E9006C00E80076006500200065006E0020004600720061006E00E7006100690073'.
-	encoder := ZnUTF16Encoder new.
-	self assert: encoder isBigEndian.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderByteOrderMark [
-	| string bytes encoder encoded |
-	string := 'foo'.
-	bytes := ByteArray readHexFrom: 'FEFF0066006f006f'.
-	encoder := ZnUTF16Encoder new.
-	self assert: encoder isBigEndian.
-	encoded := ByteArray streamContents: [ :out |
-		encoder nextPutByteOrderMarkToStream: out.
-		encoder next: string size putAll: string startingAt: 1 toStream: out ].
-	self assert: encoded equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string.
-	encoder beLittleEndian.
-	self assert: encoder isLittleEndian.
-	self assert: (encoder decodeBytes: bytes) equals: string.
-	self assert: encoder isBigEndian.
-	1 to: bytes size by: 2 do: [ :each | bytes swap: each with: each + 1 ].
-	self assert: (encoder decodeBytes: bytes) equals: string.
-	self assert: encoder isLittleEndian
-
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderLittleEndian [
-	| string bytes encoder |
-	string := 'élève en Français'.
-	bytes := ByteArray readHexFrom:
-		'E9006C00E80076006500200065006E0020004600720061006E00E700610069007300'.
-	encoder := ZnUTF16Encoder new.
-	encoder beLittleEndian.
-	self assert: encoder isLittleEndian.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF16EncoderWide1 [
-	| string bytes encoder |
-	string := (Character codePoint: 16r1d11e) asString. "MUSICAL SYMBOL G CLEF"
-	bytes := ByteArray readHexFrom: 'D834DD1E'.
-	encoder := ZnUTF16Encoder new.
-	self assert: encoder isBigEndian.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD100 [
-	| string bytes encoder |
-	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
-	bytes := ByteArray readHexFrom: '4D000000300400008C4E000002030100'.
-	encoder := #utf32 asZnCharacterEncoder.
-	encoder beLittleEndian.
-	self assert: encoder isLittleEndian.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD101 [
-	| string encoder bytesBigEndianWithBom bytesLittleEndianWithBom |
-	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
-	encoder := #utf32 asZnCharacterEncoder.
-	encoder beLittleEndian.
-	"start with the wrong endianness (LE)"
-	bytesBigEndianWithBom := ByteArray readHexFrom: '0000FEFF0000004D0000043000004E8C00010302'.
-	"the correct endianness (BE) should be detected"
-	self assert: (encoder decodeBytes: bytesBigEndianWithBom) equals: string.
-	self assert: encoder isBigEndian.
-	"start with the wrong endianness (BE)"
-	bytesLittleEndianWithBom := ByteArray readHexFrom: 'FFFE00004D000000300400008C4E000002030100'.
-	"the correct endianness (LE) should be detected"
-	self assert: (encoder decodeBytes: bytesLittleEndianWithBom) equals: string.
-	self assert: encoder isLittleEndian.
-
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderExampleFromD99 [
-	| string bytes encoder |
-	string := #(16r0000004D 16r00000430 16r00004E8C 16r00010302) collect: #asCharacter as: String.
-	bytes := ByteArray readHexFrom: '0000004D0000043000004E8C00010302'.
-	encoder := #utf32 asZnCharacterEncoder.
-	encoder beBigEndian.
-	self assert: encoder isBigEndian.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderSimple [
-	| string bytes encoder |
-	string := 'élève en Français'.
-	bytes := ByteArray readHexFrom: '000000e90000006c000000e8000000760000006500000020000000650000006e000000200000004600000072000000610000006e000000e7000000610000006900000073'.
-	encoder := #utf32 asZnCharacterEncoder.
-	self assert: encoder isBigEndian.
-	self assert: (encoder encodedByteCountForString: string) equals: 17 * 4.
-	self assert: (encoder encodeString: string) equals: bytes.
-	self assert: (encoder decodeBytes: bytes) equals: string
-]
-
-{ #category : #testing }
-ZnCharacterEncoderTests >> testUTF32EncoderWide [
-	| encoder |
-	encoder := ZnUTF32Encoder new.
-	{ 
-		'abc'. 
-		'élève en Français'. 
-		'Pra-ská' copy at: 4 put: (Character value: 382); yourself. 
-		(Character codePoint: 16r1d11e) asString. "MUSICAL SYMBOL G CLEF"
-		'' } do: [ :each | 
-			| bytes |
-			bytes := self encodeString: each with: encoder. 
-			self assert: (encoder decodeBytesIntoWideString: bytes) equals: each ]
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8Back [
 	| encoder stream |
 	encoder := ZnUTF8Encoder new.
@@ -496,7 +343,7 @@ ZnCharacterEncoderTests >> testUTF8Back [
 	self assert: (encoder nextFromStream: stream) equals: $s
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8Boundaries [
 	"Test encoding and decoding of the characters at the boundaries between 1, 2, 3, and 4 multi-byte sequences.
 	Values taken from http://en.wikipedia.org/wiki/Utf8#Description with the new RFC 3629 limit"
@@ -515,7 +362,7 @@ ZnCharacterEncoderTests >> testUTF8Boundaries [
 			self assert: encoded size equals: byteCount ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8ByteOrderMark [
 	"The Unicode Byte Order Mark (BOM) should be skipped."
 	
@@ -536,7 +383,7 @@ ZnCharacterEncoderTests >> testUTF8ByteOrderMark [
 	self should: [ encoder decodeBytes: bom ] raise: ZnIncomplete
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8Encoder [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 	
@@ -550,7 +397,7 @@ ZnCharacterEncoderTests >> testUTF8Encoder [
 	self assert: outputString = inputString 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8EncoderAuto [
 	| encoder inputString bytes outputString |
 	encoder := ZnUTF8Encoder new.
@@ -560,7 +407,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderAuto [
 	self assert: inputString = outputString 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8EncoderByteCount [	
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -570,7 +417,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderByteCount [
 	self assert: (encoder encodedByteCountFor: (16r024B62 asCharacter)) = 4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8EncoderIncomplete [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 	
@@ -583,7 +430,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderIncomplete [
 				raise: ZnIncomplete ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8EncoderRandom [
 	#(unicodeCharacterSource latin1CharacterSource asciiCharacterSource) do: [ :source |
 		| string bytes result |
@@ -593,7 +440,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderRandom [
 		self assert: result equals: string ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8EncoderWide [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
@@ -603,7 +450,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderWide [
 			self assert: (encoder decodeBytesIntoWideString: bytes) equals: each ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8Overlong [
 	"Overlong encoding, aka Non shortest form characters should be rejected.
 	See http://en.wikipedia.org/wiki/UTF-8#Overlong_encodings"
@@ -618,7 +465,7 @@ ZnCharacterEncoderTests >> testUTF8Overlong [
 	
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8ReadFaultyInput [
 	"Although not recommended, it is possible to read faulty UTF-8 encoded input by resuming ZnInvalidUTF8"
 	
@@ -650,7 +497,7 @@ ZnCharacterEncoderTests >> testUTF8ReadFaultyInput [
 		equals: 'foo?'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8SurrogateCodePointsShouldFail [
 	| encoder surrogateCodePoint |
 	encoder := #utf8 asZnCharacterEncoder.

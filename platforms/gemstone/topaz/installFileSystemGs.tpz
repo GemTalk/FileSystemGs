@@ -38,12 +38,9 @@
 	'ZnByteEncoder' .
 	'ZnIncomplete' .
 	'ZnInvalidUTF8' .
-	'ZnNullEncoder' .
-	'ZnUTF16Encoder' .
 	'ZnCodePointReadStream' .
 	'ZnCodePointWriteStream' .
-	'WideString' .
-	'ZnUTF32Encoder' } .
+	'WideString' } .
 	
 	Transcript cr; show: 'Install Object subclasses'.
 	list do:[:e| 
