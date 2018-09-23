@@ -29,7 +29,6 @@
 	'UUID' .
 	'OSPlatform' .
 	'ZnCharacterWriteStream' .
-	'Message' .
 	'WeakRegistry' .
 	'ZipArchive' .
 	'UUIDGenerator' .

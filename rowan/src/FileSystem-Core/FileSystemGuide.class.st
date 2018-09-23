@@ -38,7 +38,6 @@ FileSystemGuide class >> show: aReference to: aVisitor selecting: aBlock [
 { #category : 'initialization' }
 FileSystemGuide >> initialize [
 
-	super initialize.
 	work := OrderedCollection new
 ]
 
