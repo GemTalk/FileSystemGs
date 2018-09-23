@@ -35,14 +35,15 @@ ZnUTF8Encoder class >> newForEncoding: string [
 { #category : 'convenience' }
 ZnUTF8Encoder >> decodeBytes: bytes [
 	"Decode bytes and return the resulting string"
-	self error: 'not yet implemented'
+
+	^ bytes decodeFromUTF8
 ]
 
 { #category : 'convenience' }
 ZnUTF8Encoder >> encodeString: string [
 	"Encode string and return the resulting Utf8 instance"
 	
-	self error: 'not yet implemented'
+	^ string encodeAsUTF8
 ]
 
 { #category : 'accessing' }

@@ -19,9 +19,10 @@ ZnEncodedReadStream >> atEnd [
 
 { #category : 'accessing' }
 ZnEncodedReadStream >> contents [
-	"This is technically not correct, but it is better than nothing"
 	
-	^ self upToEnd
+	^ self collectionSpecies
+		streamContents: [ :collectionStream | 
+			collectionStream nextPutAll: (self encoder decodeBytes: stream  contents) ]
 ]
 
 { #category : 'testing' }
