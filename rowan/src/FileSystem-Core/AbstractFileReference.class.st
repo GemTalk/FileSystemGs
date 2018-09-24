@@ -535,6 +535,10 @@ AbstractFileReference >> indicator [
 		ifFalse: ['?']
 ]
 
+{ #category : 'initialization' }
+AbstractFileReference >> initialize [
+]
+
 { #category : 'testing' }
 AbstractFileReference >> isAbsolute [ 
 	self subclassResponsibility 
