@@ -63,12 +63,6 @@ DiskStore class >> delimiter [
 	^ self current delimiter
 ]
 
-{ #category : 'class initialization' }
-DiskStore class >> initialize [
-	SessionManager default
-		registerSystemClassNamed: self name
-]
-
 { #category : 'current' }
 DiskStore class >> isActiveClass [
 	^ self delimiter = File delimiter

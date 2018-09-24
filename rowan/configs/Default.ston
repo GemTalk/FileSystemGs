@@ -14,7 +14,6 @@ RwProjectLoadConfiguration {
 					'FileSystem-Memory',
 					'FileSystem-Path',
 					'FileSystem-Zip',
-					'SessionManager-GemStone',
 					'Zinc-Character-Encoding-Core',
 					'Files',
 					'Kernel-Methods'

@@ -23,13 +23,6 @@ MemoryStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : 'class initialization' }
-MemoryStore class >> initialize [
-	"self initialize"
-
-	SessionManager default registerSystemClassNamed: self name
-]
-
 { #category : 'public' }
 MemoryStore class >> isCaseSensitive [
 	^ true

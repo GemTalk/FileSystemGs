@@ -38,9 +38,6 @@ Class {
 		'origin',
 		'path'
 	],
-	#classVars : [
-		'Resolver'
-	],
 	#category : 'FileSystem-Core-Public'
 }
 
@@ -52,7 +49,7 @@ FileLocator class >> A [
 
 { #category : 'adding' }
 FileLocator class >> addResolver: aResolver [
-	Resolver addResolver: aResolver
+	self resolver addResolver: aResolver
 ]
 
 { #category : 'windows-origins' }
@@ -117,7 +114,7 @@ FileLocator class >> F [
 
 { #category : 'flushing' }
 FileLocator class >> flushCaches [
-	Resolver flushCaches
+	self resolver flushCaches
 ]
 
 { #category : 'windows-origins' }
@@ -151,16 +148,6 @@ FileLocator class >> image [
 { #category : 'origins' }
 FileLocator class >> imageDirectory [
 	^ self origin: #imageDirectory 
-]
-
-{ #category : 'class initialization' }
-FileLocator class >> initialize [
-	"FileLocator is needed to initialize SystemSettingsPersistence (call to FileLocator>>#preferences),
-	and could be useful for other classes.
-	Let initialize FileLocator before other standard system classes."
-	SessionManager default 
-		registerSystemClassNamed: self name atPriority: 90.
-	self startUp: true
 ]
 
 { #category : 'windows-origins' }
@@ -238,6 +225,16 @@ FileLocator class >> R [
 
 ]
 
+{ #category : 'accessing' }
+FileLocator class >> resolver [
+
+	^ SessionTemps current at: #FileLocator_Resolver ifAbsentPut: [
+		InteractiveResolver new
+			addResolver: SystemResolver new;
+			addResolver: PlatformResolver forCurrentPlatform;
+			yourself ]
+]
+
 { #category : 'origins' }
 FileLocator class >> root [
 	^ FileSystem disk root
@@ -249,20 +246,11 @@ FileLocator class >> S [
 
 ]
 
-{ #category : 'system startup' }
-FileLocator class >> startUp: resuming [
-	resuming
-		ifFalse: [ ^ self ].
-	Resolver := InteractiveResolver new.
-	Resolver addResolver: SystemResolver new.
-	Resolver addResolver: PlatformResolver forCurrentPlatform
-]
-
 { #category : 'accessing' }
 FileLocator class >> supportedOrigins [
 	| origins current |
 	origins := IdentitySet new.
-	current := Resolver.
+	current := self resolver.
 	[current notNil] whileTrue:
 		[origins addAll: current supportedOrigins.
 		current := current next].
@@ -484,13 +472,13 @@ FileLocator >> renameTo: newBasename [
 
 { #category : 'navigating' }
 FileLocator >> resolve [
-	^ (Resolver resolve: origin) resolve: path
+	^ (self class resolver resolve: origin) resolve: path
 ]
 
 { #category : 'navigating' }
 FileLocator >> resolveString: aString [
 	| filesystem thePath |
-	filesystem := (Resolver resolve: origin) fileSystem.
+	filesystem := (self class resolver resolve: origin) fileSystem.
 	thePath := filesystem pathFromString: aString.
 	^ self withPath: (path resolvePath: thePath)
 ]

@@ -23,14 +23,6 @@ Class {
 	#category : 'FileSystem-Core-Public'
 }
 
-{ #category : 'initializing' }
-FileSystem class >> startUp: aBoolean [
-	"This is only here to deal with migration from older versions of
-	FileSystem that wanted to receive startup notifcations."
-	
-	SessionManager default unregisterClassNamed: self name
-]
-
 { #category : 'instance creation' }
 FileSystem class >> store: aStore [
 	^ self basicNew
