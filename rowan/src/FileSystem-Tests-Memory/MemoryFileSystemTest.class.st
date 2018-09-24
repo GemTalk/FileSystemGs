@@ -61,7 +61,7 @@ MemoryFileSystemTest >> testModifiedTimeWhenFileModifiedWithBinaryWriteStream [
 	self
 		assert: data asByteArray
 		equals: (fileReference binaryReadStreamDo: [ :aStream | aStream upToEnd ]).
-	self assert: data equals: (fileReference readStreamDo: [ :aStream | aStream upToEnd ])
+	self assert: data equals: (fileReference readStreamDo: [ :aStream | aStream contents ])
 ]
 
 { #category : 'tests' }

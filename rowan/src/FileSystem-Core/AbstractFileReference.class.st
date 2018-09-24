@@ -214,7 +214,7 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 
 { #category : 'enumerating' }
 AbstractFileReference >> childNames [
-	^ self children collect: #basename
+	^ self children collect: [:each | each basename ]
 ]
 
 { #category : 'enumerating' }
@@ -688,7 +688,7 @@ AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 { #category : 'streams' }
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
 	^ self isFile
-		ifTrue: [ self readStreamPortable ]
+		ifTrue: [ self readStream ]
 		ifFalse: absentBlock
 
 ]
