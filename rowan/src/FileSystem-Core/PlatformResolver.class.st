@@ -10,7 +10,7 @@ Class {
 { #category : 'instance creation' }
 PlatformResolver class >> forCurrentPlatform [
 	| platformName |
-	platformName :=  Smalltalk os platformName.
+	platformName :=  System gemVersionAt: 'osName' .
 	^ (self allSubclasses detect: [:ea | ea platformName = platformName]) new
 ]
 

@@ -9,7 +9,7 @@ Class {
 
 { #category : 'accessing' }
 UnixResolver class >> platformName [
-	^  'unix'
+	^  'Linux'
 ]
 
 { #category : 'origins' }

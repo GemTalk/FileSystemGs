@@ -14,6 +14,14 @@ Class {
 	#category : 'FileSystem-Core-Base-Resolver'
 }
 
+{ #category : 'instance creation' }
+FileSystemResolver class >> new [
+
+	^ self basicNew
+		initialize;
+		yourself
+]
+
 { #category : 'accessing' }
 FileSystemResolver >> addResolver: aResolver [
 	next
@@ -34,6 +42,10 @@ FileSystemResolver >> flushCaches [
 
 { #category : 'accessing' }
 FileSystemResolver >> flushLocalCache [
+]
+
+{ #category : 'initialization' }
+FileSystemResolver >> initialize [
 ]
 
 { #category : 'accessing' }

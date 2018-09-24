@@ -9,7 +9,7 @@ Class {
 
 { #category : 'current' }
 MacStore class >> isActiveClass [
-	^ Smalltalk os isMacOS
+	^ ((System gemVersionAt: 'osName') = 'OSX') and: [ super isActiveClass ]
 ]
 
 { #category : 'public' }
