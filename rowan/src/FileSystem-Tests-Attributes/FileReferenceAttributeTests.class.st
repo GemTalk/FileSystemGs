@@ -25,12 +25,11 @@ FileReferenceAttributeTests >> tempFileResource [
 { #category : 'tests' }
 FileReferenceAttributeTests >> testCreationTime [
 
-	| resource creationTime |
+	| resource creationTime x |
 	resource := self tempFileResource.
 	creationTime := resource file creationTime.
-	self assert: resource beforeCreationTime <= creationTime.
-	self assert: resource afterCreationTime >= creationTime.
-
+	self assert: (x := resource beforeCreationTime) <= creationTime.
+	self assert: (x := resource afterCreationTime) >= creationTime.
 ]
 
 { #category : 'tests' }

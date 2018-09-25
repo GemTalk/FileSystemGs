@@ -179,19 +179,12 @@ self error: 'not yet implmented'
 ]
 
 { #category : 'primitives-file' }
-File class >> flush: id [
+File class >> flush: aGsFile [
 	"On Unix, the FilePlugin uses stdio FILE* structs which maintain their
 	own internal buffer to minimize write() syscalls. This flushes that buffer.
 	On Windows this and primSync: do the same thing."
 
-"
-	<primitive: 'primitiveFileFlush' module: 'FilePlugin'>
-	"
-self error: 'not yet implmented'
-
-	"We can't ignore fflush() failing, because it can fail for any of the
-	reasons write() can."
-	self primitiveFailed
+	aGsFile flush
 ]
 
 { #category : 'primitives-path' }
@@ -219,8 +212,8 @@ File class >> lookupDirectory: fullPath filename: fileName [
 	"Look up <fileName> (a simple file name) in the directory identified by <fullPath> and return an array containing:
 
 	<fileName> 			
-	<creationTime> 			(in seconds since the start of the Smalltalk time epoch)
-	<modificationTime> 	(in seconds since the start of the Smalltalk time epoch)
+	<creationTime> 			(in seconds since the start of the Linux time epoch)
+	<modificationTime> 	(in seconds since the start of the Linux time epoch)
 	<dirFlag> 				DirFlag is true if the entry is a directory
 	<fileSize> 				FileSize the file size in bytes or zero for directories
 	<posixPermissions> 	Numeric Notation 
@@ -474,7 +467,7 @@ File >> exists [
 
 	| handle |
 	"We open it for read. If the returned handle is nil, the file could not be opened"
-	handle := self basicOpenForWrite: false.
+	handle := self basicOpenForWrite: #read.
 	handle ifNil: [^ false].
 	self class close: handle.
 	^ true

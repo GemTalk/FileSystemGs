@@ -40,19 +40,37 @@ DiskFileAttributesTestsResources >> file [
 { #category : 'running' }
 DiskFileAttributesTestsResources >> setUp [
 
-	| ws |
+	| ws bufferedStream days hours minutes seconds |
 
 	file := FileLocator temp / ('FileAttributesTests-', FastUUIDGenerator next asString, '.txt').
-	beforeCreationTime := DateAndTime now beRounded.
+	beforeCreationTime := DateAndTime secondsLocal: DateAndTime secondsSince2001 truncated offset: (Duration seconds: 0).
+	beforeCreationTime offset: (Duration seconds: (beforeCreationTime currentTimeZone transitionAtUTC: beforeCreationTime) offsetFromUTC).
 	ws := file writeStream.
+	bufferedStream := ZnBufferedWriteStream on: ws.
 	[
-		ws nextPutAll: 'Created by FileAttributesTestsResources>>setUp '.
-		beforeCreationTime printOn: ws.
-	] ensure: [ ws close ].
+		bufferedStream nextPutAll: 'Created by FileAttributesTestsResources>>setUp '.
+		beforeCreationTime printOn: bufferedStream.
+	] ensure: [ bufferedStream close ].
 	afterCreationTime := DateAndTime now beRounded.
 	"Round up to the next second"
+	days := afterCreationTime dayOfYear.
+	hours := afterCreationTime hour.
+	minutes := afterCreationTime minute.
+	seconds := afterCreationTime second + 1.
+	seconds >= 60
+		ifTrue: [ 
+			minutes := minutes + 1.
+			seconds := seconds - 60.
+			minutes >= 60
+				ifTrue: [
+					hours := hours + 1.
+					minutes := minutes - 60.
+					hours >=  24
+						ifTrue: [ 
+							days := days + 1.
+							hours := hours - 24 ] ].].
 	afterCreationTime := DateAndTime
-		year: afterCreationTime year day: afterCreationTime dayOfYear hour: afterCreationTime hour minute: afterCreationTime minute second: afterCreationTime second + 1
+		year: afterCreationTime year day: days hour:  hours minute: minutes second: seconds
 ]
 
 { #category : 'running' }

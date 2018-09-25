@@ -106,7 +106,10 @@ DiskStore >> basenameFromEntry: entry [
 { #category : 'private' }
 DiskStore >> basicCreationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
-	^  (DateAndTime fromSeconds: (anEntry at: 2) offset: 0) translateTo: DateAndTime localOffset
+	| dt |
+	dt := DateAndTime posixSeconds:  (anEntry at: 2)  offset: (Duration seconds: 0).
+	dt offset: (Duration seconds: (dt currentTimeZone transitionAtUTC: dt) offsetFromUTC).
+	^ dt
 ]
 
 { #category : 'private' }
