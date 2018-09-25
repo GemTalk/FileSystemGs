@@ -25,11 +25,9 @@
 	'CodeImporter' .
 	'ZnMimeType' .
 	'UIManager' .
-	'UUID' .
 	'OSPlatform' .
 	'WeakRegistry' .
 	'ZipArchive' .
-	'UUIDGenerator' .
 	'Stdio' .
 	'DomainError' .
 	'ZnByteStringBecameWideString' .
@@ -51,7 +49,7 @@
 
 	run
 	| skipInitializationClassNames |
-	skipInitializationClassNames := { 'FileLocator' . 'DiskStore' }.
+	skipInitializationClassNames := { }.
 	[
 		Rowan projectTools load
     	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston' ]

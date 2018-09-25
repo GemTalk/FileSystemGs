@@ -16,7 +16,8 @@ RwProjectLoadConfiguration {
 					'FileSystem-Zip',
 					'Zinc-Character-Encoding-Core',
 					'Files',
-					'Kernel-Methods'
+					'Kernel-Methods',
+					'Network-UUID'
 				]
 			},
 			'tests' : {
@@ -26,7 +27,8 @@ RwProjectLoadConfiguration {
 					'FileSystem-Tests-Disk',
 					'FileSystem-Tests-Memory',
 					'Zinc-Character-Encoding-Tests',
-					'Files-Tests'
+					'Files-Tests',
+					'Network-UUID-Tests'
 				]
 			}
 		}
