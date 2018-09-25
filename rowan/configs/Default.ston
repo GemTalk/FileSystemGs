@@ -28,7 +28,8 @@ RwProjectLoadConfiguration {
 					'FileSystem-Tests-Memory',
 					'Zinc-Character-Encoding-Tests',
 					'Files-Tests',
-					'Network-UUID-Tests'
+					'Network-UUID-Tests',
+					'FileSystem-Tests-GemStone'
 				]
 			}
 		}

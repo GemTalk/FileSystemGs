@@ -36,6 +36,17 @@ FastUUIDGenerator class >> initialize [
 
 ]
 
+{ #category : 'accessing' }
+FastUUIDGenerator class >> next [
+	"Return a UUID using the shared generator"
+	
+	"self next"
+	
+	"[ UUIDGenerator next ] bench"
+	
+	^ self default next
+]
+
 { #category : 'instance creation' }
 FastUUIDGenerator >> generateBytes: aPlaceHolder forVersion: aVersion [
 	aVersion = 4 ifTrue: [self generateFieldsVersion4]
@@ -63,6 +74,17 @@ FastUUIDGenerator >> initialize [
 	random := Random new.
 	semaphoreForGenerator := Semaphore forMutualExclusion
 
+]
+
+{ #category : 'accessing' }
+FastUUIDGenerator >> next [
+
+	"Return the next UUID"
+	
+	| uuid |
+	uuid := UUID nilUUID.
+	self generateBytes: uuid forVersion: 4.
+	^ uuid
 ]
 
 { #category : 'instance creation' }
