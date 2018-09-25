@@ -30,7 +30,12 @@ UUID class >> generatorClass [
 { #category : 'accessing' }
 UUID class >> generatorClass: aClass [
   GeneratorClass := aClass.
-  aClass initialize
+  aClass ifNotNil: [ aClass initialize ]
+]
+
+{ #category : 'instance creation' }
+UUID class >> new [
+  ^ (self new: 16) initialize
 ]
 
 { #category : 'instance creation' }
@@ -38,6 +43,11 @@ UUID class >> nilUUID [
 	"Must call basicNew: here because I have a non-trivial initialize method."
 
 	^self basicNew: 16
+]
+
+{ #category : 'private' }
+UUID >> _primMakeUUID [
+  self class generatorClass default generateBytes: self forVersion: 4
 ]
 
 { #category : 'comparing' }
@@ -112,6 +122,11 @@ UUID >> asUUID: aString [
 		byte := Integer fromHexString: token.
 		self at: i put: byte].
 	^self
+]
+
+{ #category : 'initialization' }
+UUID >> initialize [
+  self _primMakeUUID
 ]
 
 { #category : 'testing' }
