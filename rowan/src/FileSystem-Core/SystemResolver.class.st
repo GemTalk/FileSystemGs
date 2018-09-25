@@ -15,18 +15,6 @@ SystemResolver class >> defaultLocalDirectoryName [
 	^ 'pharo-local'
 ]
 
-{ #category : 'settings' }
-SystemResolver class >> settingsOn: aBuilder [
-	<systemsettings>  
-
-	(aBuilder setting: #userLocalDirectory)
-		parent: #pharoSystem;
-		type: #Directory;
-		target: self;
-		description: 'The path of a directory where Pharo will store local files' ;
-		label: 'Local directory'.
-]
-
 { #category : 'accessing' }
 SystemResolver class >> userLocalDirectory [
 	^ UserLocalDirectory ifNil: [ 
@@ -39,19 +27,33 @@ SystemResolver class >> userLocalDirectory: aFileReference [
 	UserLocalDirectory := aFileReference
 ]
 
-{ #category : 'origins' }
-SystemResolver >> changes [
-	^ self image withExtension: Smalltalk changesSuffix
+{ #category : 'private' }
+SystemResolver >> _extent: extentIndex [
+	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
+
+	| extentNames extentName |
+	extentNames := System stoneConfigurationReport at: #DBF_EXTENT_NAMES.
+	extentNames _isArray
+		ifTrue: [  
+			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
+			extentName := extentNames ]
+		ifFalse: [ 
+			extentIndex ~= 1 ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (1)'  ].
+			extentName := extentNames ].
+	^ self  resolveString: extentName
 ]
 
 { #category : 'origins' }
-SystemResolver >> image [
-	^ self resolveString: Smalltalk primImagePath
+SystemResolver >> dbfScratchDir [
+	"Answer the path to the DBF_SCRATCH_DIR"
+
+	^ self  resolveString: (System stoneConfigurationReport at: #DBF_SCRATCH_DIR)
 ]
 
 { #category : 'origins' }
-SystemResolver >> imageDirectory [
-	^ self image parent
+SystemResolver >> extent1 [
+
+	^ self _extent: 1
 ]
 
 { #category : 'origins' }
@@ -62,15 +64,12 @@ SystemResolver >> localDirectory [
 
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #(image imageDirectory changes vmBinary vmDirectory workingDirectory localDirectory)
+	^ #(extent1 tranlog dbfScratchDir workingDirectory localDirectory)
 ]
 
 { #category : 'origins' }
-SystemResolver >> vmBinary [
-	^ self resolveString: Smalltalk vm fullPath
-]
+SystemResolver >> tranlog [
+	"Answer the path to the current tranlog"
 
-{ #category : 'origins' }
-SystemResolver >> vmDirectory [
-	^ self resolveString: Smalltalk vm primVmDirectoryPath
+	^ self  resolveString: (System stoneConfigurationReport at: #StnCurrentTranLogNames)
 ]

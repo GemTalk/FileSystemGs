@@ -69,9 +69,9 @@ FileLocator class >> cache [
 	^ self origin: #cache
 ]
 
-{ #category : 'origins' }
-FileLocator class >> changes [
-	^ self origin: #changes 
+{ #category : 'gemstone-origins' }
+FileLocator class >> client [
+	^ self origin: #client
 ]
 
 { #category : 'origins' }
@@ -83,6 +83,13 @@ FileLocator class >> cwd [
 FileLocator class >> D [
 	^ self driveNamed: #D
 
+]
+
+{ #category : 'gemstone-origins' }
+FileLocator class >> dbfScratchDir [
+	"Answer the path to the DBF_SCRATCH_DIR"
+
+	^ self origin: #dbfScratchDir
 ]
 
 { #category : 'origins' }
@@ -104,6 +111,20 @@ FileLocator class >> driveNamed: driveName [
 FileLocator class >> E [
 	^ self driveNamed: #E
 
+]
+
+{ #category : 'gemstone-origins' }
+FileLocator class >> extent: extentIndex [
+	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
+
+	^ self origin: ('extent', extentIndex printString) asSymbol
+]
+
+{ #category : 'gemstone-origins' }
+FileLocator class >> extent1 [
+	"Answer the path to the first exent extent"
+
+	^ self origin: #extent1
 ]
 
 { #category : 'windows-origins' }
@@ -138,16 +159,6 @@ FileLocator class >> home [
 FileLocator class >> I [
 	^ self driveNamed: #I
 
-]
-
-{ #category : 'origins' }
-FileLocator class >> image [
-	^ self origin: #image 
-]
-
-{ #category : 'origins' }
-FileLocator class >> imageDirectory [
-	^ self origin: #imageDirectory 
 ]
 
 { #category : 'windows-origins' }
@@ -246,6 +257,11 @@ FileLocator class >> S [
 
 ]
 
+{ #category : 'gemstone-origins' }
+FileLocator class >> server [
+	^ self origin: #server
+]
+
 { #category : 'accessing' }
 FileLocator class >> supportedOrigins [
 	| origins current |
@@ -278,6 +294,13 @@ FileLocator class >> temp [
 	^ self origin: #temp
 ]
 
+{ #category : 'gemstone-origins' }
+FileLocator class >> tranlog [
+	"Answer the path to the current tranlog directory"
+
+	^ self origin: #tranlog
+]
+
 { #category : 'windows-origins' }
 FileLocator class >> U [
 	^ self driveNamed: #U
@@ -303,16 +326,6 @@ FileLocator class >> userLibrary [
 FileLocator class >> V [
 	^ self driveNamed: #V
 
-]
-
-{ #category : 'origins' }
-FileLocator class >> vmBinary [
-	^ self origin: #vmBinary
-]
-
-{ #category : 'origins' }
-FileLocator class >> vmDirectory [
-	^ self origin: #vmDirectory
 ]
 
 { #category : 'windows-origins' }

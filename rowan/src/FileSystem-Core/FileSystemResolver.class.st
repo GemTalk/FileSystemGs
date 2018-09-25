@@ -66,7 +66,7 @@ FileSystemResolver >> resolveString: aString [
 	"The argument string is actually a byte array encoded differently on each platform.
 	We are transforming it to an image string.
 	We assume for now that the string is utf8 encoded."
-	decoded := aString asByteArray utf8Decoded.
+	decoded := (aString decodeFromUTF8) asString.
 	fs := FileSystem disk.
 	^ FileReference 
 		fileSystem: fs 

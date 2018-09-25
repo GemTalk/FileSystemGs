@@ -19,13 +19,6 @@ PlatformResolver class >> platformName [
 	^ nil
 ]
 
-{ #category : 'private' }
-PlatformResolver class >> primitiveGetUntrustedUserDirectory [
-"	<primitive: 'primitiveGetUntrustedUserDirectory' module: 'SecurityPlugin'>"
-	self primitiveFailed.
-	self flag: 'use a more decent way to get a path in the users home directory'.
-]
-
 { #category : 'origins' }
 PlatformResolver >> cache [
 	"Operating Systems often define standard locations for a personal cache directory. The cache directory is a user-specific non-essential (cached) place where data should be written."
@@ -50,12 +43,13 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString [
 { #category : 'private' }
 PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 	| envValue |
-	envValue := [ Smalltalk os environment at: aString ifAbsent: [ nil ] ]
+	envValue := [ System gemEnvironmentVariable: aString ]
 		on: Error
 		do: [ ^ aBlock value ].
 	^ envValue isEmptyOrNil
 		ifTrue: [ aBlock value ]
 		ifFalse: [ self resolveString: envValue ]
+
 ]
 
 { #category : 'origins' }
