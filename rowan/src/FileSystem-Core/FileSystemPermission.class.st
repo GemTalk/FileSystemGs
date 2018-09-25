@@ -63,6 +63,10 @@ FileSystemPermission >> groupWrite [
 ]
 
 { #category : 'initialization' }
+FileSystemPermission >> initialize [
+]
+
+{ #category : 'initialization' }
 FileSystemPermission >> initialize: aNumber [
 	posixPermission := aNumber.
 	self initialize.	

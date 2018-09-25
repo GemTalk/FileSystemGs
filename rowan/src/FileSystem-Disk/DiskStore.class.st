@@ -160,7 +160,11 @@ DiskStore >> basicIsSymlink: anEntry [
 { #category : 'private' }
 DiskStore >> basicModificationTimeOf: anEntry [
 	" the entry contains the seconds since the squeak epoch in local time"
-	^ (DateAndTime fromSeconds: (anEntry at: 3) offset: 0) translateTo: DateAndTime localOffset
+
+	| dt |
+	dt := DateAndTime posixSeconds:  (anEntry at: 3) offset: (Duration seconds: 0).
+	dt offset: (Duration seconds: (dt currentTimeZone transitionAtUTC: dt) offsetFromUTC).
+	^ dt
 ]
 
 { #category : 'public' }

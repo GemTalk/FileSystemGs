@@ -46,13 +46,6 @@ FileReferenceAttributeTests >> testFileSize [
 ]
 
 { #category : 'tests' }
-FileReferenceAttributeTests >> testIsBlock [
-
-	self deny: self tempFileResource file isBlock
-
-]
-
-{ #category : 'tests' }
 FileReferenceAttributeTests >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter
@@ -83,8 +76,7 @@ FileReferenceAttributeTests >> testIsReadable [
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsSymlink [
 
-	self deny: self tempFileResource file isSymlink.
-
+	self deny: self tempFileResource file resolve isSymlink.
 ]
 
 { #category : 'tests' }

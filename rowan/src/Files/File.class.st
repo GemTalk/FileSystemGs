@@ -232,7 +232,7 @@ File class >> lookupDirectory: fullPath filename: fileName [
 		gsFileStat isDirectory .
 		gsFileStat size.
 		gsFileStat gid .
-		gsFileStat nlink > 0.
+		gsFileStat nlink > 1.
 	}
 ]
 
