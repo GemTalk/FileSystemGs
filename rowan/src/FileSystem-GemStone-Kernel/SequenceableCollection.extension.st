@@ -1,6 +1,17 @@
 Extension { #name : 'SequenceableCollection' }
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> copyLast: n [
+	"Answer the last n elements of the receiver.  
+	Raise an error if there are not enough elements."
+
+	| size |
+	size := self size.
+	^ self copyFrom: size - n + 1 to: size
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> grownBy: length [
 	"Answer a copy of receiver collection with size grown by length"
 
