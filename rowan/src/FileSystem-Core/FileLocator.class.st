@@ -70,8 +70,8 @@ FileLocator class >> cache [
 ]
 
 { #category : 'gemstone-origins' }
-FileLocator class >> client [
-	^ self origin: #client
+FileLocator class >> clientWorkingDirectory [
+	^ FileSystem client referenceTo: RelativePath new
 ]
 
 { #category : 'origins' }
@@ -258,8 +258,8 @@ FileLocator class >> S [
 ]
 
 { #category : 'gemstone-origins' }
-FileLocator class >> server [
-	^ self origin: #server
+FileLocator class >> serverWorkingDirectory [
+	^ FileSystem server referenceTo: RelativePath new
 ]
 
 { #category : 'accessing' }
