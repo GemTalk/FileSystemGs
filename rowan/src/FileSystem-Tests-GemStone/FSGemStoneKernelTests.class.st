@@ -33,6 +33,52 @@ FSGemStoneKernelTests >> indexInForCollectionWithoutDuplicates [
 	^ 2.
 ]
 
+{ #category : 'private' }
+FSGemStoneKernelTests >> indexInNonEmpty [
+	"Return an index between bounds of 'nonEmpty'"
+	
+	^ 2
+]
+
+{ #category : 'private' }
+FSGemStoneKernelTests >> moreThan3Elements [
+
+	^ #(1 2 3 4 5) copy.
+]
+
+{ #category : 'private' }
+FSGemStoneKernelTests >> nonEmpty [
+
+	^ self moreThan3Elements
+]
+
+{ #category : 'tests' }
+FSGemStoneKernelTests >> testAllButFirstNElements [
+
+	| allButFirst collection |
+	collection := self moreThan3Elements.
+	allButFirst := collection allButFirst: 2.
+	allButFirst withIndexDo: 
+		 [:el :i | self assert: el equals: (collection at: i + 2) ].
+	self assert: allButFirst size + 2 equals: collection size
+]
+
+{ #category : 'tests' }
+FSGemStoneKernelTests >> testCopyAfterLast [
+
+	| result index collection |
+	collection := self collectionWithoutEqualElements .
+	index:= self indexInForCollectionWithoutDuplicates .
+	result := collection copyAfterLast: (collection  at:index ).
+	
+	"Verify content"
+	result withIndexDo: 
+		[:el :i | self assert: (collection at: (i + index )) equals: (result at: i)].
+
+	"Verify size"
+	self assert: result size equals: (collection size - index)
+]
+
 { #category : 'tests' }
 FSGemStoneKernelTests >> testCopyUpToLast [
 
@@ -46,6 +92,23 @@ FSGemStoneKernelTests >> testCopyUpToLast [
 	
 	"Verify size"
 	self assert: result size equals: (index-1)
+]
+
+{ #category : 'tests' }
+FSGemStoneKernelTests >> testCopyWithFirst [
+
+	| index element result |
+	index:= self indexInNonEmpty .
+	element:= self nonEmpty at: index.
+	
+	result := self nonEmpty copyWithFirst: element.	
+	
+	self assert: result size = (self nonEmpty size + 1).
+	self assert: result first = element .
+	
+	2 to: result size do:
+	[ :i |
+	self assert: (result at: i) = ( self nonEmpty at: ( i - 1 ))].
 ]
 
 { #category : 'tests' }

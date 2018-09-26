@@ -1,6 +1,25 @@
 Extension { #name : 'SequenceableCollection' }
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> allButFirst: n [
+	"Answer a copy of the receiver containing all but the first n
+	elements. Raise an error if there are not enough elements."
+
+	^ self copyFrom: n + 1 to: self size
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> copyAfterLast: anElement [
+	"Answer a copy of the receiver from after the last occurence
+	of anElement up to the end. If no such element exists, answer 
+	an empty copy."
+
+	^ self allButFirst: (self lastIndexOf: anElement ifAbsent: [^ self copyEmpty])
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> copyLast: n [
 	"Answer the last n elements of the receiver.  
 	Raise an error if there are not enough elements."
@@ -20,6 +39,21 @@ SequenceableCollection >> copyUpToLast: anElement [
 	n :=  (self lastIndexOf: anElement ifAbsent: [ ^ self copy ]) - 1.
   ^ self copyFrom: 1 to: n
 
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> copyWithFirst: newElement [ 
+	"Answer a copy of the receiver that is 1 bigger than the receiver with newElement as the first element."
+
+	| newIC |
+	newIC := self species new: self size + 1.
+	newIC 
+		replaceFrom: 2
+		to: self size + 1
+		with: self
+		startingAt: 1.
+	newIC at: 1 put: newElement.
+	^ newIC
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
@@ -77,5 +111,12 @@ SequenceableCollection >> reversed [
 	src := n + 1.
 	1 to: n do: [:i | result at: i put: (self at: (src := src - 1))].
 	^ result
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> writeStreamPortable [
+
+	^ WriteStreamPortable on: self
 
 ]

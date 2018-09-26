@@ -34,7 +34,7 @@ AbstractEnumerationVisitor >> preorder: aReference [
 
 { #category : 'visiting' }
 AbstractEnumerationVisitor >> visit: aReference with: aGuide [
-	out := (Array new: 10) writeStream.
+	out := (Array new: 10) writeStreamPortable.
 	aGuide show: aReference.
 	^ out contents
 ]

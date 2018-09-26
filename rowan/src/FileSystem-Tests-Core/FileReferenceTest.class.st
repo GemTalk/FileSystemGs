@@ -716,7 +716,7 @@ FileReferenceTest >> testReadStream [
 	path := Path * 'plonk'.
 	filesystem store createFile: path.
 	ref := filesystem referenceTo: path.
-	[ [ stream := ref readStreamPortable ]
+	[ [ stream := ref readStream ]
 		ensure: [ stream ifNotNil: [ stream close ] ] ]
 		ensure: [ ref delete ]
 
@@ -778,7 +778,7 @@ FileReferenceTest >> testReadStreamNotFound [
 	| ref  |
 	ref := filesystem * 'plonk'.
 	self
-		should: [ref readStreamPortable]
+		should: [ref readStream ]
 		raise: FileDoesNotExistException
 
 ]

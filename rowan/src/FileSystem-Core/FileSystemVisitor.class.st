@@ -7,6 +7,10 @@ Class {
 	#category : 'FileSystem-Core-Base-Visitors'
 }
 
+{ #category : 'initialization' }
+FileSystemVisitor >> initialize [
+]
+
 { #category : 'visiting' }
 FileSystemVisitor >> visitDirectory: aReference [
 	^ self visitReference: aReference
