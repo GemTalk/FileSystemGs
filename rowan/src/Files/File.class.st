@@ -49,14 +49,10 @@ Class {
 }
 
 { #category : 'primitives-file' }
-File class >> atEnd: id [
+File class >> atEnd: aGsFile [
 	"Answer true if the file position is at the end of the file."
 
-	"<primitive: 'primitiveFileAtEnd' module: 'FilePlugin'>
-	self primitiveFailed"
-
-self error: 'not yet implemented'
-
+	^ aGsFile atEnd
 ]
 
 { #category : 'primitives-file' }
@@ -337,12 +333,8 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	"Rename the file of the given name to the new name. Fail if there is no file of the old name 
 	or if there is an existing file with the new name."
 
-"
-	<primitive: 'primitiveFileRename' module: 'FilePlugin'>
-	^nil
-"
-self error: 'not yet implmented'
-
+	(GsFile renameFile: oldFileFullName to: newFileFullName) = 0
+		ifFalse: [ self error: 'Rename file failed'].
 ]
 
 { #category : 'primitives-file' }

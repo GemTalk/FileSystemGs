@@ -23,6 +23,21 @@ SystemResolverTest >> testExtent1 [
 ]
 
 { #category : 'testing' }
+SystemResolverTest >> testExtent1Directory [
+	self assertOriginResolves: #extent1Directory
+]
+
+{ #category : 'testing' }
+SystemResolverTest >> testImage [
+	self assertOriginResolves: #image
+]
+
+{ #category : 'testing' }
+SystemResolverTest >> testImageDirectory [
+	self assertOriginResolves: #imageDirectory
+]
+
+{ #category : 'testing' }
 SystemResolverTest >> testTranlog [
 	self assertOriginResolves: #tranlog
 ]

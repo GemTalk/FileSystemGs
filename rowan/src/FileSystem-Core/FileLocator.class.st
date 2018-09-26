@@ -127,6 +127,12 @@ FileLocator class >> extent1 [
 	^ self origin: #extent1
 ]
 
+{ #category : 'gemstone-origins' }
+FileLocator class >> extent1Directory [
+
+	^ self origin: #extent1Directory
+]
+
 { #category : 'windows-origins' }
 FileLocator class >> F [
 	^ self driveNamed: #F
@@ -163,6 +169,13 @@ FileLocator class >> I [
 
 { #category : 'gemstone-origins' }
 FileLocator class >> image [
+	"commonly used, so we need to define it, but the closest that GemStone comes is the #dbfScratchDir"
+
+	^ self dbfScratchDir
+]
+
+{ #category : 'gemstone-origins' }
+FileLocator class >> imageDirectory [
 	"commonly used, so we need to define it, but the closest that GemStone comes is the #dbfScratchDir"
 
 	^ self dbfScratchDir

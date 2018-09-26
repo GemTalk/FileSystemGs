@@ -56,9 +56,27 @@ SystemResolver >> extent1 [
 	^ self _extent: 1
 ]
 
+{ #category : 'origins' }
+SystemResolver >> extent1Directory [
+
+	^ self extent1 parent
+]
+
+{ #category : 'origins' }
+SystemResolver >> image [
+
+	^ self dbfScratchDir
+]
+
+{ #category : 'origins' }
+SystemResolver >> imageDirectory [
+
+	^ self dbfScratchDir
+]
+
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #(extent1 tranlog dbfScratchDir workingDirectory localDirectory)
+	^ #(image imageDirectory extent1 extent1Directory tranlog dbfScratchDir workingDirectory)
 ]
 
 { #category : 'origins' }

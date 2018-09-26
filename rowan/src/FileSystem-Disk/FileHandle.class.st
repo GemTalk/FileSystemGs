@@ -61,7 +61,7 @@ FileHandle >> at: index write: buffer startingAt: start count: count [
 
 { #category : 'public' }
 FileHandle >> binaryReadStream [
-	^ ZnBufferedReadStream on: (File named: reference fullName) readStreamPortable
+	^ ZnBufferedReadStream on: (File named: reference fullName) readStream
 
 ]
 
