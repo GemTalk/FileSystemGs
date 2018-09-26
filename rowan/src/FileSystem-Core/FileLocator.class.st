@@ -161,6 +161,13 @@ FileLocator class >> I [
 
 ]
 
+{ #category : 'gemstone-origins' }
+FileLocator class >> image [
+	"commonly used, so we need to define it, but the closest that GemStone comes is the #dbfScratchDir"
+
+	^ self dbfScratchDir
+]
+
 { #category : 'windows-origins' }
 FileLocator class >> J [
 	^ self driveNamed: #J
