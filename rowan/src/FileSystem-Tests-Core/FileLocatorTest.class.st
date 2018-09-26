@@ -113,12 +113,6 @@ FileLocatorTest >> testIsRoot [
 	self assert: locator canonicalize isRoot
 ]
 
-{ #category : 'resolution tests' }
-FileLocatorTest >> testLocalDirectory [
-	locator := FileLocator localDirectory.
-	self assert: locator resolve fullName equals: (FileLocator imageDirectory resolve / (SystemResolver defaultLocalDirectoryName)) fullName
-]
-
 { #category : 'compatibility tests' }
 FileLocatorTest >> testMoveTo [
 	| old new |

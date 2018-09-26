@@ -100,16 +100,30 @@ Path class >> from: aString [
 { #category : 'instance creation' }
 Path class >> from: aString delimiter: aDelimiterCharacter [ 
 	"Answer a path composed of several elements delimited by aCharacter"
-	| pathClass |
+	| pathClass splitPathElements |
 	aString isEmpty
 		ifTrue: [ ^ self root ].
+
+	aString first = $$
+		ifTrue: [
+			| pathElements envVarString envVarElement |
+			"GemStone paths are allowed to start with an environment variable"
+			pathElements := aDelimiterCharacter split: aString.
+			envVarElement := (pathElements at: 1) .
+			envVarString := (System gemEnvironmentVariable: (envVarElement copyFrom: 2 to: envVarElement size)) decodeFromUTF8 asString.
+			pathClass :=  ((self isAbsolutePath: envVarString delimiter: aDelimiterCharacter) or: 
+									[self isAbsoluteWindowsPath: envVarString]) 
+				ifTrue: [ AbsolutePath ]
+				ifFalse:[ RelativePath ].
+			splitPathElements :=  (aDelimiterCharacter split: envVarString) , (pathElements copyFrom: 2 to: pathElements size) ]
+		ifFalse: [ 	
+			pathClass :=  ((self isAbsolutePath: aString delimiter: aDelimiterCharacter) or: 
+									[self isAbsoluteWindowsPath: aString]) 
+				ifTrue: [ AbsolutePath ]
+				ifFalse:[ RelativePath ] .
+			splitPathElements := aDelimiterCharacter split: aString. ].
 	
-	pathClass :=  ((self isAbsolutePath: aString delimiter: aDelimiterCharacter) or: 
-							[self isAbsoluteWindowsPath: aString]) 
-		ifTrue: [ AbsolutePath ]
-		ifFalse:[ RelativePath ].
-	
-	^ pathClass withAll: (aDelimiterCharacter split: aString)
+	^ pathClass withAll: splitPathElements
 ]
 
 { #category : 'private' }

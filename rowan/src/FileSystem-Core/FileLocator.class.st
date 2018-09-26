@@ -179,11 +179,6 @@ FileLocator class >> L [
 
 ]
 
-{ #category : 'origins' }
-FileLocator class >> localDirectory [
-	^ self origin: #localDirectory 
-]
-
 { #category : 'windows-origins' }
 FileLocator class >> M [
 	^ self driveNamed: #M

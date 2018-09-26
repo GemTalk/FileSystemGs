@@ -56,12 +56,6 @@ SystemResolver >> extent1 [
 	^ self _extent: 1
 ]
 
-{ #category : 'origins' }
-SystemResolver >> localDirectory [ 
-	^ self class userLocalDirectory 
-		ifNil: [ (self imageDirectory / self class defaultLocalDirectoryName) ensureCreateDirectory ]
-]
-
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
 	^ #(extent1 tranlog dbfScratchDir workingDirectory localDirectory)

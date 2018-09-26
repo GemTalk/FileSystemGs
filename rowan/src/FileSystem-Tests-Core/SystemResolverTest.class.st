@@ -13,34 +13,16 @@ SystemResolverTest >> createResolver [
 ]
 
 { #category : 'testing' }
-SystemResolverTest >> testChanges [
-	self assertOriginResolves: #changes
+SystemResolverTest >> testDbfScratchDir [
+	self assertOriginResolves: #dbfScratchDir
 ]
 
 { #category : 'testing' }
-SystemResolverTest >> testImage [
-	self assertOriginResolves: #image
+SystemResolverTest >> testExtent1 [
+	self assertOriginResolves: #extent1
 ]
 
 { #category : 'testing' }
-SystemResolverTest >> testImageDirectory [
-	self assertOriginResolves: #imageDirectory
-]
-
-{ #category : 'testing' }
-SystemResolverTest >> testLocalDirectory [
-	| reference |
-	reference := resolver resolve: #localDirectory.
-	self assert: (reference isKindOf: FileReference).
-	^ reference
-]
-
-{ #category : 'testing' }
-SystemResolverTest >> testVmBinary [
-	self assertOriginResolves: #vmBinary
-]
-
-{ #category : 'testing' }
-SystemResolverTest >> testVmDirectory [
-	self assertOriginResolves: #vmDirectory
+SystemResolverTest >> testTranlog [
+	self assertOriginResolves: #tranlog
 ]
