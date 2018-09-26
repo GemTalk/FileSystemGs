@@ -12,6 +12,17 @@ SequenceableCollection >> copyLast: n [
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> copyUpToLast: anElement [
+  "Answer a copy of the receiver from index 1 to the last occurrence of 
+	anElement, not including anElement."
+
+	| n |
+	n :=  (self lastIndexOf: anElement ifAbsent: [ ^ self copy ]) - 1.
+  ^ self copyFrom: 1 to: n
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> grownBy: length [
 	"Answer a copy of receiver collection with size grown by length"
 
@@ -20,6 +31,31 @@ SequenceableCollection >> grownBy: length [
 	newCollection := self species new: size + length.
 	newCollection replaceFrom: 1 to: size with: self startingAt: 1.
 	^ newCollection
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> lastIndexOf: anElement ifAbsent: exceptionBlock [
+  "Answer the index of the last occurence of anElement within the  
+	receiver. If the receiver does not contain anElement, answer the
+	result of evaluating the argument, exceptionBlock."
+
+  ^ self lastIndexOf: anElement startingAt: self size ifAbsent: exceptionBlock
+
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> lastIndexOf: anElement startingAt: lastIndex ifAbsent: exceptionBlock [
+  "Answer the index of the last occurence of anElement within the  
+	receiver. If the receiver does not contain anElement, answer the
+	result of evaluating the argument, exceptionBlock."
+
+  lastIndex to: 1 by: -1 do: [ :index | 
+    (self at: index) = anElement
+      ifTrue: [ ^ index ] ].
+  ^ exceptionBlock ~~ nil
+    ifTrue: [ exceptionBlock value ]
+    ifFalse: [ 0 ]
 
 ]
 
