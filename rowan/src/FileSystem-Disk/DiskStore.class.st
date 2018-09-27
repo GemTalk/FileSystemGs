@@ -113,20 +113,28 @@ DiskStore >> basicCreationTimeOf: anEntry [
 ]
 
 { #category : 'private' }
-DiskStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
-	| index entry pathString |
+DiskStore >> basicEntry: ignored path: aPath nodesDo: aBlock [
+	| pathString intOrArray |
 		
-	index := 1.
 	pathString := self stringFromPath: aPath.
-	entry := File lookupEntryIn: pathString index: index.
-	entry = #badDirectoryPath ifTrue: [ ^ self signalDirectoryDoesNotExist: aPath ].
-	
-	[ entry isNil ]
-		whileFalse: [ 
-			entry at: 1 put:entry first.
-			aBlock value: entry.
-			index := index + 1.
-			entry := File lookupEntryIn: pathString index: index ].
+	intOrArray := GsFile _contentsOfServerDirectory: pathString expandPath: true.
+	intOrArray _isArray ifFalse: [ ^ self signalDirectoryDoesNotExist: aPath ].
+	intOrArray
+		do: [:entryPathString |
+			((entryPathString endsWith: '.')  or: [ entryPathString endsWith: '..' ])
+				ifFalse: [ 
+					| entry gsFileStat |
+					gsFileStat := GsFile stat: entryPathString isLstat: false.
+					gsFileStat _isSmallInteger ifTrue: [ ^ self error: ' unexpected GsFile stat error' ].
+					
+					entry := {
+						(Path from: entryPathString) basename.
+						gsFileStat ctimeUtcSeconds .
+						gsFileStat mtimeUtcSeconds .
+						gsFileStat isDirectory .
+						gsFileStat size.
+					}.
+					aBlock value: entry ] ]
 ]
 
 { #category : 'public' }

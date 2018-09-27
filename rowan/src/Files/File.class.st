@@ -114,12 +114,7 @@ File class >> deleteDirectory: fullPath [
 	"Delete the directory named by the given path. 
 	Fail if the path is bad or if a directory by that name does not exist."
 
-"
- 	<primitive: 'primitiveDirectoryDelete' module: 'FilePlugin'>
-	self primitiveFailed
-"
-self error: 'not yet implmented'
-
+	GsFile removeServerDirectory: fullPath
 ]
 
 { #category : 'primitives-path' }
@@ -217,42 +212,13 @@ File class >> lookupDirectory: fullPath filename: fileName [
 	gsFileStat := GsFile stat: fullPath, '/', fileName isLstat: false.
 	gsFileStat _isSmallInteger ifTrue: [ ^ nil ].
 	^	{
-		fullPath .
+		fileName .
 		gsFileStat ctimeUtcSeconds .
 		gsFileStat mtimeUtcSeconds .
 		gsFileStat isDirectory .
 		gsFileStat size.
 		gsFileStat gid .
 		gsFileStat nlink > 1.
-	}
-]
-
-{ #category : 'primitives-path' }
-File class >> lookupEntryIn: fullPath index: index [
-	"Look up the index-th entry of the directory with the given fully-qualified path 
-	(i.e., starting from the root of the file hierarchy) and return an array containing:
-
-	<name> <creationTime> <modificationTime> <dirFlag> <fileSize>
-
-	The empty string enumerates the top-level files or drives. (For example, on Unix, the empty 
-	path enumerates the contents of '/'. On Macs and PCs, it enumerates the mounted volumes/drives.)
-
-	The creation and modification times are in seconds since the start of the Smalltalk time epoch. 
-	DirFlag is true if the entry is a directory. FileSize the file size in bytes or zero for directories. 
-	The primitive returns nil when index is past the end of the directory. It fails if the given path 
-	is bad."
-
-
-	| entries gsFileStat |
-	entries := GsFile _contentsOfServerDirectory: fullPath expandPath: true.
-	gsFileStat := GsFile stat: (entries at: index) isLstat: false.
-	gsFileStat _isSmallInteger ifTrue: [ ^ nil ].
-	^	{
-		fullPath .
-		gsFileStat ctimeUtcSeconds .
-		gsFileStat mtimeUtcSeconds .
-		gsFileStat isDirectory .
-		gsFileStat size.
 	}
 ]
 
@@ -328,7 +294,7 @@ File class >> rename: oldFileFullName to: newFileFullName [
 	"Rename the file of the given name to the new name. Fail if there is no file of the old name 
 	or if there is an existing file with the new name."
 
-	(GsFile renameFile: oldFileFullName to: newFileFullName) = 0
+	(GsFile renameFileOnServer: oldFileFullName to: newFileFullName) = 0
 		ifFalse: [ self error: 'Rename file failed'].
 ]
 
