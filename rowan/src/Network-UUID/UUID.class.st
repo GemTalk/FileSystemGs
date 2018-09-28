@@ -78,6 +78,11 @@ UUID >> >= uuid [
 ]
 
 { #category : 'converting' }
+UUID >> asInteger [
+  ^ self inject: 0 into: [ :sum :each | sum * 256 + each ]
+]
+
+{ #category : 'converting' }
 UUID >> asString [
 	| result data |
 	data := String new: 36.

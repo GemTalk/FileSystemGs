@@ -903,20 +903,20 @@ FileReferenceTest >> testUnequalSize [
 
 { #category : 'tests' }
 FileReferenceTest >> testUpToAll [
-	| testString filename  |
+	| testString fileRef |
 	testString := 'ße'.
-	filename := 'test-file-' , 99 atRandom printString , '.txt'.
+	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
 
 	[  
-	filename asFileReference
+	fileRef
 		writeStreamEncoded: 'utf8' do: [ :stream | 
 			stream nextPutAll: testString ].
 
-	filename asFileReference
+	fileRef
 		readStreamDo: [ :stream |
 			self assert: (stream upToAll: 'e') equals: 'ß'.
 		] ]
-	ensure: [ filename asFileReference ensureDelete ] 
+	ensure: [ fileRef ensureDelete ]
 ]
 
 { #category : 'tests' }
