@@ -161,6 +161,11 @@ FileSystemDirectoryEntry >> modificationTime [
 	^  modification
 ]
 
+{ #category : 'accessing' }
+FileSystemDirectoryEntry >> name [
+    ^ self basename
+]
+
 { #category : 'delegate' }
 FileSystemDirectoryEntry >> pathSegments [
 	^ reference pathSegments
