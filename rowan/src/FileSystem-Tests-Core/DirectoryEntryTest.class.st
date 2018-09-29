@@ -9,7 +9,8 @@ Class {
 
 { #category : 'accessing' }
 DirectoryEntryTest >> entry [
-	^ FileLocator image resolve entry
+	System sessionIsOnStoneHost ifFalse: [ self error: 'DirectoryEntryTest needs to be run on the stone''s host' ].
+	^ FileLocator extent1 resolve entry
 ]
 
 { #category : 'tests' }
@@ -28,7 +29,7 @@ DirectoryEntryTest >> testIsDirectory [
 	ref := FileLocator imageDirectory resolve.
 	entry := ref entry.
 	self assert: entry isDirectory.
-	self assert: FileLocator imageDirectory resolve equals: Smalltalk imageDirectory
+	self assert: FileLocator imageDirectory resolve equals: FileLocator dbfScratchDir resolve
 ]
 
 { #category : 'tests' }
@@ -69,5 +70,5 @@ DirectoryEntryTest >> testReference [
 
 { #category : 'tests' }
 DirectoryEntryTest >> testSize [
-	self assert: self entry size isInteger
+	self assert: self entry size _isInteger
 ]

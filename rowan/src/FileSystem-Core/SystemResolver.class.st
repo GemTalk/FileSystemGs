@@ -63,6 +63,13 @@ SystemResolver >> extent1Directory [
 ]
 
 { #category : 'origins' }
+SystemResolver >> gemLogDirectory [
+	"Answer the path to the gem log directory"
+
+	^ self  resolveString: (System gemLogPath)
+]
+
+{ #category : 'origins' }
 SystemResolver >> image [
 
 	^ self dbfScratchDir

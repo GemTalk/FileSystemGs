@@ -150,6 +150,13 @@ FileLocator class >> G [
 
 ]
 
+{ #category : 'gemstone-origins' }
+FileLocator class >> gemLogDirectory [
+	"locator for the log directory (parent directory of gemLog)"
+
+	^ self origin: #gemLogDirectory
+]
+
 { #category : 'windows-origins' }
 FileLocator class >> H [
 	^ self driveNamed: #H
