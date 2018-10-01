@@ -312,6 +312,7 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 			newOffset := offset + countRead.
 			(self shouldBufferReadOfCount: countYetToRead)
 				ifTrue: [ self nextBuffer.
+					position > limit ifTrue: [ ^ countRead ].
 					limit > 0
 						ifTrue:
 							[ countRead := countRead + (self readInto: collection startingAt: newOffset count: countYetToRead) ] ]
