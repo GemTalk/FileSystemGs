@@ -94,9 +94,6 @@ FileSystemHandleTest >> testCreatedOpen [
 
 { #category : 'tests' }
 FileSystemHandleTest >> testEnsureClosed [
-	filesystem := self createFileSystem.
-	reference := filesystem * 'plonk'.
-	handle := reference openWritable: true.
 	handle ensureClosed.
 	self deny: handle isOpen.
 	handle ensureClosed.

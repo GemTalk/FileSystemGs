@@ -191,6 +191,8 @@ FileSystemTest >> testCopyAndDelete [
 	"Check that FileSystem>>copyAndDelete:to: works within a filesystem.
 	DiskFileSystemTest>>testMoveMemoryToDisk checks that #copyAndDelete:to: works across filesystems."
 	| folder testString f1 f1s f2 |
+
+self error: 'stack overflow error?'.
 	
 	folder := filesystem workingDirectory.
 	testString := 'To be copied and deleted'.

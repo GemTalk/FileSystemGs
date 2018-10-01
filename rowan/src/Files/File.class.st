@@ -59,7 +59,13 @@ File class >> atEnd: aGsFile [
 File class >> close: aGsFile [
 	"Close this file."
 
+	aGsFile ifNil: [ ^ self ].
 	aGsFile close
+]
+
+{ #category : 'primitives-file' }
+File class >> closed: aGsFile [
+	^ aGsFile isNil or: [ (self sizeOrNil: aGsFile) isNil ]
 ]
 
 { #category : 'primitives-file' }
@@ -243,11 +249,11 @@ File class >> open: fileName writable: writeMode [
 
 	| mode |
 	mode := writeMode == #write 
-		ifTrue: [ 'w' ] 
+		ifTrue: [ 'w+' ] 
 		ifFalse: [ 
 			writeMode = #read
-				ifTrue: [ 'r' ]
-				ifFalse: [ 'a' ] ].
+				ifTrue: [ 'r+' ]
+				ifFalse: [ 'a+' ] ].
 	^ GsFile
 		open: fileName 
 		mode: mode 
@@ -276,17 +282,19 @@ File class >> openForWriteFileNamed: aName [
 ]
 
 { #category : 'primitives-file' }
-File class >> read: id into: byteArray startingAt: startIndex count: count [
-	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. Answer the number of bytes actually read."
+File class >> read: aGsFile into: byteArray startingAt: startIndex count: count [
+	"Read up to count bytes of data from this file into the given string or byte array starting at the given index. 
+		Answer the number of bytes actually read."
 
-"
-	<primitive: 'primitiveFileRead' module: 'FilePlugin'>
-	(self closed: id)
-		ifTrue: [ ^ self error: 'File is closed' ].
-	self error: 'File read failed'
-"
-self error: 'not yet implmented'
-
+	| buf cnt |
+	buf := byteArray species new: count.
+	cnt := aGsFile next: count into: buf.
+	cnt ifNil: [ 
+		(self closed: aGsFile)
+			ifTrue: [ ^ self error: 'File is closed' ].
+		self error: 'File read failed: ' , (GsFile serverErrorString ifNil: [ '']) ].
+	byteArray replaceFrom: startIndex to: startIndex + cnt - 1 with: buf.
+	^cnt
 ]
 
 { #category : 'primitives-path' }
@@ -302,7 +310,9 @@ File class >> rename: oldFileFullName to: newFileFullName [
 File class >> setPosition: aGsFile to: anInteger [
 	"Set this file to the given position."
 
-	aGsFile position: anInteger
+	| pos |
+	pos := aGsFile position: anInteger.
+	pos ifNil: [ self error: 'position error' ].
 ]
 
 { #category : 'primitives-file' }
@@ -313,15 +323,11 @@ File class >> sizeOf: aGsFile [
 ]
 
 { #category : 'primitives-file' }
-File class >> sizeOrNil: id [
+File class >> sizeOrNil: aGsFile [
 	"Answer the size of this file."
 
-"
-	<primitive: 'primitiveFileSize' module: 'FilePlugin'>
-	^ nil
-" 
-self error: 'not net implemented'
-
+	aGsFile ifNil: [ ^ nil ].
+	^ aGsFile fileSize
 ]
 
 { #category : 'primitives-file' }

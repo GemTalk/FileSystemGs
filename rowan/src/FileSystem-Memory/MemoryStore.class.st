@@ -86,14 +86,14 @@ MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 ]
 
 { #category : 'private' }
-MemoryStore >> basicOpen: path writable: aBoolean [
+MemoryStore >> basicOpen: path writable: writeMode [
 	^ self
 		nodeAt: path
 		ifPresent: [ :aMemoryFileSystemEntry | 
 			aMemoryFileSystemEntry
 				basicOpen;
 				yourself ]
-		ifAbsent: [ aBoolean
+		ifAbsent: [ writeMode == #write
 				ifFalse: [ self signalFileDoesNotExist: path ]
 				ifTrue: [ self createFile: path ] ]
 ]
