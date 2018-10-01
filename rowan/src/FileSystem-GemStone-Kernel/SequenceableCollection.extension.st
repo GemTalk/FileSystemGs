@@ -1,6 +1,14 @@
 Extension { #name : 'SequenceableCollection' }
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> allButFirst [
+  "Answer a copy of the receiver containing all but the first
+	element. Raise an error if there are not enough elements."
+
+  ^ self allButFirst: 1
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> allButFirst: n [
 	"Answer a copy of the receiver containing all but the first n
 	elements. Raise an error if there are not enough elements."
@@ -98,6 +106,18 @@ SequenceableCollection >> readStreamPortable [
 
 	^ ReadStreamPortable on: self
 
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> replaceAll: oldObject with: newObject [
+  "Replace all occurences of oldObject with newObject"
+
+  | index |
+  index := self indexOf: oldObject startingAt: 1 ifAbsent: [ 0 ].
+  [ index = 0 ]
+    whileFalse: [ 
+      self at: index put: newObject.
+      index := self indexOf: oldObject startingAt: index + 1 ifAbsent: [ 0 ] ]
 ]
 
 { #category : '*filesystem-gemstone-kernel' }

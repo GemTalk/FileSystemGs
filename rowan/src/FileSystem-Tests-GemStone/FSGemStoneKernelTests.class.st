@@ -29,6 +29,12 @@ FSGemStoneKernelTests >> elementNotInForIndexAccessing [
 ]
 
 { #category : 'private' }
+FSGemStoneKernelTests >> empty [
+
+	^ #().
+]
+
+{ #category : 'private' }
 FSGemStoneKernelTests >> indexInForCollectionWithoutDuplicates [
 	^ 2.
 ]
@@ -50,6 +56,16 @@ FSGemStoneKernelTests >> moreThan3Elements [
 FSGemStoneKernelTests >> nonEmpty [
 
 	^ self moreThan3Elements
+]
+
+{ #category : 'tests' }
+FSGemStoneKernelTests >> testAllButFirst [
+
+	| abf col |
+	col := self moreThan3Elements.
+	abf := col allButFirst.
+	self deny: abf first = col first.
+	self assert: abf size + 1 = col size
 ]
 
 { #category : 'tests' }
@@ -109,6 +125,19 @@ FSGemStoneKernelTests >> testCopyWithFirst [
 	2 to: result size do:
 	[ :i |
 	self assert: (result at: i) = ( self nonEmpty at: ( i - 1 ))].
+]
+
+{ #category : 'tests' }
+FSGemStoneKernelTests >> testDifference [
+	"Answer the set theoretic difference of two collections."
+	
+	| difference |
+	self assert: (self collectionWithoutEqualElements difference: self collectionWithoutEqualElements) isEmpty.
+	self assert: (self empty difference: self collectionWithoutEqualElements) isEmpty.
+	difference := (self collectionWithoutEqualElements difference: self empty).
+	self assert: difference size = self collectionWithoutEqualElements size.
+	self collectionWithoutEqualElements do: [ :each |
+		self assert: (difference includes: each) ].
 ]
 
 { #category : 'tests' }
