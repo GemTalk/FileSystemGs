@@ -79,8 +79,8 @@ ZnCharacterReadStream >> upToAll: aCollection [
 	
 	^ self collectionSpecies streamContents: [ :out |
 		| partialMatch pattern matched |
-		partialMatch := (self collectionSpecies new: aCollection size) writeStream.
-		pattern := aCollection readStream.
+		partialMatch := (self collectionSpecies new: aCollection size) writeStreamPortable.
+		pattern := aCollection readStreamPortable.
 		matched := false.
 		([ matched or: [ self atEnd or: [ pattern atEnd ] ] ]) whileFalse: [
 			| ch |

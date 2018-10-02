@@ -271,13 +271,8 @@ FileSystemTest >> testCreateDirectoryExists [
 	
 	filesystem createDirectory: path.
 	self 
-		should: [filesystem createDirectory: path]
+		should: [ filesystem createDirectory: path]
 		raise: DirectoryExists.
-		
-
-	
-	
-
 ]
 
 { #category : 'tests' }
