@@ -122,19 +122,7 @@ DiskStore >> basicEntry: ignored path: aPath nodesDo: aBlock [
 	intOrArray
 		do: [:entryPathString |
 			((entryPathString endsWith: '.')  or: [ entryPathString endsWith: '..' ])
-				ifFalse: [ 
-					| entry gsFileStat |
-					gsFileStat := GsFile stat: entryPathString isLstat: false.
-					gsFileStat _isSmallInteger ifTrue: [ ^ self error: ' unexpected GsFile stat error' ].
-					
-					entry := {
-						(Path from: entryPathString) basename.
-						gsFileStat ctimeUtcSeconds .
-						gsFileStat mtimeUtcSeconds .
-						gsFileStat isDirectory .
-						gsFileStat size.
-					}.
-					aBlock value: entry ] ]
+				ifFalse: [ aBlock value: (File lookupPath: entryPathString) ] ]
 ]
 
 { #category : 'public' }

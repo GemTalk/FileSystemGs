@@ -201,7 +201,15 @@ File class >> getPosition: aGsFile [
 { #category : 'primitives-path' }
 File class >> lookupDirectory: fullPath filename: fileName [
 
-	"Look up <fileName> (a simple file name) in the directory identified by <fullPath> and return an array containing:
+	"Look up <fileName> (a simple file name) in the directory identified by <fullPath> and return entry array"
+
+	^ self lookupPath: fullPath, '/', fileName
+]
+
+{ #category : 'primitives-path' }
+File class >> lookupPath: fullPath [
+
+	"Look up the file or directory identified by <fullPath> and return an array containing:
 
 	<fileName> 			
 	<creationTime> 			(in seconds since the start of the Linux time epoch)
@@ -215,17 +223,18 @@ File class >> lookupDirectory: fullPath filename: fileName [
    On Macs and PCs, it is the container of the system volumes."
 
 	| gsFileStat |
-	gsFileStat := GsFile stat: fullPath, '/', fileName isLstat: false.
+	gsFileStat := GsFile stat: fullPath isLstat: true.
 	gsFileStat _isSmallInteger ifTrue: [ ^ nil ].
 	^	{
-		fileName .
+		(Path from: fullPath) basename.
 		gsFileStat ctimeUtcSeconds .
 		gsFileStat mtimeUtcSeconds .
 		gsFileStat isDirectory .
 		gsFileStat size.
 		gsFileStat mode bitAnd: 8r777. "https://github.com/GemTalk/FileSystemGs/issues/11"
-		"https://github.com/GemTalk/FileSystemGs/issues/10"
+		(gsFileStat mode bitAnd: 8r0120000) = 8r0120000. "https://github.com/GemTalk/FileSystemGs/issues/10"
 	}
+
 ]
 
 { #category : 'file creation' }
