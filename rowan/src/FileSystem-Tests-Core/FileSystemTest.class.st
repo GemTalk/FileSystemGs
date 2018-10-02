@@ -251,12 +251,15 @@ FileSystemTest >> testCopyWithCorrectBasename [
 
 { #category : 'tests' }
 FileSystemTest >> testCreateDirectory [
-	| path |
-	path := filesystem workingDirectory / 'plonk' / 'griffle'.
-	(filesystem workingDirectory / 'plonk') ensureCreateDirectory.
+	| path directory |
+	directory := filesystem workingDirectory.
+ 	self markForCleanup: directory / 'plonk' / 'griffle'.
+	self markForCleanup: directory / 'plonk'.
+	path := directory / 'plonk' / 'griffle'.
+	(directory / 'plonk') ensureCreateDirectory.
 	self shouldnt: [path createDirectory] raise:Error.
 	self assert: path exists.
-	(filesystem workingDirectory / 'plonk' )deleteAll.
+	(directory / 'plonk' ) deleteAll.
 ]
 
 { #category : 'tests' }
@@ -299,12 +302,15 @@ FileSystemTest >> testCreateDirectoryNotCreateParent [
 
 { #category : 'tests' }
 FileSystemTest >> testCreateFile [
-	| path |
-	path := filesystem workingDirectory / 'plonk' / 'griffles'.
-	(filesystem workingDirectory / 'plonk') ensureCreateDirectory.
+	| directory path |
+	directory := filesystem workingDirectory.
+ 	self markForCleanup: directory / 'plonk' / 'griffles'.
+	self markForCleanup: directory / 'plonk'.
+	path := directory / 'plonk' / 'griffles'.
+	(directory / 'plonk') ensureCreateDirectory.
 	self shouldnt: [ path createFile] raise:Error.
 	self assert:path exists .
-	(filesystem workingDirectory / 'plonk') deleteAll.
+	(directory / 'plonk') deleteAll.
 ]
 
 { #category : 'tests' }

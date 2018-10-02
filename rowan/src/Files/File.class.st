@@ -223,8 +223,8 @@ File class >> lookupDirectory: fullPath filename: fileName [
 		gsFileStat mtimeUtcSeconds .
 		gsFileStat isDirectory .
 		gsFileStat size.
-		gsFileStat gid .
-		gsFileStat nlink > 1.
+		"https://github.com/GemTalk/FileSystemGs/issues/11"
+		"https://github.com/GemTalk/FileSystemGs/issues/10"
 	}
 ]
 
