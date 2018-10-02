@@ -434,12 +434,6 @@ FileSystem >> isWritable: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> mimeTypesAt: aResolvable [
-	"Return the possible mime types for the given path."
-	^ store mimeTypesAt: (self resolve: aResolvable)
-]
-
-{ #category : 'public' }
 FileSystem >> modificationTime: aResolvable [
 	"Returns the date of the last modification of aResolvable"
 

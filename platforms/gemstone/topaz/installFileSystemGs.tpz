@@ -7,62 +7,8 @@
   login
 
 	run
-	|blk eblk list |
-	blk := [:name|
-	  Object subclass: name instVarNames: #() classVars: #() classInstVars: #() poolDictionaries: #() inDictionary: Globals options: #()].
-	eblk := [:name|
-	  Exception subclass: name instVarNames: #() classVars: #() classInstVars: #() poolDictionaries: #() inDictionary: Globals options: #()].
-	
-	Transcript cr; show: 'Install exception subclasses'.
-	{
-		'NotFound' }
-	do: [:exSubclassName |
-		Transcript cr; tab; show: exSubclassName, '...'.
-		eblk value: exSubclassName ].
-
-	list := {
-	'Smalltalk' .
-	'CodeImporter' .
-	'ZnMimeType' .
-	'UIManager' .
-	'OSPlatform' .
-	'WeakRegistry' .
-	'ZipArchive' .
-	'Stdio' .
-	'DomainError' .
-	'ZnByteStringBecameWideString' .
-	'ZnDefaultCharacterEncoder' .
-	'ZnByteEncoder' .
-	'ZnIncomplete' .
-	'ZnInvalidUTF8' .
-	'ZnCodePointReadStream' .
-	'ZnCodePointWriteStream' .
-	'WideString' } .
-	
-	Transcript cr; show: 'Install Object subclasses'.
-	list do:[:e| 
-		Transcript cr; tab; show: e, '...'.
-		blk value: e] .
-	true
-%
-	commit
-
-	run
-	| skipInitializationClassNames |
-	skipInitializationClassNames := { }.
-	[
 		Rowan projectTools load
-    	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston' ]
-		on: RwExecuteClassInitializeMethodsAfterLoadNotification
-		do: [ :ex |
-			(skipInitializationClassNames includes: ex candidateClass name asString) 
-				ifTrue: [ 
-					"bypass class initialization until we are further along in the port"
-					Transcript cr; tab; show: 'Skipping initialize for: ', ex candidateClass name asString.
-					ex resume: false ]
-				ifFalse: [
-					ex resume: true ] ]. 
-	true
+    	loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
 %
 	commit
 

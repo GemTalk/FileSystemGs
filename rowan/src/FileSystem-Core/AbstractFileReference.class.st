@@ -419,13 +419,6 @@ AbstractFileReference >> extensions [
         ^ self fullPath extensions
 ]
 
-{ #category : 'ToDeprecate' }
-AbstractFileReference >> fileIn [
-
-	self readStreamDo: [ :stream | 
-		CodeImporter evaluateFileStream: stream ]
-]
-
 { #category : 'enumerating' }
 AbstractFileReference >> fileNames [
 	^ self files collect: #basename
@@ -593,11 +586,6 @@ AbstractFileReference >> item [
 { #category : 'navigating' }
 AbstractFileReference >> makeRelative: anObject [
 	^ anObject relativeToReference: self resolve
-]
-
-{ #category : 'delegated' }
-AbstractFileReference >> mimeTypes [
-	^ self resolve mimeTypes
 ]
 
 { #category : 'accessing' }

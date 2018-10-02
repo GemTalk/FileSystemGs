@@ -15,12 +15,6 @@ Class {
 	#category : 'FileSystem-Disk-Base'
 }
 
-{ #category : 'registry' }
-FileHandle class >> registry [
-	^Registry ifNil: [Registry := WeakRegistry new]
-
-]
-
 { #category : 'class initialization' }
 FileHandle class >> startUp: resuming [
 	"This functionality is disabled for now, to avoid doing a lot of processing at

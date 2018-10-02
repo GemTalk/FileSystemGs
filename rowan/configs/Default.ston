@@ -13,7 +13,6 @@ RwProjectLoadConfiguration {
 					'FileSystem-GemStone-Kernel',
 					'FileSystem-Memory',
 					'FileSystem-Path',
-					'FileSystem-Zip',
 					'Zinc-Character-Encoding-Core',
 					'Files',
 					'Kernel-Methods',

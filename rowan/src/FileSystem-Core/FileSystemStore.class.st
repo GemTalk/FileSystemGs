@@ -295,15 +295,6 @@ FileSystemStore >> isWritable: aPath [
 ]
 
 { #category : 'public' }
-FileSystemStore >> mimeTypesAt: aPath [
-	| mimeType |
-	mimeType := ZnMimeType 
-						forFilenameExtension: aPath extension 
-						ifAbsent: [  ^ nil ].
-	^ Array with: mimeType
-]
-
-{ #category : 'public' }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
 	^ self 
@@ -318,7 +309,7 @@ FileSystemStore >> nodeAt: aPath [
 	^ self 
 		nodeAt: aPath 
 		ifPresent: [ :node| node ]
-		ifAbsent: [ NotFound signalFor: aPath in: self ]
+		ifAbsent: [ self error: 'the node ', aPath printString, ' not found.' ]
 ]
 
 { #category : 'abstract' }
