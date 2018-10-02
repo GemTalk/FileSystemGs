@@ -477,7 +477,7 @@ File >> openForWrite: writeMode [
 		If the file does not exist, we throw an explicit FileDoesNotExistException.
 		Otherwise, we throw a generic FileException."
 		self exists
-			ifFalse: [ ^ FileDoesNotExistException signalWithFile: self writeMode: writeMode ].
+			ifFalse: [ ^ FileDoesNotExistException signalWithFile: self writeMode: writeMode == #write ].
 		CannotDeleteFileException signal: name
 	].
 

@@ -14,9 +14,9 @@ DiskFileSystemTest >> createFileSystem [
 
 { #category : 'tests' }
 DiskFileSystemTest >> testDefaultWorkingDirectory [
-	| ref |
+	| ref x y |
 	ref := filesystem workingDirectory.
-	self assert: (('File @ ', Smalltalk vm imagePath) beginsWith: ref asString)
+	self assert: ((x := GsFile _expandEnvVariable: 'PWD' isClient:false) beginsWith: (y := ref asString))
 ]
 
 { #category : 'tests' }
