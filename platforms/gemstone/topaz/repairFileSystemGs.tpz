@@ -10,7 +10,7 @@
 	run
 "install st_launcher project"
 	| url projectSetDefinition projectDefinition |
-	url := 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
+	url := 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs_dev.ston'.
 	projectSetDefinition := (((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition') newForUrl: url)
 		projectHome: '$ROWAN_PROJECTS_HOME';
 		read.

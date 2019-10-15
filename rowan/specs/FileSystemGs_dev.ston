@@ -1,0 +1,14 @@
+RwComponentSpecification {
+	#specName : 'FileSystemGs_dev',
+	#projectAlias : 'FileSystemGs_dev',
+	#projectName : 'FileSystemGs',
+	#version : '0.3.0',
+	#projectUrl : 'https://github.com/GemTalk/FileSystemGs',
+	#configsPath : 'rowan/components',
+	#repoPath : 'rowan/src',
+	#projectsPath : 'rowan/projects',
+	#specsPath : 'rowan/specs',
+	#defaultConfigurationNames : [ 'Core_dev' ],
+	#defaultGroupNames : [ 'tests' ],
+	#comment : 'Load spec for installing FileSystem into GemStone/S as DataCurator for independent development of FileSystemGs using Rowan (which has a version of FileSystemGs loaded)'
+}
