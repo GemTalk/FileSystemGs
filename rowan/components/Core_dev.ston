@@ -43,8 +43,7 @@ RwProjectLoadConfiguration {
 			'gs3.[5-]'
 		] : {
 			'core' : {
-				#packageNames : [
-				]
+				#packageNames : [ ]
 			}
 		}
 	},
