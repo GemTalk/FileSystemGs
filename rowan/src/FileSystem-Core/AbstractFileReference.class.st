@@ -4,7 +4,7 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : 'AbstractFileReference',
 	#superclass : 'Object',
-	#category : 'FileSystem-Core-Public'
+	#category : 'FileSystem-Core'
 }
 
 { #category : 'copying' }
@@ -204,7 +204,7 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 	files := Set new.
 	reference := self resolve.
 	
-	(patterns findTokens: ';', String crlf) do: [ :pattern | 
+	(patterns subStrings: ';', String crlf) do: [ :pattern | 
 		doBlock value: reference value: [ :basename|
 			(pattern match: basename)
 				ifTrue: [ files add: (self / basename) ]]].

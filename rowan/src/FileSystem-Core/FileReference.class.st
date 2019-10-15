@@ -17,7 +17,7 @@ Class {
 		'filesystem',
 		'path'
 	],
-	#category : 'FileSystem-Core-Public'
+	#category : 'FileSystem-Core'
 }
 
 { #category : 'cross platform' }
@@ -87,6 +87,12 @@ FileReference >> asPath [
 	"Answer the receivers path"
 
 	^path
+]
+
+{ #category : 'printing' }
+FileReference >> asString [
+  "needed for informative topaz stack display"
+  ^ path asString 
 ]
 
 { #category : 'streams' }

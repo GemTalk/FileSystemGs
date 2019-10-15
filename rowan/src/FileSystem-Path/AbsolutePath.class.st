@@ -4,7 +4,7 @@ I represent an absolute path (a position starting from Path root)
 Class {
 	#name : 'AbsolutePath',
 	#superclass : 'Path',
-	#category : 'FileSystem-Path-Base'
+	#category : 'FileSystem-Path'
 }
 
 { #category : 'as yet unclassified' }
@@ -17,6 +17,16 @@ AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 		ifTrue: [ ^ self root ].
 		
 	^ super from: aString delimiter: aDelimiterCharater
+]
+
+{ #category : 'printing' }
+AbsolutePath >> asString [
+  "used by topaz stack display"
+  | str sz |
+  str := '/' copy .
+  1 to: (sz := self size) - 1 do:[:j | str addAll: (self at: j) ; add: $/ ].
+  str add: (self at: sz ).
+  ^ str
 ]
 
 { #category : 'testing' }

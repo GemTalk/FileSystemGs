@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'file'
 	],
-	#category : 'Files-Core'
+	#category : 'Files'
 }
 
 { #category : 'instance creation' }
@@ -15,7 +15,7 @@ FileAlreadyExistsException class >> signalOnFile: aFile [
 	
 	self new
 		file: aFile;
-		signal
+		signal: aFile name "use signal: so filename shows up in exception printString"
 ]
 
 { #category : 'accessing' }

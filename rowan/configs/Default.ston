@@ -15,7 +15,6 @@ RwProjectLoadConfiguration {
 					'FileSystem-Path',
 					'Zinc-Character-Encoding-Core',
 					'Files',
-					'Kernel-Methods',
 					'Network-UUID'
 				]
 			},
@@ -31,6 +30,24 @@ RwProjectLoadConfiguration {
 					'FileSystem-Tests-GemStone'
 				]
 			}
+		},
+		[
+			'gs3.2.x'
+		] : {
+			'core' : {
+				#packageNames : [
+					'FileSystem-Core-32x'
+				]
+			}
+		},
+		[
+			'gs3.[5-]'
+		] : {
+			'core' : {
+				#packageNames : [
+					'FileSystem-GemStone-Kernel-35x'
+				]
+			}
 		}
 	},
 	#conditionalPackageMapSpecs : {
@@ -41,7 +58,9 @@ RwProjectLoadConfiguration {
 		}
 	},
 	#definedGroupNames : {
-		'core' : [ ],
-		'tests' : [ 'core' ]
+		'tests' : [
+			'core'
+		],
+		'core' : [ ]
 	}
 }
