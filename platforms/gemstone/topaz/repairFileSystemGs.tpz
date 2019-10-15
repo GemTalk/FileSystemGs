@@ -4,17 +4,22 @@
   iferr 2 stack
 #  iferr 3 exit 1
 
-  set u DataCurator p swordfish
+  set u SystemUser p swordfish
   login
 
 	run
 "install st_launcher project"
-	| url projectSetDefinition |
+	| url projectSetDefinition projectDefinition |
 	url := 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
 	projectSetDefinition := (((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition') newForUrl: url)
 		projectHome: '$ROWAN_PROJECTS_HOME';
 		read.
-	projectSetDefinition load
+	projectDefinition := projectSetDefinition projectNamed: 'FileSystemGs'.
+	projectDefinition packages keysAndValuesDo: [:packageName :packageDef |
+		packageDef classDefinitions keysAndValuesDo: [:className :classDef |
+			classDef category = packageDef name
+				ifFalse: [ classDef category: packageDef name ] ] ].
+	projectDefinition export
 %
 	commit
 

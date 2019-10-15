@@ -1,6 +1,6 @@
 RwProjectLoadConfiguration {
-	#name : 'Default',
-	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded int Globals by SystemUser',
+	#name : 'Core',
+	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded into Globals by SystemUser',
 	#version : '0.1.0',
 	#conditionalPackages : {
 		[
@@ -35,13 +35,18 @@ RwProjectLoadConfiguration {
 	},
 	#conditionalPackageMapSpecs : {
 		'gemstone' : {
+			'DataCurator' : {
+				#defaultSymbolDictName : 'UserGlobals'
+			},
 			'SystemUser' : {
 				#defaultSymbolDictName : 'Globals'
 			}
 		}
 	},
 	#definedGroupNames : {
-		'core' : [ ],
-		'tests' : [ 'core' ]
+		'tests' : [
+			'core'
+		],
+		'core' : [ ]
 	}
 }
