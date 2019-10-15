@@ -157,7 +157,7 @@ DiskStore >> basicOpen: aPath writable: writeMode [
 
 	"writeMode - #read, #append, #write"
 
-	| string encoded |
+	| string |
 	string := self stringFromPath: aPath.
 	^ File open: string writable: writeMode
 ]
@@ -352,8 +352,8 @@ DiskStore >> openFileStream: path writable: writable [
 	fullPath := self stringFromPath: path.
 	"redirect over the default implementation"
 	^ writable 
-		ifFalse: [ FileStream readOnlyFileNamed: fullPath ]
-		ifTrue: [ FileStream fileNamed: fullPath ]
+		ifFalse: [ FileStreamPortable readOnlyFileNamed: fullPath ]
+		ifTrue: [ FileStreamPortable fileNamed: fullPath ]
 ]
 
 { #category : 'public' }

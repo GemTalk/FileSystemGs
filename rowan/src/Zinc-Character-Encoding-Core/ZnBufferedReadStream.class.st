@@ -211,6 +211,28 @@ ZnBufferedReadStream >> nextInto: collection [
 		into: collection
 ]
 
+{ #category : 'accessing' }
+ZnBufferedReadStream >> nextLine [
+"Answer next line (may be empty) without line end delimiters, or nil if at end.
+Leave the stream positioned after the line delimiter(s).
+Handle a zoo of line delimiters CR, LF, or CR-LF pair"
+
+| cr lf chrcls result ch |
+self atEnd ifTrue: [^nil].
+cr := (chrcls:= Character) cr.
+lf := chrcls  lf.
+result := self collectionSpecies new.
+[ ch := self next .
+  (ch == cr or:[ ch == lf ]) ifTrue:[ 
+    ch == cr ifTrue:[ self peekFor: lf ].
+    ^ result 
+  ].
+  result add: ch .
+  self atEnd 
+] whileFalse .
+^ result
+]
+
 { #category : 'accessing-bytes' }
 ZnBufferedReadStream >> nextLittleEndianNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false
@@ -241,6 +263,12 @@ ZnBufferedReadStream >> peek [
 	^ position <= limit
 		ifTrue: [ buffer at: position ]
 		ifFalse: [ nil ]
+]
+
+{ #category : 'accessing' }
+ZnBufferedReadStream >> peek: count [
+  self peek .
+  ^ buffer copyFrom: position to: (position + count min: limit)
 ]
 
 { #category : 'accessing' }
@@ -378,6 +406,26 @@ ZnBufferedReadStream >> upTo: value [
 		streamContents: [ :writeStream | | element |
 			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
 				writeStream nextPut: element ] ]
+]
+
+{ #category : 'accessing' }
+ZnBufferedReadStream >> upToAll: aCollection [ 
+"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
+
+| startPos endMatch result x |
+startPos := self position.
+x := self upTo: aCollection first.
+self atEnd ifTrue: [ ^ x ].
+2 to: aCollection size do: [:i |
+	self peek = (aCollection at: i)
+		ifTrue: [ self next ]
+		ifFalse: [ self position: startPos.
+		^ self upToEnd ] ].
+endMatch := self position.
+self position: startPos.
+result := self next: endMatch - startPos - aCollection size.
+self position: endMatch.
+^ result
 ]
 
 { #category : 'accessing' }
