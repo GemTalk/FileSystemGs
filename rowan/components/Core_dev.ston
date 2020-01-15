@@ -8,7 +8,7 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
-                    'FileDescriptor',
+					'FileDescriptor',
 					'FileSystem-Core',
 					'FileSystem-Disk',
 					'FileSystem-Memory',
@@ -20,7 +20,7 @@ RwProjectLoadConfiguration {
 			},
 			'tests' : {
 				#packageNames : [
-                    'FileDescriptor-Tests',
+					'FileDescriptor-Tests',
 					'FileSystem-Tests-Attributes',
 					'FileSystem-Tests-Core',
 					'FileSystem-Tests-Disk',
