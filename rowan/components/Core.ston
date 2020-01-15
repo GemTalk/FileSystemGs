@@ -8,6 +8,7 @@ RwProjectLoadConfiguration {
 		] : {
 			'core' : {
 				#packageNames : [
+                    'FileDescriptor',
 					'FileSystem-Core',
 					'FileSystem-Disk',
 					'FileSystem-GemStone-Kernel',
@@ -20,6 +21,7 @@ RwProjectLoadConfiguration {
 			},
 			'tests' : {
 				#packageNames : [
+                    'FileDescriptor-Tests',
 					'FileSystem-Tests-Attributes',
 					'FileSystem-Tests-Core',
 					'FileSystem-Tests-Disk',
