@@ -5,6 +5,11 @@ Class {
 }
 
 { #category : 'BasicTests' }
+UnixFileDescriptorTest >> testNoNew [
+	self  should: [ UnixFileDescriptor new ] raise: Error
+]
+
+{ #category : 'BasicTests' }
 UnixFileDescriptorTest >> testOpenStdin [
 	| fd |
 	fd := UnixFileDescriptor forStdout.
