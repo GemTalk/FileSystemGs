@@ -31,7 +31,10 @@ LibcFactory class >> generateFromHeader: headerName [
 	className := self classNameForHeaderName: headerName.
 	libraryPath := '/lib64/libc.so.6'.	"You may need to change the path to libc, which varies by Linux distribution."
 	header := CHeader path: headerPath.
-	wrapperClass := header wrapperNamed: className forLibraryAt: libraryPath.
+	wrapperClass := header
+		wrapperNamed: className
+		forLibraryAt: libraryPath
+		select: nil.
 	wrapperClass initializeFunctions.
 	UserGlobals at: wrapperClass name put: wrapperClass.
 	Rowan packageTools adopt adoptClassNamed: className intoPackageNamed: 'LibC'
