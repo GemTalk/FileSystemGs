@@ -1,5 +1,5 @@
 "
-Utility to re-generate the Libc class.
+Utility to re-generate the Libc classes.
 "
 Class {
 	#name : 'LibcFactory',
