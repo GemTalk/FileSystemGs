@@ -13,6 +13,7 @@ RwProjectLoadConfiguration {
 					'FileSystem-Disk',
 					'FileSystem-Memory',
 					'FileSystem-Path',
+					'LibC',
 					'Zinc-Character-Encoding-Core',
 					'Files',
 					'Network-UUID'
@@ -27,6 +28,7 @@ RwProjectLoadConfiguration {
 					'FileSystem-Tests-Memory',
 					'Zinc-Character-Encoding-Tests',
 					'Files-Tests',
+					'LibC-Tests',
 					'Network-UUID-Tests',
 					'FileSystem-Tests-GemStone'
 				]
