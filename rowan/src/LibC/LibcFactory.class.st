@@ -22,22 +22,35 @@ LibcFactory class >> classNameForHeaderName: headerName [
 	^ writeStream contents
 ]
 
+{ #category : 'Utility' }
+LibcFactory class >> generateFcntl [
+	"LibcFactory generateFcntl"
+
+	self generateFromHeader: 'fcntl.h'
+]
+
 { #category : 'private' }
 LibcFactory class >> generateFromHeader: headerName [
 	"private"
 
-	| className headerPath libraryPath header wrapperClass |
+	| className headerPath libraryPath packageName header wrapperClass |
 	headerPath := '/usr/include/' , headerName.
 	className := self classNameForHeaderName: headerName.
 	libraryPath := '/lib64/libc.so.6'.	"You may need to change the path to libc, which varies by Linux distribution."
+	packageName := 'LibC'.
+
 	header := CHeader path: headerPath.
 	wrapperClass := header
 		wrapperNamed: className
 		forLibraryAt: libraryPath
 		select: nil.
-	wrapperClass initializeFunctions.
+	wrapperClass
+		category: packageName;
+		initializeFunctions.
 	UserGlobals at: wrapperClass name put: wrapperClass.
-	Rowan packageTools adopt adoptClassNamed: className intoPackageNamed: 'LibC'
+	Rowan packageTools adopt
+		adoptClassNamed: className
+		intoPackageNamed: packageName
 ]
 
 { #category : 'Utility' }
