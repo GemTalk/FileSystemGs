@@ -110,7 +110,7 @@ Class {
 		'Function_exit',
 		'Function__getpgid'
 	],
-	#category : nil
+	#category : 'LibC'
 }
 
 { #category : 'Initializing - private' }

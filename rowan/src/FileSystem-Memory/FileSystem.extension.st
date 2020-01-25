@@ -1,11 +1,6 @@
 Extension { #name : 'FileSystem' }
 
 { #category : '*FileSystem-Memory' }
-FileSystem >> isMemoryFileSystem [
-	^ store isMemoryFileSystem
-]
-
-{ #category : '*FileSystem-Memory' }
 FileSystem class >> currentMemoryFileSystem [
 	^ MemoryStore currentFileSystem
 ]
@@ -13,4 +8,9 @@ FileSystem class >> currentMemoryFileSystem [
 { #category : '*FileSystem-Memory' }
 FileSystem class >> memory [
 	^ self store: MemoryStore new
+]
+
+{ #category : '*FileSystem-Memory' }
+FileSystem >> isMemoryFileSystem [
+	^ store isMemoryFileSystem
 ]

@@ -1,10 +1,5 @@
 Extension { #name : 'FileSystem' }
 
-{ #category : '*FileSystem-Disk' }
-FileSystem >> isDiskFileSystem [
-	^ store isDiskFileSystem
-]
-
 { #category : '*filesystem-disk' }
 FileSystem class >> * aFileOrDirectoryName [
 	^ self disk * aFileOrDirectoryName
@@ -30,4 +25,9 @@ FileSystem class >> root [
 { #category : '*filesystem-disk' }
 FileSystem class >> workingDirectory [
 	^ self disk workingDirectory
+]
+
+{ #category : '*FileSystem-Disk' }
+FileSystem >> isDiskFileSystem [
+	^ store isDiskFileSystem
 ]
