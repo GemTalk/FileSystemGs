@@ -4,6 +4,11 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'constants' }
+libcUnistd >> libraryClass [
+	^ _libcUnistd
+]
+
 { #category : 'Functions' }
 libcUnistd >> writeToFileDescriptor: fd fromBuffer: buf count: bytes [
 	| result errno |
