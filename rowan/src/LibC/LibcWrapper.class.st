@@ -12,3 +12,30 @@ Class {
 	],
 	#category : 'LibC'
 }
+
+{ #category : 'instance creation' }
+LibcWrapper class >> new [
+	^ super new
+		initialize;
+		yourself
+]
+
+{ #category : 'error handling' }
+LibcWrapper >> handleErrno: errorNumber [
+	" Default handling of system errors: just signal the default exception class for the error.
+	Subclasses may override this method for specific errors that need other handling."
+
+	| errorClass |
+	errorClass := UnixError errorClassForErrorNumber: errorNumber.
+	^ errorClass signal
+]
+
+{ #category : 'initialization' }
+LibcWrapper >> initialize [
+	library := self wrappedClass new
+]
+
+{ #category : 'accessing' }
+LibcWrapper >> wrappedClass [
+	self subclassResponsibility
+]
