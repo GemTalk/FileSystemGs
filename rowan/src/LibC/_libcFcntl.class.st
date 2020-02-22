@@ -13,6 +13,11 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'initializing' }
+_libcFcntl class >> initialize [
+	self initializeFunctions
+]
+
 { #category : 'Initializing - private' }
 _libcFcntl class >> initializeFunction_creat_inLibrary: cLibrary [
 
@@ -156,6 +161,19 @@ extern int open (const char *__file, int __oflag, ...)                          
 
 	^Functionopen callWith: { __file. __oflag"varArgs array should be appended to this array" }
 
+]
+
+{ #category : 'Functions' }
+_libcFcntl >> open_: __file _: __oflag _: __varArgs [
+	"/usr/include/fcntl.h line 195
+extern int open (const char *__file, int __oflag, ...)                                                       __attribute__ ((__nonnull__                                                       (1)                                                      ))                                                                     ;"
+
+	"Interpreted as #int32 from #( #'const char*' #'int32' )"
+
+	^ Functionopen
+		callWith:
+			{__file.
+			__oflag} , __varArgs
 ]
 
 { #category : 'Functions' }

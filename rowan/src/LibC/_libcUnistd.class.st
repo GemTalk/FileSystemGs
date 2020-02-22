@@ -113,6 +113,11 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'initializing' }
+_libcUnistd class >> initialize [
+	self initializeFunctions
+]
+
 { #category : 'Initializing - private' }
 _libcUnistd class >> initializeFunction___getpgid_inLibrary: cLibrary [
 
