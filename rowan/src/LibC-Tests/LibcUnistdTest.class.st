@@ -33,12 +33,15 @@ LibcUnistdTest >> testReadBash [
 	filename := '/bin/bash'.
 	fd := LibcFcntl new openPath: filename flags: 0 mode: 0.
 	self assert: fd > 0.
-	buffer := ByteArray new: 128.
-	numRead := instance readFromFileDescriptor:fd  toBuffer: buffer count: buffer size.
+	buffer := CByteArray gcMalloc: 128.
+	numRead := instance
+		readFromFileDescriptor: fd
+		toBuffer: buffer
+		count: buffer size.
 	self assert: numRead equals: buffer size.
-	self assert: ( buffer at: 1) equals: 16r7f. "Part of the ELF majic number"
-
-	closeReturn := instance new closeFd: fd.
+	self assert: (buffer int8At: 0) equals: 16r7f.	"Part of the ELF majic number"
+	self assert: (buffer stringFrom: 1 to: 3) equals: 'ELF'.
+	closeReturn := instance closeFd: fd.
 	self assert: closeReturn equals: 0
 ]
 
