@@ -21,9 +21,29 @@ DirentStruct >> d_name [
 	in a filesystem that uses, for instance, UTF-8 encoding
 	for filenames."
 
-	| startIndex endIndex |
-	startIndex := 19.	"Omit the zero termination byte of the name by subtracting one."
-	endIndex := self d_reclen - 1.
+	| startIndex recordLength endIndex lastWord firstZeroIndex |
+	startIndex := 19.	"Offset of start of name string."
+	recordLength := self d_reclen.
+	recordLength \\ 8 = 0
+		ifFalse: [ self error: 'Record not an integral number of 64-bit words.' ].
+	recordLength <= 24
+		ifTrue: [ 
+			"20 is index of 0 byte for a one-character filename."
+			lastWord := bytes byteArrayFrom: 20 to: recordLength - 1.
+			firstZeroIndex := lastWord indexOf: 0.
+			firstZeroIndex = 0
+				ifTrue: [ self error: 'Failed to find zero byte terminating filename.' ].	
+			"Subtracting one to not include the zero"
+			endIndex := startIndex + firstZeroIndex - 1 ]
+		ifFalse: [ 
+			lastWord := bytes byteArrayFrom: recordLength - 8 to: recordLength - 1.
+			firstZeroIndex := lastWord indexOf: 0.
+			firstZeroIndex = 0
+				ifTrue: [ self error: 'Failed to find zero byte terminating filename' ].	
+	"(recordLength - 10) is the penultimate byte in the penultimate word (if any).
+	Adding the index of the first zero in the ultimate word will yield the index of the last
+	non-zero byte before the first zero."
+			endIndex := recordLength - 10 + firstZeroIndex ].
 	^ bytes byteArrayFrom: startIndex to: endIndex
 ]
 

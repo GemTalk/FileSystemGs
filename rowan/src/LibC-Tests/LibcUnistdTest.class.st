@@ -29,14 +29,17 @@ LibcUnistdTest >> testEOF [
 	"Create an empty file, read from it. 
 	Should get EOF exception."
 
-	self deny: true
-]
-
-{ #category : 'tests' }
-LibcUnistdTest >> testListDirectory [
-	"List the files in the current working directory"
-
-	self deny: true
+	| filename fd buf returned |
+	filename := 'testEof.empty'.	
+	"Flags: O_CREAT (8r100), O_RDONLY (0)"	"Mode: S_IRWXU"
+	fd := LibcFcntl new openPath: filename flags: 8r100 mode: 8r0700.
+	buf := CByteArray gcMalloc: 1024.
+	returned := instance readFromFileDescriptor: fd toBuffer: buf count: 1.
+	self assert: returned equals: 0.
+	returned := instance closeFd: fd.
+	self assert: returned equals: 0.
+	returned := instance unlinkPath: filename.
+	self assert: returned equals: 0
 ]
 
 { #category : 'tests' }

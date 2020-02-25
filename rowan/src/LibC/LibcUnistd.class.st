@@ -28,6 +28,18 @@ LibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
 	^ result
 ]
 
+{ #category : 'functions' }
+LibcUnistd >> unlinkPath: pathString [
+	| result errno |
+	CCallout errno: 0.
+	result := library unlink_: pathString.
+	errno := CCallout errno.
+
+	errno ~~ 0
+		ifTrue: [ self handleErrno: errno ].
+	^ result
+]
+
 { #category : 'accessing' }
 LibcUnistd >> wrappedClass [
 	^ _libcUnistd

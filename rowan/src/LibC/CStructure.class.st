@@ -14,3 +14,26 @@ Class {
 	],
 	#category : 'LibC'
 }
+
+{ #category : 'instance creation' }
+CStructure class >> forPointer: aCPointer [
+	"aCPointer must point at the kind of struct for the receiving class."
+
+	^ self new
+		bytes: aCPointer;
+		yourself
+]
+
+{ #category : 'private - accessing' }
+CStructure >> bytes: aCByteArray [
+	"Private"
+
+	bytes := aCByteArray
+]
+
+{ #category : 'testing' }
+CStructure >> isNull [
+	"Answer true if my CByteArray is a null pointer."
+
+	^ bytes memoryAddress = 0
+]
