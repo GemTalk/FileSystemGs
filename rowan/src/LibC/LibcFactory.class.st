@@ -23,6 +23,13 @@ LibcFactory class >> classNameForHeaderName: headerName [
 ]
 
 { #category : 'Utility' }
+LibcFactory class >> generateDirent [
+	"LibcFactory generateDirent"
+
+	self generateFromHeader: 'dirent.h'
+]
+
+{ #category : 'Utility' }
 LibcFactory class >> generateFcntl [
 	"LibcFactory generateFcntl"
 

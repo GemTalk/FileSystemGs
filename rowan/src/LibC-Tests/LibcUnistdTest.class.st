@@ -25,6 +25,21 @@ LibcUnistdTest >> testEbadf [
 ]
 
 { #category : 'tests' }
+LibcUnistdTest >> testEOF [
+	"Create an empty file, read from it. 
+	Should get EOF exception."
+
+	self deny: true
+]
+
+{ #category : 'tests' }
+LibcUnistdTest >> testListDirectory [
+	"List the files in the current working directory"
+
+	self deny: true
+]
+
+{ #category : 'tests' }
 LibcUnistdTest >> testReadBash [
 	"This test relies on the /bin/bash being there and readable.
 	This should be true on all Linux machines. And our Macs, though not necessarily Macs in general."
