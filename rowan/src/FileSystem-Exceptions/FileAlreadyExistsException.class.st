@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'file'
 	],
-	#category : 'Files'
+	#category : 'FileSystem-Exceptions'
 }
 
 { #category : 'instance creation' }

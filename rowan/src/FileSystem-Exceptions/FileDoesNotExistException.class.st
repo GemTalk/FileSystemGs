@@ -19,7 +19,7 @@ Class {
 	#instVars : [
 		'readOnly'
 	],
-	#category : 'Files'
+	#category : 'FileSystem-Exceptions'
 }
 
 { #category : 'signalling' }

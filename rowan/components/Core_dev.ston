@@ -11,12 +11,12 @@ RwProjectLoadConfiguration {
 					'FileDescriptor',
 					'FileSystem-Core',
 					'FileSystem-Disk',
+					'FileSystem-Exceptions',
 					'FileSystem-Memory',
 					'FileSystem-Obsolete',
 					'FileSystem-Path',
 					'LibC',
 					'Zinc-Character-Encoding-Core',
-					'Files',
 					'Network-UUID'
 				]
 			},
