@@ -48,7 +48,7 @@ UnixResolver >> supportedOrigins [
 
 { #category : 'origins' }
 UnixResolver >> temp [
-	^ '/tmp' asFileReference
+	^ FileSystem disk referenceTo: '/tmp'
 ]
 
 { #category : 'origins' }

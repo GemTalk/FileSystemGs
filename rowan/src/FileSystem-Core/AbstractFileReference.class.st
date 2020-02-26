@@ -7,6 +7,11 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
+{ #category : 'hacks' }
+AbstractFileReference class >> fixMe [
+	"Senders of this message should be fixed before release."
+]
+
 { #category : 'copying' }
 AbstractFileReference >> , extension [
 	^ self resolve, extension

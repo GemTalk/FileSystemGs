@@ -260,12 +260,12 @@ FileLocator class >> R [
 
 { #category : 'accessing' }
 FileLocator class >> resolver [
-
-	^ SessionTemps current at: #FileLocator_Resolver ifAbsentPut: [
+	self fixMe.
+	^ " SessionTemps current at: #FileLocator_Resolver ifAbsentPut: ["
 		InteractiveResolver new
 			addResolver: SystemResolver new;
 			addResolver: PlatformResolver forCurrentPlatform;
-			yourself ]
+			yourself "]"
 ]
 
 { #category : 'origins' }
