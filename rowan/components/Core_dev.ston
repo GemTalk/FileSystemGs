@@ -12,6 +12,7 @@ RwProjectLoadConfiguration {
 					'FileSystem-Core',
 					'FileSystem-Disk',
 					'FileSystem-Memory',
+					'FileSystem-Obsolete',
 					'FileSystem-Path',
 					'LibC',
 					'Zinc-Character-Encoding-Core',
