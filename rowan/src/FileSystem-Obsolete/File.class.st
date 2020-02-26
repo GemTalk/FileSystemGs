@@ -45,7 +45,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : 'Files'
+	#category : 'FileSystem-Obsolete'
 }
 
 { #category : 'primitives-file' }

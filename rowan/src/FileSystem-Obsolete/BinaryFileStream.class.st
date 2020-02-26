@@ -9,7 +9,7 @@ stream upToEnd
 Class {
 	#name : 'BinaryFileStream',
 	#superclass : 'AbstractBinaryFileStream',
-	#category : 'Files'
+	#category : 'FileSystem-Obsolete'
 }
 
 { #category : 'open/close' }

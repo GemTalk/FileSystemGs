@@ -39,7 +39,7 @@ Class {
 		'handle',
 		'forWrite'
 	],
-	#category : 'Files'
+	#category : 'FileSystem-Obsolete'
 }
 
 { #category : 'instance creation' }

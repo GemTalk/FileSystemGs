@@ -12,7 +12,7 @@ Class {
 	#classVars : [
 		'Registry'
 	],
-	#category : 'FileSystem-Disk'
+	#category : 'FileSystem-Obsolete'
 }
 
 { #category : 'class initialization' }
