@@ -16,27 +16,5 @@ Applications that want to offer the user the opportunity to select a different f
 Class {
 	#name : 'FileDoesNotExistException',
 	#superclass : 'FileException',
-	#instVars : [
-		'readOnly'
-	],
 	#category : 'FileSystem-Exceptions'
 }
-
-{ #category : 'signalling' }
-FileDoesNotExistException class >> signalWithFile: aFile writeMode: writeMode [
-
-  | ex |
-	^ (ex := self fileName: aFile basename)
-		readOnly: writeMode not;
-		signal: ex fileName  "use signal: so file name shows up in  ex printString"
-]
-
-{ #category : 'accessing' }
-FileDoesNotExistException >> readOnly [
-	^readOnly == true
-]
-
-{ #category : 'accessing' }
-FileDoesNotExistException >> readOnly: aBoolean [
-	readOnly := aBoolean
-]
