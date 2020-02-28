@@ -310,10 +310,11 @@ FileSystemTest >> testCreateFile [
 
 { #category : 'tests' }
 FileSystemTest >> testCreateFileNotCreateParent [
-	| path |
-	path := FileSystem disk referenceTo: '/plonk/griffles'.
-	self should: [ path createFile ] raise: DirectoryDoesNotExist.
-	self assert: path exists not
+	| path reference |
+	path := Path / 'plonk' / 'griffles'.
+	reference := FileReference fileSystem: filesystem path: path.
+	self should: [ reference openWritable: true ] raise: DirectoryDoesNotExist.
+	self assert: reference exists not
 ]
 
 { #category : 'tests' }
