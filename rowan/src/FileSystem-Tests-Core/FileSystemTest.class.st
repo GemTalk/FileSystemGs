@@ -311,9 +311,9 @@ FileSystemTest >> testCreateFile [
 { #category : 'tests' }
 FileSystemTest >> testCreateFileNotCreateParent [
 	| path |
-	path := '/plonk/griffles' asFileReference.
-	self should:[path createFile] raise: DirectoryDoesNotExist .
-	self assert: path exists not.
+	path := FileSystem disk referenceTo: '/plonk/griffles'.
+	self should: [ path createFile ] raise: DirectoryDoesNotExist.
+	self assert: path exists not
 ]
 
 { #category : 'tests' }
@@ -463,17 +463,21 @@ FileSystemTest >> testFile [
 { #category : 'tests' }
 FileSystemTest >> testFileNames [
 	| reference |
-	#('test one' 'test with two' 'test-äöü' 'test.äöü') do: [ :each |
-		reference := filesystem workingDirectory / each.
-		self assert: reference basename = each.
-		self deny: reference exists.
-		reference
-			writeStreamDo: [ :stream | stream nextPutAll: 'gooly' ]
-			ifPresent: [ self fail ].
-		[	self assert: reference exists.
-			self assert: (filesystem workingDirectory children
-				anySatisfy: [ :ref | ref = reference ]) ]
-		ensure: [ reference delete ] ]
+	self fail.	"UTF-8 encoding of filenames not working correctly."
+	#('test one' 'test with two' 'test-äöü' 'test.äöü')
+		do: [ :each | 
+			reference := filesystem workingDirectory / each.
+			self assert: reference basename = each.
+			self deny: reference exists.
+			reference
+				writeStreamDo: [ :stream | stream nextPutAll: 'gooly' ]
+				ifPresent: [ self fail ].
+			[ 
+			self assert: reference exists.
+			self
+				assert:
+					(filesystem workingDirectory children anySatisfy: [ :ref | ref = reference ]) ]
+				ensure: [ reference delete ] ]
 ]
 
 { #category : 'tests' }
