@@ -13,23 +13,23 @@ Class {
 	#category : 'System-Platforms-Mac'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MacOSXPlatform class >> isActivePlatform [
 	^ self isMacOS
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MacOSXPlatform >> accept: aVisitor [
 
 	^ aVisitor visitMacOSX: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MacOSXPlatform >> family [
 	^#MacOSX
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MacOSXPlatform >> isMacOSX [
 	^ true
 ]
