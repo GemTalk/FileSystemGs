@@ -15,6 +15,7 @@ DiskFileSystemTest >> createFileSystem [
 { #category : 'tests' }
 DiskFileSystemTest >> testDefaultWorkingDirectory [
 	| ref x y |
+	self fail. "Needs to not use GsFile."
 	ref := filesystem workingDirectory.
 	self assert: ((x := GsFile _expandEnvVariable: 'PWD' isClient:false) beginsWith: (y := ref pathString))
 ]

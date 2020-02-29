@@ -24,17 +24,18 @@ FileSystemStore class >> isCaseSensitive [
 	^ self shouldBeImplemented
 ]
 
+{ #category : 'porting' }
+FileSystemStore class >> isGemStoneSpecific [
+	"Methods that send this message will need to be refactored when 
+	porting from GemStone to another Smalltalk dialect."
+]
+
 { #category : 'instance creation' }
 FileSystemStore class >> new [
 
 	^self basicNew
 		initialize;
 		yourself
-]
-
-{ #category : 'accessing' }
-FileSystemStore class >> separator [
-	self shouldBeImplemented
 ]
 
 { #category : 'public' }
@@ -364,11 +365,6 @@ FileSystemStore >> rename: sourcePath ifAbsent: absentBlock to: destinationPath 
 { #category : 'abstract' }
 FileSystemStore >> rename: sourcePath to: destinationPath [
 	self subclassResponsibility 
-]
-
-{ #category : 'accessing' }
-FileSystemStore >> separator [
-	^ self class separator
 ]
 
 { #category : 'error signalling' }

@@ -44,6 +44,8 @@ DiskStore class >> defaultWorkingDirectory [
 	Clients should normally use the instance side method which caches this value."
 	| pathString |
 
+	self error: 'Replace GsFile use here.'.
+
 	pathString := (GsFile _expandEnvVariable: 'PWD' isClient:false).
 	^(Path from: pathString delimiter: self delimiter).
 ]
@@ -104,6 +106,8 @@ DiskStore >> basicCreationTimeOf: anEntry [
 { #category : 'private' }
 DiskStore >> basicEntry: ignored path: aPath nodesDo: aBlock [
 	| pathString intOrArray |
+
+	self error: 'Replace GsFile use here.'.
 		
 	pathString := self stringFromPath: aPath.
 	intOrArray := GsFile _contentsOfServerDirectory: pathString expandPath: true.

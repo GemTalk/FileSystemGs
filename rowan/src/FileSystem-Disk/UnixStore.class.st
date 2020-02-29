@@ -14,7 +14,8 @@ UnixStore class >> delimiter [
 
 { #category : 'current' }
 UnixStore class >> isActiveClass [
-	^ ((System gemVersionAt: 'osName') = 'Linux') and: [ super isActiveClass ]
+	self isGemStoneSpecific.
+	^ true
 ]
 
 { #category : 'public' }
@@ -27,11 +28,6 @@ UnixStore class >> isCaseSensitive [
 UnixStore class >> maxFileNameLength [
 
 	^ 255
-]
-
-{ #category : 'public' }
-UnixStore class >> separator [ 
-	^ $:
 ]
 
 { #category : 'public' }

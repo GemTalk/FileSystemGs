@@ -33,11 +33,6 @@ MemoryStore class >> reset [
 	CurrentFS := nil
 ]
 
-{ #category : 'public' }
-MemoryStore class >> separator [ 
-	^ $:
-]
-
 { #category : 'system startup' }
 MemoryStore class >> startUp [
 	self reset

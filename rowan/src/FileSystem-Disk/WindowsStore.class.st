@@ -29,11 +29,6 @@ WindowsStore class >> maxFileNameLength [
 	^ 255
 ]
 
-{ #category : 'accessing' }
-WindowsStore class >> separator [ 
-	^ $\
-]
-
 { #category : 'public' }
 WindowsStore >> checkName: aFileName fixErrors: fixing [
 	"Check if the file name contains any invalid characters"

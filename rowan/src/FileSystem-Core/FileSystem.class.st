@@ -617,13 +617,6 @@ FileSystem >> root [
 	^ self referenceTo: Path root
 ]
 
-{ #category : 'accessing' }
-FileSystem >> separator [
-	"Return path separator used by this filesystem."
-
-	^ store separator
-]
-
 { #category : 'public' }
 FileSystem >> sizeOf: aResolvable [
 	"Resolve the argument and return the size for this file or directory "
