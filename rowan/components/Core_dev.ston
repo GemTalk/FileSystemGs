@@ -17,6 +17,7 @@ RwProjectLoadConfiguration {
 					'FileSystem-Path',
 					'LibC',
 					'System-Platforms-Base',
+					'System-Platforms-Mac',
 					'System-Platforms-Unix',
 					'Zinc-Character-Encoding-Core',
 					'Network-UUID'
