@@ -13,20 +13,20 @@ Class {
 	#category : 'System-Platforms-Unix'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Unix64Platform class >> isActivePlatform [
     self fixMe.
     ^true.
 	"^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 Unix64Platform >> accept: aVisitor [
 
 	^ aVisitor visitUnix64: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Unix64Platform >> isUnix64 [
 	^ true
 ]

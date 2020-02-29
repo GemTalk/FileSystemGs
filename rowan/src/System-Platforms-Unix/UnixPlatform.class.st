@@ -13,18 +13,18 @@ Class {
 	#category : 'System-Platforms-Unix'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixPlatform class >> isActivePlatform [
 	^ false
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 UnixPlatform >> accept: aVisitor [
 
 	^ aVisitor visitUnix: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. 
 Unix default PATH_MAX is 4096.  PATH_MAX is needed to avoid buffer overflow. In case PATH_MAX is not sufficient the method  currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size."
@@ -32,12 +32,12 @@ Unix default PATH_MAX is 4096.  PATH_MAX is needed to avoid buffer overflow. In 
 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> family [
 	^#Unix
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version.This method is used in getting the current working directory. getcwd is preffered over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implict re- initialization.
 	
@@ -55,18 +55,18 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 UnixPlatform >> isUnix [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> lineEnding [
 
 	^ String lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UnixPlatform >> menuShortcutString [
 	^ 'ctrl'
 ]

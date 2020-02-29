@@ -7,21 +7,20 @@ Class {
 	#category : 'System-Platforms-Unix'
 }
 
-{ #category : #testing }
-
+{ #category : 'testing' }
 Unix32Platform class >> isActivePlatform [
     self fixMe.
     ^false
 	"^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 4 ]"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 Unix32Platform >> accept: aVisitor [
 
 	^ aVisitor visitUnix32: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Unix32Platform >> isUnix32 [
 	^ true
 ]
