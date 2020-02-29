@@ -16,6 +16,7 @@ RwProjectLoadConfiguration {
 					'FileSystem-Obsolete',
 					'FileSystem-Path',
 					'LibC',
+					'System-Platforms-Base',
 					'Zinc-Character-Encoding-Core',
 					'Network-UUID'
 				]
