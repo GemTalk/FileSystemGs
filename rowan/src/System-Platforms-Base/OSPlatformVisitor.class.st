@@ -4,7 +4,7 @@ A visitor to be subclassed to write platform specific code without needing to ad
 Class {
 	#name : #OSPlatformVisitor,
 	#superclass : #Object,
-	#category : #'System-Platforms-Base'
+	#category : 'System-Platforms-Base'
 }
 
 { #category : #visiting }

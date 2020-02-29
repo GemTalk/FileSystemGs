@@ -14,7 +14,7 @@ Class {
 	#classVars : [
 		'Current'
 	],
-	#category : #'System-Platforms-Base'
+	#category : 'System-Platforms-Base'
 }
 
 { #category : #accessing }
@@ -26,15 +26,18 @@ OSPlatform class >> current [
 { #category : #'system attributes' }
 OSPlatform class >> currentPlatformName [
 	"Return the name of the platform we're running on"
+     self fixMe.
+    ^ 'Unknown'.
 
-	^ Smalltalk vm getSystemAttribute: 1001
+	"^ Smalltalk vm getSystemAttribute: 1001"
 ]
 
 { #category : #'system attributes' }
 OSPlatform class >> currentVersion [
 	"Return the version number string of the platform we're running on"
-
-	^ (Smalltalk vm getSystemAttribute: 1002) asString
+    self fixMe.
+    ^ 'Unknown'.
+	"^ (Smalltalk vm getSystemAttribute: 1002) asString"
 ]
 
 { #category : #private }
@@ -43,22 +46,6 @@ OSPlatform class >> determineActivePlatform [
 	^ self allSubclasses 
 		detect: [ :any | any isActivePlatform ].
 
-]
-
-{ #category : #example }
-OSPlatform class >> example [
-	<example>
-	Smalltalk os current inspect
-]
-
-{ #category : #'class initialization' }
-OSPlatform class >> initialize [
-	"OSPlatform initialize"
-
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 50.	
-	self startUp: true.
 ]
 
 { #category : #private }
@@ -104,7 +91,7 @@ OSPlatform >> currentWorkingDirectoryPath [
 
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
-	<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>
+	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
 	
 	^ (self getPwdViaFFI: aByteString size: aByteString size) 
 		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
@@ -113,7 +100,7 @@ OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
 { #category : #accessing }
 OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
 	| buffer |
-	buffer := ByteString new: aBufferSize.
+	buffer := String new: aBufferSize.
 	^ self currentWorkingDirectoryPathWithBuffer: buffer
 ]
 
@@ -227,8 +214,10 @@ OSPlatform >> startUp: resuming [
 { #category : #accessing }
 OSPlatform >> subtype [
 	"Return the subType of the platform we're running on"
+    self fixMe.
+    ^ 'Unknown'.
 
-	^ (Smalltalk vm getSystemAttribute: 1003)
+	"^ (Smalltalk vm getSystemAttribute: 1003)"
 ]
 
 { #category : #accessing }
@@ -242,11 +231,4 @@ OSPlatform >> version [
 OSPlatform >> virtualKey: virtualKeyCode [
 	"Subclass responsibility to override if necessary"
 	^nil
-]
-
-{ #category : #accessing }
-OSPlatform >> windowSystemName [			
-	"Return the name of the window system currently being used for display."
-
-	^ Smalltalk vm getSystemAttribute: 1005
 ]
