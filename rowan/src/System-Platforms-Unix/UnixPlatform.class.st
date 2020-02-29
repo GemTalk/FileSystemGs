@@ -8,9 +8,9 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #UnixPlatform,
-	#superclass : #OSPlatform,
-	#category : #'System-Platforms-Unix'
+	#name : 'UnixPlatform',
+	#superclass : 'OSPlatform',
+	#category : 'System-Platforms-Unix'
 }
 
 { #category : #testing }
@@ -42,7 +42,8 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version.This method is used in getting the current working directory. getcwd is preffered over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implict re- initialization.
 	
 	We use FFI-Kernel for this because this is required for bootstrapping, and we ensure minimal dependencies."
-	^ (ExternalLibraryFunction 
+	self halt: 'Need to get this done through a Libc class.'
+	"^ (ExternalLibraryFunction 
 			name: 'getcwd'
 			module: 'libc.so.6'
 			callType: 1
@@ -50,18 +51,13 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 			argumentTypes: {
 				ExternalType char asPointerType.
 				ExternalType long })
-					invokeWith: buffer with: bufferSize.
+					invokeWith: buffer with: bufferSize."
 
 ]
 
 { #category : #testing }
 UnixPlatform >> isUnix [
 	^ true
-]
-
-{ #category : #accessing }
-UnixPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForUnixPlatform: aKeyValue.
 ]
 
 { #category : #accessing }

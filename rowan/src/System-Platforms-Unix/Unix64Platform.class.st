@@ -8,14 +8,16 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #Unix64Platform,
-	#superclass : #UnixPlatform,
-	#category : #'System-Platforms-Unix'
+	#name : 'Unix64Platform',
+	#superclass : 'UnixPlatform',
+	#category : 'System-Platforms-Unix'
 }
 
 { #category : #testing }
 Unix64Platform class >> isActivePlatform [
-	^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]
+    self fixMe.
+    ^true.
+	"^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]"
 ]
 
 { #category : #visiting }
