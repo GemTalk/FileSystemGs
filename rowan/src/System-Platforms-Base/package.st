@@ -1,1 +1,1 @@
-Package { #name : #'System-Platforms-Base' }
+Package { #name : 'System-Platforms-Base' }
