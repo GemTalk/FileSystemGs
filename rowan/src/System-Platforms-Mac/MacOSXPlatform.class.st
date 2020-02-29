@@ -8,9 +8,9 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : #MacOSXPlatform,
-	#superclass : #MacOSPlatform,
-	#category : #'System-Platforms-Mac'
+	#name : 'MacOSXPlatform',
+	#superclass : 'MacOSPlatform',
+	#category : 'System-Platforms-Mac'
 }
 
 { #category : #testing }

@@ -3,9 +3,9 @@ I am a an object representing a Mac OS (pre OSX) platform. Use myself to access 
 
 "
 Class {
-	#name : #MacOSPlatform,
-	#superclass : #OSPlatform,
-	#category : #'System-Platforms-Mac'
+	#name : 'MacOSPlatform',
+	#superclass : 'OSPlatform',
+	#category : 'System-Platforms-Mac'
 }
 
 { #category : #testing }
@@ -42,7 +42,8 @@ MacOSPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version. This method is used in getting the current working directory. This uses the inbuilt libC function getcwd(). getcwd is preferred over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implict re- initialization.
 	
 	We use FFI-Kernel for this because this is required for bootstrapping, and we ensure minimal dependencies."
-	^ (ExternalLibraryFunction 
+	self halt: 'Use LibC functions for this.'.
+	"^ (ExternalLibraryFunction 
 			name: 'getcwd'
 			module: 'libc.dylib'
 			callType: 1
@@ -50,18 +51,13 @@ MacOSPlatform >> getPwdViaFFI: buffer size: bufferSize [
 			argumentTypes: {
 				ExternalType char asPointerType.
 				ExternalType long })
-					invokeWith: buffer with: bufferSize.
+					invokeWith: buffer with: bufferSize."
 
 ]
 
 { #category : #testing }
 MacOSPlatform >> isMacOS [
 	^ true
-]
-
-{ #category : #accessing }
-MacOSPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForMacOSXPlatform: aKeyValue.
 ]
 
 { #category : #accessing }
