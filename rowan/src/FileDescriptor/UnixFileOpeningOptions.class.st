@@ -27,8 +27,10 @@ Class {
 	#category : 'FileDescriptor'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'private' }
 UnixFileOpeningOptions class >> new [
+	"Private -- use one of the access mode messages to create instances."
+
 	^ super new initialize
 ]
 
@@ -49,7 +51,9 @@ UnixFileOpeningOptions class >> writeOnly [
 
 { #category : 'testing' }
 UnixFileOpeningOptions >> allowsRead [
-	^ (flags bitAnd: self O_ACCMODE) even
+	"Cannot read or write when path is specified."
+
+	^ self isPath not & (flags bitAnd: self O_ACCMODE) even
 ]
 
 { #category : 'testing' }
@@ -59,6 +63,7 @@ UnixFileOpeningOptions >> allowsWrite [
 
 { #category : 'options' }
 UnixFileOpeningOptions >> append [
+	self denyPath.
 	flags := flags bitOr: self O_APPEND
 ]
 
@@ -69,16 +74,27 @@ UnixFileOpeningOptions >> closeOnExec [
 
 { #category : 'options' }
 UnixFileOpeningOptions >> create [
+	self denyPath.
 	flags := flags bitOr: self O_CREAT
 ]
 
 { #category : 'options' }
 UnixFileOpeningOptions >> dataSync [
+	self denyPath.
 	flags := flags bitOr: self O_DSYNC
+]
+
+{ #category : 'private' }
+UnixFileOpeningOptions >> denyPath [
+	self isPath
+		ifTrue: [ 
+			self improperOperationExceptionClass
+				signal: 'Cannot combine #path with this option.' ]
 ]
 
 { #category : 'options' }
 UnixFileOpeningOptions >> direct [
+	self denyPath.
 	flags := flags bitOr: self O_DIRECT
 ]
 
@@ -89,6 +105,7 @@ UnixFileOpeningOptions >> directory [
 
 { #category : 'options' }
 UnixFileOpeningOptions >> exclusive [
+	self denyPath.
 	flags := flags bitOr: self O_EXCL
 ]
 
@@ -97,9 +114,22 @@ UnixFileOpeningOptions >> flags [
 	^ flags
 ]
 
+{ #category : 'private' }
+UnixFileOpeningOptions >> improperOperationExceptionClass [
+
+	"GemStone-specific; will need factoring to platform-specific package upon first port."
+	^ ImproperOperation
+]
+
 { #category : 'initialization' }
 UnixFileOpeningOptions >> initialize [
-	flags := 0
+	flags := self initialValue
+]
+
+{ #category : 'private' }
+UnixFileOpeningOptions >> initialValue [
+	"Must be non-zero, and have enough low 0 bits that we can detect any out-of-order setting of access mode."
+	^ 16r800000000000
 ]
 
 { #category : 'testing' }
@@ -182,8 +212,22 @@ UnixFileOpeningOptions >> isWriteOnly [
 	^ (flags bitAnd: self O_ACCMODE) = self O_WRONLY
 ]
 
+{ #category : 'accessing' }
+UnixFileOpeningOptions >> mode [
+	^ mode
+]
+
+{ #category : 'accessing' }
+UnixFileOpeningOptions >> modeBits [
+	"If mode has not been explicitly set, answer all read and write. 
+	This will be modified by the user's umask when creating a file."
+
+	^ mode ifNotNil: [ mode modeBits ] ifNil: [ 8r666 ]
+]
+
 { #category : 'options' }
 UnixFileOpeningOptions >> noAccessTime [
+	self denyPath.
 	flags := flags bitOr: self O_NOATIME
 ]
 
@@ -294,40 +338,69 @@ UnixFileOpeningOptions >> O_WRONLY [
 
 { #category : 'options' }
 UnixFileOpeningOptions >> path [
+	"Path can only be combined with these options."
+
+	| allowed |
+	allowed := self O_PATH.
+	allowed := allowed bitOr: self O_CLOEXEC.
+	allowed := allowed bitOr: self O_DIRECTORY.
+	allowed := allowed bitOr: self O_NOFOLLOW.
+	(flags bitInvert bitOr: allowed) = -1
+		ifFalse: [ 
+			self improperOperationExceptionClass
+				signal: 'Attempt to combine #path with one or more incompatible options.' ].
 	flags := flags bitOr: self O_PATH
 ]
 
 { #category : 'private access modes' }
 UnixFileOpeningOptions >> readOnly [
-	flags = 0
-		ifFalse: [ self signalLateAccessChange ]
+	flags = self initialValue
+		ifFalse: [ self signalLateAccessChange ].
+	flags := 0
 ]
 
 { #category : 'private access modes' }
 UnixFileOpeningOptions >> readWrite [
-	flags = 0
+	flags = self initialValue
 		ifFalse: [ self signalLateAccessChange ].
 	flags := self O_RDWR
 ]
 
+{ #category : 'private' }
+UnixFileOpeningOptions >> signalLateAccessChange [
+	self improperOperationExceptionClass
+		signal: 'Access mode must be set before adding any other options.'
+]
+
 { #category : 'options' }
 UnixFileOpeningOptions >> sync [
+	self denyPath.
 	flags := flags bitOr: self O_SYNC
 ]
 
 { #category : 'options' }
 UnixFileOpeningOptions >> tmpFile [
+	self allowsWrite
+		ifFalse: [ 
+			self improperOperationExceptionClass
+				signal: 'Cannot specify #tmpFile and readOnly together.' ].
+	self denyPath.
 	flags := flags bitOr: self O_TMPFILE
 ]
 
 { #category : 'options' }
 UnixFileOpeningOptions >> truncate [
+	self isReadOnly
+		ifTrue: [ 
+			self improperOperationExceptionClass
+				signal: 'Truncate and readOnly cannot be specified together.' ].
+	self denyPath.
 	flags := flags bitOr: self O_TRUNC
 ]
 
 { #category : 'private access modes' }
 UnixFileOpeningOptions >> writeOnly [
-	flags = 0
+	flags = self initialValue
 		ifFalse: [ self signalLateAccessChange ].
 	flags := self O_WRONLY
 ]

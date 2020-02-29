@@ -4,7 +4,7 @@ Class {
 	#category : 'FileDescriptor-Tests'
 }
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testAppend [
 	| instance |
 	instance := UnixFileOpeningOptions writeOnly.
@@ -16,7 +16,7 @@ UnixFileOpeningOptionsTest >> testAppend [
 		assert: instance flags equals: 8r2001
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testCloseOnExec [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -28,7 +28,7 @@ UnixFileOpeningOptionsTest >> testCloseOnExec [
 		assert: instance flags equals: 8r2000000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testCreate [
 	| instance |
 	instance := UnixFileOpeningOptions readWrite.
@@ -41,7 +41,7 @@ UnixFileOpeningOptionsTest >> testCreate [
 		assert: instance flags equals: 8r102
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDataSync [
 	| instance |
 	instance := UnixFileOpeningOptions writeOnly.
@@ -54,7 +54,16 @@ UnixFileOpeningOptionsTest >> testDataSync [
 		assert: instance flags equals: 8r10001
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'file creation mode tests' }
+UnixFileOpeningOptionsTest >> testDefaultCreationMode [
+	"Mode that is given when no mode has been explicitly specified."
+
+	| instance |
+	instance := UnixFileOpeningOptions writeOnly.
+	self assert: instance modeBits equals: 8r666
+]
+
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDirect [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -67,7 +76,7 @@ UnixFileOpeningOptionsTest >> testDirect [
 		assert: instance flags equals: 8r40000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDirectory [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -80,7 +89,7 @@ UnixFileOpeningOptionsTest >> testDirectory [
 		assert: instance flags equals: 8r200000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testExclusive [
 	| instance |
 	instance := UnixFileOpeningOptions writeOnly.
@@ -93,7 +102,42 @@ UnixFileOpeningOptionsTest >> testExclusive [
 		assert: instance flags equals: 8r201
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testLateReadOnly [
+	"Can't add an access mode after other options."
+
+	| instance |
+	instance := UnixFileOpeningOptions new.
+	instance append.
+	self
+		should: [ instance readOnly ]
+		raise: instance improperOperationExceptionClass
+]
+
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testLateReadWrite [
+	"Can't add an access mode after other options."
+
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	self
+		should: [ instance readWrite ]
+		raise: instance improperOperationExceptionClass
+]
+
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testLateWriteOnly [
+	"Can't add an access mode after other options."
+
+	| instance |
+	instance := UnixFileOpeningOptions new.
+	instance create.
+	self
+		should: [ instance writeOnly ]
+		raise: instance improperOperationExceptionClass
+]
+
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testNoAccessTime [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -106,7 +150,7 @@ UnixFileOpeningOptionsTest >> testNoAccessTime [
 		assert: instance flags equals: 8r1000000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testNoFollow [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -119,17 +163,113 @@ UnixFileOpeningOptionsTest >> testNoFollow [
 		assert: instance flags equals: 8r400000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testPath [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
 	instance path.
 	self
-		assert: instance allowsRead;
+		deny: instance allowsRead;
 		deny: instance allowsWrite;
 		assert: instance isReadOnly;
 		assert: instance isPath;
 		assert: instance flags equals: 8r10000000
+]
+
+{ #category : 'multiple option adding tests' }
+UnixFileOpeningOptionsTest >> testPath1 [
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	instance
+		path;
+		closeOnExec;
+		directory;
+		noFollow;
+		path.
+	self
+		deny: instance allowsRead;
+		deny: instance allowsWrite;
+		assert: instance isReadOnly;
+		assert: instance isPath;
+		assert: instance isCloseOnExec;
+		assert: instance isDirectory;
+		assert: instance isNoFollow;
+		deny: instance isDataSync;
+		assert: instance flags equals: 8r12600000
+]
+
+{ #category : 'multiple option adding tests' }
+UnixFileOpeningOptionsTest >> testPath2 [
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	instance
+		noFollow;
+		directory;
+		closeOnExec;
+		path.
+	self
+		deny: instance allowsRead;
+		deny: instance allowsWrite;
+		assert: instance isReadOnly;
+		assert: instance isPath;
+		assert: instance isCloseOnExec;
+		assert: instance isDirectory;
+		assert: instance isNoFollow;
+		deny: instance isDataSync;
+		assert: instance flags equals: 8r12600000
+]
+
+{ #category : 'multiple option adding tests' }
+UnixFileOpeningOptionsTest >> testPath3 [
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	instance
+		noFollow;
+		path.
+	self
+		deny: instance allowsRead;
+		deny: instance allowsWrite;
+		assert: instance isReadOnly;
+		assert: instance isPath;
+		assert: instance isNoFollow;
+		deny: instance isDataSync;
+		assert: instance flags equals: 8r10400000
+]
+
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testPathPlusWhatever [
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	instance path.
+	self
+		should: [ instance append ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance create ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance dataSync ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance direct ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance exclusive ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance noAccessTime ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance sync ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance tmpFile ]
+		raise: instance improperOperationExceptionClass;
+		should: [ instance truncate ]
+		raise: instance improperOperationExceptionClass
+]
+
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testPathPlusWrite [
+	
+	| instance |
+	instance := UnixFileOpeningOptions readWrite.
+	self
+		should: [ instance path ]
+		raise: instance improperOperationExceptionClass
 ]
 
 { #category : 'instance creation tests' }
@@ -145,6 +285,26 @@ UnixFileOpeningOptionsTest >> testReadOnly [
 		assert: instance flags equals: 0.
 ]
 
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testReadOnlyPlusTmpFile [
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	self
+		should: [ instance tmpFile ]
+		raise: instance improperOperationExceptionClass
+]
+
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testReadOnlyPlusTruncate [
+	"Undefined behavior, prohibit it."
+
+	| instance |
+	instance := UnixFileOpeningOptions readOnly.
+	self
+		should: [ instance truncate ]
+		raise: instance improperOperationExceptionClass
+]
+
 { #category : 'instance creation tests' }
 UnixFileOpeningOptionsTest >> testReadWrite [
 	| instance |
@@ -158,7 +318,7 @@ UnixFileOpeningOptionsTest >> testReadWrite [
 		assert: instance flags equals: 2
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testSync [
 	| instance |
 	instance := UnixFileOpeningOptions readOnly.
@@ -171,7 +331,7 @@ UnixFileOpeningOptionsTest >> testSync [
 		assert: instance flags equals: 8r4010000
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testTmpFile [
 	| instance |
 	instance := UnixFileOpeningOptions readWrite.
@@ -184,7 +344,7 @@ UnixFileOpeningOptionsTest >> testTmpFile [
 		assert: instance flags equals: 8r20200002
 ]
 
-{ #category : 'option adding tests' }
+{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testTruncate [
 	| instance |
 	instance := UnixFileOpeningOptions readWrite.
