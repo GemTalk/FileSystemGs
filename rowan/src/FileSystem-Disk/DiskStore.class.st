@@ -9,8 +9,7 @@ Class {
 		'maxFileNameLength'
 	],
 	#classVars : [
-		'CurrentFS',
-		'DefaultWorkingDirectory'
+		'CurrentFS'
 	],
 	#category : 'FileSystem-Disk'
 }
@@ -38,18 +37,6 @@ DiskStore class >> currentFileSystem [
 		CurrentFS := FileSystem store: self activeClass createDefault]
 ]
 
-{ #category : 'accessing' }
-DiskStore class >> defaultWorkingDirectory [
-	"Ask the VM for the default working directory.
-	Clients should normally use the instance side method which caches this value."
-	| pathString |
-
-	self error: 'Replace GsFile use here.'.
-
-	pathString := (GsFile _expandEnvVariable: 'PWD' isClient:false).
-	^(Path from: pathString delimiter: self delimiter).
-]
-
 { #category : 'public' }
 DiskStore class >> delimiter [
 	^ self current delimiter
@@ -67,21 +54,7 @@ DiskStore class >> maxFileNameLength [
 
 { #category : 'current' }
 DiskStore class >> reset [
-	DefaultWorkingDirectory := nil.
 	CurrentFS := nil
-]
-
-{ #category : 'system startup' }
-DiskStore class >> shutDown: quitting [
-	"Force to detect filesystem after image restart"
-	self reset
-]
-
-{ #category : 'system startup' }
-DiskStore class >> startUp: resuming [
-	resuming 
-		ifTrue: [ self reset ].
-	DefaultWorkingDirectory := self defaultWorkingDirectory.
 ]
 
 { #category : 'comparing' }
@@ -217,11 +190,12 @@ DiskStore >> createDirectory: path [
 ]
 
 { #category : 'accessing' }
-DiskStore >> defaultWorkingDirectory [
-	"Answer the default working directory, which is defined as the directory where the image resides."
+DiskStore >> currentWorkingDirectoryPath [
+	"Answer an absolute Path for the current working directory of the VM."
 
-	^ DefaultWorkingDirectory
-		ifNil: [ self class defaultWorkingDirectory ]
+	| pathString |
+	pathString := OSPlatform current currentWorkingDirectoryPath.
+	^ Path from: pathString delimiter: self delimiter
 ]
 
 { #category : 'public' }

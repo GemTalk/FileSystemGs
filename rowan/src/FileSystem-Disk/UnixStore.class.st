@@ -14,7 +14,9 @@ UnixStore class >> delimiter [
 
 { #category : 'current' }
 UnixStore class >> isActiveClass [
-	self isGemStoneSpecific.
+	"This version of GemStone does not have any non-Unix VM platforms."
+
+	OSPlatform isGemStoneSpecific.
 	^ true
 ]
 

@@ -24,12 +24,6 @@ FileSystemStore class >> isCaseSensitive [
 	^ self shouldBeImplemented
 ]
 
-{ #category : 'porting' }
-FileSystemStore class >> isGemStoneSpecific [
-	"Methods that send this message will need to be refactored when 
-	porting from GemStone to another Smalltalk dialect."
-]
-
 { #category : 'instance creation' }
 FileSystemStore class >> new [
 
@@ -162,7 +156,7 @@ FileSystemStore >> creationTimeOf: aPath [
 ]
 
 { #category : 'accessing' }
-FileSystemStore >> defaultWorkingDirectory [
+FileSystemStore >> currentWorkingDirectoryPath [
 	^ Path root
 ]
 

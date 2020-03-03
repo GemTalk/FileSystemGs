@@ -13,17 +13,6 @@ Class {
 	#category : 'System-Platforms-Unix'
 }
 
-{ #category : 'testing' }
-UnixPlatform class >> isActivePlatform [
-	^ false
-]
-
-{ #category : 'visiting' }
-UnixPlatform >> accept: aVisitor [
-
-	^ aVisitor visitUnix: self
-]
-
 { #category : 'accessing' }
 UnixPlatform >> defaultMaximumPathLength [
 	"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. 
@@ -42,6 +31,7 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 	"This method calls the Standard C Library getcwd() function. The name of the argument (arg1) should fit decompiled version.This method is used in getting the current working directory. getcwd is preffered over pwd because getcwd takes care of re-initialization of environment variables, whereas pwd needs implict re- initialization.
 	
 	We use FFI-Kernel for this because this is required for bootstrapping, and we ensure minimal dependencies."
+	self fixMe.
 	self halt: 'Need to get this done through a Libc class.'
 	"^ (ExternalLibraryFunction 
 			name: 'getcwd'
@@ -52,7 +42,6 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 				ExternalType char asPointerType.
 				ExternalType long })
 					invokeWith: buffer with: bufferSize."
-
 ]
 
 { #category : 'testing' }
@@ -64,9 +53,4 @@ UnixPlatform >> isUnix [
 UnixPlatform >> lineEnding [
 
 	^ String lf
-]
-
-{ #category : 'accessing' }
-UnixPlatform >> menuShortcutString [
-	^ 'ctrl'
 ]

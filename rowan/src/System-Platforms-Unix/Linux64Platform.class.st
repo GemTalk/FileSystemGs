@@ -8,25 +8,20 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : 'Unix64Platform',
+	#name : 'Linux64Platform',
 	#superclass : 'UnixPlatform',
 	#category : 'System-Platforms-Unix'
 }
 
 { #category : 'testing' }
-Unix64Platform class >> isActivePlatform [
-    self fixMe.
-    ^true.
-	"^ (self currentPlatformName = 'unix') and: [ Smalltalk vm wordSize = 8 ]"
-]
+Linux64Platform class >> isActivePlatform [
+	"This version of GemStone is always 64-bit."
 
-{ #category : 'visiting' }
-Unix64Platform >> accept: aVisitor [
-
-	^ aVisitor visitUnix64: self
+	OSPlatform isGemStoneSpecific.
+	^ self currentPlatformName = 'Linux'
 ]
 
 { #category : 'testing' }
-Unix64Platform >> isUnix64 [
+Linux64Platform >> isLinux64 [
 	^ true
 ]

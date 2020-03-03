@@ -11,33 +11,27 @@ most platform specific methods that need to be added to the platform class shoul
 Class {
 	#name : 'OSPlatform',
 	#superclass : 'Object',
-	#classVars : [
-		'Current'
-	],
 	#category : 'System-Platforms-Base'
 }
 
 { #category : 'accessing' }
 OSPlatform class >> current [
-	"Answer the current platform"
-	^Current
+	"Answer the instance for the currently executing OS platform."
+
+	| platform |
+	(SessionTemps current at: self platformKey ifAbsent: [  ])
+		ifNil: [ 
+			platform := self determineActivePlatform new.
+			SessionTemps current at: self platformKey put: platform ].
+	^ platform
 ]
 
 { #category : 'system attributes' }
 OSPlatform class >> currentPlatformName [
 	"Return the name of the platform we're running on"
-     self fixMe.
-    ^ 'Unknown'.
 
-	"^ Smalltalk vm getSystemAttribute: 1001"
-]
-
-{ #category : 'system attributes' }
-OSPlatform class >> currentVersion [
-	"Return the version number string of the platform we're running on"
-    self fixMe.
-    ^ 'Unknown'.
-	"^ (Smalltalk vm getSystemAttribute: 1002) asString"
+	OSPlatform isGemStoneSpecific.
+	^ System gemVersionAt: 'osName'
 ]
 
 { #category : 'private' }
@@ -54,27 +48,15 @@ OSPlatform class >> isActivePlatform [
 	^false
 ]
 
-{ #category : 'system startup' }
-OSPlatform class >> shutDown: isImageQuitting [
-	"The system is going down"
-	Current ifNotNil: [ Current shutDown: isImageQuitting ].
-
+{ #category : 'porting' }
+OSPlatform class >> isGemStoneSpecific [
+	"Methods that send this message will need to be refactored when 
+	porting from GemStone to another Smalltalk dialect."
 ]
 
-{ #category : 'system startup' }
-OSPlatform class >> startUp: isImageStarting [
-	"Determine the current platform."
-	
-	isImageStarting ifFalse: [  ^ self ].
-	
-	Current := self determineActivePlatform new.
-	Current startUp: isImageStarting
-]
-
-{ #category : 'visiting' }
-OSPlatform >> accept: aVisitor [
-
-	self subclassResponsibility	
+{ #category : 'private' }
+OSPlatform class >> platformKey [
+	^ #'GsCurrentPlatform'
 ]
 
 { #category : 'accessing' }
@@ -127,6 +109,11 @@ OSPlatform >> getPwdViaFFI: arg1 size: arg2 [
 ]
 
 { #category : 'testing' }
+OSPlatform >> isLinux64 [
+	^ false
+]
+
+{ #category : 'testing' }
 OSPlatform >> isMacOS [
 	^ false
 ]
@@ -147,11 +134,6 @@ OSPlatform >> isUnix32 [
 ]
 
 { #category : 'testing' }
-OSPlatform >> isUnix64 [
-	^ false
-]
-
-{ #category : 'testing' }
 OSPlatform >> isWin32 [
 	^ false
 ]
@@ -166,19 +148,9 @@ OSPlatform >> isWindows [
 	^ false
 ]
 
-{ #category : 'testing' }
-OSPlatform >> isX11 [
-	^ self windowSystemName = 'X11'
-]
-
 { #category : 'accessing' }
 OSPlatform >> lineEnding [
 
-	^ self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-OSPlatform >> menuShortcutString [
 	^ self subclassResponsibility
 ]
 
@@ -197,38 +169,4 @@ OSPlatform >> platformFamily [
 { #category : 'compatbility' }
 OSPlatform >> platformName [
 	^ self name
-]
-
-{ #category : 'initialize' }
-OSPlatform >> shutDown: quitting [
-	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-
-]
-
-{ #category : 'initialize' }
-OSPlatform >> startUp: resuming [
-	"Pharo is starting up. If this platform requires specific intialization, this is a great place to put it."
-
-]
-
-{ #category : 'accessing' }
-OSPlatform >> subtype [
-	"Return the subType of the platform we're running on"
-    self fixMe.
-    ^ 'Unknown'.
-
-	"^ (Smalltalk vm getSystemAttribute: 1003)"
-]
-
-{ #category : 'accessing' }
-OSPlatform >> version [
-	"Return the version number string of the platform we're running on"
-
-	^ self class currentVersion
-]
-
-{ #category : 'accessing' }
-OSPlatform >> virtualKey: virtualKeyCode [
-	"Subclass responsibility to override if necessary"
-	^nil
 ]

@@ -318,11 +318,6 @@ FileSystemTest >> testCreateFileNotCreateParent [
 ]
 
 { #category : 'tests' }
-FileSystemTest >> testDefaultWorkingDirectory [
-	self assert: filesystem workingDirectory isRoot
-]
-
-{ #category : 'tests' }
 FileSystemTest >> testDelete [
 	"Unlike ensureDelete, delete raises an exception if the file does not exist."
 	| reference |
@@ -683,6 +678,11 @@ FileSystemTest >> testRootIsNotAFile [
 FileSystemTest >> testWorking [
 	self assert: filesystem workingDirectory fileSystem = filesystem.
 	self assert: filesystem workingDirectory path = filesystem workingDirectoryPath
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testWorkingDirectory [
+	self assert: filesystem workingDirectory isRoot
 ]
 
 { #category : 'tests-streams' }

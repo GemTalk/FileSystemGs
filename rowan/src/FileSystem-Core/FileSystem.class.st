@@ -636,14 +636,20 @@ FileSystem >> stringFromPath: aPath [
 
 { #category : 'accessing' }
 FileSystem >> workingDirectory [
-	"Returns a reference to the directory from where the image was launched"
+	"Returns a reference to the current working directory of the VM.
+	This may not be the same directory for the entire life of a VM, 
+	since it can be set programmatically."
 
 	^ self referenceTo: self workingDirectoryPath
 ]
 
 { #category : 'accessing' }
 FileSystem >> workingDirectoryPath [
-	^ store defaultWorkingDirectory
+	"Returns the absolute path string of the current working directory of the VM.
+	This may not be the same directory for the entire life of a VM, 
+	since it can be set programmatically."
+
+	^ store currentWorkingDirectoryPath
 ]
 
 { #category : 'public' }
