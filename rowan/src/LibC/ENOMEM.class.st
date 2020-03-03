@@ -1,13 +1,13 @@
 "
-No such file or directory
+Out of memory
 "
 Class {
-	#name : 'ENOENT',
+	#name : 'ENOMEM',
 	#superclass : 'UnixError',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-ENOENT class >> errorNumber [
-	^ 2
+ENOMEM class >> errorNumber [
+	^ 12
 ]

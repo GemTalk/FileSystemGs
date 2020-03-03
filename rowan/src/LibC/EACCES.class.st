@@ -1,13 +1,13 @@
 "
-No such file or directory
+Permission was denied
 "
 Class {
-	#name : 'ENOENT',
+	#name : 'EACCES',
 	#superclass : 'UnixError',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-ENOENT class >> errorNumber [
-	^ 2
+EACCES class >> errorNumber [
+	^13
 ]

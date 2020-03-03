@@ -19,7 +19,7 @@ OSPlatform class >> current [
 	"Answer the instance for the currently executing OS platform."
 
 	| platform |
-	(SessionTemps current at: self platformKey ifAbsent: [  ])
+	(platform := SessionTemps current at: self platformKey ifAbsent: [  ])
 		ifNil: [ 
 			platform := self determineActivePlatform new.
 			SessionTemps current at: self platformKey put: platform ].

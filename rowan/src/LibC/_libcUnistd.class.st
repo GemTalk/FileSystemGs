@@ -55,6 +55,7 @@ Class {
 		'Functiongetuid',
 		'Functiongetusershell',
 		'Functiongetwd',
+		'Functionget_current_dir_name',
 		'Functionisatty',
 		'Functionlchown',
 		'Functionlink',
@@ -500,6 +501,17 @@ _libcUnistd class >> initializeFunction_ftruncate_inLibrary: cLibrary [
 		args: #(#'int32' #'int64')
 		varArgsAfter: -1.
 
+]
+
+{ #category : 'Initializing - private' }
+_libcUnistd class >> initializeFunction_get_current_dir_name_inLibrary: cLibrary [
+
+	Functionget_current_dir_name := CCallout
+		library: cLibrary
+		name: 'get_current_dir_name'
+		result: #'ptr'
+		args: #()
+		varArgsAfter: -1
 ]
 
 { #category : 'Initializing - private' }
@@ -1438,6 +1450,7 @@ _libcUnistd class >> initializeFunctions [
 		initializeFunction_fpathconf_inLibrary: library;
 		initializeFunction_fsync_inLibrary: library;
 		initializeFunction_ftruncate_inLibrary: library;
+		initializeFunction_get_current_dir_name_inLibrary: library;
 		initializeFunction_getcwd_inLibrary: library;
 		initializeFunction_getdomainname_inLibrary: library;
 		initializeFunction_getdtablesize_inLibrary: library;
@@ -1516,7 +1529,6 @@ _libcUnistd class >> initializeFunctions [
 		initializeFunction__exit_inLibrary: library;
 		initializeFunction___getpgid_inLibrary: library;
 		yourself.
-
 ]
 
 { #category : 'Functions' }
@@ -1879,6 +1891,14 @@ extern int ftruncate (int __fd, __off_t __length)                               
 
 	^Functionftruncate callWith: { __fd. __length }
 
+]
+
+{ #category : 'Functions' }
+_libcUnistd >> get_current_dir_name [
+	"/usr/include/unistd.h line
+	extern char *get_current_dir_name (void)"
+
+	^Functionget_current_dir_name callWith: {}
 ]
 
 { #category : 'Functions' }
@@ -2629,6 +2649,7 @@ extern int ttyname_r (int __fd, char *__buf, size_t __buflen)
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'uint64' )"
 
 	^Functionttyname_r callWith: { __fd. __buf. __buflen }
+
 
 ]
 
