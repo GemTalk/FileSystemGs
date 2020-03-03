@@ -199,18 +199,6 @@ OSPlatform >> platformName [
 	^ self name
 ]
 
-{ #category : 'initialize' }
-OSPlatform >> shutDown: quitting [
-	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-
-]
-
-{ #category : 'initialize' }
-OSPlatform >> startUp: resuming [
-	"Pharo is starting up. If this platform requires specific intialization, this is a great place to put it."
-
-]
-
 { #category : 'accessing' }
 OSPlatform >> subtype [
 	"Return the subType of the platform we're running on"

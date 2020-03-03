@@ -41,12 +41,10 @@ DiskStore class >> currentFileSystem [
 { #category : 'accessing' }
 DiskStore class >> defaultWorkingDirectory [
 	"Ask the VM for the default working directory.
-	Clients should normally use the instance side method which caches this value."
+	Clients should normally use the instance side method which might someday once again cache this value."
 	| pathString |
 
-	self error: 'Replace GsFile use here.'.
-
-	pathString := (GsFile _expandEnvVariable: 'PWD' isClient:false).
+	pathString := OSPlatform current currentWorkingDirectoryPath.
 	^(Path from: pathString delimiter: self delimiter).
 ]
 
@@ -218,10 +216,14 @@ DiskStore >> createDirectory: path [
 
 { #category : 'accessing' }
 DiskStore >> defaultWorkingDirectory [
-	"Answer the default working directory, which is defined as the directory where the image resides."
+	"Answer the current working directory of this process."
+	^ self class defaultWorkingDirectory
 
+	"Should not cache this directory, since it can be changed.
+	Could cache it in the future, if the cache is invalidated or updated 
+	whenever the working directory is changed.
 	^ DefaultWorkingDirectory
-		ifNil: [ self class defaultWorkingDirectory ]
+		ifNil: [ self class defaultWorkingDirectory ]"
 ]
 
 { #category : 'public' }
