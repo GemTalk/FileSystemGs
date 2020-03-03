@@ -14,16 +14,21 @@ Class {
 	#category : 'System-Platforms-Base'
 }
 
+{ #category : 'private' }
+OSPlatform class >> cacheKey [
+	^ #'GsCurrentPlatform'
+]
+
 { #category : 'accessing' }
 OSPlatform class >> current [
 	"Answer the instance for the currently executing OS platform."
 
-	| platform |
-	(platform := SessionTemps current at: self platformKey ifAbsent: [  ])
+	| cached |
+	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
 		ifNil: [ 
-			platform := self determineActivePlatform new.
-			SessionTemps current at: self platformKey put: platform ].
-	^ platform
+			cached := self determineActivePlatform new.
+			SessionTemps current at: self cacheKey put: cached ].
+	^ cached
 ]
 
 { #category : 'system attributes' }
@@ -52,11 +57,6 @@ OSPlatform class >> isActivePlatform [
 OSPlatform class >> isGemStoneSpecific [
 	"Methods that send this message will need to be refactored when 
 	porting from GemStone to another Smalltalk dialect."
-]
-
-{ #category : 'private' }
-OSPlatform class >> platformKey [
-	^ #'GsCurrentPlatform'
 ]
 
 { #category : 'accessing' }

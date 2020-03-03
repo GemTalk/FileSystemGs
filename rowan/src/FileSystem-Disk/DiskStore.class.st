@@ -8,9 +8,6 @@ Class {
 	#instVars : [
 		'maxFileNameLength'
 	],
-	#classVars : [
-		'CurrentFS'
-	],
 	#category : 'FileSystem-Disk'
 }
 
@@ -19,6 +16,11 @@ DiskStore class >> activeClass [
 	self allSubclasses do: [:ea | 
 		ea isActiveClass ifTrue: [^ ea]].
 	^ self
+]
+
+{ #category : 'current' }
+DiskStore class >> cacheKey [
+	^ #'GsCurrentDiskFileSystem'
 ]
 
 { #category : 'current' }
@@ -33,8 +35,12 @@ DiskStore class >> current [
 
 { #category : 'current' }
 DiskStore class >> currentFileSystem [
-	^ CurrentFS ifNil: [
-		CurrentFS := FileSystem store: self activeClass createDefault]
+	| cached |
+	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
+		ifNil: [ 
+			cached := FileSystem store: self activeClass createDefault.
+			SessionTemps current at: self cacheKey put: cached ].
+	^ cached
 ]
 
 { #category : 'public' }
@@ -50,11 +56,6 @@ DiskStore class >> isActiveClass [
 { #category : 'public' }
 DiskStore class >> maxFileNameLength [
 	self subclassResponsibility 
-]
-
-{ #category : 'current' }
-DiskStore class >> reset [
-	CurrentFS := nil
 ]
 
 { #category : 'comparing' }
