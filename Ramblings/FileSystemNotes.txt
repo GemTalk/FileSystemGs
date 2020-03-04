@@ -1,0 +1,170 @@
+Responsibilities within FileSystem on GemStone (as is):
+
+FileSystem 
+
+delegates to a FileSystemStore (a DiskStore or a MemoryStore)
+
+DiskStore class defaultWorkingDirectory references GsFile to find the working directory. 
+
+So is DiskStore not portable? Maybe it should not be. Hmm?
+
+Where is GsFile referenced within the FileSystemGs world?
+
+from File, this is appropriate. I'm definitely replacing File, at least partially
+ with FileDescriptor
+
+From DiskStore class for defaultWorkingDirectory (not a clean location for this)
+and DiskStore instance for iterating over contents of a directory (#basicEntry:path:nodesDo:)
+
+It would be nice to think that DiskStore could be platform-independent.
+
+It feels like those two things in DiskStore and DiskStore class could use some other class. 
+
+So the main class is FileDescriptor. It mainly deals with open file descriptors.
+
+Another class should deal with generic operations. Is this a subclass of UnixStore, 
+specific to GemStone?
+No, not right now, at least, I think.
+
+Operations provided:
+
+
+
+
+---------------------
+
+Directories deserve to be their own objects, at the low level. 
+
+---------------------
+
+Then there's the buffered streams -- how do those work?
+
+GsExternalReadStream has a reference to a CByteArray buffer, and a reference to a FileDescriptor
+
+FileDescriptor creates the stream (holds it as unique?) and holds instances of one or
+ more LibcWrapper subclasses. Handles EINTR and so on as appropriate.
+
+Libc*  The wrappers are pretty small, so can have multiples. Each wraps an instance
+of an FFI class.
+
+Instances of the FFI classes themselves are also pretty small.
+
+---
+
+Unbuffered reads will be less common.
+
+
+
+----
+
+FileDescriptors should close themselves on GC.
+This means an ephemeron registry. On the class side of FileDescriptor? Yes, let's.
+
+----
+
+FileSystemError vs. FileException -- what to do?
+
+FileException has subclasses
+  CannotDeleteFileException
+  FileAlreadyExistsException
+  FileDoesNotExistException
+  FileWriteError
+
+FileSystemError has subclasses 
+  DirectoryDoesNotExist
+  DirectoryExists
+  DirectoryIsNotEmpty
+  FileExists
+  IllegalName
+
+So quite a bit of overlap.
+
+There's also ResolutionRequest, a Notification subclass.
+
+
+=============================
+
+Tests failing:
+
+FileSystem-Tests-Disk > DiskFileSystemTest >> testFileNames -- legit failure, looks like. Fix later. Fails to get directory 
+entry path as UTF-8 string, so the directory entry does not exist. 
+Not the best way of getting this functionality in any case
+
+FileHandleTest>>testTruncate Truncate NYI
+
+FileReferenceTest >> testUpToAll  ZnUTF8Encoder>>nextCodePointFromStream not currently supported.
+Which probably means UTF-8 is mostly unsupported.
+
+---------------
+
+OK, let's see what still works if we gut the obsolete classes.
+
+First, File. Copied it and removed all methods from the original.
+
+BreadthFirstGuideTest is passing -- why? Because it tests with a memory file system.
+Will likely be true of all the guide tests.
+And:
+All of the SingleTreeTests
+CopyVisitorTest
+
+Most of FileLocatorTest passes (all but testMoveTo). Probably legit.
+
+FileReferenceTest is mixed.
+
+PathTest passes in its entirety. May be OK.
+
+DiskFileSystemTest fails entirely, which is excellent!
+
+===============================
+
+I want to replace FileHandle with FileDescriptor
+In order for memory filesystem to keep working, do I need to replace MemoryHandle with
+MemoryFileDescriptor or something?
+
+What does MemoryHandle do?
+
+A MemoryHandle instance has "primitives" to do I/O on a MemoryFileSystemEntry, 
+which it holds in an instvar. 
+So it does hold a similar place in the design as a FileDescriptor, so maybe making it into
+a MemoryFileDescriptor makes sense.
+
+There are operations supported by FileSystemHandle (both FileHandle and MemoryHandle) that I 
+don't think we want to support. These include things like #at:. In normal FileSystem operation, 
+
+
+=================================
+
+To Do:
+
+Need to write tests for getting and setting current working directory. 
+(will need to have ability to create and change directories first...)
+* Longer than 4K bytes 
+* Containing non-ASCII characters
+
+
+-------
+
+Open FileDescriptors need a weak registry to close on GC. 
+   Conveniently, I'd implemented ExternalObjectRegistry for X509-Certificates
+
+-------
+
+========================
+
+Which classes should be instancesNonPersistent?
+
+Don't persist:
+FileDescriptor
+
+
+OK to persist:
+FileLocator
+FileReference
+Path
+
+Not sure about:
+LibC wrapper classes and wrapped classes -- no harm, I guess, and 
+	could be some benefit to caching a persistent singleton instance.
+
+
+

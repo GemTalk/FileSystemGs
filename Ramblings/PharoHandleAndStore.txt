@@ -1,0 +1,59 @@
+FileReference>>openWritable: -- nobody but tests sends this.
+
+
+FileReference>>readStream
+AbstractFileReference>>#readStreamEncoded: 'utf8'
+FileReference>>#binaryReadStream
+FileSystem>>#binaryReadStreamOn: aResolvable
+FileSystem>>#open: aResolvable writable:
+
+Then it's 
+path := self resolve: aResolvable.
+	^ store handleClass 
+		open: (FileReference fileSystem: self path: path) 
+		writable: aBoolean
+		
+FileSystemHandle class>>#open:writable:
+  which creates a handle then sends it open
+
+For a FileReference with a file system with a disk store, that does this:
+
+open just answers self, 'cause we still "rely on the old FileStreams"
+So we have a FileHandle (or a MemoryHandle)
+And we send it #binaryReadStream
+
+FileHandle>>#binaryReadStream
+which creates an instance of file with the name in it (full path) which is the only state in an instance of File. Then sends that #readStream
+
+File>>#readStream
+File>>#openForRead
+File>>#openForWrite:
+File>>#basicOpenForWrite:
+File class>>#retryWithGC:until:forFileNamed: (to finalize unreferenced open file for Windows, apparently; I won't need this)
+File class>>#open:writable: 
+  Which is a primitive. which answers the file ID. What happens to 
+	that? Oh, right, that goes into the BinaryFileStream. Sigh.
+	Which holds the File (only a name), the handle (the actual ID), 
+	and forWrite boolean.
+
+The BinaryFileStream is registered with File class for finalization
+
+Wrapped in a UTF-8 encoding stream.
+
+Which is returned.
+
+------
+
+If it's a memory store...
+
+FileSystemHandle class>>#open:writable:
+  which creates a handle then sends it open
+
+MemoryHandle>>#open "Does nothing in disk, but in Memory..."
+FileSystemHandle>>#basicOpen
+FileSystem>>#openStreamDescription:writable:
+MemoryStore>>#basicOpen:writable:
+MemoryStore>>#nodeAt:ifPresent:ifAbsent:
+...and the MemoryStore starts doing stuff.
+
+The division of responsibility between MemoryStore and MemoryHandle seems to be fairly reasonable. I'll start by approximating this in the disk file world, and see how it goes.
