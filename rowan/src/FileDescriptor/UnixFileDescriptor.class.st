@@ -21,7 +21,16 @@ UnixFileDescriptor class >> new [
 
 { #category : 'private' }
 UnixFileDescriptor >> beForStdout [
+	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
+	since we don't want to close stdout when I'm garbage collected."
+
 	self id: 1
+]
+
+{ #category : 'finalization' }
+UnixFileDescriptor >> free [
+	"Sent by the ExternalObjectRegistry before I'm garbage collected."
+	self close
 ]
 
 { #category : 'accessing' }

@@ -19,6 +19,21 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'private' }
+ExternalObjectRegistry class >> cacheKey [
+	^ #'GsExternalObjectRegistry'
+]
+
+{ #category : 'accessing' }
+ExternalObjectRegistry class >> current [
+	| cached |
+	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
+		ifNil: [ 
+			cached := self new.
+			SessionTemps current at: self cacheKey put: cached ].
+	^ cached
+]
+
 { #category : 'instance creation' }
 ExternalObjectRegistry class >> new [
 

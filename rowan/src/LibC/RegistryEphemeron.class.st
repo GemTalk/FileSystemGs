@@ -5,10 +5,13 @@ Each RegistryEphemeron registers one object for the ExternalObjectRegistry.
 Class {
 	#name : 'RegistryEphemeron',
 	#superclass : 'Object',
-	#instVars : Array [
+	#instVars : [
 		'object',
 		'registry',
 		'index'
+	],
+	#gs_options : [
+		'instancesNonPersistent'
 	],
 	#category : 'LibC'
 }
