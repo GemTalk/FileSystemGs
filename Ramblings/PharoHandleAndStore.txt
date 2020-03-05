@@ -57,3 +57,17 @@ MemoryStore>>#nodeAt:ifPresent:ifAbsent:
 ...and the MemoryStore starts doing stuff.
 
 The division of responsibility between MemoryStore and MemoryHandle seems to be fairly reasonable. I'll start by approximating this in the disk file world, and see how it goes.
+
+=======================
+
+What's the life cycle of Filesystem and Store instances?
+
+Cached singletons for DiskStore and MemoryStore
+
+Each of those subclasses of FileSystemStore has a class variable, CurrentFS, that holds a FileSystem. That FileSystem in turn holds onto a store of that kind (which *does* include subclasses).
+
+These caches are cleared on startup. 
+
+So those should go in SessionTemps also. I already did that for DiskStore; should also do it in MemoryStore.
+
+And FileSystem and FileSystemStore and subclasses should all be InstancesNonPersistent.
