@@ -147,6 +147,8 @@ Need to write tests for getting and setting current working directory.
 Open FileDescriptors need a weak registry to close on GC. 
    Conveniently, I'd implemented ExternalObjectRegistry for X509-Certificates
 
+Need to add #noStubbing to RegistryEphemeron once feature request 48585 is done.
+
 -------
 
 ========================

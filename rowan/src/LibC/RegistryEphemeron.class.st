@@ -32,6 +32,16 @@ RegistryEphemeron class >> object: anObject registry: anExternalObjectRegistry i
 		yourself
 ]
 
+{ #category : 'public' }
+RegistryEphemeron >> deregister [
+	"The object is expected to send this message to me
+	after I send it #free, unless it wants me to keep a strong
+	transient reference to it longer than that."
+
+	registry mournAt: index.
+	object := nil
+]
+
 { #category : 'accessing' }
 RegistryEphemeron >> index: anInteger [
 
@@ -46,10 +56,11 @@ RegistryEphemeron >> initialize [
 
 { #category : 'mourning' }
 RegistryEphemeron >> mourn [
+	"Unless the object wants to be kept alive after freeing,
+	it is expected to send #deregister to me as part of its
+	freeing action."
 
-	object free.
-	registry mournAt: index.
-	object := nil
+	object free
 ]
 
 { #category : 'accessing' }

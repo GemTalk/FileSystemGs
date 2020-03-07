@@ -11,6 +11,9 @@ My associated filesystem can be accessed as follows:
 Class {
 	#name : 'FileSystemStore',
 	#superclass : 'Object',
+	#gs_options : [
+		'instancesNonPersistent'
+	],
 	#category : 'FileSystem-Core'
 }
 

@@ -20,6 +20,9 @@ Class {
 	#instVars : [
 		'store'
 	],
+	#gs_options : [
+		'instancesNonPersistent'
+	],
 	#category : 'FileSystem-Core'
 }
 

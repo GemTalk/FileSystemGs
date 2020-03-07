@@ -60,7 +60,7 @@ ExternalObjectRegistry >> elementClass [
 	^RegistryEphemeron
 ]
 
-{ #category : 'registration' }
+{ #category : 'private' }
 ExternalObjectRegistry >> grow [
 
 	| capacity |
@@ -94,7 +94,10 @@ ExternalObjectRegistry >> mournAt: index [
 
 { #category : 'registration' }
 ExternalObjectRegistry >> register: anObject [
-	"Add an entry for transient object anObject. It will be sent #free when it is not strongly referenced."
+	"Add an entry for transient object anObject. It will be sent #free when it is not strongly referenced.
+	Answer a registry entry object. The registered object anObject is expected to send this registry entry
+	object the message #deregister when it should no longer be kept track of. This is most often part of 
+	its #free action, but can be done earlier, later, or not at all."
 
 	| newElement newElementIndex newFreeHead |
 	freeHead = 0 ifTrue: [self grow].
@@ -107,7 +110,8 @@ ExternalObjectRegistry >> register: anObject [
 				registry: self
 				index: newElementIndex.
 	list at: newElementIndex put: newElement.
-	tally := tally + 1
+	tally := tally + 1.
+	^newElement
 ]
 
 { #category : 'accessing' }
@@ -116,7 +120,7 @@ ExternalObjectRegistry >> size [
 	^tally
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 ExternalObjectRegistry >> threadFreeList [
 
 	| capacity |
