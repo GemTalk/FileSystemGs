@@ -27,11 +27,11 @@ UnixError class >> initialize [
 	mySubclasses := organizer allSubclassesOf: self.
 	mySubclasses
 		do: [ :subclass | 
-			| errorNumber |
+			| errorNumber existing |
 			errorNumber := subclass errorNumber.
-			classesByNumber
-				at: errorNumber
-				ifPresent: [ :otherClass | 
+			existing := classesByNumber at: errorNumber ifAbsent: [  ].
+			existing
+				ifNotNil: [ :otherClass | 
 					Error
 						signal:
 							subclass printString , ' and ' , otherClass printString
