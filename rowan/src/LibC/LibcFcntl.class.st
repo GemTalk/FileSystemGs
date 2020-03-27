@@ -13,7 +13,7 @@ LibcFcntl >> openPath: pathString flags: flagsInteger mode: modeInteger [
 	result := library open_: pathString _: flagsInteger _: varArgs.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result == -1
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]

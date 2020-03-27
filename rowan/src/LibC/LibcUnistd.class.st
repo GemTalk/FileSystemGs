@@ -11,7 +11,7 @@ LibcUnistd >> closeFd: fdInteger [
 	result := library close_: fdInteger.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result == -1
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]
@@ -29,7 +29,7 @@ LibcUnistd >> getCurrentDirName [
 	result := library get_current_dir_name.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result memoryAddress == 0 "NULL"
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]
@@ -41,7 +41,7 @@ LibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
 	result := library read_: fd _: buf _: bytes.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result == -1
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]
@@ -53,7 +53,7 @@ LibcUnistd >> unlinkPath: pathString [
 	result := library unlink_: pathString.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result == -1
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]
@@ -70,7 +70,7 @@ LibcUnistd >> writeToFileDescriptor: fd fromBuffer: buf count: bytes [
 	result := library write_: fd _: buf _: bytes.
 	errno := CCallout errno.
 
-	errno ~~ 0
+	result == -1
 		ifTrue: [ self handleErrno: errno ].
 	^ result
 ]
