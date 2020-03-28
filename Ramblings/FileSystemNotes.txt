@@ -146,7 +146,5 @@ Need to add #noStubbing (or #noAggressiveStubbing) to RegistryEphemeron once fea
 
 -------
 
-Set up the current platform to cache an instance of each LibC wrapper class. All others should ask the platform for an instance when needed. FileDescriptor should cache instances of the wrapper classes it needs.
-
 ========================
 
