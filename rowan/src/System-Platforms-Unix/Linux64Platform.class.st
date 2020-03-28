@@ -27,7 +27,7 @@ Linux64Platform >> currentWorkingDirectoryPath [
 	There's not much sensible I can do with them at this level."
 
 	| pointer externalBytes |
-	pointer := LibcUnistd new getCurrentDirName.	
+	pointer := libcUnistd getCurrentDirName.	
 
 	"Arrange for the result to be freed, and figure out how big it is."
 	externalBytes := CByteArray fromCharStarGcFree: pointer.

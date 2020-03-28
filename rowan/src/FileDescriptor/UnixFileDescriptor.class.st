@@ -18,7 +18,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'id',
-		'registryEntry'
+		'registryEntry',
+		'libcUnistd'
 	],
 	#gs_options : [
 		'dbTransient'
@@ -27,8 +28,15 @@ Class {
 }
 
 { #category : 'Instance Creation' }
+UnixFileDescriptor class >> forId: fileDescriptorInteger [
+	^ self basicNew initialize
+		id: fileDescriptorInteger;
+		yourself
+]
+
+{ #category : 'Instance Creation' }
 UnixFileDescriptor class >> forStdout [
-	^ self basicNew
+	^ self basicNew initialize
 		beForStdout;
 		yourself
 ]
@@ -51,7 +59,7 @@ UnixFileDescriptor >> close [
 	"Closing should silently succeed even if I'm invalid,
 	since I don't represent anything open."
 
-	id ifNotNil: [ self privateClose: id ].
+	self privateClose.
 	registryEntry ifNotNil: [ registryEntry deregister ]
 ]
 
@@ -81,4 +89,39 @@ UnixFileDescriptor >> id: anInteger [
 	id = nil
 		ifFalse: [ ^ self error: 'Cannot set file descriptor ID more than once.' ].
 	id := anInteger
+]
+
+{ #category : 'initialization' }
+UnixFileDescriptor >> initialize [
+	libcUnistd := OSPlatform current libcUnistd
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> privateClose [
+	"Close the file. Fsync it first so we are notified of any errors during the flush.
+	Report some errors when flushing (I/O error, out-of-space, quota exceeded)
+	Ignore EBADF, which indicates that my descriptor is already somehow closed,
+	so we silently succeed.
+	Other errors on fsync must be ignored (EROFS, EINVAL) since they just say 
+	that fsync isn't supported on this kind of fd.
+	EINTR is, according to some references, never returned on Linux. But if it is, 
+	it should be ignored, since the file descriptor has already been freed."
+
+	| cachedId |
+	id ifNil: [ ^ self ].
+	cachedId := id.
+
+	[ 
+	[ libcUnistd fdatasyncFd: cachedId ]
+		on: EBADF
+		do: [ ^ self ] ]
+		on: EROFS , EINVAL
+		do: [  ].
+	id := nil.
+	[ 
+	[ libcUnistd closeFd: cachedId ]
+		on: EBADF
+		do: [ ^ self ] ]
+		on: EINTR
+		do: [  ]
 ]

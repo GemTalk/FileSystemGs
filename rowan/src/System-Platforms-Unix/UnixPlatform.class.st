@@ -10,6 +10,11 @@ OSPlatform current.
 Class {
 	#name : 'UnixPlatform',
 	#superclass : 'OSPlatform',
+	#instVars : [
+		'libcDirent',
+		'libcFcntl',
+		'libcUnistd'
+	],
 	#category : 'System-Platforms-Unix'
 }
 
@@ -44,9 +49,31 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 					invokeWith: buffer with: bufferSize."
 ]
 
+{ #category : 'initialization' }
+UnixPlatform >> initialize [
+	libcDirent := LibcDirent new.
+	libcFcntl := LibcFcntl new.
+	libcUnistd := LibcUnistd new
+]
+
 { #category : 'testing' }
 UnixPlatform >> isUnix [
 	^ true
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcDirent [
+	^libcDirent
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcFcntl [
+	^libcFcntl
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcUnistd [
+	^libcUnistd
 ]
 
 { #category : 'accessing' }

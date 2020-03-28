@@ -26,7 +26,7 @@ OSPlatform class >> current [
 	| cached |
 	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
 		ifNil: [ 
-			cached := self determineActivePlatform new.
+			cached := self determineActivePlatform new initialize.
 			SessionTemps current at: self cacheKey put: cached ].
 	^ cached
 ]
