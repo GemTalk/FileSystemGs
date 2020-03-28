@@ -10,8 +10,7 @@ So is DiskStore not portable? Maybe it should not be. Hmm?
 
 Where is GsFile referenced within the FileSystemGs world?
 
-from File, this is appropriate. I'm definitely replacing File, at least partially
- with FileDescriptor
+from File, this is appropriate. I'm definitely replacing File in its entirety, and replacing FileHandle with  FileDescriptor
 
 From DiskStore class for defaultWorkingDirectory (not a clean location for this)
 and DiskStore instance for iterating over contents of a directory (#basicEntry:path:nodesDo:)
@@ -141,22 +140,35 @@ Need to write tests for getting and setting current working directory.
 * Longer than 4K bytes 
 * Containing non-ASCII characters
 
+Need to test that a transient ephemeron will fire when it's the only thing holding a persistent object in memory. Until #48585  F3  Class option #noAggressiveStubbing is done, may need to set aggressiveStubbing off in the test gem.
+
+Need to add #noStubbing (or #noAggressiveStubbing) to RegistryEphemeron once feature request 48585 is done.
 
 -------
 
-Open FileDescriptors need a weak registry to close on GC. 
-   Conveniently, I'd implemented ExternalObjectRegistry for X509-Certificates
-
-Need to add #noStubbing to RegistryEphemeron once feature request 48585 is done.
-
--------
+Set up the current platform to cache an instance of each LibC wrapper class. All others should ask the platform for an instance when needed. FileDescriptor should cache instances of the wrapper classes it needs.
 
 ========================
+
+Persistence design:
+
+FileDescriptors are dbTransient. Thus, they can be committed but their contents will be nil upon re-fault. This is to allow them to be committed as part of a continuation, rather than failing the commit as would be done with #instancesNonPersistent.
+
+Some of the behavior that results, and how it's implemented:
+
+* If re-faulted in another session the FileDescriptor will be invalid. Methods detect nil contents and react appropriately.
+
+* If the FileDescriptor is not committed, it is automatically closed and freed if dereferenced. To implement this, it is always referenced from a RegistryEphemeron.
+
+* If the FileDescriptor is committed, it will stay open until the end of the session unless sent #close. This is because it might be referenced from a committed object that has dropped from memory, but we cannot allow the FileDescriptor to lose its state during the session while its underlying OS descriptor is live. This is implemented by checking to for committed state in UnixFileDescriptor>>free.
+
+* In order to keep the FileDescriptor from dropping out of memory even if it's committed, the RegistryEphemeron must never be committed, or allowed to be stubbed as a transient object. This is accomplished by setting RegistryEphemeron to be #instancesNonPersistent and, when available, #noAggressiveStubbing. Being #instancesNonPersistent assures that there is an unbroken chain of transient objects from session state to the RegistryEphemeron, so it cannot itself drop out of memory. #noAggressiveStubbing ensures that the RegistryEphemeron's state must remain a direct memory reference, and not be replaced with an oop reference. An oop reference could allow the FileDescriptor to drop from memory if committed.
+
 
 Which classes should be instancesNonPersistent?
 
 Don't persist:
-FileDescriptor
+RegistryEphemeron
 
 
 OK to persist:
