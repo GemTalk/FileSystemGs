@@ -87,12 +87,6 @@ FileSystemStore >> basicModificationTime: aNode [
 	self subclassResponsibility 
 ]
 
-{ #category : 'error signalling' }
-FileSystemStore >> basicOpen: aPath writable: aBoolean [
-	"open the file at the given path and return an identifier"
-	self subclassResponsibility
-]
-
 { #category : 'abstract' }
 FileSystemStore >> basicPosixPermissions: aNode [
 	"Used to get the posix permissions from a low-level filesystem entry / node"

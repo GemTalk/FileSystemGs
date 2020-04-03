@@ -130,16 +130,6 @@ DiskStore >> basicModificationTimeOf: anEntry [
 	^ dt
 ]
 
-{ #category : 'public' }
-DiskStore >> basicOpen: aPath writable: writeMode [
-
-	"writeMode - #read, #append, #write"
-
-	| string |
-	string := self stringFromPath: aPath.
-	^ File open: string writable: writeMode
-]
-
 { #category : 'private' }
 DiskStore >> basicPosixPermissions: anEntry [
 	^ (anEntry size >= 6)

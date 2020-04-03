@@ -497,26 +497,6 @@ FileSystem >> open: aResolvable writable: aBoolean [
 		
 ]
 
-{ #category : 'delegated' }
-FileSystem >> openFileStream: aResolvable writable: aBoolean [
-	^ store 
-		openFileStream: (self resolve: aResolvable) 
-		writable: aBoolean
-]
-
-{ #category : 'private' }
-FileSystem >> openStreamDescription: aResolvable writable: writeMode [
-	"I am  a helper method to delegate basicOpen:writable: to the store.
-	 I am called from FileSystemHandle implementations."
-	
-	"writeMode - #read, #append, #write"
-
-	| path |
-	
-	path := self resolve: aResolvable.
-	^ store basicOpen: path writable: writeMode
-]
-
 { #category : 'converting' }
 FileSystem >> pathFromObject: anObject [ 
 	^ anObject asPathWith: self
