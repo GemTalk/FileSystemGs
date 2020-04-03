@@ -199,6 +199,16 @@ DiskStore >> currentWorkingDirectoryPath [
 	^ Path from: pathString delimiter: self delimiter
 ]
 
+{ #category : 'accessing' }
+DiskStore >> defaultOptionsForRead [
+	^ FileOpeningOptions readOnly
+]
+
+{ #category : 'accessing' }
+DiskStore >> defaultOptionsForWrite [
+	^ FileOpeningOptions writeOnly
+]
+
 { #category : 'public' }
 DiskStore >> delete: path [
 	| pathString |
@@ -221,7 +231,7 @@ DiskStore >> forReferencePrintOn: aStream [
 
 { #category : 'accessing' }
 DiskStore >> handleClass [
-	^ FileHandle
+	^ UnixFileDescriptor
 ]
 
 { #category : 'comparing' }
@@ -271,7 +281,8 @@ DiskStore >> isFile: aPath [
 { #category : 'public' }
 DiskStore >> isReadable: aPath [
 	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
+	self flag: 'TODO: Make this work properly'.
+	self error: 'ToBeImplemented'.
 	(self basicOpen: aPath writable: #read) 
 		ifNotNil: [ :id|
 			File close: id.
@@ -295,12 +306,14 @@ DiskStore >> isSymlink: aPath [
 
 { #category : 'public' }
 DiskStore >> isWritable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: we need a decent primitive for this...'.
-	(self basicOpen: aPath writable: #write) 
-		ifNotNil: [ :id|
+	(self exists: aPath)
+		ifFalse: [ ^ false ].
+	self flag: 'TODO: Make this work properly'.
+	self error: 'ToBeImplemented'.
+	(self basicOpen: aPath writable: #'write')
+		ifNotNil: [ :id | 
 			File close: id.
-			^ true].
+			^ true ].
 	^ false
 ]
 

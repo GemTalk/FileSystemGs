@@ -80,7 +80,6 @@ So quite a bit of overlap.
 
 There's also ResolutionRequest, a Notification subclass.
 
-
 =============================
 
 Tests failing:
@@ -130,6 +129,14 @@ a MemoryFileDescriptor makes sense.
 There are operations supported by FileSystemHandle (both FileHandle and MemoryHandle) that I 
 don't think we want to support. These include things like #at:. In normal FileSystem operation, 
 
+=================================
+
+To implement binaryReadStream...
+
+FileReference >> binaryReadStream 
+Filesystem >> binaryReadStreamOn: aPath
+  Filesystem >> open:withOptions: "On success, yields a FileDescriptor"
+  
 
 =================================
 
@@ -148,3 +155,6 @@ Need to add #noStubbing (or #noAggressiveStubbing) to RegistryEphemeron once fea
 
 ========================
 
+Things I'm identified to remove once they're suitably replaced, but have not yet removed:
+
+#open:writable:
