@@ -1,0 +1,10 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'gemstone3.2/Core_dev',
+	#condition : 'gs3.2.x',
+	#projectNames : [ ],
+	#componentNames : [ ],
+	#packageNames : [
+		'FileSystem-Core-32x'
+	],
+	#comment : 'gemstone 3.2.x-specific packages'
+}

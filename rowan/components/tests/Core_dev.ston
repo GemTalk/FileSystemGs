@@ -1,0 +1,19 @@
+RwSimpleProjectLoadComponentV2 {
+	#name : 'tests/Core_dev',
+	#condition : 'tests',
+	#projectNames : [ ],
+	#componentNames : [ ],
+	#packageNames : [
+		'FileDescriptor-Tests',
+		'FileSystem-Tests-Attributes',
+		'FileSystem-Tests-Core',
+		'FileSystem-Tests-Disk',
+		'FileSystem-Tests-Memory',
+		'Zinc-Character-Encoding-Tests',
+		'Files-Tests',
+		'LibC-Tests',
+		'Network-UUID-Tests',
+		'FileSystem-Tests-GemStone'
+	],
+	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded into Globals by SystemUser'
+}

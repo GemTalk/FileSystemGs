@@ -1,74 +1,25 @@
-RwProjectLoadConfiguration {
+RwSimpleProjectLoadComponentV2 {
 	#name : 'Core_dev',
-	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded into Globals by SystemUser',
-	#version : '0.1.0',
-	#conditionalPackages : {
-		[
-			'gemstone'
-		] : {
-			'core' : {
-				#packageNames : [
-					'FileDescriptor',
-					'FileSystem-Core',
-					'FileSystem-Disk',
-					'FileSystem-Exceptions',
-					'FileSystem-Memory',
-					'FileSystem-Obsolete',
-					'FileSystem-Path',
-					'LibC',
-					'System-Platforms-Base',
-					'System-Platforms-Mac',
-					'System-Platforms-Unix',
-					'Zinc-Character-Encoding-Core',
-					'Network-UUID'
-				]
-			},
-			'tests' : {
-				#packageNames : [
-					'FileDescriptor-Tests',
-					'FileSystem-Tests-Attributes',
-					'FileSystem-Tests-Core',
-					'FileSystem-Tests-Disk',
-					'FileSystem-Tests-Memory',
-					'Zinc-Character-Encoding-Tests',
-					'Files-Tests',
-					'LibC-Tests',
-					'Network-UUID-Tests',
-					'FileSystem-Tests-GemStone'
-				]
-			}
-		},
-		[
-			'gs3.2.x'
-		] : {
-			'core' : {
-				#packageNames : [
-					'FileSystem-Core-32x'
-				]
-			}
-		},
-		[
-			'gs3.[5-]'
-		] : {
-			'core' : {
-				#packageNames : [ ]
-			}
-		}
-	},
-	#conditionalPackageMapSpecs : {
-		'gemstone' : {
-			'DataCurator' : {
-				#defaultSymbolDictName : 'UserGlobals'
-			},
-			'SystemUser' : {
-				#defaultSymbolDictName : 'Globals'
-			}
-		}
-	},
-	#definedGroupNames : {
-		'tests' : [
-			'core'
-		],
-		'core' : [ ]
-	}
+	#condition : 'gemstone',
+	#projectNames : [ ],
+	#componentNames : [
+		'gemstone3.2/Core_dev',
+		'tests/Core_dev'
+	],
+	#packageNames : [
+		'FileDescriptor',
+		'FileSystem-Core',
+		'FileSystem-Disk',
+		'FileSystem-Exceptions',
+		'FileSystem-Memory',
+		'FileSystem-Obsolete',
+		'FileSystem-Path',
+		'LibC',
+		'System-Platforms-Base',
+		'System-Platforms-Mac',
+		'System-Platforms-Unix',
+		'Zinc-Character-Encoding-Core',
+		'Network-UUID'
+	],
+	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded into Globals by SystemUser'
 }

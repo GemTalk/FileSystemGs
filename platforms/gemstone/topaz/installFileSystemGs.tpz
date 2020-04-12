@@ -8,13 +8,17 @@
   login
 
 	run
-"install st_launcher project"
-	| url projectSetDefinition |
-	url := 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs_dev.ston'.
-	projectSetDefinition := (((AllUsers userWithId: 'SystemUser') objectNamed: 'RwComponentProjectDefinition') newForUrl: url)
-		projectHome: '$ROWAN_PROJECTS_HOME';
-		read.
-	projectSetDefinition load
+	| projectsHome url loadSpec resolvedProject |
+	Rowan projectTools trace startTracing.
+	projectsHome := '$ARCHBASE/externals_st' asFileReference.
+	url := 'file:', (projectsHome / 'FileSystemGs' / 'rowan' / 'specs' / 'FileSystemGs_dev', 'ston') pathString.
+	loadSpec := (Rowan projectTools load loadProjectSpecFromUrl: url)
+		projectsHome: projectsHome;
+		yourself.
+	resolvedProject := loadSpec resolve.
+
+	resolvedProject load.
+
 %
 	commit
 
