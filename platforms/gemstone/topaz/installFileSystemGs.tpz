@@ -8,17 +8,11 @@
   login
 
 	run
-	| projectsHome url loadSpec resolvedProject |
+	| projectsHome url |
 	Rowan projectTools trace startTracing.
 	projectsHome := '$ARCHBASE/externals_st' asFileReference.
 	url := 'file:', (projectsHome / 'FileSystemGs' / 'rowan' / 'specs' / 'FileSystemGs_dev', 'ston') pathString.
-	loadSpec := (Rowan projectTools load loadProjectSpecFromUrl: url)
-		projectsHome: projectsHome;
-		yourself.
-	resolvedProject := loadSpec resolve.
-
-	resolvedProject load.
-
+	(Rowan projectFromUrl: url projectsHome: projectsHome) resolve load.
 %
 	commit
 
