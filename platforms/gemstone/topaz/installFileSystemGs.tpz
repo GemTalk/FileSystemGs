@@ -10,7 +10,7 @@
 	run
 	| projectsHome url |
 	Rowan projectTools trace startTracing.
-	projectsHome := '$ARCHBASE/externals_st' asFileReference.
+	projectsHome := '$ROWAN_PROJECTS_HOME' asFileReference.
 	url := 'file:', (projectsHome / 'FileSystemGs' / 'rowan' / 'specs' / 'FileSystemGs_dev', 'ston') pathString.
 	(Rowan projectFromUrl: url projectsHome: projectsHome) resolve load.
 %
