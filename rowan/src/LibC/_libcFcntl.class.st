@@ -135,7 +135,7 @@ _libcFcntl class >> initializeFunction_posix_fallocate_inLibrary: cLibrary [
 _libcFcntl class >> initializeFunctions [
 
 	| library |
-	library := CLibrary named: '/lib64/libc.so.6'.
+	library := CLibrary named: 'libc.so.6'.
 	self
 		initializeFunction_creat_inLibrary: library;
 		initializeFunction_fcntl_inLibrary: library;
@@ -145,7 +145,6 @@ _libcFcntl class >> initializeFunctions [
 		initializeFunction_posix_fadvise_inLibrary: library;
 		initializeFunction_posix_fallocate_inLibrary: library;
 		yourself.
-
 ]
 
 { #category : 'Functions' }

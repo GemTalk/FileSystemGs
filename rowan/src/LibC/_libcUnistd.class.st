@@ -1418,7 +1418,7 @@ _libcUnistd class >> initializeFunction_write_inLibrary: cLibrary [
 _libcUnistd class >> initializeFunctions [
 
 	| library |
-	library := CLibrary named: '/lib64/libc.so.6'.
+	library := CLibrary named: 'libc.so.6'.
 	self
 		initializeFunction_access_inLibrary: library;
 		initializeFunction_acct_inLibrary: library;

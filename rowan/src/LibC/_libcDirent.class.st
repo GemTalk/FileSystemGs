@@ -171,7 +171,7 @@ _libcDirent class >> initializeFunction_telldir_inLibrary: cLibrary [
 _libcDirent class >> initializeFunctions [
 
 	| library |
-	library := CLibrary named: '/lib64/libc.so.6'.
+	library := CLibrary named: 'libc.so.6'.
 	self
 		initializeFunction_alphasort_inLibrary: library;
 		initializeFunction_closedir_inLibrary: library;
@@ -186,7 +186,6 @@ _libcDirent class >> initializeFunctions [
 		initializeFunction_seekdir_inLibrary: library;
 		initializeFunction_telldir_inLibrary: library;
 		yourself.
-
 ]
 
 { #category : 'Functions' }
