@@ -15,16 +15,6 @@ LibcFcntl >> openPath: pathString flags: flagsInteger mode: modeInteger [
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
-
-	"| result varArgs errno |
-	varArgs := Array with: #'int32' with: modeInteger.
-	CCallout errno: 0.
-	result := library open_: pathString _: flagsInteger _: varArgs.
-	errno := CCallout errno.
-
-	result == -1
-		ifTrue: [ self handleErrno: errno ].
-	^ result"
 ]
 
 { #category : 'accessing' }
