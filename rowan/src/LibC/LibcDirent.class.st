@@ -18,14 +18,14 @@ LibcDirent >> closeDirectoryStream: dirPtr [
 
 { #category : 'functions' }
 LibcDirent >> openDirectoryStreamWithPath: pathString [
-	| result errno |
-	CCallout errno: 0.
-	result := library opendir_: pathString.
-	errno := CCallout errno.
-
+	| result errnoHolder |
+	errnoHolder := { 0 }.
+	result := library
+		opendir_: pathString
+		errno: errnoHolder.
 	result memoryAddress == 0 "NULL"
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]
 
 { #category : 'functions' }

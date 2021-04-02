@@ -257,6 +257,17 @@ extern DIR *opendir (const char *__name)                                        
 ]
 
 { #category : 'Functions' }
+_libcDirent >> opendir_: __name
+errno: errnoHolder [
+	"/usr/include/dirent.h line 134
+extern DIR *opendir (const char *__name)                                         __attribute__ ((__nonnull__                                         (1)                                        ))                                                       ;"
+
+	"Interpreted as #ptr from #( #'const char*' )"
+
+	^Functionopendir callWith: { __name } errno: errnoHolder
+]
+
+{ #category : 'Functions' }
 _libcDirent >> readdir_: __dirp [ 
 	"/usr/include/dirent.h line 162
 extern struct dirent *readdir (DIR *__dirp)                                            __attribute__ ((__nonnull__                                            (1)                                           ))                                                          ;"
