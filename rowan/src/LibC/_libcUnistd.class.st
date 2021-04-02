@@ -55,7 +55,6 @@ Class {
 		'Functiongetuid',
 		'Functiongetusershell',
 		'Functiongetwd',
-		'Functionget_current_dir_name',
 		'Functionisatty',
 		'Functionlchown',
 		'Functionlink',
@@ -113,11 +112,6 @@ Class {
 	],
 	#category : 'LibC'
 }
-
-{ #category : 'initializing' }
-_libcUnistd class >> initialize [
-	self initializeFunctions
-]
 
 { #category : 'Initializing - private' }
 _libcUnistd class >> initializeFunction___getpgid_inLibrary: cLibrary [
@@ -501,17 +495,6 @@ _libcUnistd class >> initializeFunction_ftruncate_inLibrary: cLibrary [
 		args: #(#'int32' #'int64')
 		varArgsAfter: -1.
 
-]
-
-{ #category : 'Initializing - private' }
-_libcUnistd class >> initializeFunction_get_current_dir_name_inLibrary: cLibrary [
-
-	Functionget_current_dir_name := CCallout
-		library: cLibrary
-		name: 'get_current_dir_name'
-		result: #'ptr'
-		args: #()
-		varArgsAfter: -1
 ]
 
 { #category : 'Initializing - private' }
@@ -1420,1325 +1403,1075 @@ _libcUnistd class >> initializeFunctions [
 	| library |
 	library := CLibrary named: 'libc.so.6'.
 	self
-		initializeFunction_access_inLibrary: library;
-		initializeFunction_acct_inLibrary: library;
-		initializeFunction_alarm_inLibrary: library;
-		initializeFunction_brk_inLibrary: library;
 		initializeFunction_chdir_inLibrary: library;
-		initializeFunction_chown_inLibrary: library;
-		initializeFunction_chroot_inLibrary: library;
-		initializeFunction_close_inLibrary: library;
-		initializeFunction_confstr_inLibrary: library;
-		initializeFunction_crypt_inLibrary: library;
-		initializeFunction_daemon_inLibrary: library;
-		initializeFunction_dup_inLibrary: library;
-		initializeFunction_dup2_inLibrary: library;
-		initializeFunction_endusershell_inLibrary: library;
-		initializeFunction_execl_inLibrary: library;
-		initializeFunction_execle_inLibrary: library;
-		initializeFunction_execlp_inLibrary: library;
-		initializeFunction_execv_inLibrary: library;
-		initializeFunction_execve_inLibrary: library;
-		initializeFunction_execvp_inLibrary: library;
-		initializeFunction_faccessat_inLibrary: library;
-		initializeFunction_fchdir_inLibrary: library;
-		initializeFunction_fchown_inLibrary: library;
-		initializeFunction_fchownat_inLibrary: library;
-		initializeFunction_fdatasync_inLibrary: library;
-		initializeFunction_fexecve_inLibrary: library;
-		initializeFunction_fork_inLibrary: library;
-		initializeFunction_fpathconf_inLibrary: library;
-		initializeFunction_fsync_inLibrary: library;
-		initializeFunction_ftruncate_inLibrary: library;
-		initializeFunction_get_current_dir_name_inLibrary: library;
-		initializeFunction_getcwd_inLibrary: library;
-		initializeFunction_getdomainname_inLibrary: library;
-		initializeFunction_getdtablesize_inLibrary: library;
-		initializeFunction_getegid_inLibrary: library;
-		initializeFunction_getentropy_inLibrary: library;
-		initializeFunction_geteuid_inLibrary: library;
-		initializeFunction_getgid_inLibrary: library;
-		initializeFunction_getgroups_inLibrary: library;
-		initializeFunction_gethostid_inLibrary: library;
-		initializeFunction_gethostname_inLibrary: library;
-		initializeFunction_getlogin_inLibrary: library;
-		initializeFunction_getlogin_r_inLibrary: library;
-		initializeFunction_getopt_inLibrary: library;
-		initializeFunction_getpagesize_inLibrary: library;
-		initializeFunction_getpass_inLibrary: library;
-		initializeFunction_getpgid_inLibrary: library;
+		initializeFunction_setsid_inLibrary: library;
 		initializeFunction_getpgrp_inLibrary: library;
-		initializeFunction_getpid_inLibrary: library;
-		initializeFunction_getppid_inLibrary: library;
+		initializeFunction_execve_inLibrary: library;
 		initializeFunction_getsid_inLibrary: library;
-		initializeFunction_getuid_inLibrary: library;
-		initializeFunction_getusershell_inLibrary: library;
-		initializeFunction_getwd_inLibrary: library;
-		initializeFunction_isatty_inLibrary: library;
-		initializeFunction_lchown_inLibrary: library;
-		initializeFunction_link_inLibrary: library;
+		initializeFunction_getlogin_r_inLibrary: library;
+		initializeFunction_getgid_inLibrary: library;
+		initializeFunction_getopt_inLibrary: library;
+		initializeFunction_write_inLibrary: library;
+		initializeFunction_ftruncate_inLibrary: library;
+		initializeFunction_execle_inLibrary: library;
+		initializeFunction_dup2_inLibrary: library;
 		initializeFunction_linkat_inLibrary: library;
+		initializeFunction_symlinkat_inLibrary: library;
+		initializeFunction___getpgid_inLibrary: library;
+		initializeFunction_execlp_inLibrary: library;
+		initializeFunction_readlinkat_inLibrary: library;
+		initializeFunction_unlinkat_inLibrary: library;
+		initializeFunction_crypt_inLibrary: library;
+		initializeFunction_setpgrp_inLibrary: library;
+		initializeFunction_getppid_inLibrary: library;
+		initializeFunction_close_inLibrary: library;
+		initializeFunction_setegid_inLibrary: library;
+		initializeFunction_ttyname_inLibrary: library;
+		initializeFunction_sbrk_inLibrary: library;
+		initializeFunction_access_inLibrary: library;
+		initializeFunction_fchown_inLibrary: library;
+		initializeFunction_fpathconf_inLibrary: library;
+		initializeFunction_link_inLibrary: library;
+		initializeFunction_execvp_inLibrary: library;
+		initializeFunction_fork_inLibrary: library;
+		initializeFunction_getuid_inLibrary: library;
+		initializeFunction_tcgetpgrp_inLibrary: library;
+		initializeFunction_getcwd_inLibrary: library;
+		initializeFunction_fexecve_inLibrary: library;
+		initializeFunction_getpass_inLibrary: library;
+		initializeFunction_geteuid_inLibrary: library;
+		initializeFunction_rmdir_inLibrary: library;
 		initializeFunction_lockf_inLibrary: library;
+		initializeFunction_pread_inLibrary: library;
+		initializeFunction_fchdir_inLibrary: library;
+		initializeFunction_gethostid_inLibrary: library;
+		initializeFunction__exit_inLibrary: library;
+		initializeFunction_sync_inLibrary: library;
+		initializeFunction_setregid_inLibrary: library;
+		initializeFunction_setpgid_inLibrary: library;
+		initializeFunction_revoke_inLibrary: library;
+		initializeFunction_tcsetpgrp_inLibrary: library;
+		initializeFunction_setuid_inLibrary: library;
+		initializeFunction_read_inLibrary: library;
+		initializeFunction_setgid_inLibrary: library;
+		initializeFunction_pause_inLibrary: library;
+		initializeFunction_fsync_inLibrary: library;
+		initializeFunction_isatty_inLibrary: library;
+		initializeFunction_dup_inLibrary: library;
+		initializeFunction_alarm_inLibrary: library;
+		initializeFunction_endusershell_inLibrary: library;
+		initializeFunction_pwrite_inLibrary: library;
+		initializeFunction_execl_inLibrary: library;
+		initializeFunction_setdomainname_inLibrary: library;
+		initializeFunction_syscall_inLibrary: library;
+		initializeFunction_confstr_inLibrary: library;
+		initializeFunction_vfork_inLibrary: library;
+		initializeFunction_getpgid_inLibrary: library;
+		initializeFunction_setusershell_inLibrary: library;
+		initializeFunction_getpagesize_inLibrary: library;
+		initializeFunction_pipe_inLibrary: library;
+		initializeFunction_usleep_inLibrary: library;
+		initializeFunction_sysconf_inLibrary: library;
+		initializeFunction_chroot_inLibrary: library;
+		initializeFunction_getdtablesize_inLibrary: library;
+		initializeFunction_fchownat_inLibrary: library;
+		initializeFunction_vhangup_inLibrary: library;
+		initializeFunction_ttyname_r_inLibrary: library;
+		initializeFunction_acct_inLibrary: library;
+		initializeFunction_brk_inLibrary: library;
+		initializeFunction_execv_inLibrary: library;
+		initializeFunction_sethostid_inLibrary: library;
+		initializeFunction_setlogin_inLibrary: library;
+		initializeFunction_daemon_inLibrary: library;
+		initializeFunction_pathconf_inLibrary: library;
+		initializeFunction_seteuid_inLibrary: library;
+		initializeFunction_lchown_inLibrary: library;
+		initializeFunction_gethostname_inLibrary: library;
+		initializeFunction_getusershell_inLibrary: library;
 		initializeFunction_lseek_inLibrary: library;
 		initializeFunction_nice_inLibrary: library;
-		initializeFunction_pathconf_inLibrary: library;
-		initializeFunction_pause_inLibrary: library;
-		initializeFunction_pipe_inLibrary: library;
-		initializeFunction_pread_inLibrary: library;
-		initializeFunction_profil_inLibrary: library;
-		initializeFunction_pwrite_inLibrary: library;
-		initializeFunction_read_inLibrary: library;
-		initializeFunction_readlink_inLibrary: library;
-		initializeFunction_readlinkat_inLibrary: library;
-		initializeFunction_revoke_inLibrary: library;
-		initializeFunction_rmdir_inLibrary: library;
-		initializeFunction_sbrk_inLibrary: library;
-		initializeFunction_setdomainname_inLibrary: library;
-		initializeFunction_setegid_inLibrary: library;
-		initializeFunction_seteuid_inLibrary: library;
-		initializeFunction_setgid_inLibrary: library;
-		initializeFunction_sethostid_inLibrary: library;
-		initializeFunction_sethostname_inLibrary: library;
-		initializeFunction_setlogin_inLibrary: library;
-		initializeFunction_setpgid_inLibrary: library;
-		initializeFunction_setpgrp_inLibrary: library;
-		initializeFunction_setregid_inLibrary: library;
-		initializeFunction_setreuid_inLibrary: library;
-		initializeFunction_setsid_inLibrary: library;
-		initializeFunction_setuid_inLibrary: library;
-		initializeFunction_setusershell_inLibrary: library;
-		initializeFunction_sleep_inLibrary: library;
-		initializeFunction_symlink_inLibrary: library;
-		initializeFunction_symlinkat_inLibrary: library;
-		initializeFunction_sync_inLibrary: library;
-		initializeFunction_syscall_inLibrary: library;
-		initializeFunction_sysconf_inLibrary: library;
-		initializeFunction_tcgetpgrp_inLibrary: library;
-		initializeFunction_tcsetpgrp_inLibrary: library;
+		initializeFunction_getegid_inLibrary: library;
+		initializeFunction_faccessat_inLibrary: library;
+		initializeFunction_getpid_inLibrary: library;
 		initializeFunction_truncate_inLibrary: library;
-		initializeFunction_ttyname_inLibrary: library;
-		initializeFunction_ttyname_r_inLibrary: library;
-		initializeFunction_ttyslot_inLibrary: library;
-		initializeFunction_ualarm_inLibrary: library;
+		initializeFunction_getentropy_inLibrary: library;
 		initializeFunction_unlink_inLibrary: library;
-		initializeFunction_unlinkat_inLibrary: library;
-		initializeFunction_usleep_inLibrary: library;
-		initializeFunction_vfork_inLibrary: library;
-		initializeFunction_vhangup_inLibrary: library;
-		initializeFunction_write_inLibrary: library;
-		initializeFunction__exit_inLibrary: library;
-		initializeFunction___getpgid_inLibrary: library;
-		yourself.
+		initializeFunction_symlink_inLibrary: library;
+		initializeFunction_getdomainname_inLibrary: library;
+		initializeFunction_fdatasync_inLibrary: library;
+		initializeFunction_ttyslot_inLibrary: library;
+		initializeFunction_getlogin_inLibrary: library;
+		initializeFunction_sethostname_inLibrary: library;
+		initializeFunction_profil_inLibrary: library;
+		initializeFunction_sleep_inLibrary: library;
+		initializeFunction_getgroups_inLibrary: library;
+		initializeFunction_getwd_inLibrary: library;
+		initializeFunction_readlink_inLibrary: library;
+		initializeFunction_ualarm_inLibrary: library;
+		initializeFunction_chown_inLibrary: library;
+		initializeFunction_setreuid_inLibrary: library;
+		yourself
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> __getpgid_: __pid [ 
-	"/usr/include/unistd.h line 637
-extern __pid_t __getpgid (__pid_t __pid)                                         __attribute__ ((__nothrow__ , __leaf__))                                               ;"
-
+_libcUnistd >> __getpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Function__getpgid callWith: { __pid }
-
+	^Function__getpgid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> _exit_: __status [ 
-	"/usr/include/unistd.h line 603
-extern void _exit (int __status) __attribute__ ((__noreturn__));"
-
+_libcUnistd >> _exit: args errno: errnoHolder [
 	"Interpreted as #void from #( #'int32' )"
 
-	^Function_exit callWith: { __status }
-
+	^Function_exit
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> access_: __name _: __type [ 
-	"/usr/include/unistd.h line 287
-extern int access (const char *__name, int __type)                                                   __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                                           (1)                                                          ))                                                                         ;"
-
+_libcUnistd >> access: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int32' )"
 
-	^Functionaccess callWith: { __name. __type }
-
+	^Functionaccess
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> acct_: __name [ 
-	"/usr/include/unistd.h line 923
-extern int acct (const char *__name)                                     __attribute__ ((__nothrow__ , __leaf__))                                           ;"
-
+_libcUnistd >> acct: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionacct callWith: { __name }
-
+	^Functionacct
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> alarm_: __seconds [ 
-	"/usr/include/unistd.h line 432
-extern unsigned int alarm (unsigned int __seconds)                                                   __attribute__ ((__nothrow__ , __leaf__))                                                         ;"
-
+_libcUnistd >> alarm: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' )"
 
-	^Functionalarm callWith: { __seconds }
-
+	^Functionalarm
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> brk_: __addr [ 
-	"/usr/include/unistd.h line 1035
-extern int brk (void *__addr)                              __attribute__ ((__nothrow__ , __leaf__))                                           ;"
-
+_libcUnistd >> brk: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
-	^Functionbrk callWith: { __addr }
-
+	^Functionbrk
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> chdir_: __path [ 
-	"/usr/include/unistd.h line 497
-extern int chdir (const char *__path)                                      __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                              (1)                                             ))                                                                   ;"
-
+_libcUnistd >> chdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionchdir callWith: { __path }
-
+	^Functionchdir
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> chown_: __file _: __owner _: __group [ 
-	"/usr/include/unistd.h line 473
-extern int chown (const char *__file, __uid_t __owner, __gid_t __group)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> chown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint32' )"
 
-	^Functionchown callWith: { __file. __owner. __group }
-
+	^Functionchown
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> chroot_: __path [ 
-	"/usr/include/unistd.h line 942
-extern int chroot (const char *__path)                                       __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                               (1)                                              ))                                                                    ;"
-
+_libcUnistd >> chroot: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionchroot callWith: { __path }
-
+	^Functionchroot
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> close_: __fd [ 
-	"/usr/include/unistd.h line 353
-extern int close (int __fd);"
-
+_libcUnistd >> close: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionclose callWith: { __fd }
-
+	^Functionclose
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> confstr_: __name _: __buf _: __len [ 
-	"/usr/include/unistd.h line 623
-extern size_t confstr (int __name, char *__buf, size_t __len)                                                              __attribute__ ((__nothrow__ , __leaf__))                                                                    ;"
-
+_libcUnistd >> confstr: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'int32' #'ptr' #'uint64' )"
 
-	^Functionconfstr callWith: { __name. __buf. __len }
-
+	^Functionconfstr
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> crypt_: __key _: __salt [ 
-	"/usr/include/unistd.h line 1124
-extern char *crypt (const char *__key, const char *__salt)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> crypt: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'const char*' #'const char*' )"
 
-	^Functioncrypt callWith: { __key. __salt }
-
+	^Functioncrypt
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> daemon_: __nochdir _: __noclose [ 
-	"/usr/include/unistd.h line 935
-extern int daemon (int __nochdir, int __noclose)                                                 __attribute__ ((__nothrow__ , __leaf__))                                                              ;"
-
+_libcUnistd >> daemon: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
-	^Functiondaemon callWith: { __nochdir. __noclose }
-
+	^Functiondaemon
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> dup_: __fd [ 
-	"/usr/include/unistd.h line 531
-extern int dup (int __fd)                          __attribute__ ((__nothrow__ , __leaf__))                                       ;"
-
+_libcUnistd >> dup: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functiondup callWith: { __fd }
-
+	^Functiondup
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> dup2_: __fd _: __fd2 [ 
-	"/usr/include/unistd.h line 534
-extern int dup2 (int __fd, int __fd2)                                      __attribute__ ((__nothrow__ , __leaf__))                                            ;"
-
+_libcUnistd >> dup2: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
-	^Functiondup2 callWith: { __fd. __fd2 }
-
+	^Functiondup2
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> endusershell [
-	"/usr/include/unistd.h line 928
-extern void endusershell (void)                                __attribute__ ((__nothrow__ , __leaf__))                                      ;"
-
+_libcUnistd >> endusershell: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
-	^Functionendusershell callWith: {  }
-
+	^Functionendusershell
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execl_: __path _: __arg [ 
-	"/usr/include/unistd.h line 573
-extern int execl (const char *__path, const char *__arg, ...)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> execl: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
-	^Functionexecl callWith: { __path. __arg"varArgs array should be appended to this array" }
-
+	^Functionexecl
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execle_: __path _: __arg [ 
-	"/usr/include/unistd.h line 568
-extern int execle (const char *__path, const char *__arg, ...)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> execle: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
-	^Functionexecle callWith: { __path. __arg"varArgs array should be appended to this array" }
-
+	^Functionexecle
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execlp_: __file _: __arg [ 
-	"/usr/include/unistd.h line 584
-extern int execlp (const char *__file, const char *__arg, ...)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> execlp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
-	^Functionexeclp callWith: { __file. __arg"varArgs array should be appended to this array" }
-
+	^Functionexeclp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execv_: __path _: __argv [ 
-	"/usr/include/unistd.h line 563
-extern int execv (const char *__path, char *const __argv[])     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> execv: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
-	^Functionexecv callWith: { __path. __argv }
-
+	^Functionexecv
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execve_: __path _: __argv _: __envp [ 
-	"/usr/include/unistd.h line 551
-extern int execve (const char *__path, char *const __argv[],     char *const __envp[])                           __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                   (1, 2)                                  ))                                                    ;"
-
+_libcUnistd >> execve: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' #'ptr' )"
 
-	^Functionexecve callWith: { __path. __argv. __envp }
-
+	^Functionexecve
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> execvp_: __file _: __argv [ 
-	"/usr/include/unistd.h line 578
-extern int execvp (const char *__file, char *const __argv[])     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                              ;"
-
+_libcUnistd >> execvp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
-	^Functionexecvp callWith: { __file. __argv }
-
+	^Functionexecvp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> faccessat_: __fd _: __file _: __type _: __flag [ 
-	"/usr/include/unistd.h line 304
-extern int faccessat (int __fd, const char *__file, int __type, int __flag)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2)            ))                                  ;"
-
+_libcUnistd >> faccessat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' #'int32' )"
 
-	^Functionfaccessat callWith: { __fd. __file. __type. __flag }
-
+	^Functionfaccessat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fchdir_: __fd [ 
-	"/usr/include/unistd.h line 501
-extern int fchdir (int __fd)                             __attribute__ ((__nothrow__ , __leaf__))                                          ;"
-
+_libcUnistd >> fchdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionfchdir callWith: { __fd }
-
+	^Functionfchdir
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fchown_: __fd _: __owner _: __group [ 
-	"/usr/include/unistd.h line 478
-extern int fchown (int __fd, __uid_t __owner, __gid_t __group)                                                               __attribute__ ((__nothrow__ , __leaf__))                                                                            ;"
-
+_libcUnistd >> fchown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'uint32' #'uint32' )"
 
-	^Functionfchown callWith: { __fd. __owner. __group }
-
+	^Functionfchown
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fchownat_: __fd _: __file _: __owner _: __group _: __flag [ 
-	"/usr/include/unistd.h line 491
-extern int fchownat (int __fd, const char *__file, __uid_t __owner,       __gid_t __group, int __flag)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2)            ))                                  ;"
-
+_libcUnistd >> fchownat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'uint32' #'int32' )"
 
-	^Functionfchownat callWith: { __fd. __file. __owner. __group. __flag }
-
+	^Functionfchownat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fdatasync_: __fildes [ 
-	"/usr/include/unistd.h line 1115
-extern int fdatasync (int __fildes);"
-
+_libcUnistd >> fdatasync: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionfdatasync callWith: { __fildes }
-
+	^Functionfdatasync
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fexecve_: __fd _: __argv _: __envp [ 
-	"/usr/include/unistd.h line 557
-extern int fexecve (int __fd, char *const __argv[], char *const __envp[])     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2)            ))                           ;"
-
+_libcUnistd >> fexecve: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'ptr' )"
 
-	^Functionfexecve callWith: { __fd. __argv. __envp }
-
+	^Functionfexecve
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fork [
-	"/usr/include/unistd.h line 756
-extern __pid_t fork (void)                           __attribute__ ((__nothrow__))                                   ;"
-
+_libcUnistd >> fork: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionfork callWith: {  }
-
+	^Functionfork
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fpathconf_: __fd _: __name [ 
-	"/usr/include/unistd.h line 616
-extern long int fpathconf (int __fd, int __name)                                                 __attribute__ ((__nothrow__ , __leaf__))                                                       ;"
-
+_libcUnistd >> fpathconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'int32' )"
 
-	^Functionfpathconf callWith: { __fd. __name }
-
+	^Functionfpathconf
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> fsync_: __fd [ 
-	"/usr/include/unistd.h line 954
-extern int fsync (int __fd);"
-
+_libcUnistd >> fsync: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionfsync callWith: { __fd }
-
+	^Functionfsync
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> ftruncate_: __fd _: __length [ 
-	"/usr/include/unistd.h line 1014
-extern int ftruncate (int __fd, __off_t __length)                                                  __attribute__ ((__nothrow__ , __leaf__))                                                               ;"
-
+_libcUnistd >> ftruncate: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int64' )"
 
-	^Functionftruncate callWith: { __fd. __length }
-
+	^Functionftruncate
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> get_current_dir_name [
-	"/usr/include/unistd.h line
-	extern char *get_current_dir_name (void)"
-
-	^Functionget_current_dir_name callWith: {}
-]
-
-{ #category : 'Functions' }
-_libcUnistd >> getcwd_: __buf _: __size [ 
-	"/usr/include/unistd.h line 511
-extern char *getcwd (char *__buf, size_t __size)                                                 __attribute__ ((__nothrow__ , __leaf__))                                                              ;"
-
+_libcUnistd >> getcwd: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' #'uint64' )"
 
-	^Functiongetcwd callWith: { __buf. __size }
-
+	^Functiongetcwd
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getdomainname_: __name _: __len [ 
-	"/usr/include/unistd.h line 895
-extern int getdomainname (char *__name, size_t __len)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> getdomainname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
-	^Functiongetdomainname callWith: { __name. __len }
-
+	^Functiongetdomainname
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getdtablesize [
-	"/usr/include/unistd.h line 981
-extern int getdtablesize (void)                                __attribute__ ((__nothrow__ , __leaf__))                                      ;"
-
+_libcUnistd >> getdtablesize: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functiongetdtablesize callWith: {  }
-
+	^Functiongetdtablesize
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getegid [
-	"/usr/include/unistd.h line 684
-extern __gid_t getegid (void)                              __attribute__ ((__nothrow__ , __leaf__))                                    ;"
-
+_libcUnistd >> getegid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
-	^Functiongetegid callWith: {  }
-
+	^Functiongetegid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getentropy_: __buffer _: __length [ 
-	"/usr/include/unistd.h line 1161
-int getentropy (void *__buffer, size_t __length) ;"
-
+_libcUnistd >> getentropy: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
-	^Functiongetentropy callWith: { __buffer. __length }
-
+	^Functiongetentropy
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> geteuid [
-	"/usr/include/unistd.h line 678
-extern __uid_t geteuid (void)                              __attribute__ ((__nothrow__ , __leaf__))                                    ;"
-
+_libcUnistd >> geteuid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
-	^Functiongeteuid callWith: {  }
-
+	^Functiongeteuid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getgid [
-	"/usr/include/unistd.h line 681
-extern __gid_t getgid (void)                             __attribute__ ((__nothrow__ , __leaf__))                                   ;"
-
+_libcUnistd >> getgid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
-	^Functiongetgid callWith: {  }
-
+	^Functiongetgid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getgroups_: __size _: __list [ 
-	"/usr/include/unistd.h line 689
-extern int getgroups (int __size, __gid_t __list[])                                                    __attribute__ ((__nothrow__ , __leaf__))                                                                 ;"
-
+_libcUnistd >> getgroups: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
-	^Functiongetgroups callWith: { __size. __list }
-
+	^Functiongetgroups
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> gethostid [
-	"/usr/include/unistd.h line 967
-extern long int gethostid (void);"
-
+_libcUnistd >> gethostid: args errno: errnoHolder [
 	"Interpreted as #int64 from #( )"
 
-	^Functiongethostid callWith: {  }
-
+	^Functiongethostid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> gethostname_: __name _: __len [ 
-	"/usr/include/unistd.h line 877
-extern int gethostname (char *__name, size_t __len)                                                    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                                            (1)                                                           ))                                                                          ;"
-
+_libcUnistd >> gethostname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
-	^Functiongethostname callWith: { __name. __len }
-
+	^Functiongethostname
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getlogin [
-	"/usr/include/unistd.h line 848
-extern char *getlogin (void);"
+_libcUnistd >> getlogin_r: args errno: errnoHolder [
+	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
+	^Functiongetlogin_r
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libcUnistd >> getlogin: args errno: errnoHolder [
 	"Interpreted as #char* from #( )"
 
-	^Functiongetlogin callWith: {  }
-
+	^Functiongetlogin
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getlogin_r_: __name _: __name_len [ 
-	"/usr/include/unistd.h line 856
-extern int getlogin_r (char *__name, size_t __name_len)                                                        __attribute__ ((__nonnull__                                                        (1)                                                       ))                                                                      ;"
-
-	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
-
-	^Functiongetlogin_r callWith: { __name. __name_len }
-
-]
-
-{ #category : 'Functions' }
-_libcUnistd >> getopt_: ___argc _: ___argv _: __shortopts [ 
-	"/usr/include/bits/getopt_core.h line 91
-extern int getopt (int ___argc, char *const *___argv, const char *__shortopts)       __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__ (2, 3)));"
-
+_libcUnistd >> getopt: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'const char*' )"
 
-	^Functiongetopt callWith: { ___argc. ___argv. __shortopts }
-
+	^Functiongetopt
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getpagesize [
-	"/usr/include/unistd.h line 976
-extern int getpagesize (void)                               __attribute__ ((__nothrow__ , __leaf__))                                       __attribute__ ((__const__));"
-
+_libcUnistd >> getpagesize: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functiongetpagesize callWith: {  }
-
+	^Functiongetpagesize
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getpass_: __prompt [ 
-	"/usr/include/unistd.h line 946
-extern char *getpass (const char *__prompt)                                            __attribute__ ((__nonnull__                                            (1)                                           ))                                                          ;"
-
+_libcUnistd >> getpass: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'const char*' )"
 
-	^Functiongetpass callWith: { __prompt }
-
+	^Functiongetpass
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getpgid_: __pid [ 
-	"/usr/include/unistd.h line 639
-extern __pid_t getpgid (__pid_t __pid)                                       __attribute__ ((__nothrow__ , __leaf__))                                             ;"
-
+_libcUnistd >> getpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functiongetpgid callWith: { __pid }
-
+	^Functiongetpgid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getpgrp [
-	"/usr/include/unistd.h line 634
-extern __pid_t getpgrp (void)                              __attribute__ ((__nothrow__ , __leaf__))                                    ;"
-
+_libcUnistd >> getpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functiongetpgrp callWith: {  }
-
+	^Functiongetpgrp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getpid [
-	"/usr/include/unistd.h line 628
-extern __pid_t getpid (void)                             __attribute__ ((__nothrow__ , __leaf__))                                   ;"
-
+_libcUnistd >> getpid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functiongetpid callWith: {  }
-
+	^Functiongetpid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getppid [
-	"/usr/include/unistd.h line 631
-extern __pid_t getppid (void)                              __attribute__ ((__nothrow__ , __leaf__))                                    ;"
-
+_libcUnistd >> getppid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functiongetppid callWith: {  }
-
+	^Functiongetppid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getsid_: __pid [ 
-	"/usr/include/unistd.h line 671
-extern __pid_t getsid (__pid_t __pid)                                      __attribute__ ((__nothrow__ , __leaf__))                                            ;"
-
+_libcUnistd >> getsid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functiongetsid callWith: { __pid }
-
+	^Functiongetsid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getuid [
-	"/usr/include/unistd.h line 675
-extern __uid_t getuid (void)                             __attribute__ ((__nothrow__ , __leaf__))                                   ;"
-
+_libcUnistd >> getuid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
-	^Functiongetuid callWith: {  }
-
+	^Functiongetuid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getusershell [
-	"/usr/include/unistd.h line 927
-extern char *getusershell (void)                                 __attribute__ ((__nothrow__ , __leaf__))                                       ;"
-
+_libcUnistd >> getusershell: args errno: errnoHolder [
 	"Interpreted as #char* from #( )"
 
-	^Functiongetusershell callWith: {  }
-
+	^Functiongetusershell
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> getwd_: __buf [ 
-	"/usr/include/unistd.h line 525
-extern char *getwd (char *__buf)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            )) __attribute__ ((__deprecated__))                                                           ;"
-
+_libcUnistd >> getwd: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' )"
 
-	^Functiongetwd callWith: { __buf }
-
+	^Functiongetwd
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> isatty_: __fd [ 
-	"/usr/include/unistd.h line 779
-extern int isatty (int __fd)                             __attribute__ ((__nothrow__ , __leaf__))                                   ;"
-
+_libcUnistd >> isatty: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionisatty callWith: { __fd }
-
+	^Functionisatty
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> lchown_: __file _: __owner _: __group [ 
-	"/usr/include/unistd.h line 483
-extern int lchown (const char *__file, __uid_t __owner, __gid_t __group)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> lchown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint32' )"
 
-	^Functionlchown callWith: { __file. __owner. __group }
-
+	^Functionlchown
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> link_: __from _: __to [ 
-	"/usr/include/unistd.h line 789
-extern int link (const char *__from, const char *__to)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                                     ;"
-
+_libcUnistd >> link: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
-	^Functionlink callWith: { __from. __to }
-
+	^Functionlink
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> linkat_: __fromfd _: __from _: __tofd _: __to _: __flags [ 
-	"/usr/include/unistd.h line 795
-extern int linkat (int __fromfd, const char *__from, int __tofd,     const char *__to, int __flags)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2, 4)            ))                                     ;"
-
+_libcUnistd >> linkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' #'const char*' #'int32' )"
 
-	^Functionlinkat callWith: { __fromfd. __from. __tofd. __to. __flags }
-
+	^Functionlinkat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> lockf_: __fd _: __cmd _: __len [ 
-	"/usr/include/unistd.h line 1079
-extern int lockf (int __fd, int __cmd, __off_t __len) ;"
-
+_libcUnistd >> lockf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'int64' )"
 
-	^Functionlockf callWith: { __fd. __cmd. __len }
-
+	^Functionlockf
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> lseek_: __fd _: __offset _: __whence [ 
-	"/usr/include/unistd.h line 334
-extern __off_t lseek (int __fd, __off_t __offset, int __whence)                                                                __attribute__ ((__nothrow__ , __leaf__))                                                                      ;"
-
+_libcUnistd >> lseek: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'int64' #'int32' )"
 
-	^Functionlseek callWith: { __fd. __offset. __whence }
-
+	^Functionlseek
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> nice_: __inc [ 
-	"/usr/include/unistd.h line 598
-extern int nice (int __inc)                            __attribute__ ((__nothrow__ , __leaf__))                                         ;"
-
+_libcUnistd >> nice: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functionnice callWith: { __inc }
-
+	^Functionnice
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> pathconf_: __path _: __name [ 
-	"/usr/include/unistd.h line 612
-extern long int pathconf (const char *__path, int __name)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                           ;"
-
+_libcUnistd >> pathconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'const char*' #'int32' )"
 
-	^Functionpathconf callWith: { __path. __name }
-
+	^Functionpathconf
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> pause [
-	"/usr/include/unistd.h line 469
-extern int pause (void);"
-
+_libcUnistd >> pause: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionpause callWith: {  }
-
+	^Functionpause
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> pipe_: __pipedes [ 
-	"/usr/include/unistd.h line 417
-extern int pipe (int __pipedes[2])                                   __attribute__ ((__nothrow__ , __leaf__))                                                ;"
-
+_libcUnistd >> pipe: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
-	^Functionpipe callWith: { __pipedes }
-
+	^Functionpipe
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> pread_: __fd _: __buf _: __nbytes _: __offset [ 
-	"/usr/include/unistd.h line 376
-extern ssize_t pread (int __fd, void *__buf, size_t __nbytes,        __off_t __offset) ;"
-
+_libcUnistd >> pread: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'int64' )"
 
-	^Functionpread callWith: { __fd. __buf. __nbytes. __offset }
-
+	^Functionpread
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> profil_: __sample_buffer _: __size _: __offset _: __scale [ 
-	"/usr/include/unistd.h line 915
-extern int profil (unsigned short int *__sample_buffer, size_t __size,     size_t __offset, unsigned int __scale)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                           ;"
-
+_libcUnistd >> profil: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' #'uint64' #'uint32' )"
 
-	^Functionprofil callWith: { __sample_buffer. __size. __offset. __scale }
-
+	^Functionprofil
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> pwrite_: __fd _: __buf _: __n _: __offset [ 
-	"/usr/include/unistd.h line 384
-extern ssize_t pwrite (int __fd, const void *__buf, size_t __n,         __off_t __offset) ;"
-
+_libcUnistd >> pwrite: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'int64' )"
 
-	^Functionpwrite callWith: { __fd. __buf. __n. __offset }
-
+	^Functionpwrite
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> read_: __fd _: __buf _: __nbytes [ 
-	"/usr/include/unistd.h line 360
-extern ssize_t read (int __fd, void *__buf, size_t __nbytes) ;"
-
+_libcUnistd >> read: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' )"
 
-	^Functionread callWith: { __fd. __buf. __nbytes }
-
+	^Functionread
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> readlink_: __path _: __buf _: __len [ 
-	"/usr/include/unistd.h line 808
-extern ssize_t readlink (const char *__restrict __path,    char *__restrict __buf, size_t __len)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                                     ;"
-
+_libcUnistd >> readlink: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'const char*' #'ptr' #'uint64' )"
 
-	^Functionreadlink callWith: { __path. __buf. __len }
-
+	^Functionreadlink
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> readlinkat_: __fd _: __path _: __buf _: __len [ 
-	"/usr/include/unistd.h line 819
-extern ssize_t readlinkat (int __fd, const char *__restrict __path,      char *__restrict __buf, size_t __len)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2, 3)            ))                                     ;"
-
+_libcUnistd >> readlinkat: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'const char*' #'ptr' #'uint64' )"
 
-	^Functionreadlinkat callWith: { __fd. __path. __buf. __len }
-
+	^Functionreadlinkat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> revoke_: __file [ 
-	"/usr/include/unistd.h line 907
-extern int revoke (const char *__file)                                       __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                               (1)                                              ))                                                                    ;"
-
+_libcUnistd >> revoke: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionrevoke callWith: { __file }
-
+	^Functionrevoke
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> rmdir_: __path [ 
-	"/usr/include/unistd.h line 834
-extern int rmdir (const char *__path)                                      __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                              (1)                                             ))                                                            ;"
-
+_libcUnistd >> rmdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionrmdir callWith: { __path }
-
+	^Functionrmdir
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sbrk_: __delta [ 
-	"/usr/include/unistd.h line 1041
-extern void *sbrk (intptr_t __delta)                                     __attribute__ ((__nothrow__ , __leaf__))                                           ;"
-
+_libcUnistd >> sbrk: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'int64' )"
 
-	^Functionsbrk callWith: { __delta }
-
+	^Functionsbrk
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setdomainname_: __name _: __len [ 
-	"/usr/include/unistd.h line 897
-extern int setdomainname (const char *__name, size_t __len)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> setdomainname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint64' )"
 
-	^Functionsetdomainname callWith: { __name. __len }
-
+	^Functionsetdomainname
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setegid_: __gid [ 
-	"/usr/include/unistd.h line 727
-extern int setegid (__gid_t __gid)                                   __attribute__ ((__nothrow__ , __leaf__))                                                ;"
-
+_libcUnistd >> setegid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
-	^Functionsetegid callWith: { __gid }
-
+	^Functionsetegid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> seteuid_: __uid [ 
-	"/usr/include/unistd.h line 710
-extern int seteuid (__uid_t __uid)                                   __attribute__ ((__nothrow__ , __leaf__))                                                ;"
-
+_libcUnistd >> seteuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
-	^Functionseteuid callWith: { __uid }
-
+	^Functionseteuid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setgid_: __gid [ 
-	"/usr/include/unistd.h line 717
-extern int setgid (__gid_t __gid)                                  __attribute__ ((__nothrow__ , __leaf__))                                               ;"
-
+_libcUnistd >> setgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
-	^Functionsetgid callWith: { __gid }
-
+	^Functionsetgid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sethostid_: __id [ 
-	"/usr/include/unistd.h line 889
-extern int sethostid (long int __id)                                     __attribute__ ((__nothrow__ , __leaf__))                                                  ;"
-
+_libcUnistd >> sethostid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int64' )"
 
-	^Functionsethostid callWith: { __id }
-
+	^Functionsethostid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sethostname_: __name _: __len [ 
-	"/usr/include/unistd.h line 884
-extern int sethostname (const char *__name, size_t __len)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> sethostname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint64' )"
 
-	^Functionsethostname callWith: { __name. __len }
-
+	^Functionsethostname
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setlogin_: __name [ 
-	"/usr/include/unistd.h line 861
-extern int setlogin (const char *__name)                                         __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                                 (1)                                                ))                                                               ;"
-
+_libcUnistd >> setlogin: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionsetlogin callWith: { __name }
-
+	^Functionsetlogin
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setpgid_: __pid _: __pgid [ 
-	"/usr/include/unistd.h line 646
-extern int setpgid (__pid_t __pid, __pid_t __pgid)                                                   __attribute__ ((__nothrow__ , __leaf__))                                                         ;"
-
+_libcUnistd >> setpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
-	^Functionsetpgid callWith: { __pid. __pgid }
-
+	^Functionsetpgid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setpgrp [
-	"/usr/include/unistd.h line 660
-extern int setpgrp (void)                          __attribute__ ((__nothrow__ , __leaf__))                                ;"
-
+_libcUnistd >> setpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionsetpgrp callWith: {  }
-
+	^Functionsetpgrp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setregid_: __rgid _: __egid [ 
-	"/usr/include/unistd.h line 722
-extern int setregid (__gid_t __rgid, __gid_t __egid)                                                     __attribute__ ((__nothrow__ , __leaf__))                                                                  ;"
-
+_libcUnistd >> setregid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' #'uint32' )"
 
-	^Functionsetregid callWith: { __rgid. __egid }
-
+	^Functionsetregid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setreuid_: __ruid _: __euid [ 
-	"/usr/include/unistd.h line 705
-extern int setreuid (__uid_t __ruid, __uid_t __euid)                                                     __attribute__ ((__nothrow__ , __leaf__))                                                                  ;"
-
+_libcUnistd >> setreuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' #'uint32' )"
 
-	^Functionsetreuid callWith: { __ruid. __euid }
-
+	^Functionsetreuid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setsid [
-	"/usr/include/unistd.h line 667
-extern __pid_t setsid (void)                             __attribute__ ((__nothrow__ , __leaf__))                                   ;"
-
+_libcUnistd >> setsid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionsetsid callWith: {  }
-
+	^Functionsetsid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setuid_: __uid [ 
-	"/usr/include/unistd.h line 700
-extern int setuid (__uid_t __uid)                                  __attribute__ ((__nothrow__ , __leaf__))                                               ;"
-
+_libcUnistd >> setuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
-	^Functionsetuid callWith: { __uid }
-
+	^Functionsetuid
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> setusershell [
-	"/usr/include/unistd.h line 929
-extern void setusershell (void)                                __attribute__ ((__nothrow__ , __leaf__))                                      ;"
-
+_libcUnistd >> setusershell: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
-	^Functionsetusershell callWith: {  }
-
+	^Functionsetusershell
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sleep_: __seconds [ 
-	"/usr/include/unistd.h line 444
-extern unsigned int sleep (unsigned int __seconds);"
-
+_libcUnistd >> sleep: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' )"
 
-	^Functionsleep callWith: { __seconds }
-
+	^Functionsleep
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> symlink_: __from _: __to [ 
-	"/usr/include/unistd.h line 802
-extern int symlink (const char *__from, const char *__to)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1, 2)            ))                                     ;"
-
+_libcUnistd >> symlink: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
-	^Functionsymlink callWith: { __from. __to }
-
+	^Functionsymlink
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> symlinkat_: __from _: __tofd _: __to [ 
-	"/usr/include/unistd.h line 815
-extern int symlinkat (const char *__from, int __tofd,        const char *__to)                          __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                  (1, 3)                                 ))                                                          ;"
-
+_libcUnistd >> symlinkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int32' #'const char*' )"
 
-	^Functionsymlinkat callWith: { __from. __tofd. __to }
-
+	^Functionsymlinkat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sync [
-	"/usr/include/unistd.h line 970
-extern void sync (void)                        __attribute__ ((__nothrow__ , __leaf__))                              ;"
-
+_libcUnistd >> sync: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
-	^Functionsync callWith: {  }
-
+	^Functionsync
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> syscall_: __sysno [ 
-	"/usr/include/unistd.h line 1056
-extern long int syscall (long int __sysno, ...)                                                __attribute__ ((__nothrow__ , __leaf__))                                                      ;"
-
+_libcUnistd >> syscall: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int64' )"
 
-	^Functionsyscall callWith: { __sysno"varArgs array should be appended to this array" }
-
+	^Functionsyscall
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> sysconf_: __name [ 
-	"/usr/include/unistd.h line 619
-extern long int sysconf (int __name)                                     __attribute__ ((__nothrow__ , __leaf__))                                           ;"
-
+_libcUnistd >> sysconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' )"
 
-	^Functionsysconf callWith: { __name }
-
+	^Functionsysconf
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> tcgetpgrp_: __fd [ 
-	"/usr/include/unistd.h line 838
-extern __pid_t tcgetpgrp (int __fd)                                    __attribute__ ((__nothrow__ , __leaf__))                                          ;"
-
+_libcUnistd >> tcgetpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
-	^Functiontcgetpgrp callWith: { __fd }
-
+	^Functiontcgetpgrp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> tcsetpgrp_: __fd _: __pgrp_id [ 
-	"/usr/include/unistd.h line 841
-extern int tcsetpgrp (int __fd, __pid_t __pgrp_id)                                                   __attribute__ ((__nothrow__ , __leaf__))                                                         ;"
-
+_libcUnistd >> tcsetpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
-	^Functiontcsetpgrp callWith: { __fd. __pgrp_id }
-
+	^Functiontcsetpgrp
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> truncate_: __file _: __length [ 
-	"/usr/include/unistd.h line 991
-extern int truncate (const char *__file, __off_t __length)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (1)            ))                                  ;"
-
+_libcUnistd >> truncate: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int64' )"
 
-	^Functiontruncate callWith: { __file. __length }
-
+	^Functiontruncate
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> ttyname_: __fd [ 
-	"/usr/include/unistd.h line 770
-extern char *ttyname (int __fd)                                __attribute__ ((__nothrow__ , __leaf__))                                      ;"
-
-	"Interpreted as #char* from #( #'int32' )"
-
-	^Functionttyname callWith: { __fd }
-
-]
-
-{ #category : 'Functions' }
-_libcUnistd >> ttyname_r_: __fd _: __buf _: __buflen [ 
-	"/usr/include/unistd.h line 774
-extern int ttyname_r (int __fd, char *__buf, size_t __buflen)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2)            ))                                  ;"
-
+_libcUnistd >> ttyname_r: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'uint64' )"
 
-	^Functionttyname_r callWith: { __fd. __buf. __buflen }
-
-
+	^Functionttyname_r
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> ttyslot [
-	"/usr/include/unistd.h line 784
-extern int ttyslot (void)                          __attribute__ ((__nothrow__ , __leaf__))                                ;"
+_libcUnistd >> ttyname: args errno: errnoHolder [
+	"Interpreted as #char* from #( #'int32' )"
 
+	^Functionttyname
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libcUnistd >> ttyslot: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionttyslot callWith: {  }
-
+	^Functionttyslot
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> ualarm_: __value _: __interval [ 
-	"/usr/include/unistd.h line 452
-extern __useconds_t ualarm (__useconds_t __value, __useconds_t __interval)     
-    __attribute__ ((__nothrow__ , __leaf__))           ;"
-
+_libcUnistd >> ualarm: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' #'uint32' )"
 
-	^Functionualarm callWith: { __value. __interval }
-
+	^Functionualarm
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> unlink_: __name [ 
-	"/usr/include/unistd.h line 825
-extern int unlink (const char *__name)                                       __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__                                               (1)                                              ))                                                             ;"
-
+_libcUnistd >> unlink: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
-	^Functionunlink callWith: { __name }
-
+	^Functionunlink
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> unlinkat_: __fd _: __name _: __flag [ 
-	"/usr/include/unistd.h line 829
-extern int unlinkat (int __fd, const char *__name, int __flag)     
-    __attribute__ ((__nothrow__ , __leaf__)) __attribute__ ((__nonnull__             (2)            ))                           ;"
-
+_libcUnistd >> unlinkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' )"
 
-	^Functionunlinkat callWith: { __fd. __name. __flag }
-
+	^Functionunlinkat
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> usleep_: __useconds [ 
-	"/usr/include/unistd.h line 460
-extern int usleep (__useconds_t __useconds);"
-
+_libcUnistd >> usleep: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
-	^Functionusleep callWith: { __useconds }
-
+	^Functionusleep
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> vfork [
-	"/usr/include/unistd.h line 764
-extern __pid_t vfork (void)                            __attribute__ ((__nothrow__ , __leaf__))                                  ;"
-
+_libcUnistd >> vfork: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionvfork callWith: {  }
-
+	^Functionvfork
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> vhangup [
-	"/usr/include/unistd.h line 904
-extern int vhangup (void)                          __attribute__ ((__nothrow__ , __leaf__))                                ;"
-
+_libcUnistd >> vhangup: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
-	^Functionvhangup callWith: {  }
-
+	^Functionvhangup
+		callWith: args
+		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libcUnistd >> write_: __fd _: __buf _: __n [ 
-	"/usr/include/unistd.h line 366
-extern ssize_t write (int __fd, const void *__buf, size_t __n) ;"
-
+_libcUnistd >> write: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' )"
 
-	^Functionwrite callWith: { __fd. __buf. __n }
-
+	^Functionwrite
+		callWith: args
+		errno: errnoHolder
 ]

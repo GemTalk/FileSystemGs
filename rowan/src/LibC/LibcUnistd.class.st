@@ -6,56 +6,58 @@ Class {
 
 { #category : 'functions' }
 LibcUnistd >> closeFd: fdInteger [
-	| result errno |
-	CCallout errno: 0.
-	result := library close_: fdInteger.
-	errno := CCallout errno.
 
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		close: { fdInteger }
+		errno: errnoHolder.
 	result == -1
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]
 
 { #category : 'functions' }
 LibcUnistd >> getCurrentDirName [
-	"This function mallocs the string, it's up to the sender to free it when done.
-	Possible exceptions:
+	"Possible exceptions:
 	EACCESS  if the user doesn't have read or search permission on a component of the path
 	ENOENT if the current working directory has been unlinked
 	ENOMEM if the attempt to malloc the string fails"
 
-	| result errno |
-	CCallout errno: 0.
-	result := library get_current_dir_name.
-	errno := CCallout errno.
-
-	result memoryAddress == 0 "NULL"
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		getcwd: { CPointer newNull. 0 } "Dynamically allocate a buffer for the full path."
+		errno: errnoHolder.
+	result == nil "The FFI will return nil for NULL char* return values."
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]
 
 { #category : 'functions' }
 LibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
-	| result errno |
-	CCallout errno: 0.
-	result := library read_: fd _: buf _: bytes.
-	errno := CCallout errno.
 
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		read: { fd. buf. bytes. }
+		errno: errnoHolder.
 	result == -1
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]
 
 { #category : 'functions' }
 LibcUnistd >> unlinkPath: pathString [
-	| result errno |
-	CCallout errno: 0.
-	result := library unlink_: pathString.
-	errno := CCallout errno.
 
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		unlink: { pathString }
+		errno: errnoHolder.
 	result == -1
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]
 
 { #category : 'accessing' }
@@ -65,12 +67,13 @@ LibcUnistd >> wrappedClass [
 
 { #category : 'functions' }
 LibcUnistd >> writeToFileDescriptor: fd fromBuffer: buf count: bytes [
-	| result errno |
-	CCallout errno: 0.
-	result := library write_: fd _: buf _: bytes.
-	errno := CCallout errno.
 
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		write: { fd. buf. bytes. }
+		errno: errnoHolder.
 	result == -1
-		ifTrue: [ self handleErrno: errno ].
-	^ result
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
 ]

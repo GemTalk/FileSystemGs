@@ -8,6 +8,13 @@ Class {
 }
 
 { #category : 'accessing' }
+DirentStruct class >> structSize [
+	"Returns the size in bytes of the C struct."
+
+	^275
+]
+
+{ #category : 'accessing' }
 DirentStruct >> d_ino [
 	"Inode"
 
