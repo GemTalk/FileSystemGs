@@ -1,6 +1,6 @@
 Class {
 	#name : 'LibcDirent',
-	#superclass : 'LibcWrapper',
+	#superclass : 'LibcInterface',
 	#category : 'LibC'
 }
 

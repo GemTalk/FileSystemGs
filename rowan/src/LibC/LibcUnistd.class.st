@@ -1,6 +1,6 @@
 Class {
 	#name : 'LibcUnistd',
-	#superclass : 'LibcWrapper',
+	#superclass : 'LibcInterface',
 	#category : 'LibC'
 }
 

@@ -7,7 +7,7 @@ The primary functions of the wrappers are:
 Instvar library should refer to a library class created by LibcFactory
 "
 Class {
-	#name : 'LibcWrapper',
+	#name : 'LibcInterface',
 	#superclass : 'Object',
 	#instVars : [
 		'library'
@@ -16,14 +16,14 @@ Class {
 }
 
 { #category : 'instance creation' }
-LibcWrapper class >> new [
+LibcInterface class >> new [
 	^ super new
 		initialize;
 		yourself
 ]
 
 { #category : 'error handling' }
-LibcWrapper >> handleErrno: errorNumber [
+LibcInterface >> handleErrno: errorNumber [
 	" Default handling of system errors: just signal the default exception class for the error.
 	Subclasses may override this method for specific errors that need other handling."
 
@@ -33,11 +33,11 @@ LibcWrapper >> handleErrno: errorNumber [
 ]
 
 { #category : 'initialization' }
-LibcWrapper >> initialize [
+LibcInterface >> initialize [
 	library := self wrappedClass new
 ]
 
 { #category : 'accessing' }
-LibcWrapper >> wrappedClass [
+LibcInterface >> wrappedClass [
 	self subclassResponsibility
 ]
