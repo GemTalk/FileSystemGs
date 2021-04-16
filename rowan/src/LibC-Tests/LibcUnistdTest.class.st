@@ -51,7 +51,7 @@ LibcUnistdTest >> testReadBash [
 	filename := '/bin/bash'.
 	fd := LibcFcntl new openPath: filename flags: 0 mode: 0.
 	self assert: fd > 0.
-	buffer := CByteArray gcMalloc: 128.
+	buffer := CByteArray gcMalloc: 4.
 	numRead := instance
 		readFromFileDescriptor: fd
 		toBuffer: buffer
@@ -67,7 +67,7 @@ LibcUnistdTest >> testReadBash [
 LibcUnistdTest >> testWriteToStderr [
 	| message buf numWritten |
 	message := '' copy lf , 'This was written to stderr.'.
-	buf := CByteArray withAll: message.
+	buf := CByteArray withAll: message asByteArray.
 	numWritten := instance writeToFileDescriptor: 2 fromBuffer: buf count: message size.
 	self assert: numWritten equals: message size	
 	"Manually determine that the message was written to the gem log or topaz stderr."
@@ -77,8 +77,8 @@ LibcUnistdTest >> testWriteToStderr [
 LibcUnistdTest >> testWriteToStdout [
 	| message buf numWritten |
 	message := '' copy lf , 'This was written to stdout.'.
-	buf := CByteArray withAll: message.
+	buf := CByteArray withAll: message asByteArray.
 	numWritten := instance writeToFileDescriptor: 1 fromBuffer: buf count: message size.
-	self assert: numWritten equals: message size	
+	self assert: numWritten equals: message size
 	"Manually determine that the message was written to the gem log or topaz stdout."
 ]

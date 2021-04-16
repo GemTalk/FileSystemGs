@@ -28,16 +28,10 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> forId: fileDescriptorInteger [
-	^ self basicNew initialize
-		id: fileDescriptorInteger;
-		yourself
-]
+UnixFileDescriptor class >> id: fileDescriptorInteger [
 
-{ #category : 'Instance Creation' }
-UnixFileDescriptor class >> forStdout [
-	^ self basicNew initialize
-		beForStdout;
+	^super new initialize
+		fd: fileDescriptorInteger;
 		yourself
 ]
 
@@ -46,12 +40,61 @@ UnixFileDescriptor class >> new [
 	self shouldNotImplement: #new
 ]
 
+{ #category : 'Instance Creation' }
+UnixFileDescriptor class >> stderr [
+
+	^super new initialize
+		becomeStderr;
+		yourself
+]
+
+{ #category : 'Instance Creation' }
+UnixFileDescriptor class >> stdin [
+
+	^super new initialize
+		becomeStdin;
+		yourself
+]
+
+{ #category : 'Instance Creation' }
+UnixFileDescriptor class >> stdout [
+
+	^super new initialize
+		becomeStdout;
+		yourself
+]
+
+{ #category : 'asserting' }
+UnixFileDescriptor >> assertUninitialized [
+
+	id = nil ifFalse: [ ^ self error: 'Cannot set file descriptor ID more than once.' ].
+]
+
 { #category : 'private' }
-UnixFileDescriptor >> beForStdout [
+UnixFileDescriptor >> becomeStderr [
+	"Assume stderr is already open, and don't register me with the ExternalObjectRegistry,
+	since we don't want to close stderr when I'm garbage collected."
+
+	self assertUninitialized.
+	id := 2
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> becomeStdin [
+	"Assume stdin is already open, and don't register me with the ExternalObjectRegistry,
+	since we don't want to close stdin when I'm garbage collected."
+
+	self assertUninitialized.
+	id := 0
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> becomeStdout [
 	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdout when I'm garbage collected."
 
-	self id: 1
+	self assertUninitialized.
+	id := 1
 ]
 
 { #category : 'public' }
@@ -86,13 +129,14 @@ UnixFileDescriptor >> id [
 
 { #category : 'private' }
 UnixFileDescriptor >> id: anInteger [
-	id = nil
-		ifFalse: [ ^ self error: 'Cannot set file descriptor ID more than once.' ].
+	
+	self assertUninitialized.
 	id := anInteger
 ]
 
 { #category : 'initialization' }
 UnixFileDescriptor >> initialize [
+
 	libcUnistd := OSPlatform current libcUnistd
 ]
 
@@ -124,4 +168,19 @@ UnixFileDescriptor >> privateClose [
 		do: [ ^ self ] ]
 		on: EINTR
 		do: [  ]
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> write: aByteArray [
+	"Write the provided bytes to the file descriptor.
+	Returns the number of bytes actually written to
+	the file descriptor."
+
+	| buffer |
+	aByteArray _validateInstanceOf: ByteArray.
+	buffer := CByteArray withAll: aByteArray nullTerminate: false.
+	^libcUnistd
+		writeToFileDescriptor: id
+		fromBuffer: buffer
+		count: buffer size
 ]

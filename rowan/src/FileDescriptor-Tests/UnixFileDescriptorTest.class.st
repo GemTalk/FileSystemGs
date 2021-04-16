@@ -1,27 +1,71 @@
 Class {
 	#name : 'UnixFileDescriptorTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'stdin',
+		'stdout',
+		'stderr'
+	],
 	#category : 'FileDescriptor-Tests'
 }
 
-{ #category : 'BasicTests' }
-UnixFileDescriptorTest >> testHelloWorld [
-	| fd nl |
-	fd := UnixFileDescriptor forStdout.
-	nl := String with: Character lf.
-	fd write: nl , 'Hello World!'
+{ #category : 'initializing' }
+UnixFileDescriptorTest >> setUp [
+	"Configure the known file descriptors"
+
+	super setUp.
+	stdin := UnixFileDescriptor stdin.
+	stdout := UnixFileDescriptor stdout.
+	stderr := UnixFileDescriptor stderr
 ]
 
 { #category : 'BasicTests' }
 UnixFileDescriptorTest >> testNoNew [
-	self  should: [ UnixFileDescriptor new ] raise: Error
+
+	self
+		should: [UnixFileDescriptor new]
+		raise: Error
+]
+
+{ #category : 'BasicTests' }
+UnixFileDescriptorTest >> testOpenStderr [
+
+	self
+		assert: stderr class equals: UnixFileDescriptor;
+		assert: stderr id equals: 2
+]
+
+{ #category : 'BasicTests' }
+UnixFileDescriptorTest >> testOpenStdin [
+
+	self
+		assert: stdin class equals: UnixFileDescriptor;
+		assert: stdin id equals: 0
 ]
 
 { #category : 'BasicTests' }
 UnixFileDescriptorTest >> testOpenStdout [
-	| fd |
-	fd := UnixFileDescriptor forStdout.
+
 	self
-		assert: fd class equals: UnixFileDescriptor;
-		assert: fd id equals: 1
+		assert: stdout class equals: UnixFileDescriptor;
+		assert: stdout id equals: 1
+]
+
+{ #category : 'BasicTests' }
+UnixFileDescriptorTest >> testWriteStringErrors [
+
+	self
+		should: [stdout write: 'Hello, World!']
+		raise: ArgumentTypeError
+]
+
+{ #category : 'BasicTests' }
+UnixFileDescriptorTest >> testWriteToStdout [
+
+	| message count |
+	message := Character lf asString, 'Hello, World!'.
+	count := stdout write: message asByteArray.
+	self
+		assert: count
+		equals: 14
 ]

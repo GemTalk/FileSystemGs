@@ -40,7 +40,7 @@ Path class >> / aString [
 	Path / 'griffle' / 'plonk'."
 	
 	aString isEmptyOrNil 
-		ifTrue: [ Error signal: 'Path element cannot be empty or nil'].
+		ifTrue: [Error signal: 'Path element cannot be empty or nil'].
 	^ AbsolutePath with: aString
 ]
 
