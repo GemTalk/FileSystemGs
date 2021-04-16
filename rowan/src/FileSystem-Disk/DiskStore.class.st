@@ -50,7 +50,9 @@ DiskStore class >> delimiter [
 
 { #category : 'current' }
 DiskStore class >> isActiveClass [
-	^ self delimiter = File delimiter
+
+	^false
+	"^self delimiter = File delimiter"
 ]
 
 { #category : 'public' }
@@ -89,7 +91,7 @@ DiskStore >> basicEntry: ignored path: aPath nodesDo: aBlock [
 	intOrArray
 		do: [:entryPathString |
 			((entryPathString endsWith: '.')  or: [ entryPathString endsWith: '..' ])
-				ifFalse: [ aBlock value: (File lookupPath: entryPathString) ] ]
+				ifFalse: [ "aBlock value: (File lookupPath: entryPathString)" ] ]
 ]
 
 { #category : 'public' }
@@ -99,8 +101,8 @@ DiskStore >> basicEntryAt: aPath [
 	path := self stringFromPath: aPath parent.
 	basename := aPath basename.
 	
-	^ (File lookupDirectory: path filename: basename)
-		ifNil: [ #badDirectoryPath ].
+	"^ (File lookupDirectory: path filename: basename)
+		ifNil: [ #badDirectoryPath ]."
 ]
 
 { #category : 'private' }
@@ -165,7 +167,7 @@ DiskStore >> createDirectory: path [
 
 	| parent pathString result |
 	pathString := self stringFromPath: path.
-	result := File createDirectory: pathString.
+	"result := File createDirectory: pathString."
 	result
 		ifNil: [ 
 			parent := path parent.
@@ -208,10 +210,10 @@ DiskStore >> delete: path [
 		
 	pathString := self stringFromPath: path.
 	
-	(self isDirectory: path)
+	"(self isDirectory: path)
 		ifTrue: [ File deleteDirectory: pathString ]
 		ifFalse: [ 
-			(File named: pathString) delete ]
+			(File named: pathString) delete ]"
 ]
 
 { #category : 'printing' }
@@ -275,7 +277,7 @@ DiskStore >> isReadable: aPath [
 	self error: 'ToBeImplemented'.
 	(self basicOpen: aPath writable: #read) 
 		ifNotNil: [ :id|
-			File close: id.
+			"File close: id."
 			^ true].
 	^ false
 ]
@@ -302,7 +304,7 @@ DiskStore >> isWritable: aPath [
 	self error: 'ToBeImplemented'.
 	(self basicOpen: aPath writable: #'write')
 		ifNotNil: [ :id | 
-			File close: id.
+			"File close: id."
 			^ true ].
 	^ false
 ]
@@ -344,7 +346,7 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	| sourcePathString targetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
 	targetPathString := self stringFromPath: destinationPath.
-	^ File rename: sourcePathString to: targetPathString.
+	"^File rename: sourcePathString to: targetPathString."
 ]
 
 { #category : 'private' }
