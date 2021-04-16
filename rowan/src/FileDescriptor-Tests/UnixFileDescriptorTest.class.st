@@ -60,12 +60,23 @@ UnixFileDescriptorTest >> testWriteStringErrors [
 ]
 
 { #category : 'BasicTests' }
+UnixFileDescriptorTest >> testWriteToStderr [
+
+	| message count |
+	message := Character lf asString, 'Running #testWriteToStderr'.
+	count := stderr write: message asByteArray.
+	self
+		assert: count
+		equals: 27
+]
+
+{ #category : 'BasicTests' }
 UnixFileDescriptorTest >> testWriteToStdout [
 
 	| message count |
-	message := Character lf asString, 'Hello, World!'.
+	message := Character lf asString, 'Running #testWriteToStdout'.
 	count := stdout write: message asByteArray.
 	self
 		assert: count
-		equals: 14
+		equals: 27
 ]
