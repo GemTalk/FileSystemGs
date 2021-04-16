@@ -26,29 +26,10 @@ Linux64Platform >> currentWorkingDirectoryPath [
 	"I don't catch any of the low-level errors here.
 	There's not much sensible I can do with them at this level."
 
-	| pointer externalBytes |
-	pointer := libcUnistd getCurrentDirName.	
-
-	"Arrange for the result to be freed, and figure out how big it is."
-	externalBytes := CByteArray fromCharStarGcFree: pointer.
-
-	^ self pathStringDecodedFrom: externalBytes
+	^libcUnistd getCurrentDirName
 ]
 
 { #category : 'testing' }
 Linux64Platform >> isLinux64 [
 	^ true
-]
-
-{ #category : 'accessing' }
-Linux64Platform >> pathStringDecodedFrom: aCByteArray [
-	"Assumption is that paths on Linux are either ASCII or UTF-8"
-
-	| internalBytes |
-	internalBytes := aCByteArray
-		_copyFrom: 0
-		to: aCByteArray size - 1
-		resKind: Utf8.
-
-	^ internalBytes decodeToString
 ]
