@@ -31,7 +31,7 @@ Class {
 UnixFileDescriptor class >> id: fileDescriptorInteger [
 
 	^super new initialize
-		fd: fileDescriptorInteger;
+		id: fileDescriptorInteger;
 		yourself
 ]
 
@@ -155,12 +155,12 @@ UnixFileDescriptor >> privateClose [
 	id ifNil: [ ^ self ].
 	cachedId := id.
 
-	[ 
+	"[ 
 	[ libcUnistd fdatasyncFd: cachedId ]
 		on: EBADF
 		do: [ ^ self ] ]
 		on: EROFS , EINVAL
-		do: [  ].
+		do: [  ]."
 	id := nil.
 	[ 
 	[ libcUnistd closeFd: cachedId ]
@@ -168,6 +168,22 @@ UnixFileDescriptor >> privateClose [
 		do: [ ^ self ] ]
 		on: EINTR
 		do: [  ]
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> read: count [
+	"Read up to <count> number of bytes from
+	the backing file descriptor."
+
+	| buffer numBytesRead |
+	buffer := CByteArray gcMalloc: count.
+	numBytesRead := libcUnistd
+		readFromFileDescriptor: id
+		toBuffer: buffer
+		count: buffer size.
+	^buffer
+		byteArrayFrom: 0
+		to: numBytesRead - 1
 ]
 
 { #category : 'private' }

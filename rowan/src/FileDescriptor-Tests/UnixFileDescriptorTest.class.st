@@ -52,6 +52,21 @@ UnixFileDescriptorTest >> testOpenStdout [
 ]
 
 { #category : 'BasicTests' }
+UnixFileDescriptorTest >> testReadFromUsrBinEnv [
+
+	| id fd bytes |
+	id := LibcFcntl new openPath: '/usr/bin/env' flags: 0 mode: 0.
+	fd := UnixFileDescriptor id: id.
+	[bytes := fd read: 4] ensure: [fd close].
+	self
+		assert: bytes size
+		equals: 4.
+	self
+		deny: bytes
+		equals: #[0 0 0 0]
+]
+
+{ #category : 'BasicTests' }
 UnixFileDescriptorTest >> testWriteStringErrors [
 
 	self
