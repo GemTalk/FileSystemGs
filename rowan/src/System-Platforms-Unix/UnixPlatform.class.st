@@ -13,7 +13,8 @@ Class {
 	#instVars : [
 		'libcDirent',
 		'libcFcntl',
-		'libcUnistd'
+		'libcUnistd',
+		'libcStat'
 	],
 	#category : 'System-Platforms-Unix'
 }
@@ -51,9 +52,11 @@ UnixPlatform >> getPwdViaFFI: buffer size: bufferSize [
 
 { #category : 'initialization' }
 UnixPlatform >> initialize [
+
 	libcDirent := LibcDirent new.
 	libcFcntl := LibcFcntl new.
-	libcUnistd := LibcUnistd new
+	libcUnistd := LibcUnistd new.
+	libcStat := libcStat new
 ]
 
 { #category : 'testing' }
@@ -69,6 +72,12 @@ UnixPlatform >> libcDirent [
 { #category : 'accessing' }
 UnixPlatform >> libcFcntl [
 	^libcFcntl
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcStat [
+
+	^libcStat
 ]
 
 { #category : 'accessing' }

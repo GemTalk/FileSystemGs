@@ -48,7 +48,7 @@ LibcDirent >> readFromDirectoryStream: dirPointer [
 	cBytes := isNull
 		ifTrue: [direntPtr]
 		ifFalse: [CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize].
-	^DirentStruct forPointer: cBytes
+	^DirentStruct forBytes: cBytes
 ]
 
 { #category : 'accessing' }

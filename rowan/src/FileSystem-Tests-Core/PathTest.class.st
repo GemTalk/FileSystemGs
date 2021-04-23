@@ -417,18 +417,6 @@ PathTest >> testParseTrailingSlash [
 ]
 
 { #category : 'tests' }
-PathTest >> testParseWindowsPathWithUnixDelimiters [
-	
-	| path |
-	path := WindowsStore new pathFromString: 'C:\a/b/c'.
-	self assert: path segments size equals: 4.
-	self
-		assertCollection: path segments
-		equals: #('C:' 'a' 'b' 'c')
-
-]
-
-{ #category : 'tests' }
 PathTest >> testPathString [
 
 	| path |

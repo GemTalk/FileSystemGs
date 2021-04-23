@@ -239,16 +239,9 @@ DiskStore >> initialize [
 
 { #category : 'public' }
 DiskStore >> isDirectory: aPath [
-	| entry |
-	
+
 	aPath isRoot ifTrue: [ ^ true ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsDirectory: entry ].
-	
+	^(self stat: aPath) isDirectory
 ]
 
 { #category : 'testing' }
@@ -352,4 +345,12 @@ DiskStore >> rename: sourcePath to: destinationPath [
 { #category : 'private' }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
+]
+
+{ #category : 'public' }
+DiskStore >> stat: aPath [
+
+	| pathString |
+	pathString := self stringFromPath: aPath.
+	^OSPlatform current libcStat stat: pathString
 ]

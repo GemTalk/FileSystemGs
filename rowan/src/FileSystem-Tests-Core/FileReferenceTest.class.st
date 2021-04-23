@@ -838,6 +838,12 @@ FileReferenceTest >> testResolve [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testRootIsDirectory [
+
+	self assert: (filesystem root) isDirectory
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testRootParent [
 	| root |
 	root := filesystem root.

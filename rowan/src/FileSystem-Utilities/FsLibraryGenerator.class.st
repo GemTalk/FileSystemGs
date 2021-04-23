@@ -1,3 +1,17 @@
+"
+FsLibraryGenerator is based upon the standard GemStone library generator function. The difference is that on the instance-side of the library, it generates a call which expects the arguments to already be in an array and exposes errno directly.
+
+Usage:
+| library |
+library := FsLibraryGenerator new
+	header: (CHeader path: '/usr/include/sys/stat.h');
+	libraryPath: 'libc.so.6';
+	generateInterfaceNamed: '_libcStat'.
+UserGlobals at: library name put: library.
+Rowan packageTools adopt
+	adoptClass: library
+	intoPackageNamed: 'LibC'
+"
 Class {
 	#name : 'FsLibraryGenerator',
 	#superclass : 'Object',

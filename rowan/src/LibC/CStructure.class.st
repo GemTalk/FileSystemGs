@@ -10,18 +10,33 @@ Class {
 	#name : 'CStructure',
 	#superclass : 'Object',
 	#instVars : [
-		'bytes'
+		'bytes',
+		'pointer'
 	],
 	#category : 'LibC'
 }
 
 { #category : 'instance creation' }
-CStructure class >> forPointer: aCPointer [
+CStructure class >> forBytes: aCByteArray [
 	"aCPointer must point at the kind of struct for the receiving class."
 
-	^ self new
-		bytes: aCPointer;
+	^super new
+		bytes: aCByteArray;
 		yourself
+]
+
+{ #category : 'accessing' }
+CStructure class >> structSize [
+	"Returns the size in bytes of the C struct."
+
+	^self subclassResponsibility
+]
+
+{ #category : 'private - accessing' }
+CStructure >> bytes [
+	"This is necessary for library calls which require passing in a structure."
+
+	^bytes
 ]
 
 { #category : 'private - accessing' }
