@@ -26,7 +26,7 @@ Class {
 		'Function__xmknodat',
 		'Function__xstat'
 	],
-	#category : nil
+	#category : 'LibC'
 }
 
 { #category : 'Initializing - private' }
