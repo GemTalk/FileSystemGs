@@ -56,7 +56,7 @@ UnixPlatform >> initialize [
 	libcDirent := LibcDirent new.
 	libcFcntl := LibcFcntl new.
 	libcUnistd := LibcUnistd new.
-	libcStat := libcStat new
+	libcStat := LibcStat new
 ]
 
 { #category : 'testing' }

@@ -70,80 +70,6 @@ DiskStore >> basenameFromEntry: entry [
 	^ entry at: 1
 ]
 
-{ #category : 'private' }
-DiskStore >> basicCreationTimeOf: anEntry [
-	" the entry contains the seconds since the squeak epoch in local time"
-	| dt |
-	dt := DateAndTime posixSeconds:  (anEntry at: 2)  offset: (Duration seconds: 0).
-	dt offset: (Duration seconds: (dt currentTimeZone transitionAtUTC: dt) offsetFromUTC).
-	^ dt
-]
-
-{ #category : 'private' }
-DiskStore >> basicEntry: ignored path: aPath nodesDo: aBlock [
-	| pathString intOrArray |
-
-	self error: 'Replace GsFile use here.'.
-		
-	pathString := self stringFromPath: aPath.
-	intOrArray := GsFile _contentsOfServerDirectory: pathString expandPath: true.
-	intOrArray _isArray ifFalse: [ ^ self signalDirectoryDoesNotExist: aPath ].
-	intOrArray
-		do: [:entryPathString |
-			((entryPathString endsWith: '.')  or: [ entryPathString endsWith: '..' ])
-				ifFalse: [ "aBlock value: (File lookupPath: entryPathString)" ] ]
-]
-
-{ #category : 'public' }
-DiskStore >> basicEntryAt: aPath [
-	| path basename |
-	
-	path := self stringFromPath: aPath parent.
-	basename := aPath basename.
-	
-	"^ (File lookupDirectory: path filename: basename)
-		ifNil: [ #badDirectoryPath ]."
-]
-
-{ #category : 'private' }
-DiskStore >> basicIsDirectory: anEntry [
-	^ anEntry at: 4
-]
-
-{ #category : 'private' }
-DiskStore >> basicIsFile: anEntry [
-	^ (anEntry at: 4) not
-]
-
-{ #category : 'private' }
-DiskStore >> basicIsSymlink: anEntry [
-	^(anEntry size >= 7)
-		ifTrue: [ anEntry at: 7 ]
-		ifFalse: [ false ]
-]
-
-{ #category : 'private' }
-DiskStore >> basicModificationTimeOf: anEntry [
-	" the entry contains the seconds since the squeak epoch in local time"
-
-	| dt |
-	dt := DateAndTime posixSeconds:  (anEntry at: 3) offset: (Duration seconds: 0).
-	dt offset: (Duration seconds: (dt currentTimeZone transitionAtUTC: dt) offsetFromUTC).
-	^ dt
-]
-
-{ #category : 'private' }
-DiskStore >> basicPosixPermissions: anEntry [
-	^ (anEntry size >= 6)
-		ifTrue: [ anEntry at: 6 ]
-		ifFalse: [ nil ].
-]
-
-{ #category : 'private' }
-DiskStore >> basicSizeOf: anEntry [
-	^ (anEntry at: 5)
-]
-
 { #category : 'public' }
 DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	"Check a string aFileName for validity as a file name. Answer the original file name if it is valid. If the name is not valid (e.g., it is too long or contains illegal characters) and fixing is false, raise an error. If fixing is true, fix the name (usually by truncating and/or tranforming characters), and answer the corrected name. The default behavior is just to truncate the name to the maximum length for this platform. Subclasses can do any kind of checking and correction appropriate for their platform."
@@ -216,6 +142,16 @@ DiskStore >> delete: path [
 			(File named: pathString) delete ]"
 ]
 
+{ #category : 'testing' }
+DiskStore >> exists: aPath [
+
+	| stat |
+	stat := [self stat: aPath]
+		on: ENOENT
+		do: [:ex | ^false].
+	^true
+]
+
 { #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
@@ -237,10 +173,10 @@ DiskStore >> initialize [
 	maxFileNameLength := 255.
 ]
 
-{ #category : 'public' }
+{ #category : 'testing' }
 DiskStore >> isDirectory: aPath [
 
-	aPath isRoot ifTrue: [ ^ true ].
+	aPath isRoot ifTrue: [^true].
 	^(self stat: aPath) isDirectory
 ]
 

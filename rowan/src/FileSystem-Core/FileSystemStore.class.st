@@ -41,64 +41,6 @@ FileSystemStore >> basenameFromEntry: aNode [
 	self subclassResponsibility
 ]
 
-{ #category : 'abstract' }
-FileSystemStore >> basicCreationTimeOf: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a readable
-	file or a directory whose contents can be listed."
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicIsDirectory: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a directory.
-	This private message should only be called form within the store."
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicIsFile: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a file.
-	This private message should only be called form within the store."
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicIsSymlink: aNode [
-	^self subclassResponsibility 
-	
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicIsWritable: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is 
-	a writable file or can be changed."
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicModificationTime: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a readable
-	file or a directory whose contents can be listed."
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicPosixPermissions: aNode [
-	"Used to get the posix permissions from a low-level filesystem entry / node"
-	self subclassResponsibility 
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> basicSizeOf: aNode [
-	"Used to get the size of the low-level representation (node / entry) "
-	self subclassResponsibility 
-]
-
 { #category : 'public' }
 FileSystemStore >> checkName: aString fixErrors: fixErrors [
 	^ self subclassResponsibility
@@ -227,11 +169,8 @@ FileSystemStore >> entryFromNode: node path: path for: aFileystem [
 
 { #category : 'public' }
 FileSystemStore >> exists: aPath [
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ true ] 
-		ifAbsent: [ ^ false ].
-	
+
+	self subclassResponsibility
 ]
 
 { #category : 'private' }
@@ -250,12 +189,13 @@ FileSystemStore >> isCaseSensitive [
 
 { #category : 'public' }
 FileSystemStore >> isDirectory: aPath [
-	aPath isRoot ifTrue: [ ^ true ].
+
+	self subclassResponsibility
+	"aPath isRoot ifTrue: [ ^ true ].
 	self 
 		nodeAt: aPath 
 		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
-		ifAbsent: [ ^ false ].
-	
+		ifAbsent: [ ^ false ]."
 ]
 
 { #category : 'public' }

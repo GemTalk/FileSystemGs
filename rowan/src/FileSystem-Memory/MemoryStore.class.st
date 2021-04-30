@@ -43,54 +43,6 @@ MemoryStore >> basenameFromEntry: aMemoryFileSystemEntry [
 	^ aMemoryFileSystemEntry basename
 ]
 
-{ #category : 'private' }
-MemoryStore >> basicCreationTimeOf: aMemoryFileSystemEntry [
-	"Returns the creation date of aMemoryFileSystemEntry"
-	^ aMemoryFileSystemEntry creationTime
-]
-
-{ #category : 'private' }
-MemoryStore >> basicEntry: entry nodesDo: aBlock [
-	entry fileEntriesDo: aBlock
-]
-
-{ #category : 'private' }
-MemoryStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
-	directoryEntry fileEntriesDo: aBlock
-]
-
-{ #category : 'private' }
-MemoryStore >> basicIsDirectory: aMemoryFileSystemEntry [
-	^ aMemoryFileSystemEntry isDirectory
-]
-
-{ #category : 'private' }
-MemoryStore >> basicIsFile: aMemoryFileSystemEntry [
-	^ aMemoryFileSystemEntry isFile
-]
-
-{ #category : 'private' }
-MemoryStore >> basicIsSymlink: aNode [
-	^false
-]
-
-{ #category : 'private' }
-MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
-	"Return the basic modification time of aMemoryFileSystemEntry"
-	^ aMemoryFileSystemEntry modificationTime
-]
-
-{ #category : 'private' }
-MemoryStore >> basicPosixPermissions: anEntry [
-	^ 8r777
-]
-
-{ #category : 'private' }
-MemoryStore >> basicSizeOf: aMemoryFileSystemEntry [
-	"Return the basic size of aMemoryFileSystemEntry"
-	^ aMemoryFileSystemEntry fileSize
-]
-
 { #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].
@@ -164,6 +116,22 @@ MemoryStore >> delete: path [
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 
+{ #category : 'private' }
+MemoryStore >> entryAt: aPath
+ifPresent: presentAction
+ifAbsent: absentAction [
+
+	| current |
+	current := self root.
+	aPath
+		do:
+			[:segment | 
+			current isDirectory
+				ifTrue: [current := current fileEntryAt: segment ifAbsent: [^absentAction value]]
+				ifFalse: [^absentAction value]].
+	^presentAction value: current
+]
+
 { #category : 'printing' }
 MemoryStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'memory://'
@@ -177,6 +145,15 @@ MemoryStore >> handleClass [
 { #category : 'initialization' }
 MemoryStore >> initialize [ 
 	root := MemoryFileSystemDirectory new
+]
+
+{ #category : 'testing' }
+MemoryStore >> isDirectory: aPath [
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entity | entity isDirectory]
+		ifAbsent: [false]
 ]
 
 { #category : 'testing' }
