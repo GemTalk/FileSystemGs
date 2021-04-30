@@ -64,6 +64,13 @@ MemoryFileSystemEntry >> isFile [
 	^ self isDirectory not
 ]
 
+{ #category : 'testing' }
+MemoryFileSystemEntry >> isSymlink [
+	"Does this entry represent a symlink?"
+
+	^false
+]
+
 { #category : 'accessing' }
 MemoryFileSystemEntry >> modificationTime [
 	^ modificationTime

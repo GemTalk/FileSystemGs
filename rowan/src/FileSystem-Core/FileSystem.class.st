@@ -293,12 +293,13 @@ FileSystem >> entriesAt: aResolvable ifAbsent: absentBlock do: aBlock [
 
 { #category : 'public' }
 FileSystem >> entryAt: aResolvable [
+
 	| path |
 	path := self resolve: aResolvable.
-	^ store
-		nodeAt: path
-		ifPresent: [ :node | store entryFromNode: node fileSystem: self path: path ]
-		ifAbsent: [ store signalFileDoesNotExist: path ]
+	^store
+		entryAt: path
+		ifPresent: [:entry | entry]
+		ifAbsent: [store signalFileDoesNotExist: path]
 ]
 
 { #category : 'public' }

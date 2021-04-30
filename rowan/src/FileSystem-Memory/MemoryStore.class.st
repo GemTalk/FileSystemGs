@@ -7,15 +7,15 @@ Class {
 	#instVars : [
 		'root'
 	],
-	#classVars : [
-		'CurrentFS'
-	],
 	#category : 'FileSystem-Memory'
 }
 
 { #category : 'current' }
 MemoryStore class >> currentFileSystem [
-	^ CurrentFS ifNil: [ CurrentFS := FileSystem store: MemoryStore new ]
+
+	^SessionTemps current
+		at: #MemoryStoreCurrentFS
+		ifAbsentPut: [FileSystem store: MemoryStore new]
 ]
 
 { #category : 'public' }
@@ -30,7 +30,8 @@ MemoryStore class >> isCaseSensitive [
 
 { #category : 'class initialization' }
 MemoryStore class >> reset [
-	CurrentFS := nil
+
+	SessionTemps current removeKey: #MemoryStoreCurrentFS
 ]
 
 { #category : 'system startup' }
@@ -129,7 +130,16 @@ ifAbsent: absentAction [
 			current isDirectory
 				ifTrue: [current := current fileEntryAt: segment ifAbsent: [^absentAction value]]
 				ifFalse: [^absentAction value]].
-	^presentAction value: current
+	^presentAction value: (MemoryDirectoryEntry reference: (FileReference fileSystem: self class currentFileSystem path: aPath) entry: current)
+]
+
+{ #category : 'testing' }
+MemoryStore >> exists: aPath [
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | true]
+		ifAbsent: [false]
 ]
 
 { #category : 'printing' }
@@ -152,7 +162,7 @@ MemoryStore >> isDirectory: aPath [
 
 	^self
 		entryAt: aPath
-		ifPresent: [:entity | entity isDirectory]
+		ifPresent: [:entry | entry isDirectory]
 		ifAbsent: [false]
 ]
 

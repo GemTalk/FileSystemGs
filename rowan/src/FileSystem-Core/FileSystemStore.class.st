@@ -149,6 +149,7 @@ FileSystemStore >> ensureCreateDirectory: aPath [
 
 { #category : 'private' }
 FileSystemStore >> entryFromNode: aNode fileSystem: aFilesystem path: aPath [
+
 	^ FileSystemDirectoryEntry
 		fileSystem: aFilesystem
 		path: aPath

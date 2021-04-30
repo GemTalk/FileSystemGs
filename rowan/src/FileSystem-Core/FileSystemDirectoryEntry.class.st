@@ -128,7 +128,7 @@ FileSystemDirectoryEntry >> initializeWithRef: ref
 FileSystemDirectoryEntry >> isDirectory [
 	"Return whether the receiver is a directory"
 	
-	^ isDirectory
+	^isDirectory
 ]
 
 { #category : 'testing' }
@@ -140,6 +140,7 @@ FileSystemDirectoryEntry >> isFile [
 
 { #category : 'testing' }
 FileSystemDirectoryEntry >> isSymlink [ 
+
 	^isSymlink
 ]
 
@@ -207,6 +208,12 @@ FileSystemDirectoryEntry >> reference [
 ]
 
 { #category : 'accessing' }
+FileSystemDirectoryEntry >> reference: aFileReference [
+
+	reference := aFileReference
+]
+
+{ #category : 'accessing' }
 FileSystemDirectoryEntry >> size [
 	"Returns the receiver size"
 	^ size
@@ -214,5 +221,6 @@ FileSystemDirectoryEntry >> size [
 
 { #category : 'delegate' }
 FileSystemDirectoryEntry >> writeStream [
-	^ reference writeStream
+
+	^reference writeStream
 ]

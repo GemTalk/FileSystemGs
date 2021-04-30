@@ -142,6 +142,16 @@ DiskStore >> delete: path [
 			(File named: pathString) delete ]"
 ]
 
+{ #category : 'accessing' }
+DiskStore >> entryAt: aPath
+ifPresent: presentAction
+ifAbsent: absentAction [
+
+	^[DiskDirectoryEntry reference: aPath asFileReference stat: (self stat: aPath)]
+		on: UnixError
+		do: [:ex | ex return: absentAction value]
+]
+
 { #category : 'testing' }
 DiskStore >> exists: aPath [
 
