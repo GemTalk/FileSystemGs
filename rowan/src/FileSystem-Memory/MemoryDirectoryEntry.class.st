@@ -1,3 +1,6 @@
+"
+I am a wrapper around a MemoryDirectoryEntry which is polymorphic with the Stat cache used for DiskDirectoryEntry
+"
 Class {
 	#name : 'MemoryDirectoryEntry',
 	#superclass : 'FileSystemDirectoryEntry',
