@@ -96,20 +96,26 @@ FileSystem >> childNamesAt: aResolvable do: aBlock [
 
 { #category : 'public-enumerating' }
 FileSystem >> childrenAt: aResolvable [
-	^ Array streamContents: [ :out | 
-		self childrenAt: aResolvable do: [ :path|
-			out nextPut: path ]].
+
+	| result |
+	result := Array new.
+	self
+		childrenAt: aResolvable
+		do: [:path | result add: path].
+	^result
 ]
 
 { #category : 'public-enumerating' }
 FileSystem >> childrenAt: aResolvable do: aBlock [
+
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		nodesDo: [ :entry | 
-			aBlock value: path / (store basenameFromEntry: entry) ]
+		ifAbsent: [store signalDirectoryDoesNotExist: path]
+		entriesDo:
+			[:entry | 
+			aBlock value: path / (store basenameFromEntry: entry)]
 ]
 
 { #category : 'public' }
@@ -586,8 +592,9 @@ FileSystem >> resolvePath: aPath [
 
 { #category : 'navigating' }
 FileSystem >> resolveReference: aReference [
-	^ aReference fileSystem = self ifTrue:
-		[self workingDirectoryPath resolvePath: aReference path]
+
+	^aReference fileSystem = self
+		ifTrue: [self workingDirectoryPath resolvePath: aReference path]
 ]
 
 { #category : 'navigating' }

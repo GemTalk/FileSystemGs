@@ -41,27 +41,9 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
-{ #category : 'windows-origins' }
-FileLocator class >> A [
-	^ self driveNamed: #A 
-
-]
-
 { #category : 'adding' }
 FileLocator class >> addResolver: aResolver [
 	self resolver addResolver: aResolver
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> B [
-	^ self driveNamed: #B
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> C [
-	^ self driveNamed: #C
-
 ]
 
 { #category : 'origins' }
@@ -79,12 +61,6 @@ FileLocator class >> cwd [
 	^ self workingDirectory
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> D [
-	^ self driveNamed: #D
-
-]
-
 { #category : 'gemstone-origins' }
 FileLocator class >> dbfScratchDir [
 	"Answer the path to the DBF_SCRATCH_DIR"
@@ -100,17 +76,6 @@ FileLocator class >> desktop [
 { #category : 'origins' }
 FileLocator class >> documents [
 	^ self origin: #documents
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> driveNamed: driveName [
-	^ FileReference fileSystem: (FileSystem disk) path: Path / (driveName, ':')
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> E [
-	^ self driveNamed: #E
-
 ]
 
 { #category : 'gemstone-origins' }
@@ -133,21 +98,9 @@ FileLocator class >> extent1Directory [
 	^ self origin: #extent1Directory
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> F [
-	^ self driveNamed: #F
-
-]
-
 { #category : 'flushing' }
 FileLocator class >> flushCaches [
 	self resolver flushCaches
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> G [
-	^ self driveNamed: #G
-
 ]
 
 { #category : 'gemstone-origins' }
@@ -157,21 +110,9 @@ FileLocator class >> gemLogDirectory [
 	^ self origin: #gemLogDirectory
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> H [
-	^ self driveNamed: #H
-
-]
-
 { #category : 'origins' }
 FileLocator class >> home [
 	^ self origin: #home
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> I [
-	^ self driveNamed: #I
-
 ]
 
 { #category : 'gemstone-origins' }
@@ -188,42 +129,6 @@ FileLocator class >> imageDirectory [
 	^ self dbfScratchDir
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> J [
-	^ self driveNamed: #J
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> K [
-	^ self driveNamed: #K
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> L [
-	^ self driveNamed: #L
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> M [
-	^ self driveNamed: #M
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> N [
-	^ self driveNamed: #N
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> O [
-	^ self driveNamed: #O
-
-]
-
 { #category : 'instance creation' }
 FileLocator class >> origin: aSymbol [ 
 	^ self origin: aSymbol path: Path workingDirectory
@@ -235,27 +140,9 @@ FileLocator class >> origin: aSymbol path: aPath [
 			initializeWithOrigin: aSymbol path: aPath
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> P [
-	^ self driveNamed: #P
-
-]
-
 { #category : 'origins' }
 FileLocator class >> preferences [
 	^ self origin: #preferences
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> Q [
-	^ self driveNamed: #Q
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> R [
-	^ self driveNamed: #R
-
 ]
 
 { #category : 'accessing' }
@@ -271,12 +158,6 @@ FileLocator class >> resolver [
 { #category : 'origins' }
 FileLocator class >> root [
 	^ FileSystem disk root
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> S [
-	^ self driveNamed: #S
-
 ]
 
 { #category : 'gemstone-origins' }
@@ -305,12 +186,6 @@ FileLocator class >> systemLibrary [
 	^ self origin: #systemLibrary
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> T [
-	^ self driveNamed: #T
-
-]
-
 { #category : 'origins' }
 FileLocator class >> temp [
 	^ self origin: #temp
@@ -321,12 +196,6 @@ FileLocator class >> tranlog [
 	"Answer the path to the current tranlog directory"
 
 	^ self origin: #tranlog
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> U [
-	^ self driveNamed: #U
-
 ]
 
 { #category : 'mac-origins' }
@@ -344,38 +213,9 @@ FileLocator class >> userLibrary [
 	^ self origin: #userLibrary
 ]
 
-{ #category : 'windows-origins' }
-FileLocator class >> V [
-	^ self driveNamed: #V
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> W [
-	^ self driveNamed: #W
-]
-
 { #category : 'origins' }
 FileLocator class >> workingDirectory [
 	^ FileSystem disk referenceTo: RelativePath new
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> X [
-	^ self driveNamed: #X
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> Y [
-	^ self driveNamed: #Y
-
-]
-
-{ #category : 'windows-origins' }
-FileLocator class >> Z [
-	^ self driveNamed: #Z
-
 ]
 
 { #category : 'comparing' }
