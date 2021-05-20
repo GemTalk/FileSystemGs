@@ -46,6 +46,12 @@ FileSystemStore >> checkName: aString fixErrors: fixErrors [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'other' }
+FileSystemStore >> childNamesAt: path
+ifAbsent: absentBlock
+do: enumerator [
+]
+
 { #category : 'abstract' }
 FileSystemStore >> close [
 	"Some kinds of filesystems need to open connections to external resources"
@@ -117,6 +123,24 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock directoryNodesDo: aB
 		nodesDo: [ :entry|
 			(self basicIsDirectory: entry) 
 				ifTrue: [ aBlock value: entry ]].
+]
+
+{ #category : 'public' }
+FileSystemStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entriesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	self subclassResponsibility
+]
+
+{ #category : 'private' }
+FileSystemStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entryNamesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	self subclassResponsibility
 ]
 
 { #category : 'public' }

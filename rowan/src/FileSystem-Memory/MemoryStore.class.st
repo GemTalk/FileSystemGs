@@ -118,19 +118,50 @@ MemoryStore >> delete: path [
 ]
 
 { #category : 'private' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entriesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	| parent |
+	self
+		entryAt: aPath
+		ifPresent: [:p | parent := p]
+		ifAbsent: [^absentBlock value].
+	parent fileEntriesDo: aBlock
+]
+
+{ #category : 'private' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entryNamesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo: [:entry | aBlock value: entry basename]
+]
+
+{ #category : 'private' }
 MemoryStore >> entryAt: aPath
-ifPresent: presentAction
-ifAbsent: absentAction [
+ifPresent: presentBlock
+ifAbsent: absentBlock [
 
 	| current |
 	current := self root.
+	aPath isRoot
+		ifTrue: [^presentBlock value: current].
 	aPath
 		do:
-			[:segment | 
+			[:segment |
 			current isDirectory
-				ifTrue: [current := current fileEntryAt: segment ifAbsent: [^absentAction value]]
-				ifFalse: [^absentAction value]].
-	^presentAction value: (MemoryDirectoryEntry reference: (FileReference fileSystem: self class currentFileSystem path: aPath) entry: current)
+				ifTrue:
+					[current := current
+						fileEntryAt: segment
+						ifAbsent: [^absentBlock value]]
+				ifFalse: [^absentBlock value]].
+	^ presentBlock value: current
 ]
 
 { #category : 'testing' }
