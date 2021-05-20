@@ -307,7 +307,8 @@ AbstractFileReference >> delete [
 { #category : 'operations' }
 AbstractFileReference >> deleteAll [
 	"Delete this directory and all children of it, raise an error if the file does not exist."
-	DeleteVisitor delete: self resolve
+
+	^self asFileReference deleteAll
 ]
 
 { #category : 'operations' }
@@ -377,7 +378,7 @@ AbstractFileReference >> ensureDelete [
 AbstractFileReference >> ensureDeleteAll [
 	"Delete this directory and all children of it, and does not raise an error if the file does not exist."
 	
-	self exists ifFalse: [ ^ self  ].
+	self exists ifFalse: [^self].
 	self deleteAll
 	
 ]

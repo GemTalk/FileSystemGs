@@ -32,8 +32,7 @@ MemoryFileSystemDirectory >> entries [
 { #category : 'enumeration' }
 MemoryFileSystemDirectory >> fileEntriesDo: aBlock [
 	
-	entries keys sort do: [ :fileName|
-		aBlock value: (entries at: fileName)].
+	entries do: aBlock
 ]
 
 { #category : 'accessing' }

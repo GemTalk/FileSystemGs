@@ -117,6 +117,19 @@ MemoryStore >> delete: path [
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 
+{ #category : 'public' }
+MemoryStore >> deleteAll: path [
+
+	self 
+		entryAt: path parent
+		ifPresent:
+			[:dict | 
+			dict
+				fileEntryRemove: path basename
+				ifAbsent: [FileDoesNotExistException signalWith: path]] 
+		ifAbsent: [DirectoryDoesNotExist signalWith: path parent]
+]
+
 { #category : 'private' }
 MemoryStore >> directoryAt: aPath
 ifAbsent: absentBlock

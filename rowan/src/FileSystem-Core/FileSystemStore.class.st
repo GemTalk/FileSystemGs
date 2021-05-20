@@ -110,6 +110,12 @@ FileSystemStore >> delete: aPath [
 	self subclassResponsibility 
 ]
 
+{ #category : 'abstract' }
+FileSystemStore >> deleteAll: aPath [
+
+	self subclassResponsibility
+]
+
 { #category : 'accessing' }
 FileSystemStore >> delimiter [
 	^ self class delimiter

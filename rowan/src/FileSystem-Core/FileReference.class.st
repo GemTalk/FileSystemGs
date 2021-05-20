@@ -135,9 +135,16 @@ FileReference >> delete [
 	"Deletes the referenced file or directory. If the directory is not empty, 
 	raises an error. Use #deleteAll to delete with the children."
 
-	(self isDirectory and:[self hasChildren]) 
-		ifTrue:[DirectoryIsNotEmpty signalWith: self].
+	(self isDirectory and: [self hasChildren]) 
+		ifTrue: [DirectoryIsNotEmpty signalWith: self].
 	filesystem delete: path
+]
+
+{ #category : 'operations' }
+FileReference >> deleteAll [
+	"Delete this directory and all children of it, raise an error if the file does not exist."
+
+	filesystem deleteAll: self fullPath
 ]
 
 { #category : 'operations' }
