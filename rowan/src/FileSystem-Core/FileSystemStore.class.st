@@ -36,12 +36,6 @@ FileSystemStore class >> new [
 ]
 
 { #category : 'public' }
-FileSystemStore >> basenameFromEntry: aNode [
-	"Used to extract the basename from the low-level representation (node / entry) from the store."
-	self subclassResponsibility
-]
-
-{ #category : 'public' }
 FileSystemStore >> checkName: aString fixErrors: fixErrors [
 	^ self subclassResponsibility
 ]
@@ -122,20 +116,10 @@ FileSystemStore >> delimiter [
 ]
 
 { #category : 'public' }
-FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock directoryNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
-		ifAbsent: absentBlock 
-		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifTrue: [ aBlock value: entry ]].
-]
-
-{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath
 ifAbsent: absentBlock
-entriesDo: aBlock [
-	"Enumerate through the entries in the provided directory."
+directoryNamesDo: aBlock [
+	"Enumerate through the directory names in the provided directory."
 
 	self subclassResponsibility
 ]
@@ -150,52 +134,10 @@ entryNamesDo: aBlock [
 ]
 
 { #category : 'public' }
-FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock fileNodesDo: aBlock [
-	^ self 
-		directoryAt: aPath 
-		ifAbsent: absentBlock 
-		nodesDo: [ :entry|
-			(self basicIsDirectory: entry) 
-				ifFalse: [ aBlock value: entry ]].
-]
-
-{ #category : 'public' }
-FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
-	^ self
-		nodeAt: aPath
-		ifPresent: [ :entry | 
-			(self basicIsDirectory: entry)
-				ifTrue: [ self basicEntry: entry path: aPath nodesDo: aBlock ]
-				ifFalse: [ DirectoryDoesNotExist signalWith: aPath ] ]
-		ifAbsent: absentBlock
-]
-
-{ #category : 'public' }
 FileSystemStore >> ensureCreateDirectory: aPath [
 	(self isDirectory: aPath) ifTrue: [ ^ self ].
 	self ensureCreateDirectory: aPath parent.
 	self createDirectory: aPath
-]
-
-{ #category : 'private' }
-FileSystemStore >> entryFromNode: aNode fileSystem: aFilesystem path: aPath [
-
-	^ FileSystemDirectoryEntry
-		fileSystem: aFilesystem
-		path: aPath
-		creation: (self basicCreationTimeOf: aNode)
-		modification:(self basicModificationTimeOf: aNode)
-		isDir: (self basicIsDirectory: aNode)
-		size: (self basicSizeOf: aNode)
-		posixPermissions: (self basicPosixPermissions: aNode)
-		isSymlink: (self basicIsSymlink: aNode)
-]
-
-{ #category : 'public' }
-FileSystemStore >> entryFromNode: node path: path for: aFileystem [
-	| entryPath |
-	entryPath := path / (self basenameFromEntry: node).
-	^ self entryFromNode: node fileSystem: aFileystem path: entryPath
 ]
 
 { #category : 'public' }
@@ -273,11 +215,6 @@ FileSystemStore >> nodeAt: aPath [
 		nodeAt: aPath 
 		ifPresent: [ :node| node ]
 		ifAbsent: [ self error: 'the node ', aPath printString, ' not found.' ]
-]
-
-{ #category : 'abstract' }
-FileSystemStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	self subclassResponsibility 
 ]
 
 { #category : 'abstract' }

@@ -40,11 +40,6 @@ MemoryStore class >> startUp [
 ]
 
 { #category : 'public' }
-MemoryStore >> basenameFromEntry: aMemoryFileSystemEntry [
-	^ aMemoryFileSystemEntry basename
-]
-
-{ #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].
 	^ aString
@@ -133,6 +128,18 @@ MemoryStore >> deleteAll: path [
 { #category : 'private' }
 MemoryStore >> directoryAt: aPath
 ifAbsent: absentBlock
+directoryNamesDo: aBlock [
+	"Enumerate through the directory names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo: [:entry | entry isDirectory ifTrue: [aBlock value: entry basename]]
+]
+
+{ #category : 'private' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
 entriesDo: aBlock [
 	"Enumerate through the entries in the provided directory."
 
@@ -154,6 +161,18 @@ entryNamesDo: aBlock [
 		directoryAt: aPath
 		ifAbsent: absentBlock
 		entriesDo: [:entry | aBlock value: entry basename]
+]
+
+{ #category : 'private' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+fileNamesDo: aBlock [
+	"Enumerate through the file names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo: [:entry | entry isFile ifTrue: [aBlock value: entry basename]]
 ]
 
 { #category : 'private' }

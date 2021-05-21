@@ -229,38 +229,59 @@ FileSystem >> delimiter [
 
 { #category : 'public-enumerating' }
 FileSystem >> directoriesAt: aResolvable [
-	^ Array streamContents: [ :out | 
-		self directoriesAt: aResolvable do: [ :path|
-			out nextPut: path ]].
+
+	| directories |
+	directories := Array new.
+	self
+		directoriesAt: aResolvable
+		do: [:path| directories add: path].
+	^directories
 ]
 
 { #category : 'public-enumerating' }
-FileSystem >> directoriesAt: aResolvable do: aBlock [
+FileSystem >> directoriesAt: aResolvable
+do: aBlock [
+
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		directoryNodesDo: [ :entry | 
-			aBlock value: path / (store basenameFromEntry: entry) ]
+		ifAbsent: [store signalDirectoryDoesNotExist: path]
+		directoryNamesDo: [:name | aBlock value: path / name]
 ]
 
 { #category : 'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable [
-	^ Array streamContents: [ :out | 
-		self directoryNamesAt: aResolvable do: [ :name|
-			out nextPut: name ]].
+
+	| names |
+	names := Array new.
+	self
+		directoryNamesAt: aResolvable
+		do: [:name | names add: name].
+	^names
 ]
 
 { #category : 'public-enumerating' }
-FileSystem >> directoryNamesAt: aResolvable do: aBlock [
+FileSystem >> directoryNamesAt: aResolvable
+do: aBlock [
+
+	self
+		directoryNamesAt: aResolvable
+		ifAbsent: [store signalDirectoryDoesNotExist: (self resolve: aResolvable)]
+		do: [:entry | aBlock value: entry]
+]
+
+{ #category : 'public-enumerating' }
+FileSystem >> directoryNamesAt: aResolvable
+ifAbsent: anAbsentBlock
+do: aBlock [
+
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		directoryNodesDo: [ :entry | 
-			aBlock value: (store basenameFromEntry: entry) ]
+		ifAbsent: [^anAbsentBlock value]
+		directoryNamesDo: [:entry | aBlock value: entry]
 ]
 
 { #category : 'public' }
@@ -269,35 +290,6 @@ FileSystem >> ensureCreateDirectory: aResolvable [
 	sure that all the directories contained in the argument path exist or are created."
 	
 	store ensureCreateDirectory: (self resolve: aResolvable)
-]
-
-{ #category : 'public-enumerating' }
-FileSystem >> entriesAt: aResolvable [
-	^ Array
-		streamContents: [ :out | 
-			self entriesAt: aResolvable do: [ :entry | out nextPut: entry ]
-		]
-]
-
-{ #category : 'public-enumerating' }
-FileSystem >> entriesAt: aResolvable do: aBlock [
-	^ self 
-		entriesAt: aResolvable 
-		ifAbsent: [ store signalDirectoryDoesNotExist: ( self resolve: aResolvable) ]
-		do: aBlock 
-]
-
-{ #category : 'public-enumerating' }
-FileSystem >> entriesAt: aResolvable ifAbsent: absentBlock do: aBlock [
-	| path entry aFilesystem |
-	path := self resolve: aResolvable.
-	aFilesystem := self.
-	store
-		directoryAt: path
-		ifAbsent: [ ^ absentBlock value ]
-		nodesDo: [ :node | 
-			entry := store entryFromNode: node path: path for: aFilesystem.
-			aBlock value: entry ]
 ]
 
 { #category : 'public' }
@@ -326,38 +318,57 @@ FileSystem >> extensionDelimiter [
 
 { #category : 'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable [
-	^ Array streamContents: [ :out | 
-		self fileNamesAt: aResolvable do: [ :path|
-			out nextPut: path ]].
+
+	| names |
+	names := Array new.
+	self
+		fileNamesAt: aResolvable
+		do: [:path| names add: path].
+	^names
 ]
 
 { #category : 'public-enumerating' }
-FileSystem >> fileNamesAt: aResolvable do: aBlock [
+FileSystem >> fileNamesAt: aResolvable
+do: aBlock [
+
+	self
+		fileNamesAt: aResolvable
+		ifAbsent: [store signalDirectoryDoesNotExist: (self resolve: aResolvable)]
+		do: aBlock
+]
+
+{ #category : 'public-enumerating' }
+FileSystem >> fileNamesAt: aResolvable
+ifAbsent: anAbsentBlock
+do: aBlock [
+
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		fileNodesDo: [ :entry | 
-			aBlock value: (store basenameFromEntry: entry) ]
+		ifAbsent: [^anAbsentBlock value]
+		fileNamesDo: aBlock
 ]
 
 { #category : 'public-enumerating' }
 FileSystem >> filesAt: aResolvable [
-	^ Array streamContents: [ :out | 
-		self filesAt: aResolvable do: [ :path|
-			out nextPut: path ]].
+
+	| files |
+	files := Array new.
+	self
+		filesAt: aResolvable
+		do: [:path| files add: path].
+	^files
 ]
 
 { #category : 'public-enumerating' }
 FileSystem >> filesAt: aResolvable do: aBlock [
+
 	| path |
 	path := self resolve: aResolvable.
-	store
-		directoryAt: path
-		ifAbsent: [ store signalDirectoryDoesNotExist: path ]
-		fileNodesDo: [ :entry | 
-			aBlock value: path / (store basenameFromEntry: entry) ]
+	self
+		filesNamesAt: path
+		do: [:name | aBlock value: path / name]
 ]
 
 { #category : 'printing' }
@@ -376,20 +387,21 @@ FileSystem >> hasChildren: aResolvable [
 
 { #category : 'public-testing' }
 FileSystem >> hasDirectories: aResolvable [
+
 	self
-		entriesAt: aResolvable
-		ifAbsent: [  ^ false ]
-		do: [ :entry | 
-			entry isDirectory ifTrue: [ ^true ] ].
+		directoryNamesAt: aResolvable
+		ifAbsent: [^false]
+		do: [:name | ^true].
 	^false
 ]
 
 { #category : 'public-testing' }
 FileSystem >> hasFiles: aResolvable [
+
 	self
-		entriesAt: aResolvable
-		ifAbsent: [  ^ false ]
-		do: [ :entry | entry isFile ifTrue: [ ^true ] ].
+		directoryNamesAt: aResolvable
+		ifAbsent: [^false]
+		do: [:name | ^true].
 	^false
 ]
 
