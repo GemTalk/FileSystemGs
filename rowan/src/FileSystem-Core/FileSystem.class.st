@@ -58,7 +58,7 @@ FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable withOptions: store defaultOptionsForRead)
+	^ (self open: aResolvable writable: false)
 		binaryReadStream
 ]
 
@@ -67,7 +67,7 @@ FileSystem >> binaryWriteStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a binary write stream for reading the file."
 
-	^ (self open: aResolvable withOptions: store defaultOptionsForWrite)
+	^ (self open: aResolvable writable: true)
 		binaryWriteStream
 ]
 
@@ -517,6 +517,16 @@ FileSystem >> open: aResolvable writable: aBoolean [
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
 		
+]
+
+{ #category : 'hack' }
+FileSystem >> openStreamDescription: aResolvable writable: aBoolean [
+	"I am  a helper method to delegate basicOpen:writable: to the store.
+	 I am called from FileSystemHandle implementations."
+	
+	| path |
+	path := self resolve: aResolvable.
+	^ store basicOpen: path writable: aBoolean
 ]
 
 { #category : 'converting' }

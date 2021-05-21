@@ -49,6 +49,15 @@ FileSystemHandle >> at: offset write: buffer startingAt: start count: count [
 	self subclassResponsibility
 ]
 
+{ #category : 'public' }
+FileSystemHandle >> basicOpen [
+	"get the raw stream description from the filesystem's store"
+
+	^self fileSystem 
+		openStreamDescription: reference path
+		writable: writable
+]
+
 { #category : 'streams' }
 FileSystemHandle >> binaryReadStream [
 	

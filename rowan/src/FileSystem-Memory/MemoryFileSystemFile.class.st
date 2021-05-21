@@ -178,9 +178,6 @@ MemoryFileSystemFile >> updateSize: newSize [
 
 { #category : 'stream-protocol' }
 MemoryFileSystemFile >> writeStreamDo: aBlock [
-	ByteArray
-		streamContents: [ :aStream | 
-			aBlock value: aStream.
-			bytes := aStream contents ].
-	self updateSize: bytes size
+
+	self updateContents: (ByteArray streamContents: aBlock)
 ]

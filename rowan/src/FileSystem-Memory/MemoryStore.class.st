@@ -40,6 +40,20 @@ MemoryStore class >> startUp [
 ]
 
 { #category : 'public' }
+MemoryStore >> basicOpen: path writable: aBoolean [
+
+	^self
+		entryAt: path
+		ifPresent: [ :aMemoryFileSystemEntry | 
+			aMemoryFileSystemEntry
+				basicOpen;
+				yourself ]
+		ifAbsent: [ aBoolean
+				ifFalse: [ self signalFileDoesNotExist: path ]
+				ifTrue: [ self createFile: path ] ]
+]
+
+{ #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].
 	^ aString
@@ -93,10 +107,11 @@ MemoryStore >> createDirectory: path [
 		ifAbsent: [ self signalDirectoryDoesNotExist: parent ]
 ]
 
-{ #category : 'private' }
+{ #category : 'public' }
 MemoryStore >> createFile: aPath [
-	^ self
-		nodeAt: aPath parent
+
+	^self
+		entryAt: aPath parent
 		ifPresent: [ :entry | 
 			entry isDirectory
 				ifTrue: [ entry ensureCreateFile: aPath basename ]]
@@ -226,6 +241,15 @@ MemoryStore >> isDirectory: aPath [
 	^self
 		entryAt: aPath
 		ifPresent: [:entry | entry isDirectory]
+		ifAbsent: [false]
+]
+
+{ #category : 'testing' }
+MemoryStore >> isFile: aPath [
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | entry isFile]
 		ifAbsent: [false]
 ]
 

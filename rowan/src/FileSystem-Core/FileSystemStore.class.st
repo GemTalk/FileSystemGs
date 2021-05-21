@@ -164,21 +164,12 @@ FileSystemStore >> isCaseSensitive [
 FileSystemStore >> isDirectory: aPath [
 
 	self subclassResponsibility
-	"aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsDirectory: entry ] 
-		ifAbsent: [ ^ false ]."
 ]
 
 { #category : 'public' }
 FileSystemStore >> isFile: aPath [
-	"slow solution for big directories! "
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsFile: entry ] 
-		ifAbsent: [ ^ false ]
-	
+
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
