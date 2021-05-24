@@ -79,7 +79,7 @@ FileReferenceTest >> testAllEntries [
 	self assert: entries size equals: 4.
 	entries
 		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
+			self assert: (entry isKindOf: FileSystemDirectoryEntry).
 			self assert: (ref = entry reference or: [ ref contains: entry reference ]) ].
 	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
@@ -458,7 +458,7 @@ FileReferenceTest >> testEntries [
 	self assert: entries size equals: 2.
 	entries
 		do: [ :entry | 
-			self assert: entry class equals: FileSystemDirectoryEntry.
+			self assert: (entry isKindOf: FileSystemDirectoryEntry).
 			self assert: (entry reference isChildOf: ref).
 			self assert: (#('beta' 'gamma') includes: entry reference basename) ] ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
@@ -553,7 +553,7 @@ FileReferenceTest >> testHasDirectories [
 
 { #category : 'tests' }
 FileReferenceTest >> testHasFiles [
-	<publicTest>
+
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.

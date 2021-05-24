@@ -315,3 +315,19 @@ MemoryStore >> replaceFile: path in: aBlock [
 MemoryStore >> root [
 	^ root
 ]
+
+{ #category : 'private' }
+MemoryStore >> statAt: aResolvable
+for: aFileReference
+ifPresent: presentBlock
+ifAbsent: absentBlock [
+
+	| entry stat |
+	entry := self
+		entryAt: aResolvable
+		ifPresent: [:entry | entry]
+		ifAbsent: [^absentBlock value].
+	^MemoryDirectoryEntry
+		reference: aFileReference
+		entry: entry
+]

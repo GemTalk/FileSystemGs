@@ -84,13 +84,25 @@ FileSystem >> childNamesAt: aResolvable [
 ]
 
 { #category : 'public-enumerating' }
-FileSystem >> childNamesAt: aResolvable do: aBlock [
+FileSystem >> childNamesAt: aResolvable
+do: aBlock [
+
+	self
+		childNamesAt: aResolvable
+		ifAbsent: [store signalDirectoryDoesNotExist: (self resolve: aResolvable)]
+		do: aBlock
+]
+
+{ #category : 'public-enumerating' }
+FileSystem >> childNamesAt: aResolvable
+ifAbsent: absentBlock
+do: aBlock [
 
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
-		ifAbsent: [store signalDirectoryDoesNotExist: path]
+		ifAbsent: [^absentBlock value]
 		entryNamesDo: aBlock
 ]
 
@@ -379,9 +391,11 @@ FileSystem >> forReferencePrintOn: aStream [
 { #category : 'public-testing' }
 FileSystem >> hasChildren: aResolvable [
 	"Returns whether aResolvable has children."
-	store directoryAt: (self resolve: aResolvable)
-			ifAbsent: [ ^false ]
-			nodesDo:  [ :node | ^true ].
+
+	self
+		childNamesAt: aResolvable
+		ifAbsent: [^false]
+		do: [:each | ^true].
 	^false
 ]
 
@@ -399,7 +413,7 @@ FileSystem >> hasDirectories: aResolvable [
 FileSystem >> hasFiles: aResolvable [
 
 	self
-		directoryNamesAt: aResolvable
+		fileNamesAt: aResolvable
 		ifAbsent: [^false]
 		do: [:name | ^true].
 	^false
@@ -510,10 +524,10 @@ FileSystem >> open [
 FileSystem >> open: aResolvable writable: aBoolean [ 
 	"Resolve aResolvable into an absolute path, then ask the store to open the file at
 	that path using the specified access mode."
-	
+
 	| path |
 	path := self resolve: aResolvable.
-	^ store handleClass 
+	^store handleClass 
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
 		
@@ -640,6 +654,19 @@ FileSystem >> sizeOf: aResolvable [
 	"Resolve the argument and return the size for this file or directory "
 
 	^ store sizeOf: (self resolve: aResolvable)
+]
+
+{ #category : 'public' }
+FileSystem >> statAt: aResolvable
+for: aFileReference [
+
+	| path |
+	path := self resolve: aResolvable.
+	^store
+		statAt: path
+		for: aFileReference
+		ifPresent: [:entry | entry]
+		ifAbsent: [store signalFileDoesNotExist: path]
 ]
 
 { #category : 'accessing' }
