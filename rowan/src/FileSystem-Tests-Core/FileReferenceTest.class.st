@@ -27,7 +27,6 @@ FileReferenceTest >> setUp [
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -49,7 +48,6 @@ FileReferenceTest >> testAllChildren [
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
 
-	<publicTest>
 	| ref children |
 	[ filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -319,7 +317,6 @@ FileReferenceTest >> testContents [
 FileReferenceTest >> testDeleteAll [
 	"allChildren returns all the files and folders recursively nested in a reference"
 
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -338,7 +335,6 @@ FileReferenceTest >> testDeleteAll [
 FileReferenceTest >> testDeleteAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 
-	<publicTest>
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -522,7 +518,7 @@ FileReferenceTest >> testGrandchildOfReference [
 
 { #category : 'tests' }
 FileReferenceTest >> testHasChildren [
-	<publicTest>
+
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -538,7 +534,7 @@ FileReferenceTest >> testHasChildren [
 
 { #category : 'tests' }
 FileReferenceTest >> testHasDirectories [
-	<publicTest>
+
 	[ | ref |
 	filesystem createDirectory: '/alpha'.
 	filesystem createDirectory: '/alpha/beta'.
@@ -911,20 +907,15 @@ FileReferenceTest >> testUnequalSize [
 
 { #category : 'tests' }
 FileReferenceTest >> testUpToAll [
+
 	| testString fileRef |
 	testString := 'ße'.
 	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
-
-	[  
-	fileRef
-		writeStreamEncoded: 'utf8' do: [ :stream | 
-			stream nextPutAll: testString ].
-
-	fileRef
-		readStreamDo: [ :stream |
-			self assert: (stream upToAll: 'e') equals: 'ß'.
-		] ]
-	ensure: [ fileRef ensureDelete ]
+	[fileRef
+		writeStreamEncoded: 'utf8'
+		do: [:stream | stream nextPutAll: testString].
+	fileRef readStreamDo: [:stream | self assert: (stream upToAll: 'e') equals: 'ß']]
+		ensure: [fileRef ensureDelete]
 ]
 
 { #category : 'tests' }
