@@ -392,55 +392,6 @@ FileSystemTest >> testEnsureDirectoryExists [
 ]
 
 { #category : 'tests' }
-FileSystemTest >> testEntriesAt [
-	| directory entries |
-	directory := Path * 'plonk'.
-	
-	filesystem createDirectory: directory.
-	filesystem createDirectory: directory / 'griffle'.
-	filesystem createDirectory: directory / 'bint'.
-	
-	self 
-		markForCleanup: directory / 'griffle';
-		markForCleanup: directory / 'bint';
-		markForCleanup: directory.
-	
-	entries := filesystem entriesAt: directory.
-	self assert: entries size = 2.
-	entries do: [ :ea | 
-		self assert: (ea isKindOf: FileSystemDirectoryEntry).
-		self assert: ea reference parent path = (filesystem resolve: directory).
-		self assert: (#('griffle' 'bint' ) includes: ea reference basename).
-		self assert: ea isDirectory ]
-]
-
-{ #category : 'tests' }
-FileSystemTest >> testEntryAt [
-	| path1 path2 entry1 entry2  |
-
-	path1 := Path * 'plonk1'.
-	path2 := Path * 'plonk2'.
-	self markForCleanup: path1.
-	self markForCleanup: path2.
-	
-	filesystem createDirectory: path1.
-	(Delay forSeconds: 2) wait. "#creationTime seems limited to 1 second resolution"
-	filesystem createDirectory: path2.
-	
-	entry1 := filesystem entryAt: path1.
-	entry2 := filesystem entryAt: path2.
-	
-	self assert: entry1 isDirectory.
-	self assert: entry2 isDirectory.
-	self assert: entry1 reference = (filesystem referenceTo: path1) asAbsolute.
-	self assert: entry2 reference = (filesystem referenceTo: path2) asAbsolute.
-
-	self assert: entry1 creationTime < entry2 creationTime.
-	self assert: entry1 modificationTime < entry2 modificationTime.
-
-]
-
-{ #category : 'tests' }
 FileSystemTest >> testFile [
 	| path |
 	
@@ -458,8 +409,8 @@ FileSystemTest >> testFile [
 
 { #category : 'tests' }
 FileSystemTest >> testFileNames [
+
 	| reference |
-	self fail.	"UTF-8 encoding of filenames not working correctly."
 	#('test one' 'test with two' 'test-äöü' 'test.äöü')
 		do: [ :each | 
 			reference := filesystem workingDirectory / each.

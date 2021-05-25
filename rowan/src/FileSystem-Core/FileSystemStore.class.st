@@ -193,11 +193,8 @@ FileSystemStore >> isWritable: aPath [
 { #category : 'public' }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicModificationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
-	
+
+	^self subclassresponsibility
 ]
 
 { #category : 'public' }
@@ -280,11 +277,8 @@ FileSystemStore >> signalFileExists: aPath [
 { #category : 'public' }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicSizeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ]
-	
+
+	self subclassResponsibility
 ]
 
 { #category : 'converting' }

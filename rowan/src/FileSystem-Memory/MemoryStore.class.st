@@ -258,6 +258,17 @@ MemoryStore >> isMemoryFileSystem [
 	^ true
 ]
 
+{ #category : 'accessing' }
+MemoryStore >> modificationTimeOf: aPath [
+	"Returns the last date of modification of the File described by aPath"
+
+	^self
+		statAt: aPath
+		for: nil
+		ifPresent: [:stat | stat modificationTime]
+		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
 { #category : 'private' }
 MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	| current |
@@ -316,6 +327,16 @@ MemoryStore >> root [
 	^ root
 ]
 
+{ #category : 'accessing' }
+MemoryStore >> sizeOf: aPath [
+
+	^self
+		statAt: aPath
+		for: nil
+		ifPresent: [:stat | stat size]
+		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
 { #category : 'private' }
 MemoryStore >> statAt: aResolvable
 for: aFileReference
@@ -327,7 +348,8 @@ ifAbsent: absentBlock [
 		entryAt: aResolvable
 		ifPresent: [:entry | entry]
 		ifAbsent: [^absentBlock value].
-	^MemoryDirectoryEntry
+	stat := MemoryDirectoryEntry
 		reference: aFileReference
-		entry: entry
+		entry: entry.
+	^presentBlock value: stat
 ]

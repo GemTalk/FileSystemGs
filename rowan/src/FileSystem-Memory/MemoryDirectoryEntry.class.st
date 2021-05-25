@@ -45,3 +45,17 @@ MemoryDirectoryEntry >> isSymlink [
 	
 	^entry isSymlink
 ]
+
+{ #category : 'accessing' }
+MemoryDirectoryEntry >> modificationTime [
+	"Return the modification date and time of the entry receiver."
+
+	^entry modificationTime
+]
+
+{ #category : 'accessing' }
+MemoryDirectoryEntry >> size [
+	"Returns the receiver size"
+
+	^entry size
+]
