@@ -64,7 +64,7 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
         | sourceNode destinationNode |
 
         sourceNode := self
-                nodeAt: sourcePath
+                entryAt: sourcePath
                 ifPresent: [ :source | source ]
                 ifAbsent: [ ^ absentBlock value].
 
@@ -72,7 +72,7 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
                 ifTrue: [ ^ absentBlock value ].
 
         destinationNode := self
-                nodeAt: destinationPath parent
+                entryAt: destinationPath parent
                 ifPresent: [ :destination |  destination ]
                 ifAbsent: [ ^ self signalDirectoryDoesNotExist: destinationPath parent ].
 
@@ -87,7 +87,6 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
                 put: (sourceNode copy
                                         basename: destinationPath basename;
                                         yourself)
-
 ]
 
 { #category : 'public' }
@@ -95,7 +94,7 @@ MemoryStore >> createDirectory: path [
 	| parent |
 	parent := path parent.
 	^ self
-		nodeAt: parent
+		entryAt: parent
 		ifPresent: [ :entry | 
 			entry
 				fileEntryAt: path basename
@@ -118,10 +117,20 @@ MemoryStore >> createFile: aPath [
 		ifAbsent: [ self signalDirectoryDoesNotExist: aPath parent ]
 ]
 
+{ #category : 'accessing' }
+MemoryStore >> creationTimeOf: aPath [
+	"Return the date of creation of the File described by aPath"
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | entry creationTime]
+		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
 { #category : 'public' }
 MemoryStore >> delete: path [
 	self 
-		nodeAt: path parent
+		entryAt: path parent
 		ifPresent: [ :dict | 
 			dict fileEntryRemove: path basename ifAbsent: [ FileDoesNotExistException signalWith: path ]] 
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
@@ -258,29 +267,45 @@ MemoryStore >> isMemoryFileSystem [
 	^ true
 ]
 
+{ #category : 'testing' }
+MemoryStore >> isSymlink: aPath [
+	"Return true if aPath refers to a symlink"
+
+	aPath isRoot ifTrue: [^true].
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | entry isSymlink]
+		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
+{ #category : 'testing' }
+MemoryStore >> isWritable: aPath [
+	"Return true if aPath is writeable"
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | entry permissions isWritable]
+		ifAbsent: [false]
+]
+
 { #category : 'accessing' }
 MemoryStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
 
 	^self
 		statAt: aPath
-		for: nil
 		ifPresent: [:stat | stat modificationTime]
 		ifAbsent: [self signalFileDoesNotExist: aPath]
 ]
 
-{ #category : 'private' }
-MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
-	| current |
-	aPath isRoot
-		ifTrue: [ ^ presentBlock value: self root ].
-	current := self root.
-	aPath
-		do: [ :segment | 
-			current isDirectory
-				ifTrue: [ current := current fileEntryAt: segment ifAbsent: [ ^ absentBlock value ] ]
-				ifFalse: [ ^ absentBlock value ] ].
-	^ presentBlock value: current
+{ #category : 'accessing' }
+MemoryStore >> permissions: aPath [
+	"Returns the permissions of the associated file"
+
+	^self
+		statAt: aPath
+		ifPresent: [:stat | stat permissions]
+		ifAbsent: [FileSystemPermission default]
 ]
 
 { #category : 'public' }
@@ -312,7 +337,7 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 { #category : 'private' }
 MemoryStore >> replaceFile: path in: aBlock [
 	^ self
-		nodeAt: path parent
+		statAt: path parent
 		ifPresent: [ :entry | | old new |
 			entry isDirectory
 				ifFalse: [ self signalFileDoesNotExist: path ].
@@ -332,7 +357,6 @@ MemoryStore >> sizeOf: aPath [
 
 	^self
 		statAt: aPath
-		for: nil
 		ifPresent: [:stat | stat size]
 		ifAbsent: [self signalFileDoesNotExist: aPath]
 ]
@@ -350,6 +374,22 @@ ifAbsent: absentBlock [
 		ifAbsent: [^absentBlock value].
 	stat := MemoryDirectoryEntry
 		reference: aFileReference
+		entry: entry.
+	^presentBlock value: stat
+]
+
+{ #category : 'private' }
+MemoryStore >> statAt: aResolvable
+ifPresent: presentBlock
+ifAbsent: absentBlock [
+
+	| entry stat |
+	entry := self
+		entryAt: aResolvable
+		ifPresent: [:e | e]
+		ifAbsent: [^absentBlock value].
+	stat := MemoryDirectoryEntry
+		reference: nil
 		entry: entry.
 	^presentBlock value: stat
 ]

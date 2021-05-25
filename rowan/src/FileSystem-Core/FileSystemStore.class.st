@@ -87,11 +87,8 @@ FileSystemStore >> createDirectory: aPath [
 { #category : 'public' }
 FileSystemStore >> creationTimeOf: aPath [
 	"Return the date of creation of the File described by aPath"
-	^ self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | self basicCreationTimeOf: entry ] 
-		ifAbsent: [ self signalFileDoesNotExist: aPath ].
-	
+
+	^self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -174,20 +171,14 @@ FileSystemStore >> isFile: aPath [
 
 { #category : 'public' }
 FileSystemStore >> isSymlink: aPath [
-	aPath isRoot ifTrue: [ ^ true ].
-	self 
-		nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsSymlink: entry ] 
-		ifAbsent: [ ^ false ].
-	
+
+	^self subclassResponsibility
 ]
 
 { #category : 'public' }
 FileSystemStore >> isWritable: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ self basicIsWritable: entry ] 
-		ifAbsent: [ ^ false ].
-	
+
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
@@ -199,8 +190,9 @@ FileSystemStore >> modificationTimeOf: aPath [
 
 { #category : 'public' }
 FileSystemStore >> nodeAt: aPath [
+
 	^ self 
-		nodeAt: aPath 
+		statAt: aPath 
 		ifPresent: [ :node| node ]
 		ifAbsent: [ self error: 'the node ', aPath printString, ' not found.' ]
 ]
@@ -224,10 +216,8 @@ FileSystemStore >> pathFromString: aString [
 
 { #category : 'public' }
 FileSystemStore >> permissions: aPath [
-	self nodeAt: aPath 
-		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ] 
-		ifAbsent: [ ^ FileSystemPermission default ].
-	
+
+	^self subclassResponsibility
 ]
 
 { #category : 'converting' }
