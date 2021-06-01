@@ -5,6 +5,19 @@ Class {
 }
 
 { #category : 'functions' }
+LibcStat >> mkdir: pathString [
+
+	| errnoHolder status |
+	errnoHolder := { 0 }.
+	status := library
+		mkdir: { pathString. 8r0777. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^true
+]
+
+{ #category : 'functions' }
 LibcStat >> stat: pathString [
 
 	| statStruct errnoHolder status |

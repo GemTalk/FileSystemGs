@@ -229,7 +229,9 @@ FileSystem >> delete: aResolvable [
 { #category : 'public' }
 FileSystem >> deleteAll: aResolvable [
 
-	store deleteAll: (self resolve: aResolvable)
+	store
+		deleteAll: (self resolve: aResolvable)
+		in: self
 ]
 
 { #category : 'public' }
@@ -302,17 +304,6 @@ FileSystem >> ensureCreateDirectory: aResolvable [
 	sure that all the directories contained in the argument path exist or are created."
 	
 	store ensureCreateDirectory: (self resolve: aResolvable)
-]
-
-{ #category : 'public' }
-FileSystem >> entryAt: aResolvable [
-
-	| path |
-	path := self resolve: aResolvable.
-	^store
-		entryAt: path
-		ifPresent: [:entry | entry]
-		ifAbsent: [store signalFileDoesNotExist: path]
 ]
 
 { #category : 'public' }

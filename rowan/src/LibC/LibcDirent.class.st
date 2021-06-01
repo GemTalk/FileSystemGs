@@ -36,7 +36,7 @@ LibcDirent >> readFromDirectoryStream: dirPointer [
 	the end of the directory stream. Should probably raise an end of stream
 	at this point instead."
 
-	| errnoHolder direntPtr isNull errno cBytes |
+	| errnoHolder direntPtr isNull errno |
 	errnoHolder := { 0 }.
 	direntPtr := library
 		readdir: { dirPointer }
@@ -45,10 +45,9 @@ LibcDirent >> readFromDirectoryStream: dirPointer [
 	errno := errnoHolder first.
 	isNull & (errno ~~ 0)
 		ifTrue: [self handleErrno: errno].
-	cBytes := isNull
-		ifTrue: [direntPtr]
-		ifFalse: [CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize].
-	^DirentStruct forBytes: cBytes
+	^isNull
+		ifTrue: [nil]
+		ifFalse: [DirentStruct forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize)]
 ]
 
 { #category : 'accessing' }

@@ -48,6 +48,19 @@ LibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
 ]
 
 { #category : 'functions' }
+LibcUnistd >> rmdir: pathString [
+
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		rmdir: { pathString }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'functions' }
 LibcUnistd >> unlinkPath: pathString [
 
 	| errnoHolder result |

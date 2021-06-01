@@ -20,6 +20,24 @@ stat: aStatStruct [
 		yourself
 ]
 
+{ #category : 'testing' }
+DiskDirectoryEntry >> isDirectory [
+
+	^stat isDirectory
+]
+
+{ #category : 'testing' }
+DiskDirectoryEntry >> isFile [
+
+	^stat isFile
+]
+
+{ #category : 'testing' }
+DiskDirectoryEntry >> isSymlink [
+
+	^stat isSymlink
+]
+
 { #category : 'accessing' }
 DiskDirectoryEntry >> stat [
 

@@ -129,6 +129,7 @@ MemoryStore >> creationTimeOf: aPath [
 
 { #category : 'public' }
 MemoryStore >> delete: path [
+
 	self 
 		entryAt: path parent
 		ifPresent: [ :dict | 
@@ -137,7 +138,8 @@ MemoryStore >> delete: path [
 ]
 
 { #category : 'public' }
-MemoryStore >> deleteAll: path [
+MemoryStore >> deleteAll: path
+in: fileSystem [
 
 	self 
 		entryAt: path parent

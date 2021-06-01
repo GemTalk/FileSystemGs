@@ -102,7 +102,8 @@ FileSystemStore >> delete: aPath [
 ]
 
 { #category : 'abstract' }
-FileSystemStore >> deleteAll: aPath [
+FileSystemStore >> deleteAll: aPath
+in: fileSystem [
 
 	self subclassResponsibility
 ]

@@ -56,56 +56,68 @@ StatStruct >> isDirectory [
 	^(self st_mode bitAnd: self s_ifmt) == self s_ifdir
 ]
 
-{ #category : 'masks' }
+{ #category : 'testing' }
+StatStruct >> isFile [
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifreg
+]
+
+{ #category : 'testing' }
+StatStruct >> isSymlink [
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_iflnk
+]
+
+{ #category : 'private-masks' }
 StatStruct >> s_ifblk [
 	"block device"
 
 	^8r0060000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ifchr [
 	"character device"
 
 	^8r0020000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ifdir [
 	"directory"
 
 	^8r0040000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ififo [
 	"FIFO"
 
 	^8r0010000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_iflnk [
 	"symbolic link"
 
 	^8r0120000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ifmt [
 	"bit mask for the file type bit field"
 
 	^8r0170000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ifreg [
 	"regular file"
 
 	^8r0100000
 ]
 
-{ #category : 'masks' }
+{ #category : 'private-masks' }
 StatStruct >> s_ifsock [
 	"socket"
 
@@ -113,81 +125,88 @@ StatStruct >> s_ifsock [
 ]
 
 { #category : 'accessing' }
+StatStruct >> size [
+	"Returns the size of the file in bytes."
+
+	^self st_size
+]
+
+{ #category : 'private-accessing' }
 StatStruct >> st_atim [
 
 	"st_atim is 16 bytes starting at 72"
 	Error signal: 'st_atim is not yet implemented'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_blksize [
 
 	^bytes uint64At: 56
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_blocks [
 
 	^bytes uint64At: 64
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_ctim [
 
 	"st_ctim is 16 bytes starting at 104"
 	Error signal: 'st_ctim is not yet implemented'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_dev [
 
 	^bytes uint64At: 0
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_gid [
 
 	^bytes uint32At: 32
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_ino [
 
 	^bytes uint64At: 0
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_mode [
 
 	^bytes uint32At: 24
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_mtim [
 
 	"st_mtim is 16 bytes starting at 88"
 	Error signal: 'st_mtim is not yet implemented'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_nlink [
 
 	^bytes uint64At: 16
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_rdev [
 
 	^bytes uint64At: 40
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_size [
 
 	^bytes uint64At: 48
 ]
 
-{ #category : 'accessing' }
+{ #category : 'private-accessing' }
 StatStruct >> st_uid [
 
 	^bytes uint32At: 28

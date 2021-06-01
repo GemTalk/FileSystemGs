@@ -86,21 +86,21 @@ DiskStore >> createDirectory: path [
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
 
-	| parent pathString result |
+	| pathString errnoHolder result parent |
 	pathString := self stringFromPath: path.
-	"result := File createDirectory: pathString."
-	result
-		ifNil: [ 
-			parent := path parent.
+	[OSPlatform current libcStat mkdir: pathString]
+		on: UnixError
+		do:
+			[:ex |
 			(self exists: path)
-				ifTrue: [ 
-					(self isFile: path)
-						ifTrue: [ self signalFileExists: path ]
-						ifFalse: [ self signalDirectoryExists: path ] ].
+				ifTrue:
+					[^(self isFile: path)
+						ifTrue: [self signalFileExists: path]
+						ifFalse: [self signalDirectoryExists: path]].
+			parent := path parent.
 			(self isDirectory: parent)
-				ifFalse: [ ^ self signalDirectoryDoesNotExist: parent ].
-			self primitiveFailed ].
-	^ self
+				ifFalse: [^self signalDirectoryDoesNotExist: parent].
+			ex pass]
 ]
 
 { #category : 'accessing' }
@@ -124,27 +124,53 @@ DiskStore >> defaultOptionsForWrite [
 
 { #category : 'public' }
 DiskStore >> delete: path [
+
 	| pathString |
-	
 	(self exists: path)
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
-		
 	pathString := self stringFromPath: path.
-	
-	"(self isDirectory: path)
-		ifTrue: [ File deleteDirectory: pathString ]
-		ifFalse: [ 
-			(File named: pathString) delete ]"
+	(self isDirectory: path)
+		ifTrue: [self libcUnistd rmdir: pathString]
+		ifFalse: [self libcUnistd unlinkPath: pathString]
 ]
 
-{ #category : 'accessing' }
-DiskStore >> entryAt: aPath
-ifPresent: presentAction
-ifAbsent: absentAction [
+{ #category : 'public' }
+DiskStore >> deleteAll: path
+in: fileSystem [
 
-	^[DiskDirectoryEntry reference: aPath asFileReference stat: (self stat: aPath)]
-		on: UnixError
-		do: [:ex | ex return: absentAction value]
+	DeleteVisitor delete: (fileSystem root resolve: path)
+]
+
+{ #category : 'private' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entriesDo: aBlock [
+	"Enumerate through the entry names in the provided directory."
+
+	| pathString dir dirent |
+	pathString := self stringFromPath: aPath.
+	dir := self libcDirent openDirectoryStreamWithPath: pathString.
+	[[dirent := self libcDirent readFromDirectoryStream: dir.
+	dirent notNil]
+		whileTrue:
+			[aBlock value: dirent]]
+		ensure: [self libcDirent closeDirectoryStream: dir]
+]
+
+{ #category : 'private' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+entryNamesDo: aBlock [
+	"Enumerate through the entry names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo:
+			[:entry | | name |
+			name := entry basename.
+			(name = '.' or: [name = '..'])
+				ifFalse: [aBlock value: name]]
 ]
 
 { #category : 'testing' }
@@ -152,7 +178,7 @@ DiskStore >> exists: aPath [
 
 	| stat |
 	stat := [self stat: aPath]
-		on: ENOENT
+		on: FileDoesNotExistException
 		do: [:ex | ^false].
 	^true
 ]
@@ -182,7 +208,9 @@ DiskStore >> initialize [
 DiskStore >> isDirectory: aPath [
 
 	aPath isRoot ifTrue: [^true].
-	^(self stat: aPath) isDirectory
+	^[(self stat: aPath) isDirectory]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'testing' }
@@ -192,16 +220,9 @@ DiskStore >> isDiskFileSystem [
 
 { #category : 'public' }
 DiskStore >> isFile: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^ false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsFile: entry ].
-	
+
+	aPath isRoot ifTrue: [^false].
+	^(self stat: aPath) isFile
 ]
 
 { #category : 'public' }
@@ -243,6 +264,18 @@ DiskStore >> isWritable: aPath [
 	^ false
 ]
 
+{ #category : 'accessing' }
+DiskStore >> libcDirent [
+
+	^OSPlatform current libcDirent
+]
+
+{ #category : 'accessing' }
+DiskStore >> libcUnistd [
+
+	^OSPlatform current libcUnistd
+]
+
 { #category : 'public' }
 DiskStore >> maxFileNameLength [
 	^ maxFileNameLength
@@ -277,5 +310,26 @@ DiskStore >> stat: aPath [
 
 	| pathString |
 	pathString := self stringFromPath: aPath.
-	^OSPlatform current libcStat stat: pathString
+	^[OSPlatform current libcStat stat: pathString]
+		on: ENOENT
+		do: [:ex | self signalFileDoesNotExist: aPath]
+]
+
+{ #category : 'private' }
+DiskStore >> statAt: aResolvable
+for: aFileReference
+ifPresent: presentBlock
+ifAbsent: absentBlock [
+
+	| pathString stat entry |
+	pathString := self stringFromPath: aResolvable.
+	stat := [OSPlatform current libcStat stat: pathString]
+		on: ENOENT
+		do: [:ex | ^absentBlock value].
+	stat isNil
+		ifTrue: [^absentBlock value].
+	entry := DiskDirectoryEntry
+		reference: aFileReference
+		stat: stat.
+	^presentBlock value: entry
 ]

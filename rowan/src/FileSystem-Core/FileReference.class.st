@@ -176,6 +176,7 @@ FileReference >> entry [
 
 { #category : 'testing' }
 FileReference >> exists [
+
 	^ filesystem exists: path
 ]
 

@@ -57,7 +57,7 @@ DiskFileSystemTest >> testMoveMemoryToDisk [
 { #category : 'tests' }
 DiskFileSystemTest >> testWorkingDirectory [
 	| ref x y |
-	self fail. "Should this use GsFile?"
+	"self fail." "Should this use GsFile?"
 	ref := filesystem workingDirectory.
 	self assert: ((x := GsFile _expandEnvVariable: 'PWD' isClient:false) beginsWith: (y := ref pathString))
 ]

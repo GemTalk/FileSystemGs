@@ -17,7 +17,7 @@ DirentStruct class >> structSize [
 { #category : 'accessing' }
 DirentStruct >> basename [
 
-	^self d_name bytesIntoUnicode
+	^self d_name decodeFromUTF8ToString
 ]
 
 { #category : 'accessing' }
