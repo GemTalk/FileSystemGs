@@ -87,7 +87,7 @@ Class {
 		'Function__overflow',
 		'Function__uflow'
 	],
-	#category : nil
+	#category : 'LibC'
 }
 
 { #category : 'Initializing - private' }
