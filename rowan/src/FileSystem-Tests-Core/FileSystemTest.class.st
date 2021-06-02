@@ -441,7 +441,7 @@ FileSystemTest >> testMoveTo [
 		markForCleanup: (base / 'folder' / 'newFile');
 		markForCleanup: (base / 'folder') ;
 		markForCleanup: (base / 'file').	
-	
+
 	file moveTo: (folder / 'newFile').
 	self deny: (base / 'file') exists.
 	self assert: (folder / 'newFile') exists.

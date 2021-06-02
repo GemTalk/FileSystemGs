@@ -222,7 +222,9 @@ DiskStore >> isDiskFileSystem [
 DiskStore >> isFile: aPath [
 
 	aPath isRoot ifTrue: [^false].
-	^(self stat: aPath) isFile
+	^[(self stat: aPath) isFile]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'public' }
@@ -297,12 +299,21 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	| sourcePathString targetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
 	targetPathString := self stringFromPath: destinationPath.
-	"^File rename: sourcePathString to: targetPathString."
+	OSPlatform current libcStdio
+		rename: sourcePathString
+		to: targetPathString
 ]
 
 { #category : 'private' }
 DiskStore >> rootNode [
 	^ #('' 0 0 true 0 8r555)
+]
+
+{ #category : 'accessing' }
+DiskStore >> sizeOf: aPath [
+	"Return the size of the File described by aPath"
+
+	^(self stat: aPath) size
 ]
 
 { #category : 'public' }

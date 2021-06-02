@@ -41,6 +41,36 @@ UnixFileDescriptor class >> new [
 ]
 
 { #category : 'Instance Creation' }
+UnixFileDescriptor class >> open: aFileReference
+writable: isWritable [
+
+	| library fd |
+	library := OSPlatform current libcFcntl.
+	fd := isWritable
+		ifTrue:
+			[[library
+				openPath: aFileReference pathString
+				flags: 8r0101 "O_CREAT | O_WRONLY"
+				mode: 8r0777. "ALL PERMISSIONS"]
+				on: ENOENT
+				do:
+					[:ex | | parent |
+					parent := aFileReference parent.
+					parent exists
+						ifTrue: [ex pass]
+						ifFalse: [parent fileSystem store signalDirectoryDoesNotExist: parent]]]
+		ifFalse:
+			[[library
+				openPath: aFileReference pathString
+				flags: 8r0
+				mode: 8r0]
+				on: ENOENT
+				do: [:ex | aFileReference fileSystem store signalFileDoesNotExist: aFileReference fullPath ]].
+	^self id: fd
+
+]
+
+{ #category : 'Instance Creation' }
 UnixFileDescriptor class >> stderr [
 
 	^super new initialize
@@ -97,6 +127,18 @@ UnixFileDescriptor >> becomeStdout [
 	id := 1
 ]
 
+{ #category : 'accessing' }
+UnixFileDescriptor >> binaryReadStream [
+
+	^BinaryFileStream on: self
+]
+
+{ #category : 'accessing' }
+UnixFileDescriptor >> binaryWriteStream [
+
+	^BinaryFileStream on: self
+]
+
 { #category : 'public' }
 UnixFileDescriptor >> close [
 	"Closing should silently succeed even if I'm invalid,
@@ -104,6 +146,13 @@ UnixFileDescriptor >> close [
 
 	self privateClose.
 	registryEntry ifNotNil: [ registryEntry deregister ]
+]
+
+{ #category : 'testing' }
+UnixFileDescriptor >> closed [
+	"Returns true if the receiver has been closed."
+
+	^id == nil
 ]
 
 { #category : 'finalization' }
@@ -138,6 +187,17 @@ UnixFileDescriptor >> id: anInteger [
 UnixFileDescriptor >> initialize [
 
 	libcUnistd := OSPlatform current libcUnistd
+]
+
+{ #category : 'positioning' }
+UnixFileDescriptor >> position [
+
+	| library |
+	library := OSPlatform current libcUnistd.
+	^library
+		lseek: id
+		offset: 0
+		whence: 8r1. "SEEK_CUR"
 ]
 
 { #category : 'private' }
@@ -184,6 +244,29 @@ UnixFileDescriptor >> read: count [
 	^buffer
 		byteArrayFrom: 0
 		to: numBytesRead - 1
+]
+
+{ #category : 'positioning' }
+UnixFileDescriptor >> setToEnd [
+
+	| library |
+	library := OSPlatform current libcUnistd.
+	^library
+		lseek: id
+		offset: 0
+		whence: 8r2. "SEEK_END"
+]
+
+{ #category : 'accessing' }
+UnixFileDescriptor >> size [
+
+	^self stat size
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> stat [
+
+	^OSPlatform current libcStat fstat: id
 ]
 
 { #category : 'private' }

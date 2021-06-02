@@ -68,11 +68,10 @@ FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath if
 				^ presentBlock value ].
 			
 		out := aFilesystem binaryWriteStreamOn: destinationPath.
-		buffer := ByteArray new: 1024.
 		
 		[ in atEnd ]
 			whileFalse: [ 
-				buffer := in nextInto: buffer.
+				buffer := in next: 1024.
 				out nextPutAll: buffer ]]
 	ensure: [ 
 		in ifNotNil: [ in close ].

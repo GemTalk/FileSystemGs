@@ -14,7 +14,8 @@ Class {
 		'libcDirent',
 		'libcFcntl',
 		'libcUnistd',
-		'libcStat'
+		'libcStat',
+		'libcStdio'
 	],
 	#category : 'System-Platforms-Unix'
 }
@@ -56,7 +57,8 @@ UnixPlatform >> initialize [
 	libcDirent := LibcDirent new.
 	libcFcntl := LibcFcntl new.
 	libcUnistd := LibcUnistd new.
-	libcStat := LibcStat new
+	libcStat := LibcStat new.
+	libcStdio := LibcStdio new
 ]
 
 { #category : 'testing' }

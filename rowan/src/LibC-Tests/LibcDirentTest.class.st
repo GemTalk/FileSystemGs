@@ -21,7 +21,7 @@ LibcDirentTest >> testListDirectory [
 	self assert: dir memoryAddress > 0.
 	names := OrderedCollection new.
 	[dirent := instance readFromDirectoryStream: dir.
-	dirent isNull]
+	dirent isNil]
 		whileFalse:
 			[names add: dirent d_name].
 	self assert: names size >= 2.

@@ -35,6 +35,21 @@ LibcUnistd >> getCurrentDirName [
 ]
 
 { #category : 'functions' }
+LibcUnistd >> lseek: descriptor
+offset: offset
+whence: whence [
+
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		lseek: { descriptor. offset. whence. }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'functions' }
 LibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
 
 	| errnoHolder result |
@@ -53,7 +68,7 @@ LibcUnistd >> rmdir: pathString [
 	| errnoHolder result |
 	errnoHolder := { 0 }.
 	result := library
-		rmdir: { pathString }
+		rmdir: { pathString encodeAsUTF8 }
 		errno: errnoHolder.
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
@@ -66,7 +81,7 @@ LibcUnistd >> unlinkPath: pathString [
 	| errnoHolder result |
 	errnoHolder := { 0 }.
 	result := library
-		unlink: { pathString }
+		unlink: { pathString encodeAsUTF8 }
 		errno: errnoHolder.
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
