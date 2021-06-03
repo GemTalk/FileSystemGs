@@ -1,0 +1,5 @@
+run
+	| suite |
+	suite := Rowan projectTools test testSuiteForProjectsNamed: { 'FileSystemGs_dev' }.
+	suite run printString.
+%
