@@ -152,7 +152,15 @@ UnixFileDescriptor >> close [
 UnixFileDescriptor >> closed [
 	"Returns true if the receiver has been closed."
 
-	^id == nil
+	^self isOpen not
+]
+
+{ #category : 'public' }
+UnixFileDescriptor >> ensureClosed [
+	"Closing should silently succeed even if I'm invalid,
+	since I don't represent anything open."
+
+	self close
 ]
 
 { #category : 'finalization' }
@@ -187,6 +195,13 @@ UnixFileDescriptor >> id: anInteger [
 UnixFileDescriptor >> initialize [
 
 	libcUnistd := OSPlatform current libcUnistd
+]
+
+{ #category : 'testing' }
+UnixFileDescriptor >> isOpen [
+	"Returns true if the receiver is open."
+
+	^id notNil
 ]
 
 { #category : 'positioning' }

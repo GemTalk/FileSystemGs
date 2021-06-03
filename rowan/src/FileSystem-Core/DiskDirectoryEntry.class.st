@@ -20,6 +20,13 @@ stat: aStatStruct [
 		yourself
 ]
 
+{ #category : 'accessing' }
+DiskDirectoryEntry >> creationTime [
+	"Right now, creation time is not supported."
+
+	^self modificationTime
+]
+
 { #category : 'testing' }
 DiskDirectoryEntry >> isDirectory [
 
@@ -36,6 +43,21 @@ DiskDirectoryEntry >> isFile [
 DiskDirectoryEntry >> isSymlink [
 
 	^stat isSymlink
+]
+
+{ #category : 'accessing' }
+DiskDirectoryEntry >> modificationTime [
+	"Right now, creation time is not supported."
+
+	^DateAndTime
+		posixSeconds: stat modificationTime
+		offset: Duration zero
+]
+
+{ #category : 'accessing' }
+DiskDirectoryEntry >> size [
+
+	^stat size
 ]
 
 { #category : 'accessing' }

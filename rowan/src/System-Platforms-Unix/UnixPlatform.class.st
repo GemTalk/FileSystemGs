@@ -83,6 +83,12 @@ UnixPlatform >> libcStat [
 ]
 
 { #category : 'accessing' }
+UnixPlatform >> libcStdio [
+
+	^libcStdio
+]
+
+{ #category : 'accessing' }
 UnixPlatform >> libcUnistd [
 	^libcUnistd
 ]

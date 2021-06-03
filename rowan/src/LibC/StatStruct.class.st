@@ -68,6 +68,12 @@ StatStruct >> isSymlink [
 	^(self st_mode bitAnd: self s_ifmt) == self s_iflnk
 ]
 
+{ #category : 'accessing' }
+StatStruct >> modificationTime [
+
+	^0
+]
+
 { #category : 'private-masks' }
 StatStruct >> s_ifblk [
 	"block device"

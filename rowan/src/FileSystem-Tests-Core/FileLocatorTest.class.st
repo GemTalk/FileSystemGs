@@ -53,14 +53,6 @@ FileLocatorTest >> testContainsReference [
 	self assert: (locator contains: (locator resolve / 'griffle')).
 ]
 
-{ #category : 'tests' }
-FileLocatorTest >> testCPath [
-	| ref |
-	ref := FileLocator C / 'WINDOWS'.
-	self assert: (ref fileSystem isKindOf: FileSystem).
-	self assert: ref path = (Path / 'C:' / 'WINDOWS')
-]
-
 { #category : 'compatibility tests' }
 FileLocatorTest >> testEqual [
 	| a b |
