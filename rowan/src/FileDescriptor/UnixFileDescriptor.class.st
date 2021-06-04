@@ -41,36 +41,6 @@ UnixFileDescriptor class >> new [
 ]
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> open: aFileReference
-writable: isWritable [
-
-	| library fd |
-	library := OSPlatform current libcFcntl.
-	fd := isWritable
-		ifTrue:
-			[[library
-				openPath: aFileReference pathString
-				flags: 8r0101 "O_CREAT | O_WRONLY"
-				mode: 8r0777. "ALL PERMISSIONS"]
-				on: ENOENT
-				do:
-					[:ex | | parent |
-					parent := aFileReference parent.
-					parent exists
-						ifTrue: [ex pass]
-						ifFalse: [parent fileSystem store signalDirectoryDoesNotExist: parent]]]
-		ifFalse:
-			[[library
-				openPath: aFileReference pathString
-				flags: 8r0
-				mode: 8r0]
-				on: ENOENT
-				do: [:ex | aFileReference fileSystem store signalFileDoesNotExist: aFileReference fullPath ]].
-	^self id: fd
-
-]
-
-{ #category : 'Instance Creation' }
 UnixFileDescriptor class >> stderr [
 
 	^super new initialize
@@ -97,7 +67,7 @@ UnixFileDescriptor class >> stdout [
 { #category : 'asserting' }
 UnixFileDescriptor >> assertUninitialized [
 
-	id = nil ifFalse: [ ^ self error: 'Cannot set file descriptor ID more than once.' ].
+	id ifNotNil: [UnixFileDescriptorAlreadyInitialized signal]
 ]
 
 { #category : 'private' }

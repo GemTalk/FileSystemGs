@@ -518,10 +518,9 @@ FileSystem >> open: aResolvable writable: aBoolean [
 
 	| path |
 	path := self resolve: aResolvable.
-	^store handleClass 
+	^store
 		open: (FileReference fileSystem: self path: path) 
 		writable: aBoolean
-		
 ]
 
 { #category : 'hack' }

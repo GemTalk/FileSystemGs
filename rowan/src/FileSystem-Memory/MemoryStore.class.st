@@ -300,6 +300,13 @@ MemoryStore >> modificationTimeOf: aPath [
 		ifAbsent: [self signalFileDoesNotExist: aPath]
 ]
 
+{ #category : 'public' }
+MemoryStore >> open: aFileReference
+writable: isWritable [
+
+	^MemoryHandle open: aFileReference writable: isWritable
+]
+
 { #category : 'accessing' }
 MemoryStore >> permissions: aPath [
 	"Returns the permissions of the associated file"

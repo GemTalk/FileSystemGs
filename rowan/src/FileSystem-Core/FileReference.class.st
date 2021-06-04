@@ -349,8 +349,11 @@ FileReference >> nextVersion [
 ]
 
 { #category : 'streams' }
-FileReference >> openWritable: aBoolean [ 
-	^ filesystem open: path writable: aBoolean
+FileReference >> openWritable: isWritable [
+
+	^filesystem
+		open: path
+		writable: isWritable
 ]
 
 { #category : 'accessing' }

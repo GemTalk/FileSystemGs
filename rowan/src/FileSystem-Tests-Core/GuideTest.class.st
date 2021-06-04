@@ -18,9 +18,11 @@ GuideTest class >> isAbstract [
 
 { #category : 'asserting' }
 GuideTest >> assertVisitedIs: anArray [
-	visited with: anArray do:
-		[:entry :basename | 
-		self assert: entry reference basename = basename]
+
+	self
+		assert: visited size
+		equals: anArray size.
+	visited do: [:each | self assert: (anArray includes: each reference basename)]
 ]
 
 { #category : 'running' }

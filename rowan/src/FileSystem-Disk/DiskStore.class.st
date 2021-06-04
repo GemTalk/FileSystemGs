@@ -114,12 +114,16 @@ DiskStore >> currentWorkingDirectoryPath [
 
 { #category : 'accessing' }
 DiskStore >> defaultOptionsForRead [
-	^ FileOpeningOptions readOnly
+
+	^UnixFileOpeningOptions readOnly
 ]
 
 { #category : 'accessing' }
 DiskStore >> defaultOptionsForWrite [
-	^ FileOpeningOptions writeOnly
+
+	^UnixFileOpeningOptions writeOnly
+		create;
+		yourself
 ]
 
 { #category : 'public' }
@@ -281,6 +285,35 @@ DiskStore >> libcUnistd [
 { #category : 'public' }
 DiskStore >> maxFileNameLength [
 	^ maxFileNameLength
+]
+
+{ #category : 'public' }
+DiskStore >> open: aFileReference
+writable: isWritable [
+
+	| options fd |
+	options := isWritable
+		ifTrue: [self defaultOptionsForWrite]
+		ifFalse: [self defaultOptionsForRead].
+	fd := [OSPlatform current libcFcntl
+				openPath: aFileReference pathString
+				flags: options flags
+				mode: options modeBits]
+			on: ENOENT
+			do:
+				[:ex | | parent |
+				"This is written in this manner to match the previous behavior in UnixFileDescriptor.
+				A better means of detecting and signaling appropriate errors needs to be devised.
+				This handling is simplistic and incorrect."
+				isWritable
+					ifTrue:
+						[parent := aFileReference parent.
+						parent exists
+							ifTrue: [ex pass]
+							ifFalse: [self signalDirectoryDoesNotExist: parent]]
+					ifFalse:
+						[self signalFileDoesNotExist: aFileReference fullPath]].
+	^UnixFileDescriptor id: fd
 ]
 
 { #category : 'public' }
