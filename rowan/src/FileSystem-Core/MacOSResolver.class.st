@@ -59,7 +59,8 @@ MacOSResolver >> systemLibrary [
 
 { #category : 'origins' }
 MacOSResolver >> temp [
-	^ '/tmp' asFileReference
+
+	^FileSystem disk root / 'tmp'
 ]
 
 { #category : 'origins' }

@@ -8,6 +8,7 @@ library := FsLibraryGenerator new
 	libraryPath: 'libc.so.6';
 	generateInterfaceNamed: '_libcStat'.
 UserGlobals at: library name put: library.
+library category: 'LibC'.
 Rowan packageTools adopt
 	adoptClass: library
 	intoPackageNamed: 'LibC'
