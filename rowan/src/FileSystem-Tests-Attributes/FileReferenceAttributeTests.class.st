@@ -49,7 +49,6 @@ FileReferenceAttributeTests >> testFileSize [
 FileReferenceAttributeTests >> testIsCharacter [
 
 	self deny: self tempFileResource file isCharacter
-
 ]
 
 { #category : 'tests' }

@@ -108,6 +108,13 @@ AbstractFileReference >> asResolvedBy: anObject [
 ]
 
 { #category : 'accessing' }
+AbstractFileReference >> attributes [
+	"Return a FileAttributes w/ information about the reference."
+
+	^self resolve attributes
+]
+
+{ #category : 'accessing' }
 AbstractFileReference >> base [
 	"Returns the base of the basename, i.e. /foo/gloops.taz base is 'gloops'"
 	^ self fullPath base

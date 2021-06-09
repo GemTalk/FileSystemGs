@@ -53,6 +53,13 @@ FileSystem >> = other [
 	^ self species = other species and: [self store = other store]
 ]
 
+{ #category : 'accessing' }
+FileSystem >> attributes: aFileReference [
+	"Returns a FileAttributes representing the attributes of the FileReference."
+
+	^store attributes: aFileReference
+]
+
 { #category : 'public' }
 FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
