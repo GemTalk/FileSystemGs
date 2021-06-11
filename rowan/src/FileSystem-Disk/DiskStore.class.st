@@ -252,16 +252,11 @@ DiskStore >> isReadable: aPath [
 
 { #category : 'public' }
 DiskStore >> isSymlink: aPath [
-	| entry |
-	
-	aPath isRoot ifTrue: [ ^false ].
-	
-	entry := self  basicEntryAt: aPath.
-	
-	^ entry == #badDirectoryPath 
-		ifTrue: [  false ]
-		ifFalse: [ self basicIsSymlink: entry ].
-	
+
+	aPath isRoot ifTrue: [^false].
+	^[(self stat: aPath) isSymlink]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'public' }

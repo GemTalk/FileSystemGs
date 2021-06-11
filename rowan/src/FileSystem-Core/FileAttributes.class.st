@@ -36,6 +36,13 @@ FileAttributes >> creationTime [
 ]
 
 { #category : 'testing' }
+FileAttributes >> exists [
+	"Returns true if the receiver represents attributes for an entry in the file system."
+
+	self subclassResponsibility
+]
+
+{ #category : 'testing' }
 FileAttributes >> isDirectory [
 	"Returns true if the receiver represents attributes for a directory."
 

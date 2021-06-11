@@ -81,3 +81,68 @@ FileAttributesTest >> testCreationTime [
 		assert: exception attribute
 		equals: #creationTime
 ]
+
+{ #category : 'running' }
+FileAttributesTest >> testDirectory [
+
+	| testDirectory attributes |
+	testDirectory := sandbox / 'test-directory'.
+	attributes := testDirectory attributes.
+	"Assert properties prior to creation."
+	self
+		deny: attributes isDirectory;
+		deny: attributes isFile;
+		deny: attributes isSymlink.
+	"Assert properties after creation. Note, attributes reflects the updated state."
+	testDirectory createDirectory.
+	self
+		assert: attributes isDirectory;
+		deny: attributes isFile;
+		deny: attributes isSymlink
+]
+
+{ #category : 'running' }
+FileAttributesTest >> testFile [
+
+	| testFile attributes |
+	testFile := sandbox / 'test-file'.
+	attributes := testFile attributes.
+	"Assert properties prior to creation."
+	self
+		deny: attributes isDirectory;
+		deny: attributes isFile;
+		deny: attributes isSymlink.
+	"Assert properties after creation. Note, attributes reflects the updated state."
+	testFile createFile.
+	self
+		deny: attributes isDirectory;
+		assert: attributes isFile;
+		deny: attributes isSymlink
+]
+
+{ #category : 'running' }
+FileAttributesTest >> testModificationTime [
+
+	| attributes |
+	attributes := sandbox attributes.
+	self assert: (attributes modificationTime isKindOf: DateAndTime)
+]
+
+{ #category : 'running' }
+FileAttributesTest >> testSymlink [
+
+	| testSymlink attributes |
+	testSymlink := sandbox / 'test-symlink'.
+	attributes := testSymlink attributes.
+	"Assert properties prior to creation."
+	self
+		deny: attributes isDirectory;
+		deny: attributes isFile;
+		deny: attributes isSymlink.
+	"Assert properties after creation. Note, attributes reflects the updated state."
+	"Create symlink not yet implemented."
+	self
+		deny: attributes isDirectory;
+		deny: attributes isFile;
+		assert: attributes isSymlink
+]
