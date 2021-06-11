@@ -19,6 +19,7 @@ Class {
 
 { #category : 'showing' }
 PostorderGuide >> pushTraverse: aReference [ 
+
 	self push: (Message 
 				selector: #traverse:
 				argument: aReference)
@@ -26,6 +27,7 @@ PostorderGuide >> pushTraverse: aReference [
 
 { #category : 'showing' }
 PostorderGuide >> pushVisit: aReference [ 
+
 	self push: (Message 
 				selector: #visit:
 				argument: aReference)
@@ -33,25 +35,26 @@ PostorderGuide >> pushVisit: aReference [
 
 { #category : 'showing' }
 PostorderGuide >> show: aReference [ 
-	self pushTraverse: aReference entry.
+
+	self pushTraverse: aReference.
 	self whileNotDoneDo: [ self pop sendTo: self ]
 ]
 
 { #category : 'showing' }
-PostorderGuide >> traverse: anEntry [ 
-		
-	self pushVisit: anEntry.
-	
-	anEntry isDirectory ifTrue: [ 
-		(self shouldVisitChildrenOf: anEntry)
-			ifFalse: [ ^ self ].
-		anEntry reference entries reverseDo: [ :each | 
-			self pushTraverse: each ]]
+PostorderGuide >> traverse: aReference [
+	self pushVisit: aReference.
+
+	aReference isDirectory
+		ifTrue: [ 
+			(self shouldVisitChildrenOf: aReference)
+				ifFalse: [ ^ self ].
+			aReference children do: [ :each | self pushTraverse: each ] ]
 ]
 
 { #category : 'showing' }
-PostorderGuide >> visit: anEntry [
-	anEntry isDirectory
-		ifTrue: [ visitor visitDirectory: anEntry ]
-		ifFalse: [ visitor visitFile: anEntry ]
+PostorderGuide >> visit: aReference [
+
+	aReference isDirectory
+		ifTrue: [ visitor visitDirectory: aReference ]
+		ifFalse: [ visitor visitFile: aReference ]
 ]

@@ -20,18 +20,17 @@ Class {
 
 { #category : 'showing' }
 BreadthFirstGuide >> show: aReference [ 
-	self push: aReference entry.
+
+	self push: aReference.
 	self whileNotDoneDo: [ self visitNextEntry: self top ]
 ]
 
 { #category : 'showing' }
-BreadthFirstGuide >> visitNextEntry: entry [
+BreadthFirstGuide >> visitNextEntry: aReference [
 		
-	entry isFile 
-		ifTrue: [ ^ visitor visitFile: entry ].
-	
-	visitor visitDirectory: entry.
-	
-	(self shouldVisitChildrenOf: entry)
-		ifTrue: [ self pushAll: entry reference entries ].
+	aReference isFile 
+		ifTrue: [^visitor visitFile: aReference].
+	visitor visitDirectory: aReference.
+	(self shouldVisitChildrenOf: aReference)
+		ifTrue: [self pushAll: aReference children].
 ]

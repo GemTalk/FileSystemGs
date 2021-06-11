@@ -82,10 +82,11 @@ FileSystemGuide >> selectChildren: aBlock [
 ]
 
 { #category : 'testing' }
-FileSystemGuide >> shouldVisitChildrenOf: anEntry [
+FileSystemGuide >> shouldVisitChildrenOf: aReference [
+
 	^ selectChildren 
 		ifNil: [ true ]
-		ifNotNil: [ selectChildren cull: anEntry ]
+		ifNotNil: [ selectChildren cull: aReference ]
 ]
 
 { #category : 'showing' }

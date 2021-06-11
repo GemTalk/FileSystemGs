@@ -653,19 +653,6 @@ FileSystem >> sizeOf: aResolvable [
 	^ store sizeOf: (self resolve: aResolvable)
 ]
 
-{ #category : 'public' }
-FileSystem >> statAt: aResolvable
-for: aFileReference [
-
-	| path |
-	path := self resolve: aResolvable.
-	^store
-		statAt: path
-		for: aFileReference
-		ifPresent: [:entry | entry]
-		ifAbsent: [store signalFileDoesNotExist: path]
-]
-
 { #category : 'accessing' }
 FileSystem >> store [
 	^ store

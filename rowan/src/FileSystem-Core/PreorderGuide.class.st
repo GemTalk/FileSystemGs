@@ -24,17 +24,17 @@ PreorderGuide >> pushAll: aCollection [
 
 { #category : 'showing' }
 PreorderGuide >> show: aReference [
-	self push: aReference entry.
+	self push: aReference.
 	self whileNotDoneDo: [ self visitNextEntry: self pop ]
 ]
 
 { #category : 'showing' }
-PreorderGuide >> visitNextEntry: entry [
+PreorderGuide >> visitNextEntry: aReference [
 	
-	entry isFile
-		ifTrue: [ visitor visitFile: entry ]
+	aReference isFile
+		ifTrue: [ visitor visitFile: aReference ]
 		ifFalse: [ 
-			visitor visitDirectory: entry.
-			(self shouldVisitChildrenOf: entry)
-				ifTrue: [ self pushAll: entry reference entries ]]
+			visitor visitDirectory: aReference.
+			(self shouldVisitChildrenOf: aReference)
+				ifTrue: [ self pushAll: aReference children ]]
 ]

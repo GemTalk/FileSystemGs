@@ -51,19 +51,17 @@ CopyVisitor >> visit [
 ]
 
 { #category : 'visiting' }
-CopyVisitor >> visitDirectory: anEntry [
-	| reference |
-	reference := anEntry reference.
-	reference = source
+CopyVisitor >> visitDirectory: aReference [
+
+	aReference = source
 		ifTrue: [dest ensureCreateDirectory]
-		ifFalse: [self copyDirectory: reference]
+		ifFalse: [self copyDirectory: aReference]
 ]
 
 { #category : 'visiting' }
-CopyVisitor >> visitFile: anEntry [
-	| reference |
-	reference := anEntry reference.
-	reference = source
+CopyVisitor >> visitFile: aReference [
+
+	aReference = source
 		ifTrue: [source copyTo: dest]
-		ifFalse: [self copyFile: reference]
+		ifFalse: [self copyFile: aReference]
 ]

@@ -45,6 +45,6 @@ CollectVisitor class >> preorder: aReference collect: aBlock [
 ]
 
 { #category : 'visiting' }
-CollectVisitor >> visitReference: anEntry [
-	out nextPut: (block value: anEntry)
+CollectVisitor >> visitReference: aReference [
+	out nextPut: (block value: aReference)
 ]

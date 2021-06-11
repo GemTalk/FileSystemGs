@@ -295,7 +295,7 @@ MemoryStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
 
 	^self
-		statAt: aPath
+		entryAt: aPath
 		ifPresent: [:stat | stat modificationTime]
 		ifAbsent: [self signalFileDoesNotExist: aPath]
 ]
@@ -312,7 +312,7 @@ MemoryStore >> permissions: aPath [
 	"Returns the permissions of the associated file"
 
 	^self
-		statAt: aPath
+		entryAt: aPath
 		ifPresent: [:stat | stat permissions]
 		ifAbsent: [FileSystemPermission default]
 ]
@@ -346,7 +346,7 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 { #category : 'private' }
 MemoryStore >> replaceFile: path in: aBlock [
 	^ self
-		statAt: path parent
+		entryAt: path parent
 		ifPresent: [ :entry | | old new |
 			entry isDirectory
 				ifFalse: [ self signalFileDoesNotExist: path ].
@@ -365,40 +365,7 @@ MemoryStore >> root [
 MemoryStore >> sizeOf: aPath [
 
 	^self
-		statAt: aPath
-		ifPresent: [:stat | stat size]
+		entryAt: aPath
+		ifPresent: [:entry | entry size]
 		ifAbsent: [self signalFileDoesNotExist: aPath]
-]
-
-{ #category : 'private' }
-MemoryStore >> statAt: aResolvable
-for: aFileReference
-ifPresent: presentBlock
-ifAbsent: absentBlock [
-
-	| entry stat |
-	entry := self
-		entryAt: aResolvable
-		ifPresent: [:entry | entry]
-		ifAbsent: [^absentBlock value].
-	stat := MemoryDirectoryEntry
-		reference: aFileReference
-		entry: entry.
-	^presentBlock value: stat
-]
-
-{ #category : 'private' }
-MemoryStore >> statAt: aResolvable
-ifPresent: presentBlock
-ifAbsent: absentBlock [
-
-	| entry stat |
-	entry := self
-		entryAt: aResolvable
-		ifPresent: [:e | e]
-		ifAbsent: [^absentBlock value].
-	stat := MemoryDirectoryEntry
-		reference: nil
-		entry: entry.
-	^presentBlock value: stat
 ]

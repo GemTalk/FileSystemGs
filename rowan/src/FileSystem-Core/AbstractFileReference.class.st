@@ -40,7 +40,7 @@ AbstractFileReference >> absolutePath [
 AbstractFileReference >> allChildren [
 	"Return all the files and folders recursively nested in the receiver"
 	
-	^ CollectVisitor breadthFirst: self resolve collect: [:entry | entry reference]
+	^ CollectVisitor breadthFirst: self resolve collect: [:reference | reference]
 ]
 
 { #category : 'enumerating' }
@@ -54,8 +54,7 @@ AbstractFileReference >> allChildrenMatching: aPattern [
 { #category : 'enumerating' }
 AbstractFileReference >> allDirectories [
 	"Return all the directories recursively nested in the receiver."
-	^ (SelectVisitor breadthFirst: self resolve select: [:entry | entry isDirectory ])
-		collect: [ :each| each reference ]
+	^SelectVisitor breadthFirst: self resolve select: [:entry | entry isDirectory ]
 ]
 
 { #category : 'enumerating' }
@@ -401,11 +400,6 @@ AbstractFileReference >> ensureDeleteAllChildren [
 { #category : 'enumerating' }
 AbstractFileReference >> entries [
 	^ self resolve entries
-]
-
-{ #category : 'accessing' }
-AbstractFileReference >> entry [
-	^ self resolve entry
 ]
 
 { #category : 'delegated' }

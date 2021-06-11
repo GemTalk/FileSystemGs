@@ -27,7 +27,7 @@ SelectVisitorTest >> testBreadthFirst [
 { #category : 'tests' }
 SelectVisitorTest >> testBreadthFirstSelect [
 	| entries |
-	entries := SelectVisitor breadthFirst: self root select: [ :node| node name endsWith: #a].
+	entries := SelectVisitor breadthFirst: self root select: [ :reference| reference basename endsWith: #a].
 	self 
 		assertEntries: entries
 		are: #(
@@ -58,7 +58,7 @@ SelectVisitorTest >> testPostorder [
 { #category : 'tests' }
 SelectVisitorTest >> testPostorderSelect [
 	| entries |
-	entries := SelectVisitor postorder: self root select: [ :node| node name endsWith: #a].
+	entries := SelectVisitor postorder: self root select: [ :reference| reference basename endsWith: #a].
 	self 
 		assertEntries: entries
 		are: #(
@@ -89,7 +89,7 @@ SelectVisitorTest >> testPreorder [
 { #category : 'tests' }
 SelectVisitorTest >> testPreorderSelect [
 	| entries |
-	entries := SelectVisitor preorder: self root select: [ :node| node name endsWith: #a].
+	entries := SelectVisitor preorder: self root select: [ :reference| reference basename endsWith: #a].
 	self 
 		assertEntries: entries
 		are: #(

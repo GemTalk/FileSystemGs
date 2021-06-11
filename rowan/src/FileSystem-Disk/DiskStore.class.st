@@ -360,22 +360,3 @@ DiskStore >> stat: aPath [
 		on: ENOENT
 		do: [:ex | self signalFileDoesNotExist: aPath]
 ]
-
-{ #category : 'private' }
-DiskStore >> statAt: aResolvable
-for: aFileReference
-ifPresent: presentBlock
-ifAbsent: absentBlock [
-
-	| pathString stat entry |
-	pathString := self stringFromPath: aResolvable.
-	stat := [OSPlatform current libcStat stat: pathString]
-		on: ENOENT
-		do: [:ex | ^absentBlock value].
-	stat isNil
-		ifTrue: [^absentBlock value].
-	entry := DiskDirectoryEntry
-		reference: aFileReference
-		stat: stat.
-	^presentBlock value: entry
-]

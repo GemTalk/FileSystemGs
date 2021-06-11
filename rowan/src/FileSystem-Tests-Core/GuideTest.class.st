@@ -22,7 +22,7 @@ GuideTest >> assertVisitedIs: anArray [
 	self
 		assert: visited size
 		equals: anArray size.
-	visited do: [:each | self assert: (anArray includes: each reference basename)]
+	visited do: [:each | self assert: (anArray includes: each basename)]
 ]
 
 { #category : 'running' }

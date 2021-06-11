@@ -17,10 +17,11 @@ DeleteVisitor >> visit: aReference [
 	PostorderGuide 
 		show: aReference 
 		to: self 
-		selecting: [ :entry | entry isSymlink not ]
+		selecting: [ :reference | reference isSymlink not ]
 ]
 
 { #category : 'visiting' }
-DeleteVisitor >> visitReference: anEntry [
-	anEntry reference delete
+DeleteVisitor >> visitReference: aReference [
+
+	aReference delete
 ]

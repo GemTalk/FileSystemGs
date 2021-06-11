@@ -168,19 +168,6 @@ FileReference >> ensureCreateDirectory [
 	
 ]
 
-{ #category : 'navigating' }
-FileReference >> entries [
-	"Return the entries (meta data - file description) of the direct children of the receiver"
-
-	^self children collect: [:each | (self resolve: each) entry]
-]
-
-{ #category : 'accessing' }
-FileReference >> entry [
-	"Return the entry (meta data) describing the receiver."
-	^ filesystem statAt: path for: self
-]
-
 { #category : 'testing' }
 FileReference >> exists [
 

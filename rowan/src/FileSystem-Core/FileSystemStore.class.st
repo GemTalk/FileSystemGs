@@ -192,7 +192,7 @@ FileSystemStore >> modificationTimeOf: aPath [
 FileSystemStore >> nodeAt: aPath [
 
 	^ self 
-		statAt: aPath 
+		entryAt: aPath 
 		ifPresent: [ :node| node ]
 		ifAbsent: [ self error: 'the node ', aPath printString, ' not found.' ]
 ]

@@ -76,9 +76,9 @@ FileReferenceTest >> testAllEntries [
 	entries := ref allEntries.
 	self assert: entries size equals: 4.
 	entries
-		do: [ :entry | 
-			self assert: (entry isKindOf: FileSystemDirectoryEntry).
-			self assert: (ref = entry reference or: [ ref contains: entry reference ]) ].
+		do: [ :reference | 
+			self assert: (reference isKindOf: FileReference).
+			self assert: (ref = reference or: [ ref contains: reference ]) ].
 	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
@@ -441,23 +441,6 @@ FileReferenceTest >> testEnsureDeleteNonEmptyDirectory [
 	self assert: childReference exists.
 	self should: [ reference ensureDelete ] raise: DirectoryIsNotEmpty ]
 		ensure: [ reference ensureDeleteAll ]
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testEntries [
-	[ | ref entries |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	entries := ref entries.
-	self assert: entries size equals: 2.
-	entries
-		do: [ :entry | 
-			self assert: (entry isKindOf: FileSystemDirectoryEntry).
-			self assert: (entry reference isChildOf: ref).
-			self assert: (#('beta' 'gamma') includes: entry reference basename) ] ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
 { #category : 'tests' }
