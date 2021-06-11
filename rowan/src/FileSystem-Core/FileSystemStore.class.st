@@ -188,15 +188,6 @@ FileSystemStore >> modificationTimeOf: aPath [
 	^self subclassresponsibility
 ]
 
-{ #category : 'public' }
-FileSystemStore >> nodeAt: aPath [
-
-	^ self 
-		entryAt: aPath 
-		ifPresent: [ :node| node ]
-		ifAbsent: [ self error: 'the node ', aPath printString, ' not found.' ]
-]
-
 { #category : 'abstract' }
 FileSystemStore >> open [
 	"Some kinds of filesystems need to open connections to external resources"

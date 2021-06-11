@@ -95,13 +95,6 @@ FileReference >> asString [
   ^ path asString 
 ]
 
-{ #category : 'accessing' }
-FileReference >> attributes [
-	"Return a FileAttributes w/ information about the reference."
-
-	^filesystem attributes: self
-]
-
 { #category : 'streams' }
 FileReference >> binaryReadStream [
 	
