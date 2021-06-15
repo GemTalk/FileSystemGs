@@ -68,6 +68,12 @@ FileReference >> absolutePath [
 		ifTrue: [ filesystem resolve: self path ]
 ]
 
+{ #category : 'accessing' }
+FileReference >> accessTime [
+
+	^ filesystem accessTimeOf: self path
+]
+
 { #category : 'converting' }
 FileReference >> asAbsolute [
 	"Return the receiver as an absolute file reference."

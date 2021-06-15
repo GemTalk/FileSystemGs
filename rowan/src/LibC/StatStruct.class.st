@@ -50,6 +50,12 @@ StatStruct class >> structSize [
 	^144
 ]
 
+{ #category : 'accessing' }
+StatStruct >> accessTime [
+
+	^TimespecStruct forBytes: (self st_atim)
+]
+
 { #category : 'testing' }
 StatStruct >> isDirectory [
 
@@ -71,7 +77,7 @@ StatStruct >> isSymlink [
 { #category : 'accessing' }
 StatStruct >> modificationTime [
 
-	^0
+	^TimespecStruct forBytes: (self st_mtim)
 ]
 
 { #category : 'private-masks' }
@@ -140,8 +146,7 @@ StatStruct >> size [
 { #category : 'private-accessing' }
 StatStruct >> st_atim [
 
-	"st_atim is 16 bytes starting at 72"
-	Error signal: 'st_atim is not yet implemented'
+	^bytes CByteArrayFrom: 72 to: 87
 ]
 
 { #category : 'private-accessing' }
@@ -159,8 +164,7 @@ StatStruct >> st_blocks [
 { #category : 'private-accessing' }
 StatStruct >> st_ctim [
 
-	"st_ctim is 16 bytes starting at 104"
-	Error signal: 'st_ctim is not yet implemented'
+	^bytes CByteArrayFrom: 104 to: 119
 ]
 
 { #category : 'private-accessing' }
@@ -190,8 +194,7 @@ StatStruct >> st_mode [
 { #category : 'private-accessing' }
 StatStruct >> st_mtim [
 
-	"st_mtim is 16 bytes starting at 88"
-	Error signal: 'st_mtim is not yet implemented'
+	^bytes CByteArrayFrom: 88 to: 103
 ]
 
 { #category : 'private-accessing' }

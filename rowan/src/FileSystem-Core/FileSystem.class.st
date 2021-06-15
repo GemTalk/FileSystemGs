@@ -54,6 +54,13 @@ FileSystem >> = other [
 ]
 
 { #category : 'public' }
+FileSystem >> accessTimeOf: aResolvable [
+	"Returns the access date of aResolvable"
+
+	^store accessTimeOf: (self resolve: aResolvable)
+]
+
+{ #category : 'public' }
 FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
@@ -463,13 +470,6 @@ FileSystem >> isWritable: aResolvable [
 	a file that can be written to or directory that can be changed."
 	
 	^  (self permissions: aResolvable) isWritable
-]
-
-{ #category : 'public' }
-FileSystem >> modificationTime: aResolvable [
-	"Returns the date of the last modification of aResolvable"
-
-	^ store modificationTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }

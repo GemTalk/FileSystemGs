@@ -255,6 +255,12 @@ FileSystemStore >> signalFileExists: aPath [
 	^ FileExists signalWith: aPath
 ]
 
+{ #category : 'error signalling' }
+FileSystemStore >> signalUnsupportedAttribute: attributeName [
+
+	^UnsupportedFileReferenceAttribute signalWith: attributeName
+]
+
 { #category : 'public' }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"

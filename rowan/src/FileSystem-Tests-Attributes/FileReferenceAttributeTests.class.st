@@ -16,6 +16,14 @@ FileReferenceAttributeTests class >> resources [
 	^Array with: DiskFileAttributesTestsResources.
 ]
 
+{ #category : 'asserting' }
+FileReferenceAttributeTests >> assert: middle
+between: min
+and: max [
+
+	^self assert: (middle between: min and: max)
+]
+
 { #category : 'helper methods' }
 FileReferenceAttributeTests >> tempFileResource [
 
@@ -23,13 +31,26 @@ FileReferenceAttributeTests >> tempFileResource [
 ]
 
 { #category : 'tests' }
+FileReferenceAttributeTests >> testAccessTime [
+
+	| resource reference initialAccessTime |
+	resource := self tempFileResource.
+	reference := resource file.
+	initialAccessTime := reference accessTime.
+	(Delay forMilliseconds: 10) wait.
+	reference binaryWriteStream nextPutAll: #[1 2 3 4]; close.
+	reference binaryReadStream next: 1; close.
+	self assert: reference accessTime > initialAccessTime
+]
+
+{ #category : 'tests' }
 FileReferenceAttributeTests >> testCreationTime [
 
-	| resource creationTime x |
-	resource := self tempFileResource.
-	creationTime := resource file creationTime.
-	self assert: (x := resource beforeCreationTime) <= creationTime.
-	self assert: (x := resource afterCreationTime) >= creationTime.
+	| reference |
+	reference  := self tempFileResource file.
+	self
+		should: [reference creationTime]
+		raise: UnsupportedFileReferenceAttribute.
 ]
 
 { #category : 'tests' }
@@ -88,10 +109,10 @@ FileReferenceAttributeTests >> testIsWriteable [
 { #category : 'tests' }
 FileReferenceAttributeTests >> testModificationTime [
 
-	| resource modificationTime |
+	| resource |
 	resource := self tempFileResource.
-	modificationTime := resource file modificationTime.
-	self assert: resource beforeCreationTime <= modificationTime.
-	self assert: resource afterCreationTime >= modificationTime.
-
+	self
+		assert: resource file modificationTime
+		between: resource beforeCreationTime
+		and: resource afterCreationTime
 ]
