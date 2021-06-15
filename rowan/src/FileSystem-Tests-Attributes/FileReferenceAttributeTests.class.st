@@ -25,6 +25,12 @@ and: max [
 ]
 
 { #category : 'helper methods' }
+FileReferenceAttributeTests >> shortDelay [
+
+	(Delay forMilliseconds: 10) wait
+]
+
+{ #category : 'helper methods' }
 FileReferenceAttributeTests >> tempFileResource [
 
 	^DiskFileAttributesTestsResources current
@@ -38,6 +44,8 @@ FileReferenceAttributeTests >> testAccessTime [
 	reference := resource file.
 	initialAccessTime := reference accessTime.
 	(Delay forMilliseconds: 10) wait.
+	"By default, it seems linux is configured to update access time
+	only if it is older than modification time."
 	reference binaryWriteStream nextPutAll: #[1 2 3 4]; close.
 	reference binaryReadStream next: 1; close.
 	self assert: reference accessTime > initialAccessTime
@@ -109,10 +117,20 @@ FileReferenceAttributeTests >> testIsWriteable [
 { #category : 'tests' }
 FileReferenceAttributeTests >> testModificationTime [
 
-	| resource |
+	| resource reference |
 	resource := self tempFileResource.
+	reference := resource file.
 	self
-		assert: resource file modificationTime
+		assert: reference modificationTime
 		between: resource beforeCreationTime
-		and: resource afterCreationTime
+		and: resource afterCreationTime.
+	self shortDelay.
+	reference binaryWriteStream
+		nextPutAll: (ByteArray new: 5);
+		close.
+	self shortDelay.
+	self
+		assert: reference modificationTime
+		between: resource afterCreationTime
+		and: DateAndTime now
 ]
