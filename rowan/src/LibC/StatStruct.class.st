@@ -75,6 +75,13 @@ StatStruct >> isSymlink [
 ]
 
 { #category : 'accessing' }
+StatStruct >> mode [
+	"Returns the mode of the file."
+
+	^self st_mode
+]
+
+{ #category : 'accessing' }
 StatStruct >> modificationTime [
 
 	^TimespecStruct forBytes: (self st_mtim)

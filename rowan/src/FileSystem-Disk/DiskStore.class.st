@@ -343,6 +343,14 @@ DiskStore >> openFileStream: path writable: writable [
 ]
 
 { #category : 'public' }
+DiskStore >> permissions: aPath [
+
+	| stat |
+	stat := self stat: aPath.
+	^FileSystemPermission posixPermissions: stat mode
+]
+
+{ #category : 'public' }
 DiskStore >> rename: sourcePath to: destinationPath [
 
 	| sourcePathString targetPathString |

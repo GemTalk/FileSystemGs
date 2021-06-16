@@ -70,8 +70,9 @@ FileReferenceAttributeTests >> testExists [
 { #category : 'tests' }
 FileReferenceAttributeTests >> testFileSize [
 
-	self assert: self tempFileResource file size equals: 72.
-
+	self
+		assert: self tempFileResource file size
+		equals: 79
 ]
 
 { #category : 'tests' }
