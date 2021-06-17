@@ -36,42 +36,68 @@ AbstractFileReference >> absolutePath [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'accessing' }
 AbstractFileReference >> allChildren [
-	"Return all the files and folders recursively nested in the receiver"
-	
-	^ CollectVisitor breadthFirst: self resolve collect: [:reference | reference]
+	"Returns all children of the receiver."
+
+	| children |
+	children := {}.
+	self allChildrenDo: [:each | children add: each].
+	^children
+]
+
+{ #category : 'enumerating' }
+AbstractFileReference >> allChildrenDo: aBlock [
+	"If the receiver is a file, evaluate aBlock w/ the receiver.
+	If the receiver is a directory, evaluate aBlock with the receiver and all children in breadth-first order."
+
+	| toEnumerate |
+	toEnumerate := { self resolve }.
+	[toEnumerate isEmpty]
+		whileFalse:
+			[| each |
+			each := toEnumerate removeFirst.
+			aBlock value: each.
+			each isDirectory
+				ifTrue: [toEnumerate addAll: each children]]
 ]
 
 { #category : 'enumerating' }
 AbstractFileReference >> allChildrenMatching: aPattern [
     "Return all the files and folders recursively nested in the receiver and matching the pattern, aPattern"
-    
-    ^ self allChildren select: [ :each |  aPattern match: each basename ]
+ 
+	^self allChildrenSelect: [:each | aPattern match: each basename]
+]
 
+{ #category : 'enumerating' }
+AbstractFileReference >> allChildrenSelect: aBlock [
+	"Return all selected blocks."
+
+	| selected |
+	selected := {}.
+	self allChildrenDo: [:each | (aBlock value: each) ifTrue: [selected add: each]].
+	^selected
 ]
 
 { #category : 'enumerating' }
 AbstractFileReference >> allDirectories [
 	"Return all the directories recursively nested in the receiver."
-	^SelectVisitor breadthFirst: self resolve select: [:entry | entry isDirectory ]
+
+	^self allChildrenSelect: [:each | each isDirectory]
 ]
 
 { #category : 'enumerating' }
 AbstractFileReference >> allDirectoriesMatching: aPattern [
     "Return all the directories recursively nested in the receiver."
-    ^ (SelectVisitor 
-			breadthFirst: self resolve 
-			select: [:entry | entry isDirectory and: [ aPattern match: entry basename ] ])
-        collect: [ :each | each reference ]
 
+	^self allChildrenSelect: [:each | each isDirectory and: [aPattern match: each basename]]
 ]
 
 { #category : 'enumerating' }
 AbstractFileReference >> allFiles [
 	"Return all the files (not directories) recursively nested in the receiver."
-	^ (SelectVisitor breadthFirst: self resolve select: [:entry | entry isFile ])
-		collect: [ :each| each reference ]
+
+	^self allChildrenSelect: [:each | each isFile]
 ]
 
 { #category : 'converting' }
@@ -470,11 +496,6 @@ AbstractFileReference >> fullPath [
 	"Returns the absolute path, better use absolutePath"
 	
 	^ self subclassResponsibility
-]
-
-{ #category : 'enumerating' }
-AbstractFileReference >> glob: aBlock [
-	^ SelectVisitor breadthFirst: self resolve select: aBlock
 ]
 
 { #category : 'testing' }
