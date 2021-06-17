@@ -152,13 +152,6 @@ DiskStore >> delete: path [
 		ifFalse: [self libcUnistd unlinkPath: pathString]
 ]
 
-{ #category : 'public' }
-DiskStore >> deleteAll: path
-in: fileSystem [
-
-	DeleteVisitor delete: (fileSystem root resolve: path)
-]
-
 { #category : 'private' }
 DiskStore >> directoryAt: aPath
 ifAbsent: absentBlock

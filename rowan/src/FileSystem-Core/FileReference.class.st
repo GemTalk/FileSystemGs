@@ -150,7 +150,19 @@ FileReference >> delete [
 FileReference >> deleteAll [
 	"Delete this directory and all children of it, raise an error if the file does not exist."
 
-	filesystem deleteAll: self fullPath
+	| toDelete toTraverse |
+	toTraverse := { self }.
+	toDelete := { }.
+	[toTraverse isEmpty]
+		whileFalse:
+			[| each |
+			each := toTraverse removeLast.
+			each isDirectory
+				ifTrue:
+					[toTraverse addAll: each children.
+					toDelete addLast: each]
+				ifFalse: [each delete]].
+	toDelete reverseDo: [:each | each delete]
 ]
 
 { #category : 'operations' }

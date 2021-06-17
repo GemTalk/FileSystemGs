@@ -66,24 +66,6 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testAllEntries [
-	| ref entries |
-	[ filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	entries := ref allEntries.
-	self assert: entries size equals: 4.
-	entries
-		do: [ :reference | 
-			self assert: (reference isKindOf: FileReference).
-			self assert: (ref = reference or: [ ref contains: reference ]) ].
-	self assert: (entries collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."

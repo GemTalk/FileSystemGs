@@ -234,14 +234,6 @@ FileSystem >> delete: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> deleteAll: aResolvable [
-
-	store
-		deleteAll: (self resolve: aResolvable)
-		in: self
-]
-
-{ #category : 'public' }
 FileSystem >> delimiter [
 	"Return path delimiter used by this filesystem."
 

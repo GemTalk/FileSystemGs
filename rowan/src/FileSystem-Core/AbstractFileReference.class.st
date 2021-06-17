@@ -68,11 +68,6 @@ AbstractFileReference >> allDirectoriesMatching: aPattern [
 ]
 
 { #category : 'enumerating' }
-AbstractFileReference >> allEntries [
-	^ CollectVisitor breadthFirst: self resolve
-]
-
-{ #category : 'enumerating' }
 AbstractFileReference >> allFiles [
 	"Return all the files (not directories) recursively nested in the receiver."
 	^ (SelectVisitor breadthFirst: self resolve select: [:entry | entry isFile ])
