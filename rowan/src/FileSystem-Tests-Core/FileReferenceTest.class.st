@@ -12,9 +12,20 @@ Class {
 }
 
 { #category : 'support' }
-FileReferenceTest >> createFile: aPath [
-	filesystem ensureCreateDirectory: aPath parent.
-	(filesystem resolve: aPath) writeStream close
+FileReferenceTest >> createDirectory: aString [
+
+	filesystem ensureCreateDirectory: (filesystem store pathFromString: aString)
+]
+
+{ #category : 'support' }
+FileReferenceTest >> createFile: aPathOrString [
+
+	| path |
+	path := (aPathOrString isKindOf: Path)
+		ifTrue: [aPathOrString]
+		ifFalse: [filesystem store pathFromString: aPathOrString].
+	filesystem ensureCreateDirectory: path parent.
+	(filesystem referenceTo: path) writeStream close
 ]
 
 { #category : 'running' }
@@ -293,6 +304,32 @@ FileReferenceTest >> testContents [
 	[ ref writeStreamDo: [ :stream | stream nextPutAll: contents ].
 	self assert: ref contents asString equals: contents ]
 		ensure: [ ref ensureDelete ]
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testCopyAllTo [
+	"Ensure #copyAllTo: results in mirroring of directories."
+
+	| source destination |
+	self 
+		createDirectory: '/alpha';
+		createDirectory: '/alpha/beta';
+		createFile: '/alpha/theta';
+		createFile: '/alpha/beta/gamma';
+		createFile: '/alpha/beta/delta';
+		createDirectory: '/alpha/epsilon';
+		createFile: '/alpha/epsilon/zeta'.
+	source := filesystem / 'alpha'.
+	destination := filesystem / 'iota'.
+	source copyAllTo: destination.
+	self
+		assert: source isDirectory;
+		assert: destination isDirectory;
+		assert: (destination / 'beta') isDirectory;
+		assert: (destination / 'theta') isFile.
+	self
+		assert: source allChildren size
+		equals: destination allChildren size
 ]
 
 { #category : 'tests' }

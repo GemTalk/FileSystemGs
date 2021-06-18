@@ -123,7 +123,14 @@ FileReference >> containsReference: aReference [
 FileReference >> copyAllTo: aResolvable [
 	"Performs a deep copy of the receiver, to a location specified by the argument. If the receiver is a file, the file will be copied; if a directory, the directory and its contents will be copied recursively. The argument must be a reference that doesn't exist; it will be created by the copy."
 	
-	CopyVisitor copy: self asAbsolute to: aResolvable resolve
+	| source destination |
+	source := self.
+	destination := aResolvable resolve.
+	source
+		allChildrenDo:
+			[:each | | target |
+			target := destination resolve: (each relativeTo: source).
+			each copyTo: target]
 ]
 
 { #category : 'operations' }
