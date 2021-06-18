@@ -246,16 +246,18 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 
 { #category : 'enumerating' }
 AbstractFileReference >> childNames [
-	^ self children collect: [:each | each basename ]
+	"Return the names of entries in a directory."
+
+	| reference |
+	reference := self resolve.
+	^reference fileSystem childNamesAt: reference path
 ]
 
 { #category : 'enumerating' }
 AbstractFileReference >> children [
 	"Answer an array containing references to the direct children of this reference."
-	| reference |
-	reference := self resolve.
-	^ (reference fileSystem childNamesAt: reference path) 
-		collect: [ :aName | self / aName ]
+
+	^self childNames collect: [:name | self / name]
 ]
 
 { #category : 'enumerating' }
