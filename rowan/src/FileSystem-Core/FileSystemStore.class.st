@@ -194,7 +194,10 @@ FileSystemStore >> open [
 ]
 
 { #category : 'public' }
-FileSystemStore >> openFileStream: path writable: writable [
+FileSystemStore >> open: aFileReference
+options: options [
+	"Open the provided FileReference with the specific options provided."
+
 	self subclassResponsibility
 ]
 

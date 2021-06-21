@@ -40,20 +40,6 @@ MemoryStore class >> startUp [
 ]
 
 { #category : 'public' }
-MemoryStore >> basicOpen: path writable: aBoolean [
-
-	^self
-		entryAt: path
-		ifPresent: [ :aMemoryFileSystemEntry | 
-			aMemoryFileSystemEntry
-				basicOpen;
-				yourself ]
-		ifAbsent: [ aBoolean
-				ifFalse: [ self signalFileDoesNotExist: path ]
-				ifTrue: [ self createFile: path ] ]
-]
-
-{ #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].
 	^ aString
@@ -125,6 +111,18 @@ MemoryStore >> creationTimeOf: aPath [
 		entryAt: aPath
 		ifPresent: [:entry | entry creationTime]
 		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
+{ #category : 'accessing' }
+MemoryStore >> defaultOptionsForRead [
+
+	^MemoryFileOpeningOptions readOnly
+]
+
+{ #category : 'accessing' }
+MemoryStore >> defaultOptionsForWrite [
+
+	^MemoryFileOpeningOptions writeOnly
 ]
 
 { #category : 'public' }
@@ -302,9 +300,23 @@ MemoryStore >> modificationTimeOf: aPath [
 
 { #category : 'public' }
 MemoryStore >> open: aFileReference
-writable: isWritable [
+options: openingOptions [
 
-	^MemoryHandle open: aFileReference writable: isWritable
+	| path entry |
+	path := aFileReference fullPath.
+	entry := self
+		entryAt: path
+		ifPresent: [ :aMemoryFileSystemEntry | 
+			aMemoryFileSystemEntry
+				basicOpen;
+				yourself ]
+		ifAbsent: [ openingOptions isWritable
+				ifFalse: [ self signalFileDoesNotExist: path ]
+				ifTrue: [ self createFile: path ] ].
+	^MemoryHandle
+		reference: aFileReference
+		entry: entry
+		options: openingOptions
 ]
 
 { #category : 'accessing' }

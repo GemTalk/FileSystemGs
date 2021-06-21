@@ -10,6 +10,16 @@ Class {
 	#category : 'FileSystem-Memory'
 }
 
+{ #category : 'instance creation' }
+MemoryHandle class >> reference: aFileReference
+entry: anEntry
+options: openingOptions [
+
+	^self new
+		setReference: aFileReference entry: anEntry options: openingOptions;
+		yourself
+]
+
 { #category : 'public' }
 MemoryHandle >> at: index [
 	^ entry at: index
@@ -29,6 +39,11 @@ MemoryHandle >> at: index read: aCollection startingAt: start count: count [
 MemoryHandle >> at: first write: aCollection startingAt: start count: count [ 
 	writable ifFalse: [ self primitiveFailed ].
 	entry at: first write: aCollection startingAt: start count: count.
+]
+
+{ #category : 'public' }
+MemoryHandle >> basicOpen [
+	"No work as entry is set upon creation"
 ]
 
 { #category : 'streams' }
@@ -77,7 +92,16 @@ MemoryHandle >> isOpen [
 
 { #category : 'public' }
 MemoryHandle >> open [
-	entry := self basicOpen.
+]
+
+{ #category : 'initalize-release' }
+MemoryHandle >> setReference: aReference
+entry: anEntry
+options: options [
+
+	reference := aReference resolve.
+	entry := anEntry.
+	writable := options isWriteOnly
 ]
 
 { #category : 'accessing' }

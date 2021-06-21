@@ -298,12 +298,9 @@ DiskStore >> modificationTimeOf: aPath [
 
 { #category : 'public' }
 DiskStore >> open: aFileReference
-writable: isWritable [
+options: options [
 
-	| options fd |
-	options := isWritable
-		ifTrue: [self defaultOptionsForWrite]
-		ifFalse: [self defaultOptionsForRead].
+	| fd |
 	fd := [OSPlatform current libcFcntl
 				openPath: aFileReference pathString
 				flags: options flags
@@ -314,7 +311,7 @@ writable: isWritable [
 				"This is written in this manner to match the previous behavior in UnixFileDescriptor.
 				A better means of detecting and signaling appropriate errors needs to be devised.
 				This handling is simplistic and incorrect."
-				isWritable
+				options isWriteOnly
 					ifTrue:
 						[parent := aFileReference parent.
 						parent exists
@@ -323,16 +320,6 @@ writable: isWritable [
 					ifFalse:
 						[self signalFileDoesNotExist: aFileReference fullPath]].
 	^UnixFileDescriptor id: fd
-]
-
-{ #category : 'public' }
-DiskStore >> openFileStream: path writable: writable [
-	| fullPath |
-	fullPath := self stringFromPath: path.
-	"redirect over the default implementation"
-	^ writable 
-		ifFalse: [ FileStreamPortable readOnlyFileNamed: fullPath ]
-		ifTrue: [ FileStreamPortable fileNamed: fullPath ]
 ]
 
 { #category : 'public' }

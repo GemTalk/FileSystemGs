@@ -27,28 +27,6 @@ Class {
 	#category : 'FileDescriptor'
 }
 
-{ #category : 'private' }
-UnixFileOpeningOptions class >> new [
-	"Private -- use one of the access mode messages to create instances."
-
-	^ super new initialize
-]
-
-{ #category : 'instance creation' }
-UnixFileOpeningOptions class >> readOnly [
-	^ self new readOnly
-]
-
-{ #category : 'instance creation' }
-UnixFileOpeningOptions class >> readWrite [
-	^ self new readWrite
-]
-
-{ #category : 'instance creation' }
-UnixFileOpeningOptions class >> writeOnly [
-	^ self new writeOnly
-]
-
 { #category : 'testing' }
 UnixFileOpeningOptions >> allowsRead [
 	"Cannot read or write when path is specified."
@@ -114,13 +92,6 @@ UnixFileOpeningOptions >> flags [
 	^ flags
 ]
 
-{ #category : 'private' }
-UnixFileOpeningOptions >> improperOperationExceptionClass [
-
-	"GemStone-specific; will need factoring to platform-specific package upon first port."
-	^ ImproperOperation
-]
-
 { #category : 'initialization' }
 UnixFileOpeningOptions >> initialize [
 	flags := self initialValue
@@ -183,6 +154,12 @@ UnixFileOpeningOptions >> isPath [
 ]
 
 { #category : 'testing' }
+UnixFileOpeningOptions >> isReadable [
+
+	^self isReadOnly or: [self isReadWrite]
+]
+
+{ #category : 'testing' }
 UnixFileOpeningOptions >> isReadOnly [
 	^ (flags bitAnd: self O_ACCMODE) = self O_RDONLY
 ]
@@ -205,6 +182,12 @@ UnixFileOpeningOptions >> isTmpFile [
 { #category : 'testing' }
 UnixFileOpeningOptions >> isTruncate [
 	^ (flags bitAnd: self O_TRUNC) = self O_TRUNC
+]
+
+{ #category : 'testing' }
+UnixFileOpeningOptions >> isWritable [
+
+	^self isWriteOnly or: [self isReadWrite]
 ]
 
 { #category : 'testing' }
@@ -364,12 +347,6 @@ UnixFileOpeningOptions >> readWrite [
 	flags = self initialValue
 		ifFalse: [ self signalLateAccessChange ].
 	flags := self O_RDWR
-]
-
-{ #category : 'private' }
-UnixFileOpeningOptions >> signalLateAccessChange [
-	self improperOperationExceptionClass
-		signal: 'Access mode must be set before adding any other options.'
 ]
 
 { #category : 'options' }

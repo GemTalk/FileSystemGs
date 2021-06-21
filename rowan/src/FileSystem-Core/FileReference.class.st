@@ -370,9 +370,13 @@ FileReference >> nextVersion [
 { #category : 'streams' }
 FileReference >> openWritable: isWritable [
 
+	| options |
+	options := isWritable
+		ifTrue: [filesystem defaultOptionsForWrite]
+		ifFalse: [filesystem defaultOptionsForRead].
 	^filesystem
 		open: path
-		writable: isWritable
+		options: options
 ]
 
 { #category : 'accessing' }

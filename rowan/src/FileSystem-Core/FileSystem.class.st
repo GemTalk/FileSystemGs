@@ -65,7 +65,7 @@ FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable writable: false)
+	^ (self open: aResolvable options: store defaultOptionsForRead)
 		binaryReadStream
 ]
 
@@ -74,7 +74,7 @@ FileSystem >> binaryWriteStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a binary write stream for reading the file."
 
-	^ (self open: aResolvable writable: true)
+	^ (self open: aResolvable options: store defaultOptionsForWrite)
 		binaryWriteStream
 ]
 
@@ -226,6 +226,18 @@ FileSystem >> creationTimeOf: aResolvable [
 	"Returns the creation date of aResolvable"
 
 	^ store creationTimeOf: (self resolve: aResolvable)
+]
+
+{ #category : 'accessing' }
+FileSystem >> defaultOptionsForRead [
+
+	^store defaultOptionsForRead
+]
+
+{ #category : 'accessing' }
+FileSystem >> defaultOptionsForWrite [
+
+	^store defaultOptionsForWrite
 ]
 
 { #category : 'public' }
@@ -504,7 +516,8 @@ FileSystem >> open [
 ]
 
 { #category : 'public' }
-FileSystem >> open: aResolvable writable: aBoolean [ 
+FileSystem >> open: aResolvable
+options: openingOptions [
 	"Resolve aResolvable into an absolute path, then ask the store to open the file at
 	that path using the specified access mode."
 
@@ -512,17 +525,7 @@ FileSystem >> open: aResolvable writable: aBoolean [
 	path := self resolve: aResolvable.
 	^store
 		open: (FileReference fileSystem: self path: path) 
-		writable: aBoolean
-]
-
-{ #category : 'hack' }
-FileSystem >> openStreamDescription: aResolvable writable: aBoolean [
-	"I am  a helper method to delegate basicOpen:writable: to the store.
-	 I am called from FileSystemHandle implementations."
-	
-	| path |
-	path := self resolve: aResolvable.
-	^ store basicOpen: path writable: aBoolean
+		options: openingOptions
 ]
 
 { #category : 'converting' }
@@ -552,8 +555,7 @@ FileSystem >> readStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable writable: false) readStream.
-
+	^ (self open: aResolvable options: store defaultOptionsForRead) readStream.
 ]
 
 { #category : 'public' }
@@ -670,5 +672,5 @@ FileSystem >> workingDirectoryPath [
 FileSystem >> writeStreamOn: aResolvable [
 	"Open a write stream on the file referred by the argument. It can be a string or a path"
 
-	^ (self open: aResolvable writable: true) writeStream.
+	^ (self open: aResolvable options: store defaultOptionsForWrite) writeStream.
 ]
