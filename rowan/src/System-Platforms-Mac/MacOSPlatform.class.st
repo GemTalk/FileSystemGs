@@ -1,12 +1,22 @@
 "
-I am a an object representing a Mac OS (pre OSX) platform. Use myself to access platform specific features.
+I am an object representing Mac OS X and macOS. I do not represent Classic Mac OS which is no longer considered relevant.
 
+Please keep me polymorphic to the the other platform objects.
+
+To get the current platform, you can evaluate:
+
+OSPlatform current.
 "
 Class {
 	#name : 'MacOSPlatform',
 	#superclass : 'OSPlatform',
 	#category : 'System-Platforms-Mac'
 }
+
+{ #category : 'testing' }
+MacOSPlatform class >> isActivePlatform [
+	^ self isMacOS
+]
 
 { #category : 'testing' }
 MacOSPlatform class >> isMacOS [
@@ -46,6 +56,11 @@ MacOSPlatform >> getPwdViaFFI: buffer size: bufferSize [
 
 { #category : 'testing' }
 MacOSPlatform >> isMacOS [
+	^ true
+]
+
+{ #category : 'testing' }
+MacOSPlatform >> isMacOSX [
 	^ true
 ]
 
