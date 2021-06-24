@@ -67,23 +67,8 @@ OSPlatform >> current [
 { #category : 'accessing' }
 OSPlatform >> currentWorkingDirectoryPath [
 	"This method calls the method getPwdViaFFI with arugement of a buffer size. By default it uses the defaultMaximumPathLength of each subclass as the buffer size."
-	^ self currentWorkingDirectoryPathWithBufferSize: self defaultMaximumPathLength
 
-]
-
-{ #category : 'accessing' }
-OSPlatform >> currentWorkingDirectoryPathWithBuffer: aByteString [
-	"<primitive: 'primitiveGetCurrentWorkingDirectory' module: '' error: ec>"
-	
-	^ (self getPwdViaFFI: aByteString size: aByteString size) 
-		ifNil:[ self error:'Insufficient buffer size to read current working directory: ' , aByteString size asString]
-]
-
-{ #category : 'accessing' }
-OSPlatform >> currentWorkingDirectoryPathWithBufferSize: aBufferSize [
-	| buffer |
-	buffer := String new: aBufferSize.
-	^ self currentWorkingDirectoryPathWithBuffer: buffer
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -99,13 +84,6 @@ OSPlatform >> family [
 	This may need to be extended if there are new platforms added or significant differences within a platform family arise (as was the case between MacOS 9 and X)."
 
 	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-OSPlatform >> getPwdViaFFI: arg1 size: arg2 [
-	" This is an virtual method. It is implemented in its sub classes"
-	 ^ self subclassResponsibility 
-
 ]
 
 { #category : 'testing' }
