@@ -7,13 +7,18 @@ As Pharo doesn't provide a mechanism to set the attributes, pick a few well know
 Class {
 	#name : 'FileReferenceAttributeTests',
 	#superclass : 'TestCase',
+	#instVars : [
+		'reference',
+		'afterCreationTime',
+		'beforeCreationTime'
+	],
 	#category : 'FileSystem-Tests-Attributes'
 }
 
-{ #category : 'resources' }
-FileReferenceAttributeTests class >> resources [
+{ #category : 'accessing' }
+FileReferenceAttributeTests >> afterCreationTime [
 
-	^Array with: DiskFileAttributesTestsResources.
+	^afterCreationTime
 ]
 
 { #category : 'asserting' }
@@ -24,114 +29,135 @@ and: max [
 	^self assert: (middle between: min and: max)
 ]
 
+{ #category : 'accessing' }
+FileReferenceAttributeTests >> beforeCreationTime [
+
+	^beforeCreationTime
+]
+
+{ #category : 'accessing' }
+FileReferenceAttributeTests >> reference [
+
+	^reference
+]
+
+{ #category : 'initializing' }
+FileReferenceAttributeTests >> setUp [
+
+	| ws bufferedStream |
+	reference := FileLocator temp asFileReference
+		/ ('FileAttributesTests-' , FastUUIDGenerator next asString , '.txt').
+	beforeCreationTime := DateAndTime now.
+	(Delay forMilliseconds: 10) wait.
+	ws := reference writeStream.
+	bufferedStream := ZnBufferedWriteStream on: ws.
+	[ 
+	bufferedStream nextPutAll: 'Created by FileAttributesTestsResources>>setUp '.
+	beforeCreationTime printOn: bufferedStream ]
+		ensure: [ bufferedStream close ].
+	(Delay forMilliseconds: 10) wait.
+	afterCreationTime := DateAndTime now
+]
+
 { #category : 'helper methods' }
 FileReferenceAttributeTests >> shortDelay [
 
 	(Delay forMilliseconds: 10) wait
 ]
 
-{ #category : 'helper methods' }
-FileReferenceAttributeTests >> tempFileResource [
+{ #category : 'initializing' }
+FileReferenceAttributeTests >> tearDown [
 
-	^DiskFileAttributesTestsResources current
+	reference delete
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testAccessTime [
 
-	| resource reference initialAccessTime |
-	resource := self tempFileResource.
-	reference := resource file.
-	initialAccessTime := reference accessTime.
+	| initialAccessTime |
+	initialAccessTime := self reference accessTime.
 	(Delay forMilliseconds: 10) wait.
 	"By default, it seems linux is configured to update access time
 	only if it is older than modification time."
-	reference binaryWriteStream nextPutAll: #[1 2 3 4]; close.
-	reference binaryReadStream next: 1; close.
-	self assert: reference accessTime > initialAccessTime
+	self reference binaryWriteStream nextPutAll: #[1 2 3 4]; close.
+	self reference binaryReadStream next: 1; close.
+	self assert: self reference accessTime > initialAccessTime
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testCreationTime [
 
-	| reference |
-	reference  := self tempFileResource file.
 	self
-		should: [reference creationTime]
+		should: [self reference creationTime]
 		raise: UnsupportedFileReferenceAttribute.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testExists [
 
-	self assert: self tempFileResource file exists
+	self assert: self reference exists
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testFileSize [
 
 	self
-		assert: self tempFileResource file size
+		assert: self reference size
 		equals: 79
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsCharacter [
 
-	self deny: self tempFileResource file isCharacter
+	self deny: self reference isCharacter
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsDirectory [
 
-	self deny: self tempFileResource file isDirectory.
+	self deny: self reference isDirectory.
 	self assert: FileLocator temp isDirectory.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsFile [
 
-	self assert: self tempFileResource file isFile.
+	self assert: self reference isFile.
 	self deny: FileLocator temp isFile.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsReadable [
 
-	self assert: self tempFileResource file isReadable.
-
+	self assert: self reference isReadable.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsSymlink [
 
-	self deny: self tempFileResource file resolve isSymlink.
+	self deny: self reference isSymlink.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsWriteable [
 
-	self assert: self tempFileResource file isWritable.
-
+	self assert: self reference isWritable.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testModificationTime [
 
-	| resource reference |
-	resource := self tempFileResource.
-	reference := resource file.
 	self
-		assert: reference modificationTime
-		between: resource beforeCreationTime
-		and: resource afterCreationTime.
+		assert: self reference modificationTime
+		between: self beforeCreationTime
+		and: self afterCreationTime.
 	self shortDelay.
-	reference binaryWriteStream
+	self reference binaryWriteStream
 		nextPutAll: (ByteArray new: 5);
 		close.
 	self shortDelay.
 	self
-		assert: reference modificationTime
-		between: resource afterCreationTime
+		assert: self reference modificationTime
+		between: self afterCreationTime
 		and: DateAndTime now
 ]
