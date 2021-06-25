@@ -1,5 +1,30 @@
 run
-	| suite |
+	| suite result |
 	suite := Rowan projectTools test testSuiteForProjectsNamed: { 'FileSystemGs_dev' }.
-	suite run printString.
+	result := suite run.
+  String
+      streamContents:
+          [:stream |
+          stream nextPutAll: 'Passes: (', result passed size printString, ')'.
+          "result passed
+              do:
+                  [:each |
+                  stream lf; tab.
+                  each printOn: stream]."
+          stream
+              lf; lf;
+              nextPutAll: 'Failures:(', result failures size printString, ')'.
+          result failures
+              do:
+                  [:each |
+                  stream lf; tab.
+                  each printOn: stream].
+          stream
+              lf; lf;
+              nextPutAll: 'Errors:(', result errors size printString, ')'.
+          result errors
+              do:
+                  [:each |
+                  stream lf; tab.
+                  each printOn: stream]].
 %
