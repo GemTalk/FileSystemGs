@@ -48,14 +48,14 @@ FileReferenceAttributeTests >> setUp [
 	reference := FileLocator temp asFileReference
 		/ ('FileAttributesTests-' , FastUUIDGenerator next asString , '.txt').
 	beforeCreationTime := DateAndTime now.
-	(Delay forMilliseconds: 10) wait.
+	self shortDelay.
 	ws := reference writeStream.
 	bufferedStream := ZnBufferedWriteStream on: ws.
 	[ 
 	bufferedStream nextPutAll: 'Created by FileAttributesTestsResources>>setUp '.
 	beforeCreationTime printOn: bufferedStream ]
 		ensure: [ bufferedStream close ].
-	(Delay forMilliseconds: 10) wait.
+	self shortDelay.
 	afterCreationTime := DateAndTime now
 ]
 
