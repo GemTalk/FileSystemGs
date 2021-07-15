@@ -103,15 +103,19 @@ FileReference >> asString [
 
 { #category : 'streams' }
 FileReference >> binaryReadStream [
-	
-	^ filesystem binaryReadStreamOn: self path
+
+	^(self exists not or: [self isFile])
+		ifTrue: [filesystem binaryReadStreamOn: self path]
+		ifFalse: [FileDoesNotExistException signalWith: self]
 ]
 
 { #category : 'streams' }
 FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
-	^ ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
+	^(self exists not or: [self isFile])
+		ifTrue: [ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)]
+		ifFalse: [FileDoesNotExistException signalWith: self]
 ]
 
 { #category : 'comparing' }

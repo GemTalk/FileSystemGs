@@ -813,17 +813,14 @@ AbstractFileReference >> writeStream [
 
 { #category : 'streams' }
 AbstractFileReference >> writeStreamDo: aBlock [
+
 	| stream |
 	stream := self writeStream.
-	^ [ aBlock value: stream ]
-		ensure: [ stream close ]
-]
-
-{ #category : 'streams' }
-AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
-	^ self isFile
-		ifTrue: presentBlock
-		ifFalse: [ self writeStreamDo: doBlock ]
+	^[aBlock value: stream]
+		ensure:
+			[stream
+				flush;
+				close]
 ]
 
 { #category : 'streams' }
@@ -840,11 +837,4 @@ AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
 	stream := self writeStreamEncoded: anEncoding.
 	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
-]
-
-{ #category : 'streams' }
-AbstractFileReference >> writeStreamIfPresent: presentBlock [
-	^ self isFile 
-		ifTrue: presentBlock
-		ifFalse: [ self writeStream ]
 ]

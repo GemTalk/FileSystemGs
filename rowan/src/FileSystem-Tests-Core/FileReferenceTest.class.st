@@ -39,12 +39,27 @@ FileReferenceTest >> createDirectory: aString [
 { #category : 'support' }
 FileReferenceTest >> createFile: aString [
 
+	^self
+		createFile: aString
+		contents: self defaultFileContents
+]
+
+{ #category : 'support' }
+FileReferenceTest >> createFile: aString
+contents: contentsString [
+
 	| reference |
 	reference := sandbox / aString.
 	reference parent ensureCreateDirectory.
-	reference writeStream close.
+	reference writeStreamDo: [:stream | stream nextPutAll: contentsString].
 	self assert: reference isFile.
 	^reference
+]
+
+{ #category : 'support' }
+FileReferenceTest >> defaultFileContents [
+
+	^self class name asString, '>>', self selector asString
 ]
 
 { #category : 'tests' }
@@ -554,32 +569,31 @@ FileReferenceTest >> testHasChildren [
 { #category : 'tests' }
 FileReferenceTest >> testHasDirectories [
 
-	[ | ref |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	(filesystem / 'alpha' / 'beta' / 'delta') ensureCreateFile.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	self assert: ref hasDirectories.
-	self deny: (ref / 'beta') hasDirectories.
-	self deny: (ref / 'beta' / 'gamma') hasDirectories ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+	| alpha beta delta gamma |
+	alpha := self createDirectory: 'alpha'.
+	beta := self createDirectory: 'alpha/beta'.
+	delta := self createFile: 'alpha/beta/delta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	self
+		assert: alpha hasDirectories;
+		deny: beta hasDirectories;
+		deny: delta hasChildren;
+		deny: gamma hasChildren
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testHasFiles [
 
-	[ | ref |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	(filesystem / 'alpha' / 'beta' / 'delta') ensureCreateFile.
-	filesystem createDirectory: '/alpha/beta/eta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	self deny: ref hasFiles.
-	self assert: (ref / 'beta') hasFiles.
-	self deny: (ref / 'beta' / 'gamma') hasFiles ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+	| alpha beta delta gamma |
+	alpha := self createDirectory: 'alpha'.
+	beta := self createDirectory: 'alpha/beta'.
+	delta := self createFile: 'alpha/beta/delta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	self
+		deny: alpha hasFiles;
+		assert: beta hasFiles;
+		deny: delta hasFiles;
+		deny: gamma hasFiles
 ]
 
 { #category : 'tests' }
@@ -597,7 +611,7 @@ FileReferenceTest >> testIndicator [
 		ensure: [ ref delete ].
 	ref := filesystem workingDirectory / 'plonk'.
 	self deny: ref exists.
-	[ ref writeStreamDo: [ :stream | stream nextPutAll: 'foo' ] ifPresent: [ self fail ].
+	[ref writeStreamDo: [ :stream | stream nextPutAll: 'foo' ].
 	self assert: ref exists.
 	self assert: ref isFile.
 	self assert: ref indicator equals: '' ]
@@ -700,20 +714,22 @@ FileReferenceTest >> testParentResolutionWithRemoteReference [
 
 { #category : 'tests' }
 FileReferenceTest >> testParentUpTo [
-	| base a b c |
-	[ 
-		base := filesystem workingDirectory.
-		(base / 'testParentUpTo') ensureCreateDirectory.
-		a := (base / 'testParentUpTo' / 'A') ensureCreateDirectory.
-		b := (base / 'testParentUpTo' / 'A' / 'B') ensureCreateDirectory.
-		c := (base / 'testParentUpTo' / 'A' / 'B' / 'C') ensureCreateDirectory.
-		self assert: b equals: (c parentUpTo: 'B').
-		self assert: a equals: (c parentUpTo: 'A').
-		self assert: (base / 'testParentUpTo') equals: (c parentUpTo: 'testParentUpTo').
-		self assert: base equals: (c parentUpTo: 'notAParent') 
-	] ensure: [ 
-		(base / 'testParentUpTo') ensureDeleteAll 
-	]
+
+	| a b c d |
+	a := self createDirectory: 'a'.
+	b := self createDirectory: 'a/b'.
+	c := self createDirectory: 'a/b/c'.
+	d := self createFile: 'a/b/c/d'.
+
+	self
+		assert: (d parentUpTo: 'a')
+		equals: a.
+	self
+		assert: (b parentUpTo: 'b')
+		equals: b.
+	self
+		assert: (c parentUpTo: 'd')
+		equals: filesystem root.
 ]
 
 { #category : 'tests' }
@@ -727,45 +743,66 @@ FileReferenceTest >> testPathRelativeTo [
 
 { #category : 'tests' }
 FileReferenceTest >> testReadStream [
-	| ref stream path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ [ stream := ref readStream ]
-		ensure: [ stream ifNotNil: [ stream close ] ] ]
-		ensure: [ ref delete ]
 
+	| plonk absent directory |
+	plonk := self createFile: 'plonk'.
+	plonk readStream
+		ifNil: [self assert: false]
+		ifNotNil:
+			[:stream |
+			[self
+				assert: stream contents
+				equals: self defaultFileContents]
+					ensure: [stream close]].
+	absent := sandbox / 'absent'.
+	self
+		should: [absent readStream]
+		raise: FileDoesNotExistException.
+	directory := self createDirectory: 'directory'.
+	self
+		should: [directory readStream]
+		raise: FileDoesNotExistException
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testReadStreamDo [
-	| ref path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ ref readStreamDo: [ :stream | self deny: stream isNil ] ]
-		ensure: [ ref delete ]
+
+	| plonk absent directory |
+	plonk := self createFile: 'plonk'.
+	plonk readStreamDo:
+		[:stream |
+		self
+			assert: stream contents
+			equals: self defaultFileContents].
+	absent := sandbox / 'absent'.
+	self
+		should: [absent readStreamDo: [:stream |]]
+		raise: FileDoesNotExistException.
+	directory := self createDirectory: 'directory'.
+	self
+		should: [directory readStreamDo: [:stream |]]
+		raise: FileDoesNotExistException
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testReadStreamDoifAbsent [
-	| ref path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ ref readStreamDo: [ :stream | self deny: stream isNil ] ifAbsent: [ self signalFailure: 'The file exists!' ] ]
-		ensure: [ ref ensureDelete ]
-]
+FileReferenceTest >> testReadStreamDoIfAbsent [
 
-{ #category : 'tests' }
-FileReferenceTest >> testReadStreamDoifAbsentNot [
-	| ref pass |
-	pass := false.
-	ref := filesystem * 'plonk'.
-	ref 
-		readStreamDo: [:stream|]
-		ifAbsent: [pass := true].
-	self assert: pass
+	| plonk doesNotExist result |
+	plonk := self createFile: 'plonk'.
+	plonk
+		readStreamDo:
+			[:stream |
+			self
+				assert: stream contents
+				equals: self defaultFileContents]
+		ifAbsent: [self assert: false].
+	doesNotExist := sandbox / 'does-not-exist'.
+	result := doesNotExist
+		readStreamDo: [:stream | self assert: false]
+		ifAbsent: [#'test-pass-marker'].
+	self
+		assert: result
+		equals: #'test-pass-marker'
 ]
 
 { #category : 'tests stream' }
@@ -779,23 +816,24 @@ FileReferenceTest >> testReadStreamDoNotFound [
 
 { #category : 'tests' }
 FileReferenceTest >> testReadStreamIfAbsent [
-	| ref stream path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ [ stream := ref readStreamIfAbsent: [ self signalFailure: 'Should not reach here.' ] ]
-		ensure: [ stream ifNotNil: [ stream close ] ] ]
-		ensure: [ ref ensureDelete ]
-]
 
-{ #category : 'tests' }
-FileReferenceTest >> testReadStreamNotFound [
-	| ref  |
-	ref := filesystem * 'plonk'.
-	self
-		should: [ref readStream ]
-		raise: FileDoesNotExistException
+	| plonk absent directory stream executed |
+	plonk := self createFile: 'plonk'.
+	stream := plonk readStreamIfAbsent: [self assert: false].
+	[self
+		assert: stream contents
+		equals: self defaultFileContents]
+			ensure: [stream close].
 
+	absent := sandbox / 'absent'.
+	executed := false.
+	absent readStreamIfAbsent: [executed := true].
+	self assert: executed.
+
+	directory := self createDirectory: 'directory'.
+	executed := false.
+	directory readStreamIfAbsent: [executed := true].
+	self assert: executed
 ]
 
 { #category : 'tests' }
@@ -974,86 +1012,56 @@ FileReferenceTest >> testWorkingDirectoryParent [
 
 { #category : 'tests' }
 FileReferenceTest >> testWriteStream [
-	| ref stream |
-	ref := filesystem / 'plonk'.
-	[ [ stream := ref writeStream ]
-		ensure: [ stream ifNotNil: [ stream close ] ] ]
-		ensure: [ ref ensureDelete ]
+
+	| file directory stream |
+	file := sandbox / 'file'.
+	directory := self createDirectory: 'directory'.
+
+	"Ensure file is created by #writeStream."
+	stream := file writeStream.
+	stream
+		nextPutAll: 'abcdef';
+		flush;
+		close.
+	self assert: file isFile.
+	self
+		assert: file contents
+		equals: 'abcdef'.
+
+	"Ensure #writeStream begins at start of file."
+	"Should the following fails in against the memory file system.
+	Should we ensure this behaves the same in all file systems?"
+	"stream := file writeStream.
+	stream
+		nextPutAll: '123';
+		flush;
+		close.
+	self
+		assert: file contents
+		equals: '123def'."
+
+	"Ensure #writeStream send to a directory raises an exception."
+	self
+		should: [directory writeStream]
+		raise: FileDoesNotExistException
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testWriteStreamDo [
-	| ref s |
-	ref := filesystem / 'plonk'.
-	[ ref
-		writeStreamDo: [ :stream | 
-			s := stream.
-			self deny: stream isNil ] ]
-		ensure: [ ref ensureDelete ]
-]
 
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamDoExists [
-	| ref path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ ref writeStreamDo: [ :stream | self deny: stream isNil ] ]
-		ensure: [ ref ensureDelete ]
-]
+	| file directory |
+	file := sandbox / 'file'.
+	directory := self createDirectory: 'directory'.
 
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamDoifPresent [
-	| ref s |
-	ref := filesystem / 'plonk'.
-	[ ref
-		writeStreamDo: [ :stream | 
-			s := stream.
-			self deny: stream isNil ]
-		ifPresent: [ self signalFailure: 'The file does not exist!' ] ]
-		ensure: [ ref ensureDelete ]
-]
+	"Ensure file is created by #writeStreamDo:."
+	file writeStreamDo: [:stream | stream nextPutAll: 'abcdef'].
+	self assert: file isFile.
+	self
+		assert: file contents
+		equals: 'abcdef'.
 
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamDoifPresentNot [
-	| ref pass path |
-	pass := false.
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ ref writeStreamDo: [ :stream |  ] ifPresent: [ pass := true ].
-	self assert: pass ]
-		ensure: [ ref ensureDelete ]
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamExists [
-	| ref stream path |
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ [ stream := ref writeStream ]
-		ensure: [ stream ifNotNil: [ stream close ] ] ]
-		ensure: [ ref ensureDelete ]
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamifPresent [
-	| ref stream |
-	ref := filesystem / 'plonk'.
-	[ [ stream := ref writeStreamIfPresent: [ self signalFailure: 'Should not reach here' ] ]
-		ensure: [ stream ifNotNil: [ stream close ] ] ]
-		ensure: [ ref ensureDelete ]
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testWriteStreamifPresentExists [
-	| ref pass path |
-	pass := false.
-	path := Path * 'plonk'.
-	filesystem store createFile: path.
-	ref := filesystem referenceTo: path.
-	[ ref writeStreamIfPresent: [ pass := true ].
-	self assert: pass ]
-		ensure: [ ref ensureDelete ]
+	"Ensure #writeStreamDo: send to a directory raises an exception."
+	self
+		should: [directory writeStreamDo: [:stream | ]]
+		raise: FileDoesNotExistException
 ]

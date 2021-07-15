@@ -167,12 +167,11 @@ ifAbsent: absentBlock
 entriesDo: aBlock [
 	"Enumerate through the entries in the provided directory."
 
-	| parent |
-	self
-		entryAt: aPath
-		ifPresent: [:p | parent := p]
-		ifAbsent: [^absentBlock value].
-	parent fileEntriesDo: aBlock
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: []
+		entriesDo: aBlock
 ]
 
 { #category : 'private' }
@@ -197,6 +196,23 @@ fileNamesDo: aBlock [
 		directoryAt: aPath
 		ifAbsent: absentBlock
 		entriesDo: [:entry | entry isFile ifTrue: [aBlock value: entry basename]]
+]
+
+{ #category : 'private' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+entriesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	| parent |
+	self
+		entryAt: aPath
+		ifPresent: [:p | parent := p]
+		ifAbsent: [^absentBlock value].
+	parent isDirectory
+		ifTrue: [parent fileEntriesDo: aBlock]
+		ifFalse: [^notDirectoryBlock value]
 ]
 
 { #category : 'private' }

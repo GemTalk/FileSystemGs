@@ -411,14 +411,12 @@ FileSystemTest >> testFile [
 FileSystemTest >> testFileNames [
 
 	| reference |
-	#('test one' 'test with two' 'test-äöü' 'test.äöü')
+	#('test one' 'test with two' 'test-Ã¤Ã¶Ã¼' 'test.Ã¤Ã¶Ã¼')
 		do: [ :each | 
 			reference := filesystem workingDirectory / each.
 			self assert: reference basename = each.
 			self deny: reference exists.
-			reference
-				writeStreamDo: [ :stream | stream nextPutAll: 'gooly' ]
-				ifPresent: [ self fail ].
+			reference writeStreamDo: [ :stream | stream nextPutAll: 'gooly' ].
 			[ 
 			self assert: reference exists.
 			self
@@ -645,30 +643,4 @@ FileSystemTest >> testWriteStreamDo [
 		true ]).
 	self assert: (filesystem workingDirectory / 'griffle') isFile.
 	self assert: (reference writeStreamDo: [ :stream | true ])
-]
-
-{ #category : 'tests-streams' }
-FileSystemTest >> testWriteStreamDoIfPresent [
-	| reference |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self assert: (reference 
-		writeStreamDo: [ :stream |
-			stream nextPutAll: 'griffle'.
-			true ]
-		ifPresent: [ false ]).
-	self assert: (filesystem workingDirectory / 'griffle') isFile.
-	self assert: (reference 
-		writeStreamDo: [ :stream | true ]
-		ifPresent: [ true ])
-]
-
-{ #category : 'tests-streams' }
-FileSystemTest >> testWriteStreamIfPresent [
-	| reference stream |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	stream := reference writeStreamIfPresent: [ false ].
-	stream nextPutAll: 'griffle'.
-	stream close.
-	self assert: (filesystem workingDirectory / 'griffle') isFile.
-	self assert: (reference writeStreamIfPresent: [ true ])
 ]
