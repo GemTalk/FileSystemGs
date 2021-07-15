@@ -155,17 +155,30 @@ DiskStore >> delete: path [
 { #category : 'private' }
 DiskStore >> directoryAt: aPath
 ifAbsent: absentBlock
+directoryNamesDo: aBlock [
+	"Enumerate through the directory names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo:
+			[:entry | | name |
+			name := entry basename.
+			(entry isDirectory and: [(name = '.' or: [name = '..']) not])
+				ifTrue: [aBlock value: name]]
+]
+
+{ #category : 'private' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
 entriesDo: aBlock [
 	"Enumerate through the entry names in the provided directory."
 
-	| pathString dir dirent |
-	pathString := self stringFromPath: aPath.
-	dir := self libcDirent openDirectoryStreamWithPath: pathString.
-	[[dirent := self libcDirent readFromDirectoryStream: dir.
-	dirent notNil]
-		whileTrue:
-			[aBlock value: dirent]]
-		ensure: [self libcDirent closeDirectoryStream: dir]
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: []
+		entriesDo: aBlock
 ]
 
 { #category : 'private' }
@@ -182,6 +195,41 @@ entryNamesDo: aBlock [
 			name := entry basename.
 			(name = '.' or: [name = '..'])
 				ifFalse: [aBlock value: name]]
+]
+
+{ #category : 'private' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+fileNamesDo: aBlock [
+	"Enumerate through the file names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		entriesDo:
+			[:entry | | name |
+			name := entry basename.
+			entry isFile
+				ifTrue: [aBlock value: name]]
+]
+
+{ #category : 'private' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+entriesDo: aBlock [
+	"Enumerate through the entry names in the provided directory."
+
+	| pathString dir dirent |
+	pathString := self stringFromPath: aPath.
+	dir := [self libcDirent openDirectoryStreamWithPath: pathString]
+		on: ENOTDIR
+		do: [:ex | ^notDirectoryBlock value].
+	[[dirent := self libcDirent readFromDirectoryStream: dir.
+	dirent notNil]
+		whileTrue:
+			[aBlock value: dirent]]
+		ensure: [self libcDirent closeDirectoryStream: dir]
 ]
 
 { #category : 'testing' }

@@ -277,6 +277,7 @@ do: aBlock [
 
 { #category : 'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable [
+	"Returns a list of directories contained in aResolvable"
 
 	| names |
 	names := Array new.
@@ -289,24 +290,27 @@ FileSystem >> directoryNamesAt: aResolvable [
 { #category : 'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable
 do: aBlock [
+	"Enumerates over the directory names in aResolvable"
 
 	self
 		directoryNamesAt: aResolvable
 		ifAbsent: [store signalDirectoryDoesNotExist: (self resolve: aResolvable)]
-		do: [:entry | aBlock value: entry]
+		do: aBlock
 ]
 
 { #category : 'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable
 ifAbsent: anAbsentBlock
 do: aBlock [
+	"Enumerate through the names of directories in aResolvable.
+	Evaluate anAbsentBlock if aResolvable does not exist."
 
 	| path |
 	path := self resolve: aResolvable.
 	store
 		directoryAt: path
 		ifAbsent: [^anAbsentBlock value]
-		directoryNamesDo: [:entry | aBlock value: entry]
+		directoryNamesDo: aBlock
 ]
 
 { #category : 'public' }

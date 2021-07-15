@@ -1,57 +1,72 @@
 "
-SUnit tests for file reference
+SUnit tests for file reference.
+
+This test case assumes that #tearDown will appropriately cleanup the sandbox directory. Files placed anywhere else should be cleaned up by the test itself.
 "
 Class {
 	#name : 'FileReferenceTest',
 	#superclass : 'TestCase',
 	#type : 'variable',
 	#instVars : [
-		'filesystem'
+		'filesystem',
+		'sandbox'
 	],
 	#category : 'FileSystem-Tests-Core'
 }
 
+{ #category : 'tesing' }
+FileReferenceTest class >> isAbstract [
+
+	^self == FileReferenceTest
+]
+
+{ #category : 'tesing' }
+FileReferenceTest class >> shouldInheritSelectors [
+
+	^true
+]
+
 { #category : 'support' }
 FileReferenceTest >> createDirectory: aString [
 
-	filesystem ensureCreateDirectory: (filesystem store pathFromString: aString)
+	| reference |
+	reference := sandbox / aString.
+	reference ensureCreateDirectory.
+	self assert: reference isDirectory.
+	^reference
 ]
 
 { #category : 'support' }
-FileReferenceTest >> createFile: aPathOrString [
+FileReferenceTest >> createFile: aString [
 
-	| path |
-	path := (aPathOrString isKindOf: Path)
-		ifTrue: [aPathOrString]
-		ifFalse: [filesystem store pathFromString: aPathOrString].
-	filesystem ensureCreateDirectory: path parent.
-	(filesystem referenceTo: path) writeStream close
-]
-
-{ #category : 'running' }
-FileReferenceTest >> setUp [
-	super setUp.
-	filesystem := FileSystem memory
+	| reference |
+	reference := sandbox / aString.
+	reference parent ensureCreateDirectory.
+	reference writeStream close.
+	self assert: reference isFile.
+	^reference
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 
-	| ref children |
-	[ filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	children := ref allChildren.
+	| alpha children |
+	[alpha := self createDirectory: 'alpha'.
+	self
+		createDirectory: 'alpha/beta';
+		createDirectory: 'alpha/beta/delta';
+		createDirectory: 'alpha/gamma'.
+	children := alpha allChildren.
 	"all children returns the nodes: '/alpha', '/alpha/beta',  '/alpha/beta/delta', and '/alpha/gamma'."
 	self assert: children size equals: 4.
 	children
 		do: [ :child | 
 			self assert: child class equals: FileReference.
-			self assert: (ref = child or: [ ref contains: child ]) ].
-	self assert: (children collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
+			self assert: (alpha = child or: [ alpha contains: child ]) ].
+	self
+		assert: (children collect: [ :ea | ea basename ]) asSet
+		equals: #('alpha' 'beta' 'gamma' 'delta') asSet]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -59,20 +74,22 @@ FileReferenceTest >> testAllChildren [
 FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
 
-	| ref children |
-	[ filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	children := ref allDirectories.
+	| alpha children |
+	[alpha := self createDirectory: 'alpha'.
+	self
+		createDirectory: 'alpha/beta';
+		createDirectory: 'alpha/beta/delta';
+		createDirectory: 'alpha/gamma'.
+	children := alpha allDirectories.
 	"all children returns the directories: '/alpha', '/alpha/beta', and '/alpha/gamma'."
 	self assert: children size equals: 4.
 	children
 		do: [ :child | 
 			self assert: child class equals: FileReference.
-			self assert: (ref = child or: [ ref contains: child ]) ].
-	self assert: (children collect: [ :ea | ea basename ]) equals: #('alpha' 'beta' 'gamma' 'delta') ]
+			self assert: (alpha = child or: [ alpha contains: child ]) ].
+	self
+		assert: (children collect: [ :ea | ea basename ]) asSet
+		equals: #('alpha' 'beta' 'gamma' 'delta') asSet ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 
@@ -81,40 +98,41 @@ FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
 
-	| ref absolute |
-	ref := filesystem * 'plonk'.
+	| ref absolute absolutePath |
+	ref := sandbox / 'plonk'.
 	absolute := ref asAbsolute.
 	self assert: absolute isAbsolute.
-	self assert: (absolute path at: 1) equals: 'plonk'
+	absolutePath := absolute path.
+	self assert: (absolutePath at: absolutePath size) equals: 'plonk'
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteIdentity [
 	| ref |
-	ref := filesystem / 'plonk'.
+	ref := sandbox / 'plonk'.
 	self assert: ref asAbsolute == ref
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testAsReference [
 	| ref |
-	ref := filesystem * 'plonk'.
+	ref := sandbox / 'plonk'.
 	self assert: ref asFileReference == ref
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testBaseAndExtension [
 	| noExtension simpleExtension complexExtension |
-	noExtension := filesystem * 'plonk'.
+	noExtension := sandbox / 'plonk'.
 	self assert: noExtension extension equals: ''.
 
 	"We create a reference to the plonk/griffle.taz in the context of filesystem"
-	simpleExtension := filesystem * 'plonk' / 'griffle.taz'.
+	simpleExtension := sandbox / 'plonk' / 'griffle.taz'.
 	self assert: simpleExtension base equals: 'griffle'.
 	self assert: simpleExtension extension equals: 'taz'.
 
 	"Note that the extension of a complex extension starts after the last extension delimiter"
-	complexExtension := filesystem * 'plonk' / 'griffle.taz.txt'.
+	complexExtension := sandbox / 'plonk' / 'griffle.taz.txt'.
 	self assert: complexExtension base equals: 'griffle.taz'.
 	self assert: complexExtension extension equals: 'txt'
 ]
@@ -186,42 +204,56 @@ FileReferenceTest >> testCanonicalization [
 
 { #category : 'tests' }
 FileReferenceTest >> testChildDirectories [
-	| childDirectories |
-	[ filesystem createDirectory: '/beta'.
-	filesystem createDirectory: '/gamma'.
-	filesystem / 'delta' writeStreamDo: [ :stream | stream nextPutAll: '1' ].
-	filesystem / 'epsilon' writeStreamDo: [ :stream | stream nextPutAll: '2' ].
-	childDirectories := filesystem root directories.
-	self assert: childDirectories size equals: 2.
-	childDirectories
+
+	| directories beta gamma delta epsilon |
+	[beta := self createDirectory: 'beta'.
+	gamma := self createDirectory: 'gamma'.
+	delta := self createFile: 'delta'.
+	epsilon := self createFile: 'epsilon'.
+	directories := sandbox directories.
+	self
+		assert: directories size
+		equals: 2.
+	directories
 		do: [ :each | 
-			self assert: each class equals: FileReference.
+			self
+				assert: each class
+				equals: FileReference.
 			self
 				assert: each isDirectory
-				description: 'Collection should not contain references to files.' ] ]
-		ensure: [ (filesystem / 'beta') ensureDeleteAll.
-			(filesystem / 'gamma') ensureDeleteAll.
-			(filesystem / 'delta') ensureDelete.
-			(filesystem / 'epsilon') ensureDelete ]
+				description: 'Collection should only contain references to directories.' ] ]
+		ensure:
+			[beta ensureDeleteAll.
+			gamma ensureDeleteAll.
+			delta ensureDelete.
+			epsilon ensureDelete]
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testChildFiles [
-	| childFiles |
-	[ filesystem createDirectory: '/beta'.
-	filesystem createDirectory: '/gamma'.
-	filesystem / 'delta' writeStreamDo: [ :stream | stream nextPutAll: '1' ].
-	filesystem / 'epsilon' writeStreamDo: [ :stream | stream nextPutAll: '2' ].
-	childFiles := filesystem root files.
-	self assert: childFiles size equals: 2.
-	childFiles
+
+	| files beta gamma delta epsilon |
+	[beta := self createDirectory: 'beta'.
+	gamma := self createDirectory: 'gamma'.
+	delta := self createFile: 'delta'.
+	epsilon := self createFile: 'epsilon'.
+	files := sandbox files.
+	self
+		assert: files size
+		equals: 2.
+	files
 		do: [ :each | 
-			self assert: each class equals: FileReference.
-			self assert: each isFile description: 'Collection should not contain references to directories.' ] ]
-		ensure: [ (filesystem / 'beta') ensureDeleteAll.
-			(filesystem / 'gamma') ensureDeleteAll.
-			(filesystem / 'delta') ensureDelete.
-			(filesystem / 'epsilon') ensureDelete ]
+			self
+				assert: each class
+				equals: FileReference.
+			self
+				assert: each isFile
+				description: 'Collection should only contain references to files.' ] ]
+		ensure:
+			[beta ensureDeleteAll.
+			gamma ensureDeleteAll.
+			delta ensureDelete.
+			epsilon ensureDelete]
 ]
 
 { #category : 'tests' }
@@ -244,19 +276,21 @@ FileReferenceTest >> testChildOfReference [
 
 { #category : 'tests' }
 FileReferenceTest >> testChildren [
-	| ref children |
-	[ filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	children := ref children.
+
+	| alpha children |
+	alpha := self createDirectory: 'alpha'.
+	self
+		createFile: 'alpha/beta';
+		createDirectory: 'alpha/gamma';
+		createFile: 'alpha/gamma/delta'.
+	children := alpha children.
 	self assert: children size equals: 2.
 	children
-		do: [ :child | 
+		do:
+			[:child | 
 			self assert: child class equals: FileReference.
-			self assert: (child isChildOf: ref).
-			self assert: (#('beta' 'gamma') includes: child basename) ] ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+			self assert: (child isChildOf: alpha).
+			self assert: (#('beta' 'gamma') includes: child basename)]
 ]
 
 { #category : 'tests' }
@@ -312,15 +346,15 @@ FileReferenceTest >> testCopyAllTo [
 
 	| source destination |
 	self 
-		createDirectory: '/alpha';
-		createDirectory: '/alpha/beta';
-		createFile: '/alpha/theta';
-		createFile: '/alpha/beta/gamma';
-		createFile: '/alpha/beta/delta';
-		createDirectory: '/alpha/epsilon';
-		createFile: '/alpha/epsilon/zeta'.
-	source := filesystem / 'alpha'.
-	destination := filesystem / 'iota'.
+		createDirectory: 'alpha';
+		createDirectory: 'alpha/beta';
+		createFile: 'alpha/theta';
+		createFile: 'alpha/beta/gamma';
+		createFile: 'alpha/beta/delta';
+		createDirectory: 'alpha/epsilon';
+		createFile: 'alpha/epsilon/zeta'.
+	source := sandbox / 'alpha'.
+	destination := sandbox / 'iota'.
 	source copyAllTo: destination.
 	self
 		assert: source isDirectory;
@@ -334,55 +368,50 @@ FileReferenceTest >> testCopyAllTo [
 
 { #category : 'tests' }
 FileReferenceTest >> testDeleteAll [
-	"allChildren returns all the files and folders recursively nested in a reference"
+	"Ensure that #delteAll deletes all a folder and all of its transitive contents."
 
-	[ | ref |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	ref deleteAll.
-	self deny: ref exists.
-	self deny: (ref / 'beta') exists.
-	self deny: (ref / 'beta' / 'delta') exists.
-	self deny: (ref / 'beta' / 'gamma') exists ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+	| alpha beta delta gamma |
+	alpha := self createDirectory: 'alpha'.
+	beta := self createDirectory: 'alpha/beta'.
+	delta := self createDirectory: 'alpha/beta/delta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	alpha deleteAll.
+	self
+		deny: alpha exists;
+		deny: beta exists;
+		deny: delta exists;
+		deny: gamma exists
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testDeleteAllChildren [
-	"allChildren returns all the files and folders recursively nested in a reference"
+	"Ensure that #delteAllChildren deletes all of its transitive contents but not the folder itself."
 
-	[ | ref |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	ref deleteAllChildren.
-	self assert: ref exists.
-	self deny: (ref / 'beta') exists.
-	self deny: (ref / 'beta' / 'delta') exists.
-	self deny: (ref / 'beta' / 'gamma') exists ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+	| alpha beta delta gamma |
+	alpha := self createDirectory: 'alpha'.
+	beta := self createDirectory: 'alpha/beta'.
+	delta := self createDirectory: 'alpha/beta/delta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	alpha deleteAllChildren.
+	self
+		assert: alpha exists;
+		deny: beta exists;
+		deny: delta exists;
+		deny: gamma exists
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testDeleteIfAbsent [
-	| flag reference |
-	flag := false.
-	reference := filesystem / 'plonk'.
-	reference ensureCreateFile.
-	[ reference exists
-		ifFalse: [ self error ].
-	reference deleteIfAbsent: [ flag := true ].
-	self deny: flag.
-	reference exists
-		ifTrue: [ self error ].
-	reference deleteIfAbsent: [ flag := true ].
-	self assert: flag ]
-		ensure: [ reference ensureDelete ]
+
+	| wasAbsent alpha |
+	wasAbsent := false.
+	alpha := self createFile: 'alpha'.
+	alpha deleteIfAbsent: [wasAbsent := true].
+	self
+		deny: wasAbsent;
+		deny: alpha exists.
+	alpha deleteIfAbsent: [wasAbsent := true].
+	self assert: wasAbsent
 ]
 
 { #category : 'tests' }
@@ -425,41 +454,40 @@ FileReferenceTest >> testDoesntContainReferencePath [
 
 { #category : 'tests' }
 FileReferenceTest >> testEnsureDelete [
-	| reference |
-	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
-	reference ensureCreateFile.
-	[ self assert: reference exists.
-	reference ensureDelete.
-	self deny: reference exists	"No-op if file does not exist" ]
-		ensure: [ reference ensureDelete ]
+
+	| plonk |
+	plonk := self createFile: 'plonk'.
+	plonk ensureDelete.
+	self deny: plonk exists.
+	self
+		shouldnt: [plonk ensureDelete]
+		raise: Error
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testEnsureDeleteAll [
-	| reference childReference |
-	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
-	reference ensureCreateDirectory.
-	[ self assert: reference exists.
-	childReference := reference / 'child'.
-	childReference ensureCreateFile.
-	self assert: childReference exists.
-	reference ensureDeleteAll.
-	self deny: childReference exists.
-	self deny: reference exists ]
-		ensure: [ reference ensureDeleteAll ]
+
+	| parent child |
+	parent := self createDirectory: 'parent'.
+	child := self createFile: 'parent/child'.
+	parent ensureDeleteAll.
+	self
+		deny: parent exists;
+		deny: child exists.
+	self
+		shouldnt: [parent ensureDeleteAll]
+		raise: Error
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testEnsureDeleteNonEmptyDirectory [
-	| reference childReference |
-	reference := filesystem / 'plonk'.	"Deletes the file if it exists"
-	reference ensureCreateDirectory.
-	[ self assert: reference exists.
-	childReference := reference / 'child'.
-	childReference ensureCreateFile.
-	self assert: childReference exists.
-	self should: [ reference ensureDelete ] raise: DirectoryIsNotEmpty ]
-		ensure: [ reference ensureDeleteAll ]
+
+	| parent child |
+	parent := self createDirectory: 'parent'.
+	child := self createFile: 'parent/child'.
+	self
+		should: [parent ensureDelete]
+		raise: DirectoryIsNotEmpty
 ]
 
 { #category : 'tests' }
@@ -483,13 +511,20 @@ FileReferenceTest >> testEqualityRelativeVsAbsolute [
 
 { #category : 'tests' }
 FileReferenceTest >> testExists [
-	| reference |
-	reference := filesystem / 'plonk'.
-	reference ensureCreateFile.
-	[ self assert: reference exists.
-	reference delete.
-	self deny: reference exists ]
-		ensure: [ reference ensureDelete ]
+
+	| alpha |
+	alpha := sandbox / 'alpha'.
+	"Test file"
+	self deny: alpha exists.
+	alpha createFile.
+	self assert: alpha exists.
+	alpha delete.
+	self deny: alpha exists.
+	"Test directory"
+	alpha createDirectory.
+	self assert: alpha exists.
+	alpha delete.
+	self deny: alpha exists
 ]
 
 { #category : 'tests' }
@@ -504,17 +539,16 @@ FileReferenceTest >> testGrandchildOfReference [
 { #category : 'tests' }
 FileReferenceTest >> testHasChildren [
 
-	[ | ref |
-	filesystem createDirectory: '/alpha'.
-	filesystem createDirectory: '/alpha/beta'.
-	filesystem createDirectory: '/alpha/beta/delta'.
-	filesystem createDirectory: '/alpha/gamma'.
-	ref := filesystem / 'alpha'.
-	self assert: ref hasChildren.
-	self assert: (ref / 'beta') hasChildren.
-	self deny: (ref / 'beta' / 'delta') hasChildren.
-	self deny: (ref / 'beta' / 'gamma') hasChildren ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+	| alpha beta delta gamma |
+	alpha := self createDirectory: 'alpha'.
+	beta := self createDirectory: 'alpha/beta'.
+	delta := self createFile: 'alpha/beta/delta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	self
+		assert: alpha hasChildren;
+		assert: beta hasChildren;
+		deny: delta hasChildren;
+		deny: gamma hasChildren
 ]
 
 { #category : 'tests' }

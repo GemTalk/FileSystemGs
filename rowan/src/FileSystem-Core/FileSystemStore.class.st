@@ -130,6 +130,15 @@ entryNamesDo: aBlock [
 	self subclassResponsibility
 ]
 
+{ #category : 'private' }
+FileSystemStore >> directoryAt: aPath
+ifAbsent: absentBlock
+fileNamesDo: aBlock [
+	"Enumerate through the file names in the provided directory."
+
+	self subclassResponsibility
+]
+
 { #category : 'public' }
 FileSystemStore >> ensureCreateDirectory: aPath [
 	(self isDirectory: aPath) ifTrue: [ ^ self ].
