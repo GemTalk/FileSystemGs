@@ -4,16 +4,23 @@ Class {
 	#category : 'FileSystem-Tests-Disk'
 }
 
+{ #category : 'accessing' }
+DiskFileReferenceTest >> sandboxName [
+	"name of the sandbox directory"
+
+	^'DiskFileReferenceTest-Sandbox'
+]
+
 { #category : 'running' }
 DiskFileReferenceTest >> setUp [
 	super setUp.
 	filesystem := FileSystem disk.
-	sandbox := FileLocator temp asFileReference / 'DiskFileReferenceTest-Sandbox'.
+	sandbox := FileLocator temp asFileReference / self sandboxName.
 	self
 		assert: sandbox fileSystem
 		equals: filesystem.
 	self deny: sandbox exists.
-	sandbox ensureCreateDirectory
+	sandbox createDirectory
 ]
 
 { #category : 'running' }

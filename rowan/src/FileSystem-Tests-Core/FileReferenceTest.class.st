@@ -62,12 +62,25 @@ FileReferenceTest >> defaultFileContents [
 	^self class name asString, '>>', self selector asString
 ]
 
+{ #category : 'accessing' }
+FileReferenceTest >> filesystem [
+
+	^filesystem
+]
+
+{ #category : 'accessing' }
+FileReferenceTest >> sandboxName [
+	"name of the sandbox directory"
+
+	^self subclassResponsibility
+]
+
 { #category : 'tests' }
 FileReferenceTest >> testAllChildren [
 	"allChildren returns all the files and folders recursively nested in a reference"
 
 	| alpha children |
-	[alpha := self createDirectory: 'alpha'.
+	alpha := self createDirectory: 'alpha'.
 	self
 		createDirectory: 'alpha/beta';
 		createDirectory: 'alpha/beta/delta';
@@ -81,8 +94,7 @@ FileReferenceTest >> testAllChildren [
 			self assert: (alpha = child or: [ alpha contains: child ]) ].
 	self
 		assert: (children collect: [ :ea | ea basename ]) asSet
-		equals: #('alpha' 'beta' 'gamma' 'delta') asSet]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+		equals: #('alpha' 'beta' 'gamma' 'delta') asSet
 ]
 
 { #category : 'tests' }
@@ -90,7 +102,7 @@ FileReferenceTest >> testAllDirectories [
 	"allDirectories returns all folders recursively nested in a reference"
 
 	| alpha children |
-	[alpha := self createDirectory: 'alpha'.
+	alpha := self createDirectory: 'alpha'.
 	self
 		createDirectory: 'alpha/beta';
 		createDirectory: 'alpha/beta/delta';
@@ -104,8 +116,7 @@ FileReferenceTest >> testAllDirectories [
 			self assert: (alpha = child or: [ alpha contains: child ]) ].
 	self
 		assert: (children collect: [ :ea | ea basename ]) asSet
-		equals: #('alpha' 'beta' 'gamma' 'delta') asSet ]
-		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
+		equals: #('alpha' 'beta' 'gamma' 'delta') asSet
 ]
 
 { #category : 'tests' }
@@ -154,39 +165,52 @@ FileReferenceTest >> testBaseAndExtension [
 
 { #category : 'tests' }
 FileReferenceTest >> testBasename [
-	| ref |
-	ref := filesystem root.
-	self assert: ref basename equals: '/'.
-	ref := filesystem * 'plonk' / 'griffle'.
-	self assert: ref basename equals: 'griffle'.
-	ref := filesystem * 'plonk' / 'griffle.taz'.
-	self assert: ref basename equals: 'griffle.taz'
+
+	| alpha beta gamma |
+	alpha := sandbox / 'alpha'.
+	beta := alpha / 'beta'.
+	gamma := alpha / 'gamma.delta'.
+	self
+		assert: sandbox basename
+		equals: self sandboxName.
+	self
+		assert: beta basename
+		equals: 'beta'.
+	self
+		assert: gamma basename
+		equals: 'gamma.delta'
 ]
 
-{ #category : 'tests' }
+{ #category : 'other' }
 FileReferenceTest >> testBasenameWithoutExtension [
 	
-	| ref |	
-	ref := filesystem root.
-	self assert: ref basename equals: '/'.
-	
-	ref := filesystem * 'plonk' / 'griffle'.
-	self assert: ref basenameWithoutExtension equals: 'griffle'.
-	self assert: (ref basenameWithoutExtension: 'griffle') equals: 'griffle'.
-	self assert: (ref basenameWithoutExtension: 'taz') equals: 'griffle'.
-	
-	ref := filesystem * 'plonk' / 'griffle.taz'.
-	self assert: ref basenameWithoutExtension equals: 'griffle'.
-	self assert: (ref basenameWithoutExtension: 'taz') equals: 'griffle'.
-	self assert: (ref basenameWithoutExtension: 'griffle.taz') equals: 'griffle.taz'.
-	self assert: (ref basenameWithoutExtension: 'zork') equals: 'griffle.taz'.
-	
-	ref := filesystem * 'plonk' / 'griffle.taz.zork'.
-	self assert: ref basenameWithoutExtension equals: 'griffle.taz'.
-	self assert: (ref basenameWithoutExtension: 'zork') equals: 'griffle.taz'.
-	self assert: (ref basenameWithoutExtension: 'taz.zork') equals: 'griffle'.
-	self assert: (ref basenameWithoutExtension: 'griffle.taz.zork') equals: 'griffle.taz.zork'.
-	self assert: (ref basenameWithoutExtension: 'taz') equals: 'griffle.taz.zork'.
+	| alpha beta |
+	alpha := sandbox / 'alpha'.
+	beta := alpha / 'beta.gamma.delta'.
+	self
+		assert: alpha basenameWithoutExtension
+		equals: 'alpha'.
+	self
+		assert: (alpha basenameWithoutExtension: 'alpha')
+		equals: 'alpha'.
+	self
+		assert: (alpha basenameWithoutExtension: 'epsilon')
+		equals: 'alpha'.
+	self
+		assert: beta basenameWithoutExtension
+		equals: 'beta.gamma'.
+	self
+		assert: (beta basenameWithoutExtension: 'delta')
+		equals: 'beta.gamma'.
+	self
+		assert: (beta basenameWithoutExtension: 'gamma.delta')
+		equals: 'beta'.
+	self
+		assert: (beta basenameWithoutExtension: 'gamma')
+		equals: 'beta.gamma.delta'.
+	self
+		assert: (beta basenameWithoutExtension: 'epsilon')
+		equals: 'beta.gamma.delta'
 ]
 
 { #category : 'tests' }
@@ -272,21 +296,18 @@ FileReferenceTest >> testChildFiles [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testChildOfPath [
-	| parent  child |
-	parent := Path / 'griffle'.
-	child := filesystem / 'griffle' / 'nurb'.
-	self deny: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
-]
+FileReferenceTest >> testChildOf [
 
-{ #category : 'tests' }
-FileReferenceTest >> testChildOfReference [
-	| parent  child |
-	parent := filesystem / 'griffle'.
-	child := filesystem / 'griffle' / 'nurb'.
-	self assert: (child isChildOf: parent).
-	self deny: (parent isChildOf: child).
+	| alpha beta alphaPath |
+	alpha := sandbox / 'alpha'.
+	beta := alpha / 'beta'.
+	alphaPath := alpha path.
+	self
+		assert: (alpha isChildOf: sandbox);
+		deny: (alpha isChildOf: beta);
+		assert: (beta isChildOf: alpha);
+		deny: (beta isChildOf: sandbox);
+		deny: (beta isChildOf: alphaPath)
 ]
 
 { #category : 'tests' }
@@ -310,18 +331,34 @@ FileReferenceTest >> testChildren [
 
 { #category : 'tests' }
 FileReferenceTest >> testCommaAddsExtension [
-	| ref result |
-	ref := filesystem * 'plonk'.
-	result := ref , 'griffle'.
-	self assert: result basename equals: 'plonk.griffle'
+
+	| justName withExtension doubleExtension |
+	justName := sandbox / 'just-name'.
+	withExtension := justName , 'extension'.
+	doubleExtension := withExtension , 'extension'.
+	self
+		assert: withExtension basename
+		equals: 'just-name.extension'.
+	self
+		assert: doubleExtension basename
+		equals: 'just-name.extension.extension'
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testCommaAddsExtensionAgain [
-	| ref result |
-	ref := filesystem * 'plonk.griffle'.
-	result := ref , 'nurp'.
-	self assert: result basename equals: 'plonk.griffle.nurp'
+FileReferenceTest >> testContains [
+
+	| alpha beta secondFileSystem secondAlpha |
+	alpha := self filesystem root / 'alpha'.
+	beta := alpha / 'beta'.
+	self
+		assert: (alpha contains: beta);
+		assert: (alpha contains: beta path);
+		deny: (beta contains: alpha).
+	secondFileSystem := FileSystem store: MemoryStore new.
+	secondAlpha := secondFileSystem root / 'alpha'.
+	self
+		deny: (secondAlpha contains: beta);
+		assert: (secondAlpha contains: beta path)
 ]
 
 { #category : 'tests' }
@@ -332,27 +369,16 @@ FileReferenceTest >> testContainsLocator [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testContainsPath [
-	| ref |
-	ref := filesystem  * 'griffle'.
-	self assert: (ref contains: (ref / 'nurp') path)
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testContainsReference [
-	| ref |
-	ref := filesystem * 'griffle'.
-	self assert: (ref contains: ref / 'nurp')
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testContents [
-	| ref contents |
-	contents := '12345 abcdf!'.
-	ref := filesystem * 'file'.
-	[ ref writeStreamDo: [ :stream | stream nextPutAll: contents ].
-	self assert: ref contents asString equals: contents ]
-		ensure: [ ref ensureDelete ]
+
+	| contents file |
+	contents := 'Hello, Smalltalk!'.
+	file := self
+		createFile: 'file'
+		contents: contents.
+	self
+		assert: file contents
+		equals: contents
 ]
 
 { #category : 'tests' }
@@ -427,22 +453,6 @@ FileReferenceTest >> testDeleteIfAbsent [
 		deny: alpha exists.
 	alpha deleteIfAbsent: [wasAbsent := true].
 	self assert: wasAbsent
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testDoesContainReferenceFileSystem [
-	| ref other |
-	ref := filesystem * 'griffle'.
-	other := filesystem / 'griffle' / 'nurp'.
-	self assert: (ref contains: other)
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testDoesNotContainReferenceWhenUsingDifferentInstancesOfMemoryFileSystem [
-	| ref other |
-	ref := filesystem * 'griffle'.
-	other := FileSystem memory / 'griffle' / 'nurp'.
-	self deny: (ref contains: other)
 ]
 
 { #category : 'tests' }
