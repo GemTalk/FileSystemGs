@@ -13,12 +13,14 @@ DiskFileReferenceTest >> sandboxName [
 
 { #category : 'running' }
 DiskFileReferenceTest >> setUp [
+
+	| fileSystem |
 	super setUp.
-	filesystem := FileSystem disk.
+	fileSystem := FileSystem disk.
 	sandbox := FileLocator temp asFileReference / self sandboxName.
 	self
 		assert: sandbox fileSystem
-		equals: filesystem.
+		equals: fileSystem.
 	self deny: sandbox exists.
 	sandbox createDirectory
 ]

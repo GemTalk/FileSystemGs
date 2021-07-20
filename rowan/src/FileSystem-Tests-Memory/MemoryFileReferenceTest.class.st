@@ -15,8 +15,7 @@ MemoryFileReferenceTest >> sandboxName [
 MemoryFileReferenceTest >> setUp [
 
 	super setUp.
-	filesystem := FileSystem memory.
-	sandbox := filesystem root / self sandboxName.
+	sandbox := FileSystem memory root / self sandboxName.
 	self deny: sandbox exists.
 	sandbox createDirectory
 ]

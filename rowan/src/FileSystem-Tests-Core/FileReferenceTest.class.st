@@ -8,7 +8,6 @@ Class {
 	#superclass : 'TestCase',
 	#type : 'variable',
 	#instVars : [
-		'filesystem',
 		'sandbox'
 	],
 	#category : 'FileSystem-Tests-Core'
@@ -24,6 +23,13 @@ FileReferenceTest class >> isAbstract [
 FileReferenceTest class >> shouldInheritSelectors [
 
 	^true
+]
+
+{ #category : 'asserting' }
+FileReferenceTest >> assert: anObject
+identicalTo: bObject [
+
+	^self assert: anObject == bObject
 ]
 
 { #category : 'support' }
@@ -62,10 +68,17 @@ FileReferenceTest >> defaultFileContents [
 	^self class name asString, '>>', self selector asString
 ]
 
-{ #category : 'accessing' }
-FileReferenceTest >> filesystem [
+{ #category : 'asserting' }
+FileReferenceTest >> deny: anObject
+identicalTo: bObject [
 
-	^filesystem
+	^self deny: anObject == bObject
+]
+
+{ #category : 'other' }
+FileReferenceTest >> fileSystem [
+
+	^sandbox fileSystem
 ]
 
 { #category : 'accessing' }
@@ -296,21 +309,6 @@ FileReferenceTest >> testChildFiles [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testChildOf [
-
-	| alpha beta alphaPath |
-	alpha := sandbox / 'alpha'.
-	beta := alpha / 'beta'.
-	alphaPath := alpha path.
-	self
-		assert: (alpha isChildOf: sandbox);
-		deny: (alpha isChildOf: beta);
-		assert: (beta isChildOf: alpha);
-		deny: (beta isChildOf: sandbox);
-		deny: (beta isChildOf: alphaPath)
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testChildren [
 
 	| alpha children |
@@ -347,18 +345,23 @@ FileReferenceTest >> testCommaAddsExtension [
 { #category : 'tests' }
 FileReferenceTest >> testContains [
 
-	| alpha beta secondFileSystem secondAlpha |
-	alpha := self filesystem root / 'alpha'.
+	| alpha beta secondFileSystem secondAlpha locator |
+	alpha := self fileSystem root / 'alpha'.
 	beta := alpha / 'beta'.
 	self
 		assert: (alpha contains: beta);
 		assert: (alpha contains: beta path);
-		deny: (beta contains: alpha).
+		deny: (beta contains: alpha);
+		deny: (beta contains: alpha path).
 	secondFileSystem := FileSystem store: MemoryStore new.
 	secondAlpha := secondFileSystem root / 'alpha'.
 	self
 		deny: (secondAlpha contains: beta);
-		assert: (secondAlpha contains: beta path)
+		assert: (secondAlpha contains: beta path).
+	locator := FileLocator image.
+	self
+		assert: (locator resolve parent contains: locator);
+		deny: (alpha contains: locator)
 ]
 
 { #category : 'tests' }
@@ -456,28 +459,6 @@ FileReferenceTest >> testDeleteIfAbsent [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testDoesntContainLocator [
-	| ref |
-	ref := filesystem * 'griffle'. 
-	self deny: (ref contains: FileLocator image)
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testDoesntContainPath [
-	| ref |
-	ref := filesystem * 'griffle'.
-	self deny: (ref contains: (Path * 'nurp'))
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testDoesntContainReferencePath [
-	| ref other |
-	ref := filesystem * 'griffle'.
-	other := filesystem * 'nurp'.
-	self deny: (ref contains: other)
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testEnsureDelete [
 
 	| plonk |
@@ -517,11 +498,20 @@ FileReferenceTest >> testEnsureDeleteNonEmptyDirectory [
 
 { #category : 'tests' }
 FileReferenceTest >> testEqual [
-	| a b |
-	a := filesystem * 'plonk'.
-	b := filesystem * 'plonk'.
-	self deny: a == b.
-	self assert: a equals: b
+
+	| alpha alpha2 beta |
+	alpha := sandbox / 'alpha'.
+	alpha2 := sandbox / 'alpha'.
+	beta := alpha / 'beta'.
+	self
+		deny: alpha
+		identicalTo: alpha2.
+	self
+		assert: alpha
+		equals: alpha2.
+	self
+		deny: alpha
+		equals: beta
 ]
 
 { #category : 'tests' }
@@ -550,15 +540,6 @@ FileReferenceTest >> testExists [
 	self assert: alpha exists.
 	alpha delete.
 	self deny: alpha exists
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testGrandchildOfReference [
-	| griffle  nurb |
-	griffle := filesystem / 'griffle'.
-	nurb := filesystem / 'griffle' / 'plonk' / 'nurb'.
-	self deny: (griffle isChildOf: nurb).
-	self deny: (nurb isChildOf: griffle).
 ]
 
 { #category : 'tests' }
@@ -608,118 +589,111 @@ FileReferenceTest >> testHasFiles [
 
 { #category : 'tests' }
 FileReferenceTest >> testIndicator [
-	| ref |
-	ref := filesystem * 'plonk' / 'griffle'.
-	self deny: ref exists.
-	self assert: ref indicator equals: '?'.
-	ref := filesystem workingDirectory / 'plonk'.
-	self deny: ref exists.
-	ref createDirectory.
-	[ self assert: ref exists.
-	self assert: ref isDirectory.
-	self assert: ref indicator equals: '/' ]
-		ensure: [ ref delete ].
-	ref := filesystem workingDirectory / 'plonk'.
-	self deny: ref exists.
-	[ref writeStreamDo: [ :stream | stream nextPutAll: 'foo' ].
-	self assert: ref exists.
-	self assert: ref isFile.
-	self assert: ref indicator equals: '' ]
-		ensure: [ ref delete ]
+
+	| referenceToNothing file |
+	referenceToNothing := sandbox / 'do-not-create-this-file-or-you-will-break-tests'.
+	file := self createFile: 'file'.
+	self
+		assert: sandbox indicator
+		equals: '/'.
+	self
+		assert: referenceToNothing indicator
+		equals: '?'.
+	self
+		assert: file indicator
+		equals: ''
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testIsAbsolute [
-	self assert: (filesystem / 'plonk') isAbsolute
+
+	self
+		assert: (sandbox / 'plonk') isAbsolute;
+		deny: FileLocator workingDirectory resolve isAbsolute
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testIsNotAbsolute [
-	self deny: (filesystem * 'plonk') isAbsolute
+FileReferenceTest >> testIsChildOf [
+
+	| alpha beta gamma alphaPath |
+	alpha := sandbox / 'alpha'.
+	beta := alpha / 'beta'.
+	gamma := alpha / 'gamma'.
+	alphaPath := alpha path.
+	self
+		assert: (alpha isChildOf: sandbox);
+		deny: (alpha isChildOf: beta);
+		assert: (beta isChildOf: alpha);
+		deny: (beta isChildOf: sandbox);
+		deny: (beta isChildOf: alphaPath);
+		deny: (gamma isChildOf: beta);
+		deny: (beta isChildOf: gamma)
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testIsNotRelative [
-	self deny: (filesystem / 'plonk') isRelative
+FileReferenceTest >> testIsDirectory [
+
+	| doesNotExist file |
+	doesNotExist := sandbox / 'do-not-create-or-you-will-break-a-test'.
+	file := self createFile: 'file'.
+	self
+		assert: self fileSystem root isDirectory;
+		assert: sandbox isDirectory;
+		deny: doesNotExist isDirectory;
+		deny: file isDirectory
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testIsNotRoot [
-	self deny: (filesystem / 'plonk') isRoot
+FileReferenceTest >> testIsFile [
+
+	| doesNotExist file |
+	doesNotExist := sandbox / 'do-not-create-or-you-will-break-a-test'.
+	file := self createFile: 'file'.
+	self
+		deny: self fileSystem root isFile;
+		deny: sandbox isFile;
+		deny: doesNotExist isFile;
+		assert: file isFile
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testIsRelative [
-	self assert: (filesystem * 'plonk') isRelative
+
+	self
+		assert: FileLocator workingDirectory resolve isRelative;
+		deny: (sandbox / 'plonk') isRelative
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testIsRoot [
-	self assert: (filesystem root) isRoot
+
+	self
+		assert: self fileSystem root isRoot;
+		deny: sandbox isRoot
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testMakeRelative [
 
 	| parent child relative |
-	parent := filesystem / 'griffle'.
-	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
+	parent := sandbox / 'griffle'.
+	child := sandbox / 'griffle' / 'plonk' / 'nurb'.
 	relative := parent makeRelative: child.
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testParent [
-	| ref parent |
-	ref := filesystem * 'plonk' / 'griffle'.
-	parent := ref parent.
-	self assert: parent class = ref class.
-	self assert: (parent path at: 1) = 'plonk'
-]
 
-{ #category : 'tests' }
-FileReferenceTest >> testParentResolutionWithAbsoluteReference [
-	| base relative absolute |
-	base := filesystem / '/plonk' / 'pinto'.
-	relative := filesystem / 'griffle' / 'zonk'.
-	absolute := base resolve: relative.
-	self assert: absolute fileSystem == relative fileSystem.
-	self assert: absolute isAbsolute.
-	self assert: (absolute path at: 1) equals: 'griffle'.
-	self assert: (absolute path at: 2) equals: 'zonk'
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testParentResolutionWithPath [
-	| base relative absolute |
-	base := filesystem / 'plonk' / 'pinto'.
-	relative := Path parent / 'griffle' / 'zonk'.
-	absolute := base resolve: relative.
-	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testParentResolutionWithReference [
-	| base relative absolute |
-	base := (filesystem / 'plonk' / 'pinto').
-	relative := (filesystem referenceTo: '../griffle/zonk').
-	absolute := base resolve: relative.
-	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk').
-	
-	
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testParentResolutionWithRemoteReference [
-	| base relative absolute |
-	base := filesystem / 'plonk' / 'pinto'.
-	relative := filesystem referenceTo: '../griffle/zonk'.
-	absolute := base resolve: relative.
-	self assert: absolute isAbsolute.
-	self assert: absolute path segments equals: #('plonk' 'pinto' '..' 'griffle' 'zonk')
+	| root reference |
+	root := self fileSystem root.
+	reference := sandbox / 'target'.
+	self
+		assert: root parent
+		equals: root.
+	self
+		assert: reference parent
+		equals: sandbox
 ]
 
 { #category : 'tests' }
@@ -739,16 +713,7 @@ FileReferenceTest >> testParentUpTo [
 		equals: b.
 	self
 		assert: (c parentUpTo: 'd')
-		equals: filesystem root.
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testPathRelativeTo [
-	| parent childPath relative |
-	parent := filesystem / 'griffle'.
-	childPath := Path / 'griffle' / 'plonk' / 'nurb'.
-	relative := childPath relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+		equals: self fileSystem root.
 ]
 
 { #category : 'tests' }
@@ -815,15 +780,6 @@ FileReferenceTest >> testReadStreamDoIfAbsent [
 		equals: #'test-pass-marker'
 ]
 
-{ #category : 'tests stream' }
-FileReferenceTest >> testReadStreamDoNotFound [
-	| ref |
-	ref := filesystem / 'plonk'.
-	self
-		should: [ref readStreamDo: [:s|]]
-		raise: FileDoesNotExistException
-]
-
 { #category : 'tests' }
 FileReferenceTest >> testReadStreamIfAbsent [
 
@@ -847,21 +803,20 @@ FileReferenceTest >> testReadStreamIfAbsent [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testRelativeToPath [
-	| parentPath child relative |
-	parentPath := Path / 'griffle'.
-	child := filesystem / 'griffle' / 'plonk' / 'nurb'.
-	relative := child relativeTo: parentPath.
-	self assert: relative = (Path * 'plonk' / 'nurb')
-]
+FileReferenceTest >> testRelativeTo [
 
-{ #category : 'tests' }
-FileReferenceTest >> testRelativeToReference [
-	| parent child relative |
-	parent := filesystem / 'griffle'.
-	child := filesystem  / 'griffle' / 'plonk' / 'nurb'.
-	relative := child relativeTo: parent.
-	self assert: relative = (Path * 'plonk' / 'nurb')
+	| alpha beta reference path result |
+	alpha := sandbox / 'alpha'.
+	beta := alpha / 'beta'.
+	self
+		assert: (beta relativeTo: sandbox)
+		equals: Path * 'alpha' / 'beta'.
+	self
+		assert: (beta relativeTo: sandbox path)
+		equals: Path * 'alpha' / 'beta'.
+	self
+		assert: (alpha relativeTo: beta)
+		equals: Path * '..'
 ]
 
 { #category : 'tests' }
@@ -895,57 +850,39 @@ FileReferenceTest >> testRenameTargetExists [
 
 { #category : 'tests' }
 FileReferenceTest >> testResolve [
-	| ref |
-	ref := filesystem / 'griffle'.
-	self assert: ref resolve == ref
-]
 
-{ #category : 'tests' }
-FileReferenceTest >> testRootIsDirectory [
-
-	self assert: (filesystem root) isDirectory
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testRootParent [
-	| root |
-	root := filesystem root.
-	self assert: root parent == root
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testSiblingOfReference [
-	| griffle  nurb |
-	griffle := filesystem / 'griffle'.
-	nurb := filesystem / 'nurb'.
-	self deny: (griffle isChildOf: nurb).
-	self deny: (nurb isChildOf: griffle).
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testSimpleResolution [
-	| base relative absolute |
-	base := filesystem / 'plonk'.
-	relative := (Path * 'griffle') / 'zonk'.
-	absolute := base resolve: relative.
-	self assert: absolute isAbsolute.
-	self assert: (absolute path at: 1) = 'plonk'.
-	self assert: (absolute path at: 2) = 'griffle'.
-	self assert: (absolute path at: 3) = 'zonk'.
-	
-	
+	| targetReference absolutePath relativePath absoluteReference relativeReference |
+	targetReference := sandbox / 'target'.
+	self
+		assert: targetReference resolve
+		identicalTo: targetReference.
+	absolutePath := targetReference absolutePath.
+	self
+		assert: (sandbox resolve: absolutePath)
+		equals: targetReference.
+	relativePath := Path * 'target'.
+	self
+		assert: (sandbox resolve: relativePath)
+		equals: targetReference.
+	absoluteReference := sandbox / 'target'.
+	self
+		assert: (sandbox resolve: absoluteReference)
+		equals: targetReference.
+	relativeReference := self fileSystem referenceTo: relativePath.
+	self assert: relativeReference isRelative.
+	self
+		assert: (sandbox resolve: relativeReference)
+		equals: targetReference
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testSlash [
-	| ref result |
-	ref := filesystem * 'plonk'.
-	result := ref / 'griffle'.
-	self assert: result class = ref class.
-	self assert: result  isRelative.
-	self assert: (result path at: 1) = 'plonk'.
-	self assert: (result path at: 2) = 'griffle'.
 
+	| alpha |
+	alpha := sandbox / 'alpha'.
+	self
+		assert: alpha parent
+		equals: sandbox
 ]
 
 { #category : 'tests' }
@@ -954,22 +891,6 @@ FileReferenceTest >> testTempFilePrefixSuffix [
 	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
 	self assert: (fileRef isKindOf: FileReference).
 	self assert: fileRef exists not.
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testUnequalContent [
-	| a b |
-	a := filesystem * 'plonk'.
-	b := filesystem * 'griffle'.
-	self deny: a = b.
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testUnequalSize [
-	| a b |
-	a := filesystem * 'plonk'.
-	b := filesystem / 'plonk' / 'griffle'.
-	self deny: a = b.
 ]
 
 { #category : 'tests' }
@@ -986,38 +907,48 @@ FileReferenceTest >> testUpToAll [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testWithExtentionAddsExtension [
-	| ref result |
-	ref := filesystem * 'plonk'.
-	result := ref withExtension: 'griffle'.
-	self assert: result isRelative.
-	self assert: result basename = 'plonk.griffle'
-]
+FileReferenceTest >> testWithExtension [
 
-{ #category : 'tests' }
-FileReferenceTest >> testWithExtentionReplacesExtension [
-	| ref result |
-	ref := filesystem * 'plonk.griffle'.
-	result := ref withExtension: 'nurp'.
-	self assert: result isRelative.
-	self assert: result basename = 'plonk.nurp'
+	| name withExtension replacedExtension |
+	name := sandbox / 'name'.
+	withExtension := name withExtension: 'extension'.
+	replacedExtension := withExtension withExtension: 'replaced'.
+	self
+		assert: withExtension
+		equals: sandbox / 'name.extension'.
+	self
+		assert: replacedExtension
+		equals: sandbox / 'name.replaced'
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testWithoutExtension [
-	| ref newRef |
-	ref := filesystem * 'plonk' / 'griffle.txt'.
-	newRef := ref withoutExtension.
-	self assert: newRef parent equals: ref parent.
-	self assert: newRef basename equals: 'griffle'
+
+	| reference result |
+	reference := sandbox / 'alpha.beta.gamma'.
+	reference := reference withoutExtension.
+	self
+		assert: reference
+		equals: sandbox / 'alpha.beta'.
+	reference := reference withoutExtension.
+	self
+		assert: reference
+		equals: sandbox / 'alpha'.
+	reference := reference withoutExtension.
+	self
+		assert: reference
+		equals: sandbox / 'alpha'
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testWorkingDirectoryParent [
-	| wd |
-	wd := filesystem referenceTo: Path workingDirectory.
-	self assert: wd parent path size = 1.
-	self assert: (wd parent path at: 1) = '..'.
+
+	| wd  parent |
+	wd := self fileSystem referenceTo: Path workingDirectory.
+	parent := wd parent.
+	self
+		assert: parent
+		equals: (self fileSystem referenceTo: Path * '..')
 ]
 
 { #category : 'tests' }
