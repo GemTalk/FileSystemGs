@@ -21,7 +21,6 @@ Class {
 		'store'
 	],
 	#gs_options : [
-		'instancesNonPersistent'
 	],
 	#category : 'FileSystem-Core'
 }

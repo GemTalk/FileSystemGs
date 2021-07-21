@@ -19,6 +19,12 @@ Class {
 }
 
 { #category : 'Initializing - private' }
+_libcDirent class >> initialize [
+ 
+  self initializeFunctions
+]
+
+{ #category : 'Initializing - private' }
 _libcDirent class >> initializeFunction_alphasort_inLibrary: cLibrary [
 
 	Functionalphasort := CCallout

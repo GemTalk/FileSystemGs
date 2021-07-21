@@ -91,6 +91,12 @@ Class {
 }
 
 { #category : 'Initializing - private' }
+_libcStdio class >> initialize [
+
+  self initializeFunctions
+]
+
+{ #category : 'Initializing - private' }
 _libcStdio class >> initializeFunction___getdelim_inLibrary: cLibrary [
 
 	Function__getdelim := CCallout

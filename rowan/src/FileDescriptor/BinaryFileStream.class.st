@@ -44,7 +44,7 @@ BinaryFileStream >> contents [
 			[:stream | | bytes |
 			[bytes := descriptor read: 4096.
 			stream nextPutAll: bytes.
-			bytes == 4096] whileTrue]
+			bytes size == 4096] whileTrue]
 ]
 
 { #category : 'accessing' }
@@ -97,7 +97,7 @@ BinaryFileStream >> position [
 { #category : 'positioning' }
 BinaryFileStream >> setToEnd [
 
-	Error signal
+  ^descriptor setToEnd
 ]
 
 { #category : 'accessing' }
@@ -105,3 +105,11 @@ BinaryFileStream >> size [
 
 	^descriptor size
 ]
+
+{ #category : 'accessing' }
+BinaryFileStream >> wrappedStreamName [
+  "Note: This should be updated to return the actual file path."
+
+  ^''
+]
+

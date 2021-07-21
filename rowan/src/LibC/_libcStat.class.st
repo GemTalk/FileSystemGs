@@ -30,6 +30,12 @@ Class {
 }
 
 { #category : 'Initializing - private' }
+_libcStat class >> initialize [
+
+  self initializeFunctions
+]
+
+{ #category : 'Initializing - private' }
 _libcStat class >> initializeFunction___fxstat_inLibrary: cLibrary [
 
 	Function__fxstat := CCallout

@@ -102,3 +102,9 @@ ZnEncodedStream >> truncate: anInteger [
 ZnEncodedStream >> wrappedStream [
 	^ stream
 ]
+
+{ #category : 'accessing' }
+ZnEncodedStream >> wrappedStreamName [
+	^ stream wrappedStreamName
+]
+

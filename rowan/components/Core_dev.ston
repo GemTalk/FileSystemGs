@@ -15,6 +15,7 @@ RwSimpleProjectLoadComponentV2 {
 		'FileSystem-Obsolete',
 		'FileSystem-Path',
 		'FileSystem-Utilities',
+		'FileSystem-GemStone-Kernel',
 		'LibC',
 		'System-Platforms-Base',
 		'System-Platforms-Mac',

@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'Initializing - private' }
+_libcFcntl class >> initialize [
+
+  self initializeFunctions
+]
+
+{ #category : 'Initializing - private' }
 _libcFcntl class >> initializeFunction_creat_inLibrary: cLibrary [
 
 	Functioncreat := CCallout

@@ -114,6 +114,12 @@ Class {
 }
 
 { #category : 'Initializing - private' }
+_libcUnistd class >> initialize [
+
+  self initializeFunctions
+]
+
+{ #category : 'Initializing - private' }
 _libcUnistd class >> initializeFunction___getpgid_inLibrary: cLibrary [
 
 	Function__getpgid := CCallout

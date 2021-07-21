@@ -1,13 +1,6 @@
 Extension { #name : 'Collection' }
 
 { #category : '*filesystem-gemstone-kernel' }
-Collection >> difference: aCollection [
-  "Answer the set theoretic difference of two collections."
-
-  ^ self reject: [ :each | aCollection includes: each ]
-]
-
-{ #category : '*filesystem-gemstone-kernel' }
 Collection >> ifEmpty: aBlock [
   self size == 0
     ifTrue: [ ^ aBlock value ]
@@ -22,11 +15,3 @@ Collection >> isEmptyOrNil [
 
 ]
 
-{ #category : '*filesystem-gemstone-kernel' }
-Collection >> sort [
-
-	"Sort this array into ascending order using the '<=' operator."
-
-	^ self sort: [ :a :b | a <= b ]
-
-]
