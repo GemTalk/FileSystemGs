@@ -8,9 +8,7 @@ RwLoadSpecificationV2 {
 	#componentNames : [
 		'Core_dev'
 	],
-	#customConditionalAttributes : [
-		'tests'
-	],
+	#customConditionalAttributes : [ ],
 	#platformProperties : {
 		'gemstone' : {
 			'DataCurator' : {

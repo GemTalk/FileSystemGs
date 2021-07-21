@@ -1,0 +1,65 @@
+#!/usr/bin/gemstone/topaz
+
+	omit pushonly
+	display classoops
+
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.7.0/install_1.tpz
+
+  set u SystemUser p swordfish
+  login
+
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.7.0/project_src_v2/RowanV2_tonel.gs
+commit
+	input $GEMSTONE_STONE_DIR/RowanFileSystemGs.gs
+commit
+	input $GEMSTONE/upgrade/bootstrap/GemStone-Rowan.gs
+commit
+	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.7.0/project_src_v2/RowanV2_stubs.gs
+commit
+
+run
+	| loadedProjects audits rowanAssoc tracer wasTracing |
+	"Create loaded Rowan project, traverse the package definitions and create loaded packages"
+	[ 
+		(RowanKernel at: #Rowan) projectTools adopt
+      adoptProjectFromUrl: 'file:$ROWAN_PROJECTS_HOME/Rowan/rowan/specs/Rowan.ston' 
+      projectsHome: '$ROWAN_PROJECTS_HOME'.
+    System commit.
+    "Reload Rowan and required projects to make sure that we're using the latest code from repository
+       audit the loaded projects after loading"
+    loadedProjects := ((RowanKernel at: #Rowan) projectNamed: 'Rowan') loadProjectSet.
+    audits := loadedProjects collect: [:project | (project name) -> (project audit) ] ]
+			on: RwAuditMethodErrorNotification
+			do: [ :ex | 
+					| theBehavior |
+					tracer := Rowan projectTools trace.
+					wasTracing := tracer isTracing.
+					tracer startTracing.
+					theBehavior := Rowan globalNamed: ex className.
+					ex isMetaclass
+						ifTrue: [ theBehavior := theBehavior class ].
+					(ex description = 'Missing loaded method' 
+						and: [ (ex selector = #gemstoneTools) 
+							and: [{ Rowan class . RwGsPlatform . } includes: theBehavior ]])
+					ifTrue: [
+						"these two methods should be packaged when the base is packaged (part of GemStone-Rowan.gs)" 
+					 	tracer trace: theBehavior printString, '>>', 
+							ex selector printString, 
+							' is an expected audit failure (Missing loaded method) at this juncture -- IGNORED'.
+						wasTracing ifFalse: [ tracer stopTracing ].
+						ex resume: false	"no audit error" ]
+					ifFalse: [ 
+						"issue audit error"
+						wasTracing ifFalse: [ tracer stopTracing ].
+						ex resume: true ] ].
+	audits do: [:assoc |
+	assoc value isEmpty 
+		ifFalse: [ self error: 'The post load audit for ', assoc key printString, ' failed.' ] ].
+	System commit.
+	"Install Rowan association in Published"
+	rowanAssoc := RowanKernel associationAt: #Rowan.
+	Published add: rowanAssoc. true.
+	System commitTransaction.
+%
+
+logout

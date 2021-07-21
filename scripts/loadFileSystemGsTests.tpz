@@ -1,0 +1,7 @@
+run
+[((Rowan projectNamed: 'FileSystemGs') defined
+	readProjectComponentNames: { 'Core_dev' }
+	customConditionalAttributes: { 'tests' }) load] 
+		on: Warning 
+		do: [:ex | ex resume ]
+%
