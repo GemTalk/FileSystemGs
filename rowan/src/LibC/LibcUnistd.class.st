@@ -77,6 +77,20 @@ LibcUnistd >> rmdir: pathString [
 ]
 
 { #category : 'functions' }
+LibcUnistd >> truncate: fileDescriptor
+to: length [
+
+	| errnoHolder result |
+	errnoHolder := { 0 }.
+	result := library
+		ftruncate: { fileDescriptor. length }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'functions' }
 LibcUnistd >> unlinkPath: pathString [
 
 	| errnoHolder result |

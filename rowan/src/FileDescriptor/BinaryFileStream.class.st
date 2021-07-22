@@ -62,6 +62,8 @@ BinaryFileStream >> descriptor: aFileDescriptor [
 { #category : 'writing' }
 BinaryFileStream >> flush [
 	"NOP"
+
+	self truncate
 ]
 
 { #category : 'testing' }
@@ -106,10 +108,16 @@ BinaryFileStream >> size [
 	^descriptor size
 ]
 
+{ #category : 'writing' }
+BinaryFileStream >> truncate [
+	"Truncate the file to the current position."
+
+	descriptor truncateTo: self position
+]
+
 { #category : 'accessing' }
 BinaryFileStream >> wrappedStreamName [
   "Note: This should be updated to return the actual file path."
 
   ^''
 ]
-

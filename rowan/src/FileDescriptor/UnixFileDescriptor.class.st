@@ -254,6 +254,17 @@ UnixFileDescriptor >> stat [
 	^OSPlatform current libcStat fstat: id
 ]
 
+{ #category : 'public' }
+UnixFileDescriptor >> truncateTo: length [
+	"Truncate the open file to the specified length."
+
+	| library |
+	library := OSPlatform current libcUnistd.
+	^library
+		truncate: id
+		to: length
+]
+
 { #category : 'private' }
 UnixFileDescriptor >> write: aByteArray [
 	"Write the provided bytes to the file descriptor.

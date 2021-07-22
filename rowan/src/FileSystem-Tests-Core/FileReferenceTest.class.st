@@ -972,14 +972,14 @@ FileReferenceTest >> testWriteStream [
 	"Ensure #writeStream begins at start of file."
 	"Should the following fails in against the memory file system.
 	Should we ensure this behaves the same in all file systems?"
-	"stream := file writeStream.
+	stream := file writeStream.
 	stream
 		nextPutAll: '123';
 		flush;
 		close.
 	self
 		assert: file contents
-		equals: '123def'."
+		equals: '123'.
 
 	"Ensure #writeStream send to a directory raises an exception."
 	self
