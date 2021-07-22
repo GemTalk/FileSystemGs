@@ -5,3 +5,4 @@ run
 		on: Warning 
 		do: [:ex | ex resume ]
 %
+commit

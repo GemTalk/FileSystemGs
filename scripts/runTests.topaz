@@ -1,6 +1,6 @@
 run
 	| suite result |
-	suite := Rowan projectTools test testSuiteForProjectsNamed: { 'FileSystemGs_dev' }.
+	suite := Rowan projectTools test testSuiteForProjectsNamed: { 'FileSystemGs' }.
 	result := suite run.
   String
       streamContents:
