@@ -20,8 +20,6 @@ Class {
 	#instVars : [
 		'store'
 	],
-	#gs_options : [
-	],
 	#category : 'FileSystem-Core'
 }
 
@@ -193,7 +191,7 @@ FileSystem >> copyAndDelete: sourcePath to: destination [
 		self delete: sourcePath.
 	] on: Error do: [ :error |
 		destination delete.
-		error signal.
+		error pass.
 	]
 ]
 
@@ -676,4 +674,6 @@ FileSystem >> writeStreamOn: aResolvable [
 	"Open a write stream on the file referred by the argument. It can be a string or a path"
 
 	^ (self open: aResolvable options: store defaultOptionsForWrite) writeStream.
+]
+rWrite) writeStream.
 ]

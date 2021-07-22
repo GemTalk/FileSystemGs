@@ -12,6 +12,12 @@ CharacterCollection >> asPathWith: anObject [
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
+CharacterCollection >> asResolvedBy: aFileSystem [
+
+	^aFileSystem resolveString: self
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 CharacterCollection >> asZnCharacterEncoder [
 	"Return a ZnCharacterEncoder instance using the receiver as identifier"
 	
@@ -22,3 +28,12 @@ CharacterCollection >> asZnCharacterEncoder [
 
 ]
 
+{ #category : '*filesystem-gemstone-kernel' }
+CharacterCollection >> encodeWith: encoding [
+	"Produce a ByteArray that encodes the receiver, using a specified encoding.
+	Encoding is either a ZnCharacterEncoder instance or an identifier for one."
+	
+	" 'Les ÃÂ©lÃÂ¨ves franÃÂ§ais' encodeWith: #utf8 "
+	
+	^ encoding asZnCharacterEncoder encodeString: self
+]

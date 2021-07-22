@@ -42,7 +42,7 @@ DiskFileSystemTest >> testMoveMemoryToDisk [
 		testString := 'To be moved to disk'.
 		[ out nextPutAll: testString ] ensure: [ out close ].
 		
-		new := FileLocator imageDirectory / 'testMoveMemoryToDisk_new'.
+		new := FileLocator workingDirectory / 'testMoveMemoryToDisk_new'.
 		old moveTo: new.
 		
 		self deny: (memfs / 'testMoveMemoryToDisk_old') exists.

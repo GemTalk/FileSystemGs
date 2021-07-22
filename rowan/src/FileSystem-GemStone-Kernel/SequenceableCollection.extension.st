@@ -102,6 +102,12 @@ SequenceableCollection >> lastIndexOf: anElement startingAt: lastIndex ifAbsent:
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
+SequenceableCollection >> readStreamPortable [
+
+	^ReadStreamPortable on: self
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 SequenceableCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed."
 	"Example: 'frog' reversed"

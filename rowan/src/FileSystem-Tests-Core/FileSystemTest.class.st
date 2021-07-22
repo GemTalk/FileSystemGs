@@ -60,53 +60,6 @@ FileSystemTest >> tearDown [
 	super tearDown	
 ]
 
-{ #category : 'tests-streams-compatibility' }
-FileSystemTest >> testBinaryReadStream [
-	| reference stream |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self should: [ reference binaryReadStream ] raise: FileDoesNotExistException.
-	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	stream := reference binaryReadStream.
-	self assert: stream contents asString equals: 'griffle'.
-	stream close
-]
-
-{ #category : 'tests-streams-compatibility' }
-FileSystemTest >> testBinaryReadStreamDo [
-	| reference |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self 
-		should: [ reference binaryReadStreamDo: [ :stream | self assert: false ] ] 
-		raise: FileDoesNotExistException.
-	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	self assert: (reference readStreamDo: [ :stream | stream contents asString ]) 
-		= 'griffle'
-]
-
-{ #category : 'tests-streams-compatibility' }
-FileSystemTest >> testBinaryReadStreamDoIfAbsent [
-	| reference |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self assert: (reference 
-		binaryReadStreamDo: [ :stream | false ]
-		ifAbsent: [ true ]).
-	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	self assert: (reference 
-		binaryReadStreamDo: [ :stream | stream contents asString = 'griffle' ]
-		ifAbsent: [ false ])
-]
-
-{ #category : 'tests-streams-compatibility' }
-FileSystemTest >> testBinaryReadStreamIfAbsent [
-	| reference stream |
-	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
-	self assert: (reference binaryReadStreamIfAbsent: [ true ]).
-	reference writeStreamDo: [ :ws | ws nextPutAll: 'griffle' ].
-	stream := reference binaryReadStreamIfAbsent: [ false ].
-	self assert: stream contents asString = 'griffle'.
-	stream close
-]
-
 { #category : 'tests' }
 FileSystemTest >> testChildrenAt [
 	| directory entries |
@@ -583,6 +536,68 @@ FileSystemTest >> testReadStreamIfAbsent [
 
 { #category : 'tests' }
 FileSystemTest >> testReferenceTo [
+	|path|
+	"use a relative path since absolute path behavior differs on mac, linux vs win native filesystems"
+	path := Path * 'a' / 'b'.
+	self assert: (filesystem referenceTo: 'a/b') path = path.
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testRoot [
+	self assert: filesystem root fileSystem = filesystem.
+	self assert: filesystem root path = Path root.
+	self assert: filesystem root isRoot.
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testRootExists [
+	self assert: (filesystem exists: Path root)
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testRootIsDirectory [
+	self assert: (filesystem isDirectory: Path root)
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testRootIsNotAFile [
+	self deny: (filesystem isFile: Path root)
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testWorking [
+	self assert: filesystem workingDirectory fileSystem = filesystem.
+	self assert: filesystem workingDirectory path = filesystem workingDirectoryPath
+]
+
+{ #category : 'tests' }
+FileSystemTest >> testWorkingDirectory [
+	self assert: filesystem workingDirectory isRoot
+]
+
+{ #category : 'tests-streams' }
+FileSystemTest >> testWriteStream [
+	| reference stream |
+	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
+	stream := reference writeStream.
+	stream nextPutAll: 'griffle'.
+	stream close.
+	self assert: (filesystem workingDirectory / 'griffle') isFile.
+	stream := reference writeStream.
+	stream close
+]
+
+{ #category : 'tests-streams' }
+FileSystemTest >> testWriteStreamDo [
+	| reference |
+	self markForCleanup: (reference := filesystem workingDirectory / 'griffle').
+	self assert: (reference writeStreamDo: [ :stream |
+		stream nextPutAll: 'griffle'.
+		true ]).
+	self assert: (filesystem workingDirectory / 'griffle') isFile.
+	self assert: (reference writeStreamDo: [ :stream | true ])
+]
+> testReferenceTo [
 	|path|
 	"use a relative path since absolute path behavior differs on mac, linux vs win native filesystems"
 	path := Path * 'a' / 'b'.

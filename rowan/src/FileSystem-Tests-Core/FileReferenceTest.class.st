@@ -822,9 +822,9 @@ FileReferenceTest >> testRelativeTo [
 { #category : 'tests' }
 FileReferenceTest >> testRename [
 	| file tmp originalFullName |
-	[ file := (FileLocator imageDirectory / 'oldName') ensureCreateFile.
+	[ file := (FileLocator workingDirectory / 'oldName') ensureCreateFile.
 	originalFullName := file fullName.
-	tmp := (FileLocator imageDirectory / 'tmp') ensureCreateDirectory.
+	tmp := (FileLocator workingDirectory / 'tmp') ensureCreateDirectory.
 	file renameTo: 'newName'.
 	self deny: originalFullName asFileReference exists.
 	self assert: file basename equals: 'newName'.

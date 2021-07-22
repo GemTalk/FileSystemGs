@@ -109,10 +109,10 @@ FileLocatorTest >> testIsRoot [
 FileLocatorTest >> testMoveTo [
 	| old new |
 	[
-		old := FileLocator imageDirectory / 'testMoveTo_old'.
+		old := FileLocator temp / 'testMoveTo_old'.
 		old ensureCreateFile.
 		
-		new := FileLocator home / 'testMoveTo_new'.
+		new := FileLocator temp / 'testMoveTo_new'.
 		old moveTo: new.
 		
 		self deny: old exists.
@@ -205,4 +205,6 @@ FileLocatorTest >> testWithExtensionAddsExtension [
 FileLocatorTest >> testWithExtensionReplacesExtension [
 	locator := FileLocator image / 'griffle.nurp'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'
+]
+.plonk'
 ]
