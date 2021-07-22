@@ -675,5 +675,3 @@ FileSystem >> writeStreamOn: aResolvable [
 
 	^ (self open: aResolvable options: store defaultOptionsForWrite) writeStream.
 ]
-rWrite) writeStream.
-]
