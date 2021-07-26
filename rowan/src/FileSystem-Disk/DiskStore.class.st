@@ -152,15 +152,17 @@ DiskStore >> delete: path [
 		ifFalse: [self libcUnistd unlinkPath: pathString]
 ]
 
-{ #category : 'private' }
+{ #category : 'public' }
 DiskStore >> directoryAt: aPath
 ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
 directoryNamesDo: aBlock [
 	"Enumerate through the directory names in the provided directory."
 
 	^self
 		directoryAt: aPath
 		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
 		entriesDo:
 			[:entry | | name |
 			name := entry basename.
@@ -171,54 +173,9 @@ directoryNamesDo: aBlock [
 { #category : 'private' }
 DiskStore >> directoryAt: aPath
 ifAbsent: absentBlock
-entriesDo: aBlock [
-	"Enumerate through the entry names in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		ifNotDirectory: []
-		entriesDo: aBlock
-]
-
-{ #category : 'private' }
-DiskStore >> directoryAt: aPath
-ifAbsent: absentBlock
-entryNamesDo: aBlock [
-	"Enumerate through the entry names in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		entriesDo:
-			[:entry | | name |
-			name := entry basename.
-			(name = '.' or: [name = '..'])
-				ifFalse: [aBlock value: name]]
-]
-
-{ #category : 'private' }
-DiskStore >> directoryAt: aPath
-ifAbsent: absentBlock
-fileNamesDo: aBlock [
-	"Enumerate through the file names in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		entriesDo:
-			[:entry | | name |
-			name := entry basename.
-			entry isFile
-				ifTrue: [aBlock value: name]]
-]
-
-{ #category : 'private' }
-DiskStore >> directoryAt: aPath
-ifAbsent: absentBlock
 ifNotDirectory: notDirectoryBlock
 entriesDo: aBlock [
-	"Enumerate through the entry names in the provided directory."
+	"Enumerate through the entries in the provided directory."
 
 	| pathString dir dirent |
 	pathString := self stringFromPath: aPath.
@@ -230,6 +187,42 @@ entriesDo: aBlock [
 		whileTrue:
 			[aBlock value: dirent]]
 		ensure: [self libcDirent closeDirectoryStream: dir]
+]
+
+{ #category : 'public' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+entryNamesDo: aBlock [
+	"Enumerate through the entry names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
+		entriesDo:
+			[:entry | | name |
+			name := entry basename.
+			(name = '.' or: [name = '..'])
+				ifFalse: [aBlock value: name]]
+]
+
+{ #category : 'public' }
+DiskStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+fileNamesDo: aBlock [
+	"Enumerate through the file names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
+		entriesDo:
+			[:entry | | name |
+			name := entry basename.
+			entry isFile
+				ifTrue: [aBlock value: name]]
 ]
 
 { #category : 'testing' }

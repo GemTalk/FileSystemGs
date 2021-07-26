@@ -248,9 +248,17 @@ AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
 AbstractFileReference >> childNames [
 	"Return the names of entries in a directory."
 
-	| reference |
+	| reference fileSystem path names |
 	reference := self resolve.
-	^reference fileSystem childNamesAt: reference path
+	fileSystem := reference fileSystem.
+	path := reference path.
+	names := {}.
+	fileSystem
+		childNamesAt: path
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+		ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+		do: [:name | names add: name].
+	^names
 ]
 
 { #category : 'enumerating' }
@@ -266,10 +274,17 @@ AbstractFileReference >> childrenMatching: patterns [
 	FileSystem disk workingDirectory childrenMatching: '*'
 	FileSystem disk workingDirectory childrenMatching: '*.image;*.changes'
 	"
-	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
-			reference fileSystem childNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+	^self 
+		childGeneratorBlock:
+			[:reference :aBlock | | fileSystem path |
+			fileSystem := reference fileSystem.
+			path := reference path.
+			fileSystem
+				childNamesAt: path
+				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+				do: aBlock]
+		matching: patterns
 ]
 
 { #category : 'comparing' }
@@ -357,10 +372,17 @@ AbstractFileReference >> deleteIfAbsent: aBlock [
 AbstractFileReference >> directories [
 	"Return all the directories (by opposition to files) contained in the receiver"
 
-	| reference |
+	| reference fileSystem path directories |
 	reference := self resolve.
-	^ (reference fileSystem directoryNamesAt: reference path) 
-		collect: [ :aName | self withPath: self path / aName ]
+	fileSystem := reference fileSystem.
+	path := reference path.
+	directories := {}.
+	fileSystem
+		directoryNamesAt: path
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+		ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+		do: [:name | directories add: (self withPath: path / name)].
+	^directories
 ]
 
 { #category : 'enumerating' }
@@ -370,9 +392,16 @@ AbstractFileReference >> directoriesMatching: patterns [
 	FileSystem disk workingDirectory directoriesMatching: 'package-cache'
 	"
 	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
-			reference fileSystem directoryNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+		childGeneratorBlock:
+			[:reference :aBlock | | fileSystem path |
+			fileSystem := reference fileSystem.
+			path := reference path.
+			fileSystem
+				directoryNamesAt: path
+				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+				do: aBlock]
+		matching:  patterns
 ]
 
 { #category : 'enumerating' }
@@ -458,10 +487,17 @@ AbstractFileReference >> fileNames [
 AbstractFileReference >> files [
 	"Return all the files (as opposed to folders) contained in the receiver"
 	
-	| reference |
+	| reference fileSystem path files |
 	reference := self resolve.
-	^ (reference fileSystem fileNamesAt: reference path) 
-		collect: [ :aName | self withPath: self path / aName ]
+	fileSystem := reference fileSystem.
+	path := reference path.
+	files := {}.
+	fileSystem
+		fileNamesAt: path
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+		ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+		do: [:name | files add: (self withPath: path / name)].
+	^files
 ]
 
 { #category : 'enumerating' }
@@ -471,9 +507,16 @@ AbstractFileReference >> filesMatching: patterns [
 	FileSystem disk workingDirectory filesMatching: '*.image;*.changes'
 	"
 	^ self 
-		childGeneratorBlock: [:reference : aBlock| 
-			reference fileSystem fileNamesAt: reference path do: aBlock ]
-		matching:  patterns 
+		childGeneratorBlock:
+			[:reference :aBlock | | fileSystem path |
+			fileSystem := reference fileSystem.
+			path := reference path.
+			fileSystem
+				fileNamesAt: path
+				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
+				do: aBlock]
+		matching:  patterns
 ]
 
 { #category : 'accessing' }

@@ -61,49 +61,6 @@ FileSystemTest >> tearDown [
 ]
 
 { #category : 'tests' }
-FileSystemTest >> testChildrenAt [
-	| directory entries |
-	directory := Path * 'plonk'.
-	
-	filesystem createDirectory: directory.
-	filesystem createDirectory: directory / 'griffle'.
-	filesystem createDirectory: directory / 'bint'.
-	
-	self markForCleanup: directory / 'griffle'.
-	self markForCleanup: directory / 'bint'.
-	self markForCleanup: directory.
-	
-	entries := filesystem childrenAt: directory.
-	
-	self assert: entries size = 2.
-	entries do: [ :ea | 
-		self assert: (ea isKindOf: Path).
-		self assert: ea parent = (filesystem resolve: directory).
-		self assert: (#('griffle' 'bint' ) includes: ea basename) ]
-]
-
-{ #category : 'tests' }
-FileSystemTest >> testChildrenSorting [
-	| directory sorted |
-	
-	directory := Path * 'plonk'.
-	
-	filesystem createDirectory: directory.
-	filesystem createDirectory: directory / 'alfa'.
-	filesystem createDirectory: directory / 'beta'.
-	
-	self markForCleanup: directory / 'alfa'.
-	self markForCleanup: directory / 'beta'.
-	self markForCleanup: directory.
-	
-	sorted := (filesystem childrenAt: directory) sort.
-	self assert: sorted size = 2.
-	self assert: (sorted at: 1) basename = 'alfa'.
-	self assert: (sorted at: 2) basename = 'beta'.
-
-]
-
-{ #category : 'tests' }
 FileSystemTest >> testChildrenSortingRoot [
 	| directory1 directory2 |
 	"self skip."
@@ -597,4 +554,3 @@ FileSystemTest >> testWriteStreamDo [
 	self assert: (filesystem workingDirectory / 'griffle') isFile.
 	self assert: (reference writeStreamDo: [ :stream | true ])
 ]
-

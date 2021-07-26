@@ -149,53 +149,18 @@ in: fileSystem [
 		ifAbsent: [DirectoryDoesNotExist signalWith: path parent]
 ]
 
-{ #category : 'private' }
+{ #category : 'public' }
 MemoryStore >> directoryAt: aPath
 ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
 directoryNamesDo: aBlock [
 	"Enumerate through the directory names in the provided directory."
 
 	^self
 		directoryAt: aPath
 		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
 		entriesDo: [:entry | entry isDirectory ifTrue: [aBlock value: entry basename]]
-]
-
-{ #category : 'private' }
-MemoryStore >> directoryAt: aPath
-ifAbsent: absentBlock
-entriesDo: aBlock [
-	"Enumerate through the entries in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		ifNotDirectory: []
-		entriesDo: aBlock
-]
-
-{ #category : 'private' }
-MemoryStore >> directoryAt: aPath
-ifAbsent: absentBlock
-entryNamesDo: aBlock [
-	"Enumerate through the entries in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		entriesDo: [:entry | aBlock value: entry basename]
-]
-
-{ #category : 'private' }
-MemoryStore >> directoryAt: aPath
-ifAbsent: absentBlock
-fileNamesDo: aBlock [
-	"Enumerate through the file names in the provided directory."
-
-	^self
-		directoryAt: aPath
-		ifAbsent: absentBlock
-		entriesDo: [:entry | entry isFile ifTrue: [aBlock value: entry basename]]
 ]
 
 { #category : 'private' }
@@ -213,6 +178,34 @@ entriesDo: aBlock [
 	parent isDirectory
 		ifTrue: [parent fileEntriesDo: aBlock]
 		ifFalse: [^notDirectoryBlock value]
+]
+
+{ #category : 'public' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+entryNamesDo: aBlock [
+	"Enumerate through the entries in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
+		entriesDo: [:entry | aBlock value: entry basename]
+]
+
+{ #category : 'public' }
+MemoryStore >> directoryAt: aPath
+ifAbsent: absentBlock
+ifNotDirectory: notDirectoryBlock
+fileNamesDo: aBlock [
+	"Enumerate through the file names in the provided directory."
+
+	^self
+		directoryAt: aPath
+		ifAbsent: absentBlock
+		ifNotDirectory: notDirectoryBlock
+		entriesDo: [:entry | entry isFile ifTrue: [aBlock value: entry basename]]
 ]
 
 { #category : 'private' }
