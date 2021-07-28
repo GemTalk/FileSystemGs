@@ -63,13 +63,6 @@ AbstractFileReference >> allChildrenDo: aBlock [
 ]
 
 { #category : 'enumerating' }
-AbstractFileReference >> allChildrenMatching: aPattern [
-    "Return all the files and folders recursively nested in the receiver and matching the pattern, aPattern"
- 
-	^self allChildrenSelect: [:each | aPattern match: each basename]
-]
-
-{ #category : 'enumerating' }
 AbstractFileReference >> allChildrenSelect: aBlock [
 	"Return all selected blocks."
 
@@ -84,13 +77,6 @@ AbstractFileReference >> allDirectories [
 	"Return all the directories recursively nested in the receiver."
 
 	^self allChildrenSelect: [:each | each isDirectory]
-]
-
-{ #category : 'enumerating' }
-AbstractFileReference >> allDirectoriesMatching: aPattern [
-    "Return all the directories recursively nested in the receiver."
-
-	^self allChildrenSelect: [:each | each isDirectory and: [aPattern match: each basename]]
 ]
 
 { #category : 'enumerating' }
@@ -225,25 +211,6 @@ AbstractFileReference >> canonicalize [
 	^ self withPath: self resolve path canonicalize
 ]
 
-{ #category : 'private' }
-AbstractFileReference >> childGeneratorBlock: doBlock matching: patterns [
-	"
-	FileSystem workingDirectory filesMatching: '*'
-	FileSystem workingDirectory filesMatching: '*.image;*.changes'
-	"
-	
-	| files reference|
-	files := Set new.
-	reference := self resolve.
-	
-	(patterns subStrings: ';', String crlf) do: [ :pattern | 
-		doBlock value: reference value: [ :basename|
-			(pattern match: basename)
-				ifTrue: [ files add: (self / basename) ]]].
-	
-	^files asOrderedCollection
-]
-
 { #category : 'enumerating' }
 AbstractFileReference >> childNames [
 	"Return the names of entries in a directory."
@@ -266,25 +233,6 @@ AbstractFileReference >> children [
 	"Answer an array containing references to the direct children of this reference."
 
 	^self childNames collect: [:name | self / name]
-]
-
-{ #category : 'enumerating' }
-AbstractFileReference >> childrenMatching: patterns [
-	"
-	FileSystem disk workingDirectory childrenMatching: '*'
-	FileSystem disk workingDirectory childrenMatching: '*.image;*.changes'
-	"
-	^self 
-		childGeneratorBlock:
-			[:reference :aBlock | | fileSystem path |
-			fileSystem := reference fileSystem.
-			path := reference path.
-			fileSystem
-				childNamesAt: path
-				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
-				do: aBlock]
-		matching: patterns
 ]
 
 { #category : 'comparing' }
@@ -386,25 +334,6 @@ AbstractFileReference >> directories [
 ]
 
 { #category : 'enumerating' }
-AbstractFileReference >> directoriesMatching: patterns [
-	"
-	FileSystem disk workingDirectory directoriesMatching: '*'
-	FileSystem disk workingDirectory directoriesMatching: 'package-cache'
-	"
-	^ self 
-		childGeneratorBlock:
-			[:reference :aBlock | | fileSystem path |
-			fileSystem := reference fileSystem.
-			path := reference path.
-			fileSystem
-				directoryNamesAt: path
-				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
-				do: aBlock]
-		matching:  patterns
-]
-
-{ #category : 'enumerating' }
 AbstractFileReference >> directoryNames [
 	^ self directories collect: #basename
 ]
@@ -498,25 +427,6 @@ AbstractFileReference >> files [
 		ifNotDirectory: [DirectoryExpected signalWith: reference]
 		do: [:name | files add: (self withPath: path / name)].
 	^files
-]
-
-{ #category : 'enumerating' }
-AbstractFileReference >> filesMatching: patterns [
-	"
-	FileSystem disk workingDirectory filesMatching: '*'
-	FileSystem disk workingDirectory filesMatching: '*.image;*.changes'
-	"
-	^ self 
-		childGeneratorBlock:
-			[:reference :aBlock | | fileSystem path |
-			fileSystem := reference fileSystem.
-			path := reference path.
-			fileSystem
-				fileNamesAt: path
-				ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-				ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
-				do: aBlock]
-		matching:  patterns
 ]
 
 { #category : 'accessing' }
