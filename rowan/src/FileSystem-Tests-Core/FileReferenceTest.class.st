@@ -257,64 +257,79 @@ FileReferenceTest >> testCanonicalization [
 { #category : 'tests' }
 FileReferenceTest >> testChildDirectories [
 
-	| directories beta gamma delta epsilon |
+	| alpha beta gamma delta epsilon |
+	alpha := self createDirectory: 'alpha'.
 	beta := self createDirectory: 'beta'.
-	gamma := self createDirectory: 'gamma'.
+	gamma := self createFile: 'gamma'.
 	delta := self createFile: 'delta'.
-	epsilon := self createFile: 'epsilon'.
-	directories := sandbox directories.
+
+	"Ensure sending to a directory returns correct results."
 	self
-		assert: directories size
-		equals: 2.
-	directories
-		do: [ :each | 
-			self
-				assert: each class
-				equals: FileReference.
-			self
-				assert: each isDirectory
-				description: 'Collection should only contain references to directories.' ]
+		assert: sandbox directories asSet
+		equals: {alpha. beta.} asSet.
+	
+	"Ensure DirectoryDoesNotExist is signaled when the directory does not exist."
+	epsilon := sandbox / 'epsilon'.
+	self
+		should: [epsilon children]
+		raise: DirectoryDoesNotExist.
+
+	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	self
+		should: [gamma children]
+		raise: DirectoryExpected
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testChildFiles [
 
-	| files beta gamma delta epsilon |
+	| alpha beta gamma delta epsilon |
+	alpha := self createDirectory: 'alpha'.
 	beta := self createDirectory: 'beta'.
-	gamma := self createDirectory: 'gamma'.
+	gamma := self createFile: 'gamma'.
 	delta := self createFile: 'delta'.
-	epsilon := self createFile: 'epsilon'.
-	files := sandbox files.
+
+	"Ensure sending to a directory returns correct results."
 	self
-		assert: files size
-		equals: 2.
-	files
-		do: [ :each | 
-			self
-				assert: each class
-				equals: FileReference.
-			self
-				assert: each isFile
-				description: 'Collection should only contain references to files.' ]
+		assert: sandbox files asSet
+		equals: {gamma. delta.} asSet.
+
+	"Ensure DirectoryDoesNotExist is signaled when the directory does not exist."
+	epsilon := sandbox / 'epsilon'.
+	self
+		should: [epsilon children]
+		raise: DirectoryDoesNotExist.
+
+	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	self
+		should: [gamma children]
+		raise: DirectoryExpected
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testChildren [
 
-	| alpha children |
+	| alpha beta gamma epsilon |
 	alpha := self createDirectory: 'alpha'.
+	beta := self createFile: 'alpha/beta'.
+	gamma := self createDirectory: 'alpha/gamma'.
+	self createFile: 'alpha/gamma/delta'.
+
+	"Ensure correct set of children is returned."
 	self
-		createFile: 'alpha/beta';
-		createDirectory: 'alpha/gamma';
-		createFile: 'alpha/gamma/delta'.
-	children := alpha children.
-	self assert: children size equals: 2.
-	children
-		do:
-			[:child | 
-			self assert: child class equals: FileReference.
-			self assert: (child isChildOf: alpha).
-			self assert: (#('beta' 'gamma') includes: child basename)]
+		assert: alpha children asSet
+		equals: { beta. gamma. } asSet.
+
+	"Ensure DirectoryDoesNotExist is signaled when the directory does not exist."
+	epsilon := sandbox / 'epsilon'.
+	self
+		should: [epsilon children]
+		raise: DirectoryDoesNotExist.
+
+	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	self
+		should: [beta children]
+		raise: DirectoryExpected
 ]
 
 { #category : 'tests' }

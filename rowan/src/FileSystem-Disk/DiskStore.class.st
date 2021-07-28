@@ -180,8 +180,16 @@ entriesDo: aBlock [
 	| pathString dir dirent |
 	pathString := self stringFromPath: aPath.
 	dir := [self libcDirent openDirectoryStreamWithPath: pathString]
-		on: ENOTDIR
-		do: [:ex | ^notDirectoryBlock value].
+		onException:
+			{
+				ENOTDIR.
+				ENOENT.
+			}
+		do:
+			{
+				[:ex | ^notDirectoryBlock value].
+				[:ex | ^absentBlock value].
+			}.
 	[[dirent := self libcDirent readFromDirectoryStream: dir.
 	dirent notNil]
 		whileTrue:
