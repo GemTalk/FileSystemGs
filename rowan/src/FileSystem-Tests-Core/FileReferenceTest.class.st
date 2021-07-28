@@ -258,7 +258,7 @@ FileReferenceTest >> testCanonicalization [
 FileReferenceTest >> testChildDirectories [
 
 	| directories beta gamma delta epsilon |
-	[beta := self createDirectory: 'beta'.
+	beta := self createDirectory: 'beta'.
 	gamma := self createDirectory: 'gamma'.
 	delta := self createFile: 'delta'.
 	epsilon := self createFile: 'epsilon'.
@@ -273,19 +273,14 @@ FileReferenceTest >> testChildDirectories [
 				equals: FileReference.
 			self
 				assert: each isDirectory
-				description: 'Collection should only contain references to directories.' ] ]
-		ensure:
-			[beta ensureDeleteAll.
-			gamma ensureDeleteAll.
-			delta ensureDelete.
-			epsilon ensureDelete]
+				description: 'Collection should only contain references to directories.' ]
 ]
 
 { #category : 'tests' }
 FileReferenceTest >> testChildFiles [
 
 	| files beta gamma delta epsilon |
-	[beta := self createDirectory: 'beta'.
+	beta := self createDirectory: 'beta'.
 	gamma := self createDirectory: 'gamma'.
 	delta := self createFile: 'delta'.
 	epsilon := self createFile: 'epsilon'.
@@ -300,12 +295,7 @@ FileReferenceTest >> testChildFiles [
 				equals: FileReference.
 			self
 				assert: each isFile
-				description: 'Collection should only contain references to files.' ] ]
-		ensure:
-			[beta ensureDeleteAll.
-			gamma ensureDeleteAll.
-			delta ensureDelete.
-			epsilon ensureDelete]
+				description: 'Collection should only contain references to files.' ]
 ]
 
 { #category : 'tests' }
@@ -821,31 +811,27 @@ FileReferenceTest >> testRelativeTo [
 
 { #category : 'tests' }
 FileReferenceTest >> testRename [
-	| file tmp originalFullName |
-	[ file := (FileLocator workingDirectory / 'oldName') ensureCreateFile.
-	originalFullName := file fullName.
-	tmp := (FileLocator workingDirectory / 'tmp') ensureCreateDirectory.
-	file renameTo: 'newName'.
-	self deny: originalFullName asFileReference exists.
-	self assert: file basename equals: 'newName'.
-	self assert: (originalFullName asFileReference parent / 'newName') exists ]
-		ensure: [ file delete.
-			tmp deleteAll ]
-]
 
-{ #category : 'tests' }
-FileReferenceTest >> testRenameTargetExists [
+	| file alpha beta delta |
+	file := self createFile: 'alpha'.
+	alpha := sandbox / 'alpha'.
+	beta := sandbox / 'beta'.
+	delta := self createFile: 'delta'.
 
-	| existingFile fileToRename |
-	[
-"		existingFile := 'existingFile' asFileReference ensureCreateFile.
-		fileToRename := 'fileToRename' asFileReference ensureCreateFile."
-		existingFile := (FileSystem disk referenceTo: 'existingFile') ensureCreateFile.
-		fileToRename := (FileSystem disk referenceTo: 'fileToRename') ensureCreateFile.
-		self should: [ fileToRename renameTo: existingFile basename ] raise: FileExists ]
-		ensure: [
-			existingFile delete.
-			fileToRename delete ].
+	"Valid rename"
+	file renameTo: beta basename.
+	self
+		deny: alpha exists;
+		assert: beta exists;
+		assert: file exists.
+	self
+		assert: file basename
+		equals: beta basename.
+
+	"Rename to existing file"
+	self
+		should: [file renameTo: delta basename]
+		raise: FileExists
 ]
 
 { #category : 'tests' }

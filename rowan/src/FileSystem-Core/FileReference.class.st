@@ -224,8 +224,13 @@ FileReference >> fullPath [
 FileReference >> hasChildren [
 	"Return whether the receiver has any children."
 	"FileSystem workingDirectory hasChildren"
-	
-	^ filesystem hasChildren: path
+
+	filesystem
+		childNamesAt: path
+		ifAbsent: [^false]
+		ifNotDirectory: [^false]
+		do: [:each | ^true].
+	^false
 ]
 
 { #category : 'testing' }
@@ -233,7 +238,12 @@ FileReference >> hasDirectories [
 	"Return whether the receiver has children that are directories."
 	"FileSystem workingDirectory hasDirectories"
 	
-	^ filesystem hasDirectories: path
+	filesystem
+		directoryNamesAt: path
+		ifAbsent: [^false]
+		ifNotDirectory: [^false]
+		do: [:each | ^true].
+	^false
 ]
 
 { #category : 'testing' }
@@ -241,7 +251,12 @@ FileReference >> hasFiles [
 	"Return whether the receiver has children that are files."
 	"FileSystem workingDirectory hasFiles"
 	
-	^ filesystem hasFiles: path
+	filesystem
+		fileNamesAt: path
+		ifAbsent: [^false]
+		ifNotDirectory: [^false]
+		do: [:each | ^true].
+	^false
 ]
 
 { #category : 'comparing' }

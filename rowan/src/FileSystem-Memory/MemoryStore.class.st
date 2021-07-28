@@ -342,10 +342,16 @@ MemoryStore >> permissions: aPath [
 MemoryStore >> rename: sourcePath to: destinationPath [
 	| sourceEntry destinationParentEntry newName |
 	
-	sourceEntry := self nodeAt: sourcePath.
+	sourceEntry := self
+		entryAt: sourcePath
+		ifPresent: [:e | e]
+		ifAbsent: [Error signal: 'Source path does not exist'].
 	newName := destinationPath basename.
 	
-	destinationParentEntry := self nodeAt: destinationPath parent.
+	destinationParentEntry := self
+		entryAt: destinationPath parent
+		ifPresent: [:p | p]
+		ifAbsent: [Error signal: 'Parent of destination does not exist'].
 	
 	destinationParentEntry isDirectory
 		ifFalse: [ Error signal: 'Copy destination has to be a directory' ].
@@ -358,10 +364,11 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 		put: sourceEntry.
 	sourceEntry basename: newName.
 	
-	
-	(self nodeAt: sourcePath parent)
-		fileEntryRemove: sourcePath basename 
-	
+	self
+		entryAt: sourcePath parent
+		ifPresent: [:parent | parent fileEntryRemove: sourcePath basename]
+		ifAbsent: [Error signal: 'Unknown state']
+
 ]
 
 { #category : 'private' }

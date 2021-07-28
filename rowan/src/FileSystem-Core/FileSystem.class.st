@@ -272,40 +272,6 @@ FileSystem >> forReferencePrintOn: aStream [
 	store forReferencePrintOn: aStream
 ]
 
-{ #category : 'public-testing' }
-FileSystem >> hasChildren: aResolvable [
-	"Returns whether aResolvable has children."
-
-	self
-		childNamesAt: aResolvable
-		ifAbsent: [^false]
-		ifNotDirectory: [^false]
-		do: [:each | ^true].
-	^false
-]
-
-{ #category : 'public-testing' }
-FileSystem >> hasDirectories: aResolvable [
-
-	self
-		directoryNamesAt: aResolvable
-		ifAbsent: [^false]
-		ifNotDirectory: [^false]
-		do: [:name | ^true].
-	^false
-]
-
-{ #category : 'public-testing' }
-FileSystem >> hasFiles: aResolvable [
-
-	self
-		fileNamesAt: aResolvable
-		ifAbsent: [^false]
-		ifNotDirectory: [^false]
-		do: [:name | ^true].
-	^false
-]
-
 { #category : 'comparing' }
 FileSystem >> hash [
 	^ store hash
