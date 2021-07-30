@@ -248,8 +248,8 @@ AbstractFileReference >> containsPath: aPath [
 
 { #category : 'accessing' }
 AbstractFileReference >> contents [
-	self readStreamDo: [ :stream |
-		^ stream contents ]
+
+	self readStreamDo: [ :stream | ^stream contents ]
 ]
 
 { #category : 'operations' }
@@ -580,11 +580,6 @@ AbstractFileReference >> moveTo: aReference [
 	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
 	"
 	^ self resolve moveTo: aReference
-]
-
-{ #category : 'utilities' }
-AbstractFileReference >> nextVersion [
-	^ self resolve nextVersion
 ]
 
 { #category : 'streams' }

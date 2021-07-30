@@ -357,17 +357,10 @@ options: options [
 			on: ENOENT
 			do:
 				[:ex | | parent |
-				"This is written in this manner to match the previous behavior in UnixFileDescriptor.
-				A better means of detecting and signaling appropriate errors needs to be devised.
-				This handling is simplistic and incorrect."
-				options isWriteOnly
-					ifTrue:
-						[parent := aFileReference parent.
-						parent exists
-							ifTrue: [ex pass]
-							ifFalse: [self signalDirectoryDoesNotExist: parent]]
-					ifFalse:
-						[self signalFileDoesNotExist: aFileReference fullPath]].
+				parent := aFileReference parent.
+				parent exists
+					ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
+					ifFalse: [self signalDirectoryDoesNotExist: parent]].
 	^UnixFileDescriptor id: fd
 ]
 

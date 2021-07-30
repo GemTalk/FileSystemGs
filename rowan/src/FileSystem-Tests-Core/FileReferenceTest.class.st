@@ -227,6 +227,63 @@ FileReferenceTest >> testBasenameWithoutExtension [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testBinaryReadStream [
+
+	| plonk absent directory |
+	plonk := self createFile: 'plonk'.
+	plonk binaryReadStream
+		ifNil: [self assert: false]
+		ifNotNil:
+			[:stream |
+			[self
+				assert: stream contents
+				equals: self defaultFileContents encodeAsUTF8 asByteArray]
+					ensure: [stream close]].
+	absent := sandbox / 'absent'.
+	self
+		should: [absent readStream]
+		raise: FileDoesNotExistException.
+	directory := self createDirectory: 'directory'.
+	self
+		should: [directory readStream]
+		raise: FileExpected
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testBinaryWriteStream [
+
+	| file directory stream |
+	file := sandbox / 'file'.
+	directory := self createDirectory: 'directory'.
+
+	"Ensure file is created by #binaryWriteStream."
+	stream := file binaryWriteStream.
+	stream
+		nextPutAll: #[72 101 108 108 111 44 32 70 105 108 101 83 121 115 116 101 109 33];
+		flush;
+		close.
+	self assert: file isFile.
+	self
+		assert: file contents
+		equals: 'Hello, FileSystem!'.
+
+	"Ensure #writeStream begins at start of file and truncates the file."
+	stream := file binaryWriteStream.
+	stream
+		nextPutAll: #[65 66 67];
+		flush;
+		close.
+	self
+		assert: file contents
+		equals: 'ABC'.
+
+	"Ensure #writeStream send to a directory raises an exception."
+	self
+		should: [directory writeStream]
+		raise: FileExpected
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testCanonicalization [
 
 	| ref |
@@ -741,7 +798,7 @@ FileReferenceTest >> testReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FileDoesNotExistException
+		raise: FileExpected
 ]
 
 { #category : 'tests' }
@@ -761,7 +818,7 @@ FileReferenceTest >> testReadStreamDo [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStreamDo: [:stream |]]
-		raise: FileDoesNotExistException
+		raise: FileExpected
 ]
 
 { #category : 'tests' }
@@ -985,7 +1042,7 @@ FileReferenceTest >> testWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FileDoesNotExistException
+		raise: FileExpected
 ]
 
 { #category : 'tests' }
@@ -1005,5 +1062,5 @@ FileReferenceTest >> testWriteStreamDo [
 	"Ensure #writeStreamDo: send to a directory raises an exception."
 	self
 		should: [directory writeStreamDo: [:stream | ]]
-		raise: FileDoesNotExistException
+		raise: FileExpected
 ]
