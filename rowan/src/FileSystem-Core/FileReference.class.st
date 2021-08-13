@@ -107,7 +107,7 @@ FileReference >> binaryReadStream [
 	self exists
 		ifFalse: [^FileDoesNotExistException signalWith: self].
 	self isFile
-		ifFalse: [^FileExpected signalWith: self pathString].
+		ifFalse: [^FileRequired signalWith: self pathString].
 	^filesystem binaryReadStreamOn: self path
 ]
 
@@ -116,7 +116,7 @@ FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	(self exists and: [self isFile not])
-		ifTrue: [^FileExpected signalWith: self].
+		ifTrue: [^FileRequired signalWith: self].
 	^ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 

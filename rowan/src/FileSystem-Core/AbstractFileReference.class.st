@@ -223,7 +223,7 @@ AbstractFileReference >> childNames [
 	fileSystem
 		childNamesAt: path
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-		ifNotDirectory: [DirectoryExpected signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | names add: name].
 	^names
 ]
@@ -424,7 +424,7 @@ AbstractFileReference >> files [
 	fileSystem
 		fileNamesAt: path
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-		ifNotDirectory: [DirectoryExpected signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | files add: (self withPath: path / name)].
 	^files
 ]

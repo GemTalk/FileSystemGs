@@ -1,5 +1,5 @@
 Class {
-	#name : 'FileExpected',
+	#name : 'FileRequired',
 	#superclass : 'FileException',
 	#category : 'FileSystem-Exceptions'
 }

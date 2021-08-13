@@ -246,7 +246,7 @@ FileReferenceTest >> testBinaryReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FileExpected
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -280,7 +280,7 @@ FileReferenceTest >> testBinaryWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FileExpected
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -331,10 +331,10 @@ FileReferenceTest >> testChildDirectories [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: DirectoryExpected
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -357,10 +357,10 @@ FileReferenceTest >> testChildFiles [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: DirectoryExpected
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -383,10 +383,10 @@ FileReferenceTest >> testChildren [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryExpected is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [beta children]
-		raise: DirectoryExpected
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -798,7 +798,7 @@ FileReferenceTest >> testReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FileExpected
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -818,7 +818,7 @@ FileReferenceTest >> testReadStreamDo [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStreamDo: [:stream |]]
-		raise: FileExpected
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -1042,7 +1042,7 @@ FileReferenceTest >> testWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FileExpected
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -1062,5 +1062,5 @@ FileReferenceTest >> testWriteStreamDo [
 	"Ensure #writeStreamDo: send to a directory raises an exception."
 	self
 		should: [directory writeStreamDo: [:stream | ]]
-		raise: FileExpected
+		raise: FileRequired
 ]

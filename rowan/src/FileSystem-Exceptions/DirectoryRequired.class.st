@@ -1,5 +1,5 @@
 Class {
-	#name : 'DirectoryExpected',
+	#name : 'DirectoryRequired',
 	#superclass : 'FileSystemError',
 	#category : 'FileSystem-Exceptions'
 }
