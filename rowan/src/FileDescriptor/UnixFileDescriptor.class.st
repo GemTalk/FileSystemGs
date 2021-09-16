@@ -226,6 +226,8 @@ UnixFileDescriptor >> read: count [
 		readFromFileDescriptor: id
 		toBuffer: buffer
 		count: buffer size.
+  numBytesRead == 0
+    ifTrue: [^#[]].
 	^buffer
 		byteArrayFrom: 0
 		to: numBytesRead - 1
