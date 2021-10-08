@@ -21,7 +21,7 @@ MacOSPlatform class >> isActivePlatform [
 { #category : 'testing' }
 MacOSPlatform class >> isMacOS [
 
-	^ self currentPlatformName = 'Mac OS'
+	^ self currentPlatformName = 'Darwin'
 ]
 
 { #category : 'accessing' }
