@@ -21,14 +21,6 @@ Linux64Platform class >> isActivePlatform [
 	^ self currentPlatformName = 'Linux'
 ]
 
-{ #category : 'accessing' }
-Linux64Platform >> currentWorkingDirectoryPath [
-	"I don't catch any of the low-level errors here.
-	There's not much sensible I can do with them at this level."
-
-	^libcUnistd getCurrentDirName
-]
-
 { #category : 'testing' }
 Linux64Platform >> isLinux64 [
 	^ true
