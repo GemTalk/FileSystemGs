@@ -9,7 +9,7 @@ OSPlatform current.
 "
 Class {
 	#name : 'MacOSPlatform',
-	#superclass : 'OSPlatform',
+	#superclass : 'UnixPlatform',
 	#category : 'System-Platforms-Mac'
 }
 
