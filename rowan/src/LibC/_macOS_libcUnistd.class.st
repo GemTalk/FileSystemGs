@@ -1522,7 +1522,7 @@ _macOS_libcUnistd class >> initializeFunctions [
 { #category : 'accessing' }
 _macOS_libcUnistd class >> libraryName [
 
-	^'libc.so.6'
+	^'/usr/lib/system/libsystem_c.dylib'
 ]
 
 { #category : 'Functions' }
