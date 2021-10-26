@@ -39,11 +39,11 @@ MacOSPlatform >> family [
 { #category : 'initialization' }
 MacOSPlatform >> initializeLibc [
 
-	libcDirent := LibcDirent new.
-	libcFcntl := LibcFcntl new.
+	libcDirent := MacOSLibcDirent new.
+	libcFcntl := MacOSLibcFcntl new.
 	libcUnistd := MacOSLibcUnistd new.
-	libcStat := LibcStat new.
-	libcStdio := LibcStdio new
+	libcStat := MacOSLibcStat new.
+	libcStdio := MacOSLibcStdio new
 ]
 
 { #category : 'testing' }
