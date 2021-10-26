@@ -1407,7 +1407,7 @@ _libcUnistd class >> initializeFunction_write_inLibrary: cLibrary [
 _libcUnistd class >> initializeFunctions [
 
 	| library |
-	library := CLibrary named: 'libc.so.6'.
+	library := CLibrary named: self libraryName.
 	self
 		initializeFunction_chdir_inLibrary: library;
 		initializeFunction_setsid_inLibrary: library;
@@ -1517,6 +1517,12 @@ _libcUnistd class >> initializeFunctions [
 		initializeFunction_chown_inLibrary: library;
 		initializeFunction_setreuid_inLibrary: library;
 		yourself
+]
+
+{ #category : 'accessing' }
+_libcUnistd class >> libraryName [
+
+	^'libc.so.6'
 ]
 
 { #category : 'Functions' }

@@ -44,11 +44,7 @@ UnixPlatform >> family [
 { #category : 'initialization' }
 UnixPlatform >> initialize [
 
-	libcDirent := LibcDirent new.
-	libcFcntl := LibcFcntl new.
-	libcUnistd := LibcUnistd new.
-	libcStat := LibcStat new.
-	libcStdio := LibcStdio new
+	self initializeLibc
 ]
 
 { #category : 'testing' }

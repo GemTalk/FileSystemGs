@@ -21,6 +21,16 @@ Linux64Platform class >> isActivePlatform [
 	^ self currentPlatformName = 'Linux'
 ]
 
+{ #category : 'initializing' }
+Linux64Platform >> initializeLibc [
+
+	libcDirent := LibcDirent new.
+	libcFcntl := LibcFcntl new.
+	libcUnistd := LibcUnistd new.
+	libcStat := LibcStat new.
+	libcStdio := LibcStdio new
+]
+
 { #category : 'testing' }
 Linux64Platform >> isLinux64 [
 	^ true

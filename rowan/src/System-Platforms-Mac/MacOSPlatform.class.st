@@ -36,6 +36,16 @@ MacOSPlatform >> family [
 	^#MacOS
 ]
 
+{ #category : 'initialization' }
+MacOSPlatform >> initializeLibc [
+
+	libcDirent := LibcDirent new.
+	libcFcntl := LibcFcntl new.
+	libcUnistd := MacOSLibcUnistd new.
+	libcStat := LibcStat new.
+	libcStdio := LibcStdio new
+]
+
 { #category : 'testing' }
 MacOSPlatform >> isMacOS [
 	^ true
