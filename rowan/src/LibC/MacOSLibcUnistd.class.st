@@ -3,3 +3,9 @@ Class {
 	#superclass : 'LibcUnistd',
 	#category : 'LibC'
 }
+
+{ #category : 'accessing' }
+MacOSLibcUnistd >> wrappedClass [
+
+	^_macOS_libcUnistd
+]
