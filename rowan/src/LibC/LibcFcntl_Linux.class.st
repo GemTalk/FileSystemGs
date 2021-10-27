@@ -1,11 +1,10 @@
 Class {
-	#name : 'MacOSLibcFcntl',
+	#name : 'LibcFcntl_Linux',
 	#superclass : 'LibcFcntl',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-MacOSLibcFcntl >> wrappedClass [
-
-	^_macOS_libcFcntl
+LibcFcntl_Linux >> wrappedClass [
+	^ _libcFcntl_Linux
 ]

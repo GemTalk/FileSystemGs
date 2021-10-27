@@ -1,11 +1,11 @@
 Class {
-	#name : 'MacOSLibcDirent',
+	#name : 'LibcDirent_macOS',
 	#superclass : 'LibcDirent',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-MacOSLibcDirent >> wrappedClass [
+LibcDirent_macOS >> wrappedClass [
 
-	^_macOS_libcDirent
+	^_libcDirent_macOS
 ]

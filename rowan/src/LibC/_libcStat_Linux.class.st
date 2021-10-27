@@ -1,6 +1,6 @@
 Class {
-	#name : '_macOS_libcStat',
-	#superclass : 'Object',
+	#name : '_libcStat_Linux',
+	#superclass : '_libcStat',
 	#classVars : [
 		'Functionchmod',
 		'Functionfchmod',
@@ -30,13 +30,13 @@ Class {
 }
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initialize [
+_libcStat_Linux class >> initialize [
 
   self initializeFunctions
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___fxstat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___fxstat_inLibrary: cLibrary [
 
 	Function__fxstat := CCallout
 		library: cLibrary
@@ -48,7 +48,7 @@ _macOS_libcStat class >> initializeFunction___fxstat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___fxstatat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___fxstatat_inLibrary: cLibrary [
 
 	Function__fxstatat := CCallout
 		library: cLibrary
@@ -60,7 +60,7 @@ _macOS_libcStat class >> initializeFunction___fxstatat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___lxstat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___lxstat_inLibrary: cLibrary [
 
 	Function__lxstat := CCallout
 		library: cLibrary
@@ -72,7 +72,7 @@ _macOS_libcStat class >> initializeFunction___lxstat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___xmknod_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___xmknod_inLibrary: cLibrary [
 
 	Function__xmknod := CCallout
 		library: cLibrary
@@ -84,7 +84,7 @@ _macOS_libcStat class >> initializeFunction___xmknod_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___xmknodat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___xmknodat_inLibrary: cLibrary [
 
 	Function__xmknodat := CCallout
 		library: cLibrary
@@ -96,7 +96,7 @@ _macOS_libcStat class >> initializeFunction___xmknodat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction___xstat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction___xstat_inLibrary: cLibrary [
 
 	Function__xstat := CCallout
 		library: cLibrary
@@ -108,7 +108,7 @@ _macOS_libcStat class >> initializeFunction___xstat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_chmod_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_chmod_inLibrary: cLibrary [
 
 	Functionchmod := CCallout
 		library: cLibrary
@@ -120,7 +120,7 @@ _macOS_libcStat class >> initializeFunction_chmod_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_fchmod_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_fchmod_inLibrary: cLibrary [
 
 	Functionfchmod := CCallout
 		library: cLibrary
@@ -132,7 +132,7 @@ _macOS_libcStat class >> initializeFunction_fchmod_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_fchmodat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_fchmodat_inLibrary: cLibrary [
 
 	Functionfchmodat := CCallout
 		library: cLibrary
@@ -144,7 +144,7 @@ _macOS_libcStat class >> initializeFunction_fchmodat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_fstat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_fstat_inLibrary: cLibrary [
 
 	Functionfstat := CCallout
 		library: cLibrary
@@ -156,7 +156,7 @@ _macOS_libcStat class >> initializeFunction_fstat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_fstatat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_fstatat_inLibrary: cLibrary [
 
 	Functionfstatat := CCallout
 		library: cLibrary
@@ -168,7 +168,7 @@ _macOS_libcStat class >> initializeFunction_fstatat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_futimens_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_futimens_inLibrary: cLibrary [
 
 	Functionfutimens := CCallout
 		library: cLibrary
@@ -180,7 +180,7 @@ _macOS_libcStat class >> initializeFunction_futimens_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_lchmod_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_lchmod_inLibrary: cLibrary [
 
 	Functionlchmod := CCallout
 		library: cLibrary
@@ -192,7 +192,7 @@ _macOS_libcStat class >> initializeFunction_lchmod_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_lstat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_lstat_inLibrary: cLibrary [
 
 	Functionlstat := CCallout
 		library: cLibrary
@@ -204,7 +204,7 @@ _macOS_libcStat class >> initializeFunction_lstat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mkdir_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mkdir_inLibrary: cLibrary [
 
 	Functionmkdir := CCallout
 		library: cLibrary
@@ -216,7 +216,7 @@ _macOS_libcStat class >> initializeFunction_mkdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mkdirat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mkdirat_inLibrary: cLibrary [
 
 	Functionmkdirat := CCallout
 		library: cLibrary
@@ -228,7 +228,7 @@ _macOS_libcStat class >> initializeFunction_mkdirat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mkfifo_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mkfifo_inLibrary: cLibrary [
 
 	Functionmkfifo := CCallout
 		library: cLibrary
@@ -240,7 +240,7 @@ _macOS_libcStat class >> initializeFunction_mkfifo_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mkfifoat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mkfifoat_inLibrary: cLibrary [
 
 	Functionmkfifoat := CCallout
 		library: cLibrary
@@ -252,7 +252,7 @@ _macOS_libcStat class >> initializeFunction_mkfifoat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mknod_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mknod_inLibrary: cLibrary [
 
 	Functionmknod := CCallout
 		library: cLibrary
@@ -264,7 +264,7 @@ _macOS_libcStat class >> initializeFunction_mknod_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_mknodat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_mknodat_inLibrary: cLibrary [
 
 	Functionmknodat := CCallout
 		library: cLibrary
@@ -276,7 +276,7 @@ _macOS_libcStat class >> initializeFunction_mknodat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_stat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_stat_inLibrary: cLibrary [
 
 	Functionstat := CCallout
 		library: cLibrary
@@ -288,7 +288,7 @@ _macOS_libcStat class >> initializeFunction_stat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_umask_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_umask_inLibrary: cLibrary [
 
 	Functionumask := CCallout
 		library: cLibrary
@@ -300,7 +300,7 @@ _macOS_libcStat class >> initializeFunction_umask_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunction_utimensat_inLibrary: cLibrary [
+_libcStat_Linux class >> initializeFunction_utimensat_inLibrary: cLibrary [
 
 	Functionutimensat := CCallout
 		library: cLibrary
@@ -312,10 +312,10 @@ _macOS_libcStat class >> initializeFunction_utimensat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcStat class >> initializeFunctions [
+_libcStat_Linux class >> initializeFunctions [
 
 	| library |
-	library := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	library := CLibrary named: 'libc.so.6'.
 	self
 		initializeFunction_umask_inLibrary: library;
 		initializeFunction___fxstatat_inLibrary: library;
@@ -344,7 +344,7 @@ _macOS_libcStat class >> initializeFunctions [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __fxstat: args errno: errnoHolder [
+_libcStat_Linux >> __fxstat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'ptr' )"
 
 	^Function__fxstat
@@ -353,7 +353,7 @@ _macOS_libcStat >> __fxstat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __fxstatat: args errno: errnoHolder [
+_libcStat_Linux >> __fxstatat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'ptr' #'int32' )"
 
 	^Function__fxstatat
@@ -362,7 +362,7 @@ _macOS_libcStat >> __fxstatat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __lxstat: args errno: errnoHolder [
+_libcStat_Linux >> __lxstat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
 
 	^Function__lxstat
@@ -371,7 +371,7 @@ _macOS_libcStat >> __lxstat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __xmknod: args errno: errnoHolder [
+_libcStat_Linux >> __xmknod: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'ptr' )"
 
 	^Function__xmknod
@@ -380,7 +380,7 @@ _macOS_libcStat >> __xmknod: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __xmknodat: args errno: errnoHolder [
+_libcStat_Linux >> __xmknodat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'uint32' #'ptr' )"
 
 	^Function__xmknodat
@@ -389,7 +389,7 @@ _macOS_libcStat >> __xmknodat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> __xstat: args errno: errnoHolder [
+_libcStat_Linux >> __xstat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
 
 	^Function__xstat
@@ -398,7 +398,7 @@ _macOS_libcStat >> __xstat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> chmod: args errno: errnoHolder [
+_libcStat_Linux >> chmod: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
 
 	^Functionchmod
@@ -407,7 +407,7 @@ _macOS_libcStat >> chmod: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> fchmod: args errno: errnoHolder [
+_libcStat_Linux >> fchmod: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'uint32' )"
 
 	^Functionfchmod
@@ -416,7 +416,7 @@ _macOS_libcStat >> fchmod: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> fchmodat: args errno: errnoHolder [
+_libcStat_Linux >> fchmodat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'int32' )"
 
 	^Functionfchmodat
@@ -425,7 +425,7 @@ _macOS_libcStat >> fchmodat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> fstat: args errno: errnoHolder [
+_libcStat_Linux >> fstat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionfstat
@@ -434,7 +434,7 @@ _macOS_libcStat >> fstat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> fstatat: args errno: errnoHolder [
+_libcStat_Linux >> fstatat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
 
 	^Functionfstatat
@@ -443,7 +443,7 @@ _macOS_libcStat >> fstatat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> futimens: args errno: errnoHolder [
+_libcStat_Linux >> futimens: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionfutimens
@@ -452,7 +452,7 @@ _macOS_libcStat >> futimens: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> lchmod: args errno: errnoHolder [
+_libcStat_Linux >> lchmod: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
 
 	^Functionlchmod
@@ -461,7 +461,7 @@ _macOS_libcStat >> lchmod: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> lstat: args errno: errnoHolder [
+_libcStat_Linux >> lstat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionlstat
@@ -470,7 +470,7 @@ _macOS_libcStat >> lstat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mkdir: args errno: errnoHolder [
+_libcStat_Linux >> mkdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
 
 	^Functionmkdir
@@ -479,7 +479,7 @@ _macOS_libcStat >> mkdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mkdirat: args errno: errnoHolder [
+_libcStat_Linux >> mkdirat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
 
 	^Functionmkdirat
@@ -488,7 +488,7 @@ _macOS_libcStat >> mkdirat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mkfifo: args errno: errnoHolder [
+_libcStat_Linux >> mkfifo: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
 
 	^Functionmkfifo
@@ -497,7 +497,7 @@ _macOS_libcStat >> mkfifo: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mkfifoat: args errno: errnoHolder [
+_libcStat_Linux >> mkfifoat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
 
 	^Functionmkfifoat
@@ -506,7 +506,7 @@ _macOS_libcStat >> mkfifoat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mknod: args errno: errnoHolder [
+_libcStat_Linux >> mknod: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint64' )"
 
 	^Functionmknod
@@ -515,7 +515,7 @@ _macOS_libcStat >> mknod: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> mknodat: args errno: errnoHolder [
+_libcStat_Linux >> mknodat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'uint64' )"
 
 	^Functionmknodat
@@ -524,7 +524,7 @@ _macOS_libcStat >> mknodat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> stat: args errno: errnoHolder [
+_libcStat_Linux >> stat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionstat
@@ -533,7 +533,7 @@ _macOS_libcStat >> stat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> umask: args errno: errnoHolder [
+_libcStat_Linux >> umask: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' )"
 
 	^Functionumask
@@ -542,7 +542,7 @@ _macOS_libcStat >> umask: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcStat >> utimensat: args errno: errnoHolder [
+_libcStat_Linux >> utimensat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
 
 	^Functionutimensat

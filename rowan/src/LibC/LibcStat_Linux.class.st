@@ -1,11 +1,11 @@
 Class {
-	#name : 'MacOSLibcStat',
+	#name : 'LibcStat_Linux',
 	#superclass : 'LibcStat',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-MacOSLibcStat >> wrappedClass [
+LibcStat_Linux >> wrappedClass [
 
-	^_macOS_libcStat
+	^_libcStat_Linux
 ]

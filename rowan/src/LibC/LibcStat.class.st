@@ -44,9 +44,3 @@ LibcStat >> stat: pathString [
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
 ]
-
-{ #category : 'accessing' }
-LibcStat >> wrappedClass [
-
-	^_libcStat
-]

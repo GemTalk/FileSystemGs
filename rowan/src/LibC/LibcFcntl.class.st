@@ -16,8 +16,3 @@ LibcFcntl >> openPath: pathString flags: flagsInteger mode: modeInteger [
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
 ]
-
-{ #category : 'accessing' }
-LibcFcntl >> wrappedClass [
-	^ _libcFcntl
-]

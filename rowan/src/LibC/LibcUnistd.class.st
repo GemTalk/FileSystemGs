@@ -103,11 +103,6 @@ LibcUnistd >> unlinkPath: pathString [
 	^result
 ]
 
-{ #category : 'accessing' }
-LibcUnistd >> wrappedClass [
-	^ _libcUnistd
-]
-
 { #category : 'functions' }
 LibcUnistd >> writeToFileDescriptor: fd fromBuffer: buf count: bytes [
 

@@ -1,11 +1,11 @@
 Class {
-	#name : 'MacOSLibcStdio',
+	#name : 'LibcStdio_macOS',
 	#superclass : 'LibcStdio',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-MacOSLibcStdio >> wrappedClass [
+LibcStdio_macOS >> wrappedClass [
 
-	^_macOS_libcStdio
+	^_libcStdio_macOS
 ]

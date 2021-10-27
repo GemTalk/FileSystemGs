@@ -49,8 +49,3 @@ LibcDirent >> readFromDirectoryStream: dirPointer [
 		ifTrue: [nil]
 		ifFalse: [DirentStruct forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize)]
 ]
-
-{ #category : 'accessing' }
-LibcDirent >> wrappedClass [
-	^ _libcDirent
-]

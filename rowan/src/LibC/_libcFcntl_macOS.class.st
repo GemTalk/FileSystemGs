@@ -1,6 +1,6 @@
 Class {
-	#name : '_macOS_libcFcntl',
-	#superclass : 'Object',
+	#name : '_libcFcntl_macOS',
+	#superclass : '_libcFcntl',
 	#classVars : [
 		'Functioncreat',
 		'Functionfcntl',
@@ -14,13 +14,13 @@ Class {
 }
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initialize [
+_libcFcntl_macOS class >> initialize [
 
   self initializeFunctions
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_creat_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_creat_inLibrary: cLibrary [
 
 	Functioncreat := CCallout
 		library: cLibrary
@@ -32,7 +32,7 @@ _macOS_libcFcntl class >> initializeFunction_creat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_fcntl_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_fcntl_inLibrary: cLibrary [
 
 	Functionfcntl := CCallout
 		library: cLibrary
@@ -44,7 +44,7 @@ _macOS_libcFcntl class >> initializeFunction_fcntl_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_lockf_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_lockf_inLibrary: cLibrary [
 
 	Functionlockf := CCallout
 		library: cLibrary
@@ -56,7 +56,7 @@ _macOS_libcFcntl class >> initializeFunction_lockf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_open_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_open_inLibrary: cLibrary [
 
 	Functionopen := CCallout
 		library: cLibrary
@@ -68,7 +68,7 @@ _macOS_libcFcntl class >> initializeFunction_open_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_openat_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_openat_inLibrary: cLibrary [
 
 	Functionopenat := CCallout
 		library: cLibrary
@@ -80,7 +80,7 @@ _macOS_libcFcntl class >> initializeFunction_openat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_posix_fadvise_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_posix_fadvise_inLibrary: cLibrary [
 
 	Functionposix_fadvise := CCallout
 		library: cLibrary
@@ -92,7 +92,7 @@ _macOS_libcFcntl class >> initializeFunction_posix_fadvise_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunction_posix_fallocate_inLibrary: cLibrary [
+_libcFcntl_macOS class >> initializeFunction_posix_fallocate_inLibrary: cLibrary [
 
 	Functionposix_fallocate := CCallout
 		library: cLibrary
@@ -104,7 +104,7 @@ _macOS_libcFcntl class >> initializeFunction_posix_fallocate_inLibrary: cLibrary
 ]
 
 { #category : 'Initializing - private' }
-_macOS_libcFcntl class >> initializeFunctions [
+_libcFcntl_macOS class >> initializeFunctions [
 
 	| library |
 	library := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
@@ -120,7 +120,7 @@ _macOS_libcFcntl class >> initializeFunctions [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> creat: args errno: errnoHolder [
+_libcFcntl_macOS >> creat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
 
 	^Functioncreat
@@ -129,7 +129,7 @@ _macOS_libcFcntl >> creat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> fcntl: args errno: errnoHolder [
+_libcFcntl_macOS >> fcntl: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
 	^Functionfcntl
@@ -138,7 +138,7 @@ _macOS_libcFcntl >> fcntl: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> lockf: args errno: errnoHolder [
+_libcFcntl_macOS >> lockf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'int64' )"
 
 	^Functionlockf
@@ -147,7 +147,7 @@ _macOS_libcFcntl >> lockf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> open: args errno: errnoHolder [
+_libcFcntl_macOS >> open: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int32' )"
 
 	^Functionopen
@@ -156,7 +156,7 @@ _macOS_libcFcntl >> open: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> openat: args errno: errnoHolder [
+_libcFcntl_macOS >> openat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' )"
 
 	^Functionopenat
@@ -165,7 +165,7 @@ _macOS_libcFcntl >> openat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> posix_fadvise: args errno: errnoHolder [
+_libcFcntl_macOS >> posix_fadvise: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' #'int32' )"
 
 	^Functionposix_fadvise
@@ -174,7 +174,7 @@ _macOS_libcFcntl >> posix_fadvise: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_macOS_libcFcntl >> posix_fallocate: args errno: errnoHolder [
+_libcFcntl_macOS >> posix_fallocate: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' )"
 
 	^Functionposix_fallocate

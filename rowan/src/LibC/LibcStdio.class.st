@@ -17,9 +17,3 @@ to: dstPathString [
 		ifTrue: [self handleErrno: errnoHolder first].
 	^true
 ]
-
-{ #category : 'accessing' }
-LibcStdio >> wrappedClass [
-
-	^_libcStdio
-]

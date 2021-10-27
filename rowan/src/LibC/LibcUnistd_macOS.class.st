@@ -1,11 +1,11 @@
 Class {
-	#name : 'MacOSLibcUnistd',
+	#name : 'LibcUnistd_macOS',
 	#superclass : 'LibcUnistd',
 	#category : 'LibC'
 }
 
 { #category : 'accessing' }
-MacOSLibcUnistd >> wrappedClass [
+LibcUnistd_macOS >> wrappedClass [
 
-	^_macOS_libcUnistd
+	^_libcUnistd_macOS
 ]
