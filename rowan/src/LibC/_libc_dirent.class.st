@@ -1,5 +1,5 @@
 Class {
-	#name : '_libcDirent',
+	#name : '_libc_dirent',
 	#superclass : 'LibcLibrary',
 	#category : 'LibC'
 }

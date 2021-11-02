@@ -7,5 +7,5 @@ Class {
 { #category : 'accessing' }
 LibcDirent_macOS >> wrappedClass [
 
-	^_libcDirent_macOS
+	^_libc_dirent_macOS
 ]

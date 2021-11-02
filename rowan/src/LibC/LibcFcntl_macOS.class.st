@@ -7,5 +7,5 @@ Class {
 { #category : 'accessing' }
 LibcFcntl_macOS >> wrappedClass [
 
-	^_libcFcntl_macOS
+	^_libc_fcntl_macOS
 ]

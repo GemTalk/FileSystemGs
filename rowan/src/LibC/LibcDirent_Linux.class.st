@@ -6,5 +6,5 @@ Class {
 
 { #category : 'accessing' }
 LibcDirent_Linux >> wrappedClass [
-	^ _libcDirent_Linux
+	^ _libc_dirent_Linux
 ]

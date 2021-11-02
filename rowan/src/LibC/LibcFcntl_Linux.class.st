@@ -6,5 +6,5 @@ Class {
 
 { #category : 'accessing' }
 LibcFcntl_Linux >> wrappedClass [
-	^ _libcFcntl_Linux
+	^ _libc_fcntl_Linux
 ]

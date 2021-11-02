@@ -1,6 +1,6 @@
 Class {
-	#name : '_libcDirent_Linux',
-	#superclass : '_libcDirent',
+	#name : '_libc_dirent_Linux',
+	#superclass : '_libc_dirent',
 	#classVars : [
 		'Functionalphasort',
 		'Functionclosedir',
@@ -19,13 +19,13 @@ Class {
 }
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initialize [
+_libc_dirent_Linux class >> initialize [
  
   self initializeFunctions
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_alphasort_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_alphasort_inLibrary: cLibrary [
 
 	Functionalphasort := CCallout
 		library: cLibrary
@@ -37,7 +37,7 @@ _libcDirent_Linux class >> initializeFunction_alphasort_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_closedir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_closedir_inLibrary: cLibrary [
 
 	Functionclosedir := CCallout
 		library: cLibrary
@@ -49,7 +49,7 @@ _libcDirent_Linux class >> initializeFunction_closedir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_dirfd_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_dirfd_inLibrary: cLibrary [
 
 	Functiondirfd := CCallout
 		library: cLibrary
@@ -61,7 +61,7 @@ _libcDirent_Linux class >> initializeFunction_dirfd_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_fdopendir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_fdopendir_inLibrary: cLibrary [
 
 	Functionfdopendir := CCallout
 		library: cLibrary
@@ -73,7 +73,7 @@ _libcDirent_Linux class >> initializeFunction_fdopendir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_getdirentries_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_getdirentries_inLibrary: cLibrary [
 
 	Functiongetdirentries := CCallout
 		library: cLibrary
@@ -85,7 +85,7 @@ _libcDirent_Linux class >> initializeFunction_getdirentries_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_opendir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_opendir_inLibrary: cLibrary [
 
 	Functionopendir := CCallout
 		library: cLibrary
@@ -97,7 +97,7 @@ _libcDirent_Linux class >> initializeFunction_opendir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_readdir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_readdir_inLibrary: cLibrary [
 
 	Functionreaddir := CCallout
 		library: cLibrary
@@ -109,7 +109,7 @@ _libcDirent_Linux class >> initializeFunction_readdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_readdir_r_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_readdir_r_inLibrary: cLibrary [
 
 	Functionreaddir_r := CCallout
 		library: cLibrary
@@ -121,7 +121,7 @@ _libcDirent_Linux class >> initializeFunction_readdir_r_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_rewinddir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_rewinddir_inLibrary: cLibrary [
 
 	Functionrewinddir := CCallout
 		library: cLibrary
@@ -133,7 +133,7 @@ _libcDirent_Linux class >> initializeFunction_rewinddir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_scandir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_scandir_inLibrary: cLibrary [
 
 	Functionscandir := CCallout
 		library: cLibrary
@@ -145,7 +145,7 @@ _libcDirent_Linux class >> initializeFunction_scandir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_seekdir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_seekdir_inLibrary: cLibrary [
 
 	Functionseekdir := CCallout
 		library: cLibrary
@@ -157,7 +157,7 @@ _libcDirent_Linux class >> initializeFunction_seekdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunction_telldir_inLibrary: cLibrary [
+_libc_dirent_Linux class >> initializeFunction_telldir_inLibrary: cLibrary [
 
 	Functiontelldir := CCallout
 		library: cLibrary
@@ -169,7 +169,7 @@ _libcDirent_Linux class >> initializeFunction_telldir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcDirent_Linux class >> initializeFunctions [
+_libc_dirent_Linux class >> initializeFunctions [
 
 	| library |
 	library := CLibrary named: 'libc.so.6'.
@@ -190,7 +190,7 @@ _libcDirent_Linux class >> initializeFunctions [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> alphasort: args errno: errnoHolder [
+_libc_dirent_Linux >> alphasort: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'ptr' )"
 
 	^Functionalphasort
@@ -199,7 +199,7 @@ _libcDirent_Linux >> alphasort: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> closedir: args errno: errnoHolder [
+_libc_dirent_Linux >> closedir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionclosedir
@@ -208,7 +208,7 @@ _libcDirent_Linux >> closedir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> dirfd: args errno: errnoHolder [
+_libc_dirent_Linux >> dirfd: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functiondirfd
@@ -217,7 +217,7 @@ _libcDirent_Linux >> dirfd: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> fdopendir: args errno: errnoHolder [
+_libc_dirent_Linux >> fdopendir: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'int32' )"
 
 	^Functionfdopendir
@@ -226,7 +226,7 @@ _libcDirent_Linux >> fdopendir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> getdirentries: args errno: errnoHolder [
+_libc_dirent_Linux >> getdirentries: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'ptr' )"
 
 	^Functiongetdirentries
@@ -235,7 +235,7 @@ _libcDirent_Linux >> getdirentries: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> opendir: args errno: errnoHolder [
+_libc_dirent_Linux >> opendir: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'const char*' )"
 
 	^Functionopendir
@@ -244,7 +244,7 @@ _libcDirent_Linux >> opendir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> readdir_r: args errno: errnoHolder [
+_libc_dirent_Linux >> readdir_r: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'ptr' #'ptr' )"
 
 	^Functionreaddir_r
@@ -253,7 +253,7 @@ _libcDirent_Linux >> readdir_r: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> readdir: args errno: errnoHolder [
+_libc_dirent_Linux >> readdir: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'ptr' )"
 
 	^Functionreaddir
@@ -262,7 +262,7 @@ _libcDirent_Linux >> readdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> rewinddir: args errno: errnoHolder [
+_libc_dirent_Linux >> rewinddir: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionrewinddir
@@ -271,7 +271,7 @@ _libcDirent_Linux >> rewinddir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> scandir: args errno: errnoHolder [
+_libc_dirent_Linux >> scandir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' #'ptr' #'ptr' )"
 
 	^Functionscandir
@@ -280,7 +280,7 @@ _libcDirent_Linux >> scandir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> seekdir: args errno: errnoHolder [
+_libc_dirent_Linux >> seekdir: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' #'int64' )"
 
 	^Functionseekdir
@@ -289,7 +289,7 @@ _libcDirent_Linux >> seekdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcDirent_Linux >> telldir: args errno: errnoHolder [
+_libc_dirent_Linux >> telldir: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' )"
 
 	^Functiontelldir

@@ -7,5 +7,5 @@ Class {
 { #category : 'accessing' }
 LibcUnistd_macOS >> wrappedClass [
 
-	^_libcUnistd_macOS
+	^_libc_unistd_macOS
 ]

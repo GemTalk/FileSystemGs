@@ -1,6 +1,6 @@
 Class {
-	#name : '_libcStdio_Linux',
-	#superclass : '_libcStdio',
+	#name : '_libc_stdio_Linux',
+	#superclass : '_libc_stdio',
 	#classVars : [
 		'Functionclearerr',
 		'Functionclearerr_unlocked',
@@ -91,13 +91,13 @@ Class {
 }
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initialize [
+_libc_stdio_Linux class >> initialize [
 
   self initializeFunctions
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction___getdelim_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction___getdelim_inLibrary: cLibrary [
 
 	Function__getdelim := CCallout
 		library: cLibrary
@@ -109,7 +109,7 @@ _libcStdio_Linux class >> initializeFunction___getdelim_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction___overflow_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction___overflow_inLibrary: cLibrary [
 
 	Function__overflow := CCallout
 		library: cLibrary
@@ -121,7 +121,7 @@ _libcStdio_Linux class >> initializeFunction___overflow_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction___uflow_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction___uflow_inLibrary: cLibrary [
 
 	Function__uflow := CCallout
 		library: cLibrary
@@ -133,7 +133,7 @@ _libcStdio_Linux class >> initializeFunction___uflow_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_clearerr_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_clearerr_inLibrary: cLibrary [
 
 	Functionclearerr := CCallout
 		library: cLibrary
@@ -145,7 +145,7 @@ _libcStdio_Linux class >> initializeFunction_clearerr_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_clearerr_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_clearerr_unlocked_inLibrary: cLibrary [
 
 	Functionclearerr_unlocked := CCallout
 		library: cLibrary
@@ -157,7 +157,7 @@ _libcStdio_Linux class >> initializeFunction_clearerr_unlocked_inLibrary: cLibra
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ctermid_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ctermid_inLibrary: cLibrary [
 
 	Functionctermid := CCallout
 		library: cLibrary
@@ -169,7 +169,7 @@ _libcStdio_Linux class >> initializeFunction_ctermid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_dprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_dprintf_inLibrary: cLibrary [
 
 	Functiondprintf := CCallout
 		library: cLibrary
@@ -181,7 +181,7 @@ _libcStdio_Linux class >> initializeFunction_dprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fclose_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fclose_inLibrary: cLibrary [
 
 	Functionfclose := CCallout
 		library: cLibrary
@@ -193,7 +193,7 @@ _libcStdio_Linux class >> initializeFunction_fclose_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fdopen_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fdopen_inLibrary: cLibrary [
 
 	Functionfdopen := CCallout
 		library: cLibrary
@@ -205,7 +205,7 @@ _libcStdio_Linux class >> initializeFunction_fdopen_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_feof_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_feof_inLibrary: cLibrary [
 
 	Functionfeof := CCallout
 		library: cLibrary
@@ -217,7 +217,7 @@ _libcStdio_Linux class >> initializeFunction_feof_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_feof_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_feof_unlocked_inLibrary: cLibrary [
 
 	Functionfeof_unlocked := CCallout
 		library: cLibrary
@@ -229,7 +229,7 @@ _libcStdio_Linux class >> initializeFunction_feof_unlocked_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ferror_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ferror_inLibrary: cLibrary [
 
 	Functionferror := CCallout
 		library: cLibrary
@@ -241,7 +241,7 @@ _libcStdio_Linux class >> initializeFunction_ferror_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ferror_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ferror_unlocked_inLibrary: cLibrary [
 
 	Functionferror_unlocked := CCallout
 		library: cLibrary
@@ -253,7 +253,7 @@ _libcStdio_Linux class >> initializeFunction_ferror_unlocked_inLibrary: cLibrary
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fflush_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fflush_inLibrary: cLibrary [
 
 	Functionfflush := CCallout
 		library: cLibrary
@@ -265,7 +265,7 @@ _libcStdio_Linux class >> initializeFunction_fflush_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fflush_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fflush_unlocked_inLibrary: cLibrary [
 
 	Functionfflush_unlocked := CCallout
 		library: cLibrary
@@ -277,7 +277,7 @@ _libcStdio_Linux class >> initializeFunction_fflush_unlocked_inLibrary: cLibrary
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fgetc_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fgetc_inLibrary: cLibrary [
 
 	Functionfgetc := CCallout
 		library: cLibrary
@@ -289,7 +289,7 @@ _libcStdio_Linux class >> initializeFunction_fgetc_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fgetc_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fgetc_unlocked_inLibrary: cLibrary [
 
 	Functionfgetc_unlocked := CCallout
 		library: cLibrary
@@ -301,7 +301,7 @@ _libcStdio_Linux class >> initializeFunction_fgetc_unlocked_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fgetpos_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fgetpos_inLibrary: cLibrary [
 
 	Functionfgetpos := CCallout
 		library: cLibrary
@@ -313,7 +313,7 @@ _libcStdio_Linux class >> initializeFunction_fgetpos_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fgets_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fgets_inLibrary: cLibrary [
 
 	Functionfgets := CCallout
 		library: cLibrary
@@ -325,7 +325,7 @@ _libcStdio_Linux class >> initializeFunction_fgets_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fileno_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fileno_inLibrary: cLibrary [
 
 	Functionfileno := CCallout
 		library: cLibrary
@@ -337,7 +337,7 @@ _libcStdio_Linux class >> initializeFunction_fileno_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fileno_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fileno_unlocked_inLibrary: cLibrary [
 
 	Functionfileno_unlocked := CCallout
 		library: cLibrary
@@ -349,7 +349,7 @@ _libcStdio_Linux class >> initializeFunction_fileno_unlocked_inLibrary: cLibrary
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_flockfile_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_flockfile_inLibrary: cLibrary [
 
 	Functionflockfile := CCallout
 		library: cLibrary
@@ -361,7 +361,7 @@ _libcStdio_Linux class >> initializeFunction_flockfile_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fmemopen_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fmemopen_inLibrary: cLibrary [
 
 	Functionfmemopen := CCallout
 		library: cLibrary
@@ -373,7 +373,7 @@ _libcStdio_Linux class >> initializeFunction_fmemopen_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fopen_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fopen_inLibrary: cLibrary [
 
 	Functionfopen := CCallout
 		library: cLibrary
@@ -385,7 +385,7 @@ _libcStdio_Linux class >> initializeFunction_fopen_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fprintf_inLibrary: cLibrary [
 
 	Functionfprintf := CCallout
 		library: cLibrary
@@ -397,7 +397,7 @@ _libcStdio_Linux class >> initializeFunction_fprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fputc_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fputc_inLibrary: cLibrary [
 
 	Functionfputc := CCallout
 		library: cLibrary
@@ -409,7 +409,7 @@ _libcStdio_Linux class >> initializeFunction_fputc_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fputc_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fputc_unlocked_inLibrary: cLibrary [
 
 	Functionfputc_unlocked := CCallout
 		library: cLibrary
@@ -421,7 +421,7 @@ _libcStdio_Linux class >> initializeFunction_fputc_unlocked_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fputs_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fputs_inLibrary: cLibrary [
 
 	Functionfputs := CCallout
 		library: cLibrary
@@ -433,7 +433,7 @@ _libcStdio_Linux class >> initializeFunction_fputs_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fread_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fread_inLibrary: cLibrary [
 
 	Functionfread := CCallout
 		library: cLibrary
@@ -445,7 +445,7 @@ _libcStdio_Linux class >> initializeFunction_fread_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fread_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fread_unlocked_inLibrary: cLibrary [
 
 	Functionfread_unlocked := CCallout
 		library: cLibrary
@@ -457,7 +457,7 @@ _libcStdio_Linux class >> initializeFunction_fread_unlocked_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_freopen_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_freopen_inLibrary: cLibrary [
 
 	Functionfreopen := CCallout
 		library: cLibrary
@@ -469,7 +469,7 @@ _libcStdio_Linux class >> initializeFunction_freopen_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fscanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fscanf_inLibrary: cLibrary [
 
 	Functionfscanf := CCallout
 		library: cLibrary
@@ -481,7 +481,7 @@ _libcStdio_Linux class >> initializeFunction_fscanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fseek_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fseek_inLibrary: cLibrary [
 
 	Functionfseek := CCallout
 		library: cLibrary
@@ -493,7 +493,7 @@ _libcStdio_Linux class >> initializeFunction_fseek_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fseeko_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fseeko_inLibrary: cLibrary [
 
 	Functionfseeko := CCallout
 		library: cLibrary
@@ -505,7 +505,7 @@ _libcStdio_Linux class >> initializeFunction_fseeko_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fsetpos_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fsetpos_inLibrary: cLibrary [
 
 	Functionfsetpos := CCallout
 		library: cLibrary
@@ -517,7 +517,7 @@ _libcStdio_Linux class >> initializeFunction_fsetpos_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ftell_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ftell_inLibrary: cLibrary [
 
 	Functionftell := CCallout
 		library: cLibrary
@@ -529,7 +529,7 @@ _libcStdio_Linux class >> initializeFunction_ftell_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ftello_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ftello_inLibrary: cLibrary [
 
 	Functionftello := CCallout
 		library: cLibrary
@@ -541,7 +541,7 @@ _libcStdio_Linux class >> initializeFunction_ftello_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ftrylockfile_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ftrylockfile_inLibrary: cLibrary [
 
 	Functionftrylockfile := CCallout
 		library: cLibrary
@@ -553,7 +553,7 @@ _libcStdio_Linux class >> initializeFunction_ftrylockfile_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_funlockfile_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_funlockfile_inLibrary: cLibrary [
 
 	Functionfunlockfile := CCallout
 		library: cLibrary
@@ -565,7 +565,7 @@ _libcStdio_Linux class >> initializeFunction_funlockfile_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fwrite_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fwrite_inLibrary: cLibrary [
 
 	Functionfwrite := CCallout
 		library: cLibrary
@@ -577,7 +577,7 @@ _libcStdio_Linux class >> initializeFunction_fwrite_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_fwrite_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_fwrite_unlocked_inLibrary: cLibrary [
 
 	Functionfwrite_unlocked := CCallout
 		library: cLibrary
@@ -589,7 +589,7 @@ _libcStdio_Linux class >> initializeFunction_fwrite_unlocked_inLibrary: cLibrary
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getc_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getc_inLibrary: cLibrary [
 
 	Functiongetc := CCallout
 		library: cLibrary
@@ -601,7 +601,7 @@ _libcStdio_Linux class >> initializeFunction_getc_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getc_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getc_unlocked_inLibrary: cLibrary [
 
 	Functiongetc_unlocked := CCallout
 		library: cLibrary
@@ -613,7 +613,7 @@ _libcStdio_Linux class >> initializeFunction_getc_unlocked_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getchar_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getchar_inLibrary: cLibrary [
 
 	Functiongetchar := CCallout
 		library: cLibrary
@@ -625,7 +625,7 @@ _libcStdio_Linux class >> initializeFunction_getchar_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getchar_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getchar_unlocked_inLibrary: cLibrary [
 
 	Functiongetchar_unlocked := CCallout
 		library: cLibrary
@@ -637,7 +637,7 @@ _libcStdio_Linux class >> initializeFunction_getchar_unlocked_inLibrary: cLibrar
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getdelim_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getdelim_inLibrary: cLibrary [
 
 	Functiongetdelim := CCallout
 		library: cLibrary
@@ -649,7 +649,7 @@ _libcStdio_Linux class >> initializeFunction_getdelim_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getline_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getline_inLibrary: cLibrary [
 
 	Functiongetline := CCallout
 		library: cLibrary
@@ -661,7 +661,7 @@ _libcStdio_Linux class >> initializeFunction_getline_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_getw_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_getw_inLibrary: cLibrary [
 
 	Functiongetw := CCallout
 		library: cLibrary
@@ -673,7 +673,7 @@ _libcStdio_Linux class >> initializeFunction_getw_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_open_memstream_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_open_memstream_inLibrary: cLibrary [
 
 	Functionopen_memstream := CCallout
 		library: cLibrary
@@ -685,7 +685,7 @@ _libcStdio_Linux class >> initializeFunction_open_memstream_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_pclose_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_pclose_inLibrary: cLibrary [
 
 	Functionpclose := CCallout
 		library: cLibrary
@@ -697,7 +697,7 @@ _libcStdio_Linux class >> initializeFunction_pclose_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_perror_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_perror_inLibrary: cLibrary [
 
 	Functionperror := CCallout
 		library: cLibrary
@@ -709,7 +709,7 @@ _libcStdio_Linux class >> initializeFunction_perror_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_popen_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_popen_inLibrary: cLibrary [
 
 	Functionpopen := CCallout
 		library: cLibrary
@@ -721,7 +721,7 @@ _libcStdio_Linux class >> initializeFunction_popen_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_printf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_printf_inLibrary: cLibrary [
 
 	Functionprintf := CCallout
 		library: cLibrary
@@ -733,7 +733,7 @@ _libcStdio_Linux class >> initializeFunction_printf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_putc_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_putc_inLibrary: cLibrary [
 
 	Functionputc := CCallout
 		library: cLibrary
@@ -745,7 +745,7 @@ _libcStdio_Linux class >> initializeFunction_putc_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_putc_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_putc_unlocked_inLibrary: cLibrary [
 
 	Functionputc_unlocked := CCallout
 		library: cLibrary
@@ -757,7 +757,7 @@ _libcStdio_Linux class >> initializeFunction_putc_unlocked_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_putchar_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_putchar_inLibrary: cLibrary [
 
 	Functionputchar := CCallout
 		library: cLibrary
@@ -769,7 +769,7 @@ _libcStdio_Linux class >> initializeFunction_putchar_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_putchar_unlocked_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_putchar_unlocked_inLibrary: cLibrary [
 
 	Functionputchar_unlocked := CCallout
 		library: cLibrary
@@ -781,7 +781,7 @@ _libcStdio_Linux class >> initializeFunction_putchar_unlocked_inLibrary: cLibrar
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_puts_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_puts_inLibrary: cLibrary [
 
 	Functionputs := CCallout
 		library: cLibrary
@@ -793,7 +793,7 @@ _libcStdio_Linux class >> initializeFunction_puts_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_putw_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_putw_inLibrary: cLibrary [
 
 	Functionputw := CCallout
 		library: cLibrary
@@ -805,7 +805,7 @@ _libcStdio_Linux class >> initializeFunction_putw_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_remove_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_remove_inLibrary: cLibrary [
 
 	Functionremove := CCallout
 		library: cLibrary
@@ -817,7 +817,7 @@ _libcStdio_Linux class >> initializeFunction_remove_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_rename_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_rename_inLibrary: cLibrary [
 
 	Functionrename := CCallout
 		library: cLibrary
@@ -829,7 +829,7 @@ _libcStdio_Linux class >> initializeFunction_rename_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_renameat_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_renameat_inLibrary: cLibrary [
 
 	Functionrenameat := CCallout
 		library: cLibrary
@@ -841,7 +841,7 @@ _libcStdio_Linux class >> initializeFunction_renameat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_rewind_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_rewind_inLibrary: cLibrary [
 
 	Functionrewind := CCallout
 		library: cLibrary
@@ -853,7 +853,7 @@ _libcStdio_Linux class >> initializeFunction_rewind_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_scanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_scanf_inLibrary: cLibrary [
 
 	Functionscanf := CCallout
 		library: cLibrary
@@ -865,7 +865,7 @@ _libcStdio_Linux class >> initializeFunction_scanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_setbuf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_setbuf_inLibrary: cLibrary [
 
 	Functionsetbuf := CCallout
 		library: cLibrary
@@ -877,7 +877,7 @@ _libcStdio_Linux class >> initializeFunction_setbuf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_setbuffer_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_setbuffer_inLibrary: cLibrary [
 
 	Functionsetbuffer := CCallout
 		library: cLibrary
@@ -889,7 +889,7 @@ _libcStdio_Linux class >> initializeFunction_setbuffer_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_setlinebuf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_setlinebuf_inLibrary: cLibrary [
 
 	Functionsetlinebuf := CCallout
 		library: cLibrary
@@ -901,7 +901,7 @@ _libcStdio_Linux class >> initializeFunction_setlinebuf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_setvbuf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_setvbuf_inLibrary: cLibrary [
 
 	Functionsetvbuf := CCallout
 		library: cLibrary
@@ -913,7 +913,7 @@ _libcStdio_Linux class >> initializeFunction_setvbuf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_snprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_snprintf_inLibrary: cLibrary [
 
 	Functionsnprintf := CCallout
 		library: cLibrary
@@ -925,7 +925,7 @@ _libcStdio_Linux class >> initializeFunction_snprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_sprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_sprintf_inLibrary: cLibrary [
 
 	Functionsprintf := CCallout
 		library: cLibrary
@@ -937,7 +937,7 @@ _libcStdio_Linux class >> initializeFunction_sprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_sscanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_sscanf_inLibrary: cLibrary [
 
 	Functionsscanf := CCallout
 		library: cLibrary
@@ -949,7 +949,7 @@ _libcStdio_Linux class >> initializeFunction_sscanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_tempnam_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_tempnam_inLibrary: cLibrary [
 
 	Functiontempnam := CCallout
 		library: cLibrary
@@ -961,7 +961,7 @@ _libcStdio_Linux class >> initializeFunction_tempnam_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_tmpfile_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_tmpfile_inLibrary: cLibrary [
 
 	Functiontmpfile := CCallout
 		library: cLibrary
@@ -973,7 +973,7 @@ _libcStdio_Linux class >> initializeFunction_tmpfile_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_tmpnam_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_tmpnam_inLibrary: cLibrary [
 
 	Functiontmpnam := CCallout
 		library: cLibrary
@@ -985,7 +985,7 @@ _libcStdio_Linux class >> initializeFunction_tmpnam_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_tmpnam_r_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_tmpnam_r_inLibrary: cLibrary [
 
 	Functiontmpnam_r := CCallout
 		library: cLibrary
@@ -997,7 +997,7 @@ _libcStdio_Linux class >> initializeFunction_tmpnam_r_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_ungetc_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_ungetc_inLibrary: cLibrary [
 
 	Functionungetc := CCallout
 		library: cLibrary
@@ -1009,7 +1009,7 @@ _libcStdio_Linux class >> initializeFunction_ungetc_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vdprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vdprintf_inLibrary: cLibrary [
 
 	Functionvdprintf := CCallout
 		library: cLibrary
@@ -1021,7 +1021,7 @@ _libcStdio_Linux class >> initializeFunction_vdprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vfprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vfprintf_inLibrary: cLibrary [
 
 	Functionvfprintf := CCallout
 		library: cLibrary
@@ -1033,7 +1033,7 @@ _libcStdio_Linux class >> initializeFunction_vfprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vfscanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vfscanf_inLibrary: cLibrary [
 
 	Functionvfscanf := CCallout
 		library: cLibrary
@@ -1045,7 +1045,7 @@ _libcStdio_Linux class >> initializeFunction_vfscanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vprintf_inLibrary: cLibrary [
 
 	Functionvprintf := CCallout
 		library: cLibrary
@@ -1057,7 +1057,7 @@ _libcStdio_Linux class >> initializeFunction_vprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vscanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vscanf_inLibrary: cLibrary [
 
 	Functionvscanf := CCallout
 		library: cLibrary
@@ -1069,7 +1069,7 @@ _libcStdio_Linux class >> initializeFunction_vscanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vsnprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vsnprintf_inLibrary: cLibrary [
 
 	Functionvsnprintf := CCallout
 		library: cLibrary
@@ -1081,7 +1081,7 @@ _libcStdio_Linux class >> initializeFunction_vsnprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vsprintf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vsprintf_inLibrary: cLibrary [
 
 	Functionvsprintf := CCallout
 		library: cLibrary
@@ -1093,7 +1093,7 @@ _libcStdio_Linux class >> initializeFunction_vsprintf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunction_vsscanf_inLibrary: cLibrary [
+_libc_stdio_Linux class >> initializeFunction_vsscanf_inLibrary: cLibrary [
 
 	Functionvsscanf := CCallout
 		library: cLibrary
@@ -1105,7 +1105,7 @@ _libcStdio_Linux class >> initializeFunction_vsscanf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcStdio_Linux class >> initializeFunctions [
+_libc_stdio_Linux class >> initializeFunctions [
 
 	| library |
 	library := CLibrary named: 'libc.so.6'.
@@ -1198,7 +1198,7 @@ _libcStdio_Linux class >> initializeFunctions [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> __getdelim: args errno: errnoHolder [
+_libc_stdio_Linux >> __getdelim: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' #'ptr' #'int32' #'ptr' )"
 
 	^Function__getdelim
@@ -1207,7 +1207,7 @@ _libcStdio_Linux >> __getdelim: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> __overflow: args errno: errnoHolder [
+_libc_stdio_Linux >> __overflow: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'int32' )"
 
 	^Function__overflow
@@ -1216,7 +1216,7 @@ _libcStdio_Linux >> __overflow: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> __uflow: args errno: errnoHolder [
+_libc_stdio_Linux >> __uflow: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Function__uflow
@@ -1225,7 +1225,7 @@ _libcStdio_Linux >> __uflow: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> clearerr_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> clearerr_unlocked: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionclearerr_unlocked
@@ -1234,7 +1234,7 @@ _libcStdio_Linux >> clearerr_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> clearerr: args errno: errnoHolder [
+_libc_stdio_Linux >> clearerr: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionclearerr
@@ -1243,7 +1243,7 @@ _libcStdio_Linux >> clearerr: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ctermid: args errno: errnoHolder [
+_libc_stdio_Linux >> ctermid: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' )"
 
 	^Functionctermid
@@ -1252,7 +1252,7 @@ _libcStdio_Linux >> ctermid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> dprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> dprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' )"
 
 	^Functiondprintf
@@ -1261,7 +1261,7 @@ _libcStdio_Linux >> dprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fclose: args errno: errnoHolder [
+_libc_stdio_Linux >> fclose: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfclose
@@ -1270,7 +1270,7 @@ _libcStdio_Linux >> fclose: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fdopen: args errno: errnoHolder [
+_libc_stdio_Linux >> fdopen: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'int32' #'const char*' )"
 
 	^Functionfdopen
@@ -1279,7 +1279,7 @@ _libcStdio_Linux >> fdopen: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> feof_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> feof_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfeof_unlocked
@@ -1288,7 +1288,7 @@ _libcStdio_Linux >> feof_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> feof: args errno: errnoHolder [
+_libc_stdio_Linux >> feof: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfeof
@@ -1297,7 +1297,7 @@ _libcStdio_Linux >> feof: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ferror_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> ferror_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionferror_unlocked
@@ -1306,7 +1306,7 @@ _libcStdio_Linux >> ferror_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ferror: args errno: errnoHolder [
+_libc_stdio_Linux >> ferror: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionferror
@@ -1315,7 +1315,7 @@ _libcStdio_Linux >> ferror: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fflush_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fflush_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfflush_unlocked
@@ -1324,7 +1324,7 @@ _libcStdio_Linux >> fflush_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fflush: args errno: errnoHolder [
+_libc_stdio_Linux >> fflush: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfflush
@@ -1333,7 +1333,7 @@ _libcStdio_Linux >> fflush: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fgetc_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fgetc_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfgetc_unlocked
@@ -1342,7 +1342,7 @@ _libcStdio_Linux >> fgetc_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fgetc: args errno: errnoHolder [
+_libc_stdio_Linux >> fgetc: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfgetc
@@ -1351,7 +1351,7 @@ _libcStdio_Linux >> fgetc: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fgetpos: args errno: errnoHolder [
+_libc_stdio_Linux >> fgetpos: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'ptr' )"
 
 	^Functionfgetpos
@@ -1360,7 +1360,7 @@ _libcStdio_Linux >> fgetpos: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fgets: args errno: errnoHolder [
+_libc_stdio_Linux >> fgets: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' #'int32' #'ptr' )"
 
 	^Functionfgets
@@ -1369,7 +1369,7 @@ _libcStdio_Linux >> fgets: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fileno_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fileno_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfileno_unlocked
@@ -1378,7 +1378,7 @@ _libcStdio_Linux >> fileno_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fileno: args errno: errnoHolder [
+_libc_stdio_Linux >> fileno: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionfileno
@@ -1387,7 +1387,7 @@ _libcStdio_Linux >> fileno: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> flockfile: args errno: errnoHolder [
+_libc_stdio_Linux >> flockfile: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionflockfile
@@ -1396,7 +1396,7 @@ _libcStdio_Linux >> flockfile: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fmemopen: args errno: errnoHolder [
+_libc_stdio_Linux >> fmemopen: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'ptr' #'uint64' #'const char*' )"
 
 	^Functionfmemopen
@@ -1405,7 +1405,7 @@ _libcStdio_Linux >> fmemopen: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fopen: args errno: errnoHolder [
+_libc_stdio_Linux >> fopen: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'const char*' #'const char*' )"
 
 	^Functionfopen
@@ -1414,7 +1414,7 @@ _libcStdio_Linux >> fopen: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> fprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' )"
 
 	^Functionfprintf
@@ -1423,7 +1423,7 @@ _libcStdio_Linux >> fprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fputc_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fputc_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionfputc_unlocked
@@ -1432,7 +1432,7 @@ _libcStdio_Linux >> fputc_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fputc: args errno: errnoHolder [
+_libc_stdio_Linux >> fputc: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionfputc
@@ -1441,7 +1441,7 @@ _libcStdio_Linux >> fputc: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fputs: args errno: errnoHolder [
+_libc_stdio_Linux >> fputs: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionfputs
@@ -1450,7 +1450,7 @@ _libcStdio_Linux >> fputs: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fread_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fread_unlocked: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'ptr' #'uint64' #'uint64' #'ptr' )"
 
 	^Functionfread_unlocked
@@ -1459,7 +1459,7 @@ _libcStdio_Linux >> fread_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fread: args errno: errnoHolder [
+_libc_stdio_Linux >> fread: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'ptr' #'uint64' #'uint64' #'ptr' )"
 
 	^Functionfread
@@ -1468,7 +1468,7 @@ _libcStdio_Linux >> fread: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> freopen: args errno: errnoHolder [
+_libc_stdio_Linux >> freopen: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'const char*' #'const char*' #'ptr' )"
 
 	^Functionfreopen
@@ -1477,7 +1477,7 @@ _libcStdio_Linux >> freopen: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fscanf: args errno: errnoHolder [
+_libc_stdio_Linux >> fscanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' )"
 
 	^Functionfscanf
@@ -1486,7 +1486,7 @@ _libcStdio_Linux >> fscanf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fseek: args errno: errnoHolder [
+_libc_stdio_Linux >> fseek: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'int64' #'int32' )"
 
 	^Functionfseek
@@ -1495,7 +1495,7 @@ _libcStdio_Linux >> fseek: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fseeko: args errno: errnoHolder [
+_libc_stdio_Linux >> fseeko: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'int64' #'int32' )"
 
 	^Functionfseeko
@@ -1504,7 +1504,7 @@ _libcStdio_Linux >> fseeko: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fsetpos: args errno: errnoHolder [
+_libc_stdio_Linux >> fsetpos: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'ptr' )"
 
 	^Functionfsetpos
@@ -1513,7 +1513,7 @@ _libcStdio_Linux >> fsetpos: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ftell: args errno: errnoHolder [
+_libc_stdio_Linux >> ftell: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' )"
 
 	^Functionftell
@@ -1522,7 +1522,7 @@ _libcStdio_Linux >> ftell: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ftello: args errno: errnoHolder [
+_libc_stdio_Linux >> ftello: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' )"
 
 	^Functionftello
@@ -1531,7 +1531,7 @@ _libcStdio_Linux >> ftello: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ftrylockfile: args errno: errnoHolder [
+_libc_stdio_Linux >> ftrylockfile: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionftrylockfile
@@ -1540,7 +1540,7 @@ _libcStdio_Linux >> ftrylockfile: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> funlockfile: args errno: errnoHolder [
+_libc_stdio_Linux >> funlockfile: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionfunlockfile
@@ -1549,7 +1549,7 @@ _libcStdio_Linux >> funlockfile: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fwrite_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> fwrite_unlocked: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'ptr' #'uint64' #'uint64' #'ptr' )"
 
 	^Functionfwrite_unlocked
@@ -1558,7 +1558,7 @@ _libcStdio_Linux >> fwrite_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> fwrite: args errno: errnoHolder [
+_libc_stdio_Linux >> fwrite: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'ptr' #'uint64' #'uint64' #'ptr' )"
 
 	^Functionfwrite
@@ -1567,7 +1567,7 @@ _libcStdio_Linux >> fwrite: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getc_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> getc_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functiongetc_unlocked
@@ -1576,7 +1576,7 @@ _libcStdio_Linux >> getc_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getc: args errno: errnoHolder [
+_libc_stdio_Linux >> getc: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functiongetc
@@ -1585,7 +1585,7 @@ _libcStdio_Linux >> getc: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getchar_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> getchar_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetchar_unlocked
@@ -1594,7 +1594,7 @@ _libcStdio_Linux >> getchar_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getchar: args errno: errnoHolder [
+_libc_stdio_Linux >> getchar: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetchar
@@ -1603,7 +1603,7 @@ _libcStdio_Linux >> getchar: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getdelim: args errno: errnoHolder [
+_libc_stdio_Linux >> getdelim: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' #'ptr' #'int32' #'ptr' )"
 
 	^Functiongetdelim
@@ -1612,7 +1612,7 @@ _libcStdio_Linux >> getdelim: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getline: args errno: errnoHolder [
+_libc_stdio_Linux >> getline: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'ptr' #'ptr' #'ptr' )"
 
 	^Functiongetline
@@ -1621,7 +1621,7 @@ _libcStdio_Linux >> getline: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> getw: args errno: errnoHolder [
+_libc_stdio_Linux >> getw: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functiongetw
@@ -1630,7 +1630,7 @@ _libcStdio_Linux >> getw: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> open_memstream: args errno: errnoHolder [
+_libc_stdio_Linux >> open_memstream: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'ptr' #'ptr' )"
 
 	^Functionopen_memstream
@@ -1639,7 +1639,7 @@ _libcStdio_Linux >> open_memstream: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> pclose: args errno: errnoHolder [
+_libc_stdio_Linux >> pclose: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionpclose
@@ -1648,7 +1648,7 @@ _libcStdio_Linux >> pclose: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> perror: args errno: errnoHolder [
+_libc_stdio_Linux >> perror: args errno: errnoHolder [
 	"Interpreted as #void from #( #'const char*' )"
 
 	^Functionperror
@@ -1657,7 +1657,7 @@ _libcStdio_Linux >> perror: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> popen: args errno: errnoHolder [
+_libc_stdio_Linux >> popen: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'const char*' #'const char*' )"
 
 	^Functionpopen
@@ -1666,7 +1666,7 @@ _libcStdio_Linux >> popen: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> printf: args errno: errnoHolder [
+_libc_stdio_Linux >> printf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionprintf
@@ -1675,7 +1675,7 @@ _libcStdio_Linux >> printf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> putc_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> putc_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionputc_unlocked
@@ -1684,7 +1684,7 @@ _libcStdio_Linux >> putc_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> putc: args errno: errnoHolder [
+_libc_stdio_Linux >> putc: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionputc
@@ -1693,7 +1693,7 @@ _libcStdio_Linux >> putc: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> putchar_unlocked: args errno: errnoHolder [
+_libc_stdio_Linux >> putchar_unlocked: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionputchar_unlocked
@@ -1702,7 +1702,7 @@ _libcStdio_Linux >> putchar_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> putchar: args errno: errnoHolder [
+_libc_stdio_Linux >> putchar: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionputchar
@@ -1711,7 +1711,7 @@ _libcStdio_Linux >> putchar: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> puts: args errno: errnoHolder [
+_libc_stdio_Linux >> puts: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionputs
@@ -1720,7 +1720,7 @@ _libcStdio_Linux >> puts: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> putw: args errno: errnoHolder [
+_libc_stdio_Linux >> putw: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionputw
@@ -1729,7 +1729,7 @@ _libcStdio_Linux >> putw: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> remove: args errno: errnoHolder [
+_libc_stdio_Linux >> remove: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionremove
@@ -1738,7 +1738,7 @@ _libcStdio_Linux >> remove: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> rename: args errno: errnoHolder [
+_libc_stdio_Linux >> rename: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionrename
@@ -1747,7 +1747,7 @@ _libcStdio_Linux >> rename: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> renameat: args errno: errnoHolder [
+_libc_stdio_Linux >> renameat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' #'const char*' )"
 
 	^Functionrenameat
@@ -1756,7 +1756,7 @@ _libcStdio_Linux >> renameat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> rewind: args errno: errnoHolder [
+_libc_stdio_Linux >> rewind: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionrewind
@@ -1765,7 +1765,7 @@ _libcStdio_Linux >> rewind: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> scanf: args errno: errnoHolder [
+_libc_stdio_Linux >> scanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionscanf
@@ -1774,7 +1774,7 @@ _libcStdio_Linux >> scanf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> setbuf: args errno: errnoHolder [
+_libc_stdio_Linux >> setbuf: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' #'ptr' )"
 
 	^Functionsetbuf
@@ -1783,7 +1783,7 @@ _libcStdio_Linux >> setbuf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> setbuffer: args errno: errnoHolder [
+_libc_stdio_Linux >> setbuffer: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' #'ptr' #'uint64' )"
 
 	^Functionsetbuffer
@@ -1792,7 +1792,7 @@ _libcStdio_Linux >> setbuffer: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> setlinebuf: args errno: errnoHolder [
+_libc_stdio_Linux >> setlinebuf: args errno: errnoHolder [
 	"Interpreted as #void from #( #'ptr' )"
 
 	^Functionsetlinebuf
@@ -1801,7 +1801,7 @@ _libcStdio_Linux >> setlinebuf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> setvbuf: args errno: errnoHolder [
+_libc_stdio_Linux >> setvbuf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'ptr' #'int32' #'uint64' )"
 
 	^Functionsetvbuf
@@ -1810,7 +1810,7 @@ _libcStdio_Linux >> setvbuf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> snprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> snprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' #'const char*' )"
 
 	^Functionsnprintf
@@ -1819,7 +1819,7 @@ _libcStdio_Linux >> snprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> sprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> sprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' )"
 
 	^Functionsprintf
@@ -1828,7 +1828,7 @@ _libcStdio_Linux >> sprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> sscanf: args errno: errnoHolder [
+_libc_stdio_Linux >> sscanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionsscanf
@@ -1837,7 +1837,7 @@ _libcStdio_Linux >> sscanf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> tempnam: args errno: errnoHolder [
+_libc_stdio_Linux >> tempnam: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'const char*' #'const char*' )"
 
 	^Functiontempnam
@@ -1846,7 +1846,7 @@ _libcStdio_Linux >> tempnam: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> tmpfile: args errno: errnoHolder [
+_libc_stdio_Linux >> tmpfile: args errno: errnoHolder [
 	"Interpreted as #ptr from #( )"
 
 	^Functiontmpfile
@@ -1855,7 +1855,7 @@ _libcStdio_Linux >> tmpfile: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> tmpnam_r: args errno: errnoHolder [
+_libc_stdio_Linux >> tmpnam_r: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' )"
 
 	^Functiontmpnam_r
@@ -1864,7 +1864,7 @@ _libcStdio_Linux >> tmpnam_r: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> tmpnam: args errno: errnoHolder [
+_libc_stdio_Linux >> tmpnam: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' )"
 
 	^Functiontmpnam
@@ -1873,7 +1873,7 @@ _libcStdio_Linux >> tmpnam: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> ungetc: args errno: errnoHolder [
+_libc_stdio_Linux >> ungetc: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functionungetc
@@ -1882,7 +1882,7 @@ _libcStdio_Linux >> ungetc: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vdprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> vdprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
 
 	^Functionvdprintf
@@ -1891,7 +1891,7 @@ _libcStdio_Linux >> vdprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vfprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> vfprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' #'ptr' )"
 
 	^Functionvfprintf
@@ -1900,7 +1900,7 @@ _libcStdio_Linux >> vfprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vfscanf: args errno: errnoHolder [
+_libc_stdio_Linux >> vfscanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' #'ptr' )"
 
 	^Functionvfscanf
@@ -1909,7 +1909,7 @@ _libcStdio_Linux >> vfscanf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> vprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionvprintf
@@ -1918,7 +1918,7 @@ _libcStdio_Linux >> vprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vscanf: args errno: errnoHolder [
+_libc_stdio_Linux >> vscanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionvscanf
@@ -1927,7 +1927,7 @@ _libcStdio_Linux >> vscanf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vsnprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> vsnprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' #'const char*' #'ptr' )"
 
 	^Functionvsnprintf
@@ -1936,7 +1936,7 @@ _libcStdio_Linux >> vsnprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vsprintf: args errno: errnoHolder [
+_libc_stdio_Linux >> vsprintf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'const char*' #'ptr' )"
 
 	^Functionvsprintf
@@ -1945,7 +1945,7 @@ _libcStdio_Linux >> vsprintf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcStdio_Linux >> vsscanf: args errno: errnoHolder [
+_libc_stdio_Linux >> vsscanf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' #'ptr' )"
 
 	^Functionvsscanf

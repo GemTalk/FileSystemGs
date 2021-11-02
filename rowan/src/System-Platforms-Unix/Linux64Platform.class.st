@@ -24,11 +24,11 @@ Linux64Platform class >> isActivePlatform [
 { #category : 'initializing' }
 Linux64Platform >> initializeLibc [
 
-	libcDirent := LibcDirent new.
-	libcFcntl := LibcFcntl new.
-	libcUnistd := LibcUnistd new.
-	libcStat := LibcStat new.
-	libcStdio := LibcStdio new
+	libcDirent := LibcDirent_Linux new.
+	libcFcntl := LibcFcntl_Linux new.
+	libcUnistd := LibcUnistd_Linux new.
+	libcStat := LibcStat_Linux new.
+	libcStdio := LibcStdio_Linux new
 ]
 
 { #category : 'testing' }

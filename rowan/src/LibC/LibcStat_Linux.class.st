@@ -7,5 +7,5 @@ Class {
 { #category : 'accessing' }
 LibcStat_Linux >> wrappedClass [
 
-	^_libcStat_Linux
+	^_libc_stat_Linux
 ]

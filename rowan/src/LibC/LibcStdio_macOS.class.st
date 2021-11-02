@@ -7,5 +7,5 @@ Class {
 { #category : 'accessing' }
 LibcStdio_macOS >> wrappedClass [
 
-	^_libcStdio_macOS
+	^_libc_stdio_macOS
 ]

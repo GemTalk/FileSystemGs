@@ -9,7 +9,7 @@ Class {
 
 { #category : 'support' }
 LibcUnistdTest >> setUp [
-	instance := LibcUnistd new
+	instance := LibcUnistd_Linux new
 ]
 
 { #category : 'tests' }

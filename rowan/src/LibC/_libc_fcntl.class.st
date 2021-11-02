@@ -1,5 +1,5 @@
 Class {
-	#name : '_libcStdio',
+	#name : '_libc_fcntl',
 	#superclass : 'LibcLibrary',
 	#category : 'LibC'
 }

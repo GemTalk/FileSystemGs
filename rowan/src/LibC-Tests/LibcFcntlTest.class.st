@@ -35,6 +35,6 @@ LibcFcntlTest >> testOpenCloseBash [
 	fd := instance openPath: filename flags: 0 mode: 0.
 	self assert: fd > 0.
 
-	closeReturn := LibcUnistd new closeFd: fd.
+	closeReturn := LibcUnistd_Linux new closeFd: fd.
 	self assert: closeReturn equals: 0
 ]

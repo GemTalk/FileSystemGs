@@ -1,6 +1,6 @@
 Class {
-	#name : '_libcUnistd_macOS',
-	#superclass : '_libcUnistd',
+	#name : '_libc_unistd_macOS',
+	#superclass : '_libc_unistd',
 	#classVars : [
 		'Functionaccess',
 		'Functionacct',
@@ -114,13 +114,13 @@ Class {
 }
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initialize [
+_libc_unistd_macOS class >> initialize [
 
   self initializeFunctions
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction___getpgid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction___getpgid_inLibrary: cLibrary [
 
 	Function__getpgid := CCallout
 		library: cLibrary
@@ -132,7 +132,7 @@ _libcUnistd_macOS class >> initializeFunction___getpgid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction__exit_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction__exit_inLibrary: cLibrary [
 
 	Function_exit := CCallout
 		library: cLibrary
@@ -144,7 +144,7 @@ _libcUnistd_macOS class >> initializeFunction__exit_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_access_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_access_inLibrary: cLibrary [
 
 	Functionaccess := CCallout
 		library: cLibrary
@@ -156,7 +156,7 @@ _libcUnistd_macOS class >> initializeFunction_access_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_acct_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_acct_inLibrary: cLibrary [
 
 	Functionacct := CCallout
 		library: cLibrary
@@ -168,7 +168,7 @@ _libcUnistd_macOS class >> initializeFunction_acct_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_alarm_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_alarm_inLibrary: cLibrary [
 
 	Functionalarm := CCallout
 		library: cLibrary
@@ -180,7 +180,7 @@ _libcUnistd_macOS class >> initializeFunction_alarm_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_brk_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_brk_inLibrary: cLibrary [
 
 	Functionbrk := CCallout
 		library: cLibrary
@@ -192,7 +192,7 @@ _libcUnistd_macOS class >> initializeFunction_brk_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_chdir_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_chdir_inLibrary: cLibrary [
 
 	Functionchdir := CCallout
 		library: cLibrary
@@ -204,7 +204,7 @@ _libcUnistd_macOS class >> initializeFunction_chdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_chown_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_chown_inLibrary: cLibrary [
 
 	Functionchown := CCallout
 		library: cLibrary
@@ -216,7 +216,7 @@ _libcUnistd_macOS class >> initializeFunction_chown_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_chroot_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_chroot_inLibrary: cLibrary [
 
 	Functionchroot := CCallout
 		library: cLibrary
@@ -228,7 +228,7 @@ _libcUnistd_macOS class >> initializeFunction_chroot_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_close_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_close_inLibrary: cLibrary [
 
 	Functionclose := CCallout
 		library: cLibrary
@@ -240,7 +240,7 @@ _libcUnistd_macOS class >> initializeFunction_close_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_confstr_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_confstr_inLibrary: cLibrary [
 
 	Functionconfstr := CCallout
 		library: cLibrary
@@ -252,7 +252,7 @@ _libcUnistd_macOS class >> initializeFunction_confstr_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_crypt_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_crypt_inLibrary: cLibrary [
 
 	Functioncrypt := CCallout
 		library: cLibrary
@@ -264,7 +264,7 @@ _libcUnistd_macOS class >> initializeFunction_crypt_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_daemon_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_daemon_inLibrary: cLibrary [
 
 	Functiondaemon := CCallout
 		library: cLibrary
@@ -276,7 +276,7 @@ _libcUnistd_macOS class >> initializeFunction_daemon_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_dup_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_dup_inLibrary: cLibrary [
 
 	Functiondup := CCallout
 		library: cLibrary
@@ -288,7 +288,7 @@ _libcUnistd_macOS class >> initializeFunction_dup_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_dup2_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_dup2_inLibrary: cLibrary [
 
 	Functiondup2 := CCallout
 		library: cLibrary
@@ -300,7 +300,7 @@ _libcUnistd_macOS class >> initializeFunction_dup2_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_endusershell_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_endusershell_inLibrary: cLibrary [
 
 	Functionendusershell := CCallout
 		library: cLibrary
@@ -312,7 +312,7 @@ _libcUnistd_macOS class >> initializeFunction_endusershell_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execl_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execl_inLibrary: cLibrary [
 
 	Functionexecl := CCallout
 		library: cLibrary
@@ -324,7 +324,7 @@ _libcUnistd_macOS class >> initializeFunction_execl_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execle_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execle_inLibrary: cLibrary [
 
 	Functionexecle := CCallout
 		library: cLibrary
@@ -336,7 +336,7 @@ _libcUnistd_macOS class >> initializeFunction_execle_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execlp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execlp_inLibrary: cLibrary [
 
 	Functionexeclp := CCallout
 		library: cLibrary
@@ -348,7 +348,7 @@ _libcUnistd_macOS class >> initializeFunction_execlp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execv_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execv_inLibrary: cLibrary [
 
 	Functionexecv := CCallout
 		library: cLibrary
@@ -360,7 +360,7 @@ _libcUnistd_macOS class >> initializeFunction_execv_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execve_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execve_inLibrary: cLibrary [
 
 	Functionexecve := CCallout
 		library: cLibrary
@@ -372,7 +372,7 @@ _libcUnistd_macOS class >> initializeFunction_execve_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_execvp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_execvp_inLibrary: cLibrary [
 
 	Functionexecvp := CCallout
 		library: cLibrary
@@ -384,7 +384,7 @@ _libcUnistd_macOS class >> initializeFunction_execvp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_faccessat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_faccessat_inLibrary: cLibrary [
 
 	Functionfaccessat := CCallout
 		library: cLibrary
@@ -396,7 +396,7 @@ _libcUnistd_macOS class >> initializeFunction_faccessat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fchdir_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fchdir_inLibrary: cLibrary [
 
 	Functionfchdir := CCallout
 		library: cLibrary
@@ -408,7 +408,7 @@ _libcUnistd_macOS class >> initializeFunction_fchdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fchown_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fchown_inLibrary: cLibrary [
 
 	Functionfchown := CCallout
 		library: cLibrary
@@ -420,7 +420,7 @@ _libcUnistd_macOS class >> initializeFunction_fchown_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fchownat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fchownat_inLibrary: cLibrary [
 
 	Functionfchownat := CCallout
 		library: cLibrary
@@ -432,7 +432,7 @@ _libcUnistd_macOS class >> initializeFunction_fchownat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fdatasync_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fdatasync_inLibrary: cLibrary [
 
 	Functionfdatasync := CCallout
 		library: cLibrary
@@ -444,7 +444,7 @@ _libcUnistd_macOS class >> initializeFunction_fdatasync_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fexecve_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fexecve_inLibrary: cLibrary [
 
 	Functionfexecve := CCallout
 		library: cLibrary
@@ -456,7 +456,7 @@ _libcUnistd_macOS class >> initializeFunction_fexecve_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fork_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fork_inLibrary: cLibrary [
 
 	Functionfork := CCallout
 		library: cLibrary
@@ -468,7 +468,7 @@ _libcUnistd_macOS class >> initializeFunction_fork_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fpathconf_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fpathconf_inLibrary: cLibrary [
 
 	Functionfpathconf := CCallout
 		library: cLibrary
@@ -480,7 +480,7 @@ _libcUnistd_macOS class >> initializeFunction_fpathconf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_fsync_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_fsync_inLibrary: cLibrary [
 
 	Functionfsync := CCallout
 		library: cLibrary
@@ -492,7 +492,7 @@ _libcUnistd_macOS class >> initializeFunction_fsync_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_ftruncate_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_ftruncate_inLibrary: cLibrary [
 
 	Functionftruncate := CCallout
 		library: cLibrary
@@ -504,7 +504,7 @@ _libcUnistd_macOS class >> initializeFunction_ftruncate_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getcwd_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getcwd_inLibrary: cLibrary [
 
 	Functiongetcwd := CCallout
 		library: cLibrary
@@ -516,7 +516,7 @@ _libcUnistd_macOS class >> initializeFunction_getcwd_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getdomainname_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getdomainname_inLibrary: cLibrary [
 
 	Functiongetdomainname := CCallout
 		library: cLibrary
@@ -528,7 +528,7 @@ _libcUnistd_macOS class >> initializeFunction_getdomainname_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getdtablesize_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getdtablesize_inLibrary: cLibrary [
 
 	Functiongetdtablesize := CCallout
 		library: cLibrary
@@ -540,7 +540,7 @@ _libcUnistd_macOS class >> initializeFunction_getdtablesize_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getegid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getegid_inLibrary: cLibrary [
 
 	Functiongetegid := CCallout
 		library: cLibrary
@@ -552,7 +552,7 @@ _libcUnistd_macOS class >> initializeFunction_getegid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getentropy_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getentropy_inLibrary: cLibrary [
 
 	Functiongetentropy := CCallout
 		library: cLibrary
@@ -564,7 +564,7 @@ _libcUnistd_macOS class >> initializeFunction_getentropy_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_geteuid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_geteuid_inLibrary: cLibrary [
 
 	Functiongeteuid := CCallout
 		library: cLibrary
@@ -576,7 +576,7 @@ _libcUnistd_macOS class >> initializeFunction_geteuid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getgid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getgid_inLibrary: cLibrary [
 
 	Functiongetgid := CCallout
 		library: cLibrary
@@ -588,7 +588,7 @@ _libcUnistd_macOS class >> initializeFunction_getgid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getgroups_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getgroups_inLibrary: cLibrary [
 
 	Functiongetgroups := CCallout
 		library: cLibrary
@@ -600,7 +600,7 @@ _libcUnistd_macOS class >> initializeFunction_getgroups_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_gethostid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_gethostid_inLibrary: cLibrary [
 
 	Functiongethostid := CCallout
 		library: cLibrary
@@ -612,7 +612,7 @@ _libcUnistd_macOS class >> initializeFunction_gethostid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_gethostname_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_gethostname_inLibrary: cLibrary [
 
 	Functiongethostname := CCallout
 		library: cLibrary
@@ -624,7 +624,7 @@ _libcUnistd_macOS class >> initializeFunction_gethostname_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getlogin_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getlogin_inLibrary: cLibrary [
 
 	Functiongetlogin := CCallout
 		library: cLibrary
@@ -636,7 +636,7 @@ _libcUnistd_macOS class >> initializeFunction_getlogin_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getlogin_r_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getlogin_r_inLibrary: cLibrary [
 
 	Functiongetlogin_r := CCallout
 		library: cLibrary
@@ -648,7 +648,7 @@ _libcUnistd_macOS class >> initializeFunction_getlogin_r_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getopt_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getopt_inLibrary: cLibrary [
 
 	Functiongetopt := CCallout
 		library: cLibrary
@@ -660,7 +660,7 @@ _libcUnistd_macOS class >> initializeFunction_getopt_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getpagesize_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getpagesize_inLibrary: cLibrary [
 
 	Functiongetpagesize := CCallout
 		library: cLibrary
@@ -672,7 +672,7 @@ _libcUnistd_macOS class >> initializeFunction_getpagesize_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getpass_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getpass_inLibrary: cLibrary [
 
 	Functiongetpass := CCallout
 		library: cLibrary
@@ -684,7 +684,7 @@ _libcUnistd_macOS class >> initializeFunction_getpass_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getpgid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getpgid_inLibrary: cLibrary [
 
 	Functiongetpgid := CCallout
 		library: cLibrary
@@ -696,7 +696,7 @@ _libcUnistd_macOS class >> initializeFunction_getpgid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getpgrp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getpgrp_inLibrary: cLibrary [
 
 	Functiongetpgrp := CCallout
 		library: cLibrary
@@ -708,7 +708,7 @@ _libcUnistd_macOS class >> initializeFunction_getpgrp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getpid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getpid_inLibrary: cLibrary [
 
 	Functiongetpid := CCallout
 		library: cLibrary
@@ -720,7 +720,7 @@ _libcUnistd_macOS class >> initializeFunction_getpid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getppid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getppid_inLibrary: cLibrary [
 
 	Functiongetppid := CCallout
 		library: cLibrary
@@ -732,7 +732,7 @@ _libcUnistd_macOS class >> initializeFunction_getppid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getsid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getsid_inLibrary: cLibrary [
 
 	Functiongetsid := CCallout
 		library: cLibrary
@@ -744,7 +744,7 @@ _libcUnistd_macOS class >> initializeFunction_getsid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getuid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getuid_inLibrary: cLibrary [
 
 	Functiongetuid := CCallout
 		library: cLibrary
@@ -756,7 +756,7 @@ _libcUnistd_macOS class >> initializeFunction_getuid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getusershell_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getusershell_inLibrary: cLibrary [
 
 	Functiongetusershell := CCallout
 		library: cLibrary
@@ -768,7 +768,7 @@ _libcUnistd_macOS class >> initializeFunction_getusershell_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_getwd_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_getwd_inLibrary: cLibrary [
 
 	Functiongetwd := CCallout
 		library: cLibrary
@@ -780,7 +780,7 @@ _libcUnistd_macOS class >> initializeFunction_getwd_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_isatty_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_isatty_inLibrary: cLibrary [
 
 	Functionisatty := CCallout
 		library: cLibrary
@@ -792,7 +792,7 @@ _libcUnistd_macOS class >> initializeFunction_isatty_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_lchown_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_lchown_inLibrary: cLibrary [
 
 	Functionlchown := CCallout
 		library: cLibrary
@@ -804,7 +804,7 @@ _libcUnistd_macOS class >> initializeFunction_lchown_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_link_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_link_inLibrary: cLibrary [
 
 	Functionlink := CCallout
 		library: cLibrary
@@ -816,7 +816,7 @@ _libcUnistd_macOS class >> initializeFunction_link_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_linkat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_linkat_inLibrary: cLibrary [
 
 	Functionlinkat := CCallout
 		library: cLibrary
@@ -828,7 +828,7 @@ _libcUnistd_macOS class >> initializeFunction_linkat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_lockf_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_lockf_inLibrary: cLibrary [
 
 	Functionlockf := CCallout
 		library: cLibrary
@@ -840,7 +840,7 @@ _libcUnistd_macOS class >> initializeFunction_lockf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_lseek_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_lseek_inLibrary: cLibrary [
 
 	Functionlseek := CCallout
 		library: cLibrary
@@ -852,7 +852,7 @@ _libcUnistd_macOS class >> initializeFunction_lseek_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_nice_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_nice_inLibrary: cLibrary [
 
 	Functionnice := CCallout
 		library: cLibrary
@@ -864,7 +864,7 @@ _libcUnistd_macOS class >> initializeFunction_nice_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_pathconf_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_pathconf_inLibrary: cLibrary [
 
 	Functionpathconf := CCallout
 		library: cLibrary
@@ -876,7 +876,7 @@ _libcUnistd_macOS class >> initializeFunction_pathconf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_pause_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_pause_inLibrary: cLibrary [
 
 	Functionpause := CCallout
 		library: cLibrary
@@ -888,7 +888,7 @@ _libcUnistd_macOS class >> initializeFunction_pause_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_pipe_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_pipe_inLibrary: cLibrary [
 
 	Functionpipe := CCallout
 		library: cLibrary
@@ -900,7 +900,7 @@ _libcUnistd_macOS class >> initializeFunction_pipe_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_pread_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_pread_inLibrary: cLibrary [
 
 	Functionpread := CCallout
 		library: cLibrary
@@ -912,7 +912,7 @@ _libcUnistd_macOS class >> initializeFunction_pread_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_profil_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_profil_inLibrary: cLibrary [
 
 	Functionprofil := CCallout
 		library: cLibrary
@@ -924,7 +924,7 @@ _libcUnistd_macOS class >> initializeFunction_profil_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_pwrite_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_pwrite_inLibrary: cLibrary [
 
 	Functionpwrite := CCallout
 		library: cLibrary
@@ -936,7 +936,7 @@ _libcUnistd_macOS class >> initializeFunction_pwrite_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_read_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_read_inLibrary: cLibrary [
 
 	Functionread := CCallout
 		library: cLibrary
@@ -948,7 +948,7 @@ _libcUnistd_macOS class >> initializeFunction_read_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_readlink_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_readlink_inLibrary: cLibrary [
 
 	Functionreadlink := CCallout
 		library: cLibrary
@@ -960,7 +960,7 @@ _libcUnistd_macOS class >> initializeFunction_readlink_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_readlinkat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_readlinkat_inLibrary: cLibrary [
 
 	Functionreadlinkat := CCallout
 		library: cLibrary
@@ -972,7 +972,7 @@ _libcUnistd_macOS class >> initializeFunction_readlinkat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_revoke_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_revoke_inLibrary: cLibrary [
 
 	Functionrevoke := CCallout
 		library: cLibrary
@@ -984,7 +984,7 @@ _libcUnistd_macOS class >> initializeFunction_revoke_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_rmdir_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_rmdir_inLibrary: cLibrary [
 
 	Functionrmdir := CCallout
 		library: cLibrary
@@ -996,7 +996,7 @@ _libcUnistd_macOS class >> initializeFunction_rmdir_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sbrk_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sbrk_inLibrary: cLibrary [
 
 	Functionsbrk := CCallout
 		library: cLibrary
@@ -1008,7 +1008,7 @@ _libcUnistd_macOS class >> initializeFunction_sbrk_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setdomainname_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setdomainname_inLibrary: cLibrary [
 
 	Functionsetdomainname := CCallout
 		library: cLibrary
@@ -1020,7 +1020,7 @@ _libcUnistd_macOS class >> initializeFunction_setdomainname_inLibrary: cLibrary 
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setegid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setegid_inLibrary: cLibrary [
 
 	Functionsetegid := CCallout
 		library: cLibrary
@@ -1032,7 +1032,7 @@ _libcUnistd_macOS class >> initializeFunction_setegid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_seteuid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_seteuid_inLibrary: cLibrary [
 
 	Functionseteuid := CCallout
 		library: cLibrary
@@ -1044,7 +1044,7 @@ _libcUnistd_macOS class >> initializeFunction_seteuid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setgid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setgid_inLibrary: cLibrary [
 
 	Functionsetgid := CCallout
 		library: cLibrary
@@ -1056,7 +1056,7 @@ _libcUnistd_macOS class >> initializeFunction_setgid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sethostid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sethostid_inLibrary: cLibrary [
 
 	Functionsethostid := CCallout
 		library: cLibrary
@@ -1068,7 +1068,7 @@ _libcUnistd_macOS class >> initializeFunction_sethostid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sethostname_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sethostname_inLibrary: cLibrary [
 
 	Functionsethostname := CCallout
 		library: cLibrary
@@ -1080,7 +1080,7 @@ _libcUnistd_macOS class >> initializeFunction_sethostname_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setlogin_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setlogin_inLibrary: cLibrary [
 
 	Functionsetlogin := CCallout
 		library: cLibrary
@@ -1092,7 +1092,7 @@ _libcUnistd_macOS class >> initializeFunction_setlogin_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setpgid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setpgid_inLibrary: cLibrary [
 
 	Functionsetpgid := CCallout
 		library: cLibrary
@@ -1104,7 +1104,7 @@ _libcUnistd_macOS class >> initializeFunction_setpgid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setpgrp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setpgrp_inLibrary: cLibrary [
 
 	Functionsetpgrp := CCallout
 		library: cLibrary
@@ -1116,7 +1116,7 @@ _libcUnistd_macOS class >> initializeFunction_setpgrp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setregid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setregid_inLibrary: cLibrary [
 
 	Functionsetregid := CCallout
 		library: cLibrary
@@ -1128,7 +1128,7 @@ _libcUnistd_macOS class >> initializeFunction_setregid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setreuid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setreuid_inLibrary: cLibrary [
 
 	Functionsetreuid := CCallout
 		library: cLibrary
@@ -1140,7 +1140,7 @@ _libcUnistd_macOS class >> initializeFunction_setreuid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setsid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setsid_inLibrary: cLibrary [
 
 	Functionsetsid := CCallout
 		library: cLibrary
@@ -1152,7 +1152,7 @@ _libcUnistd_macOS class >> initializeFunction_setsid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setuid_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setuid_inLibrary: cLibrary [
 
 	Functionsetuid := CCallout
 		library: cLibrary
@@ -1164,7 +1164,7 @@ _libcUnistd_macOS class >> initializeFunction_setuid_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_setusershell_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_setusershell_inLibrary: cLibrary [
 
 	Functionsetusershell := CCallout
 		library: cLibrary
@@ -1176,7 +1176,7 @@ _libcUnistd_macOS class >> initializeFunction_setusershell_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sleep_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sleep_inLibrary: cLibrary [
 
 	Functionsleep := CCallout
 		library: cLibrary
@@ -1188,7 +1188,7 @@ _libcUnistd_macOS class >> initializeFunction_sleep_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_symlink_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_symlink_inLibrary: cLibrary [
 
 	Functionsymlink := CCallout
 		library: cLibrary
@@ -1200,7 +1200,7 @@ _libcUnistd_macOS class >> initializeFunction_symlink_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_symlinkat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_symlinkat_inLibrary: cLibrary [
 
 	Functionsymlinkat := CCallout
 		library: cLibrary
@@ -1212,7 +1212,7 @@ _libcUnistd_macOS class >> initializeFunction_symlinkat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sync_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sync_inLibrary: cLibrary [
 
 	Functionsync := CCallout
 		library: cLibrary
@@ -1224,7 +1224,7 @@ _libcUnistd_macOS class >> initializeFunction_sync_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_syscall_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_syscall_inLibrary: cLibrary [
 
 	Functionsyscall := CCallout
 		library: cLibrary
@@ -1236,7 +1236,7 @@ _libcUnistd_macOS class >> initializeFunction_syscall_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_sysconf_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_sysconf_inLibrary: cLibrary [
 
 	Functionsysconf := CCallout
 		library: cLibrary
@@ -1248,7 +1248,7 @@ _libcUnistd_macOS class >> initializeFunction_sysconf_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_tcgetpgrp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_tcgetpgrp_inLibrary: cLibrary [
 
 	Functiontcgetpgrp := CCallout
 		library: cLibrary
@@ -1260,7 +1260,7 @@ _libcUnistd_macOS class >> initializeFunction_tcgetpgrp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_tcsetpgrp_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_tcsetpgrp_inLibrary: cLibrary [
 
 	Functiontcsetpgrp := CCallout
 		library: cLibrary
@@ -1272,7 +1272,7 @@ _libcUnistd_macOS class >> initializeFunction_tcsetpgrp_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_truncate_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_truncate_inLibrary: cLibrary [
 
 	Functiontruncate := CCallout
 		library: cLibrary
@@ -1284,7 +1284,7 @@ _libcUnistd_macOS class >> initializeFunction_truncate_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_ttyname_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_ttyname_inLibrary: cLibrary [
 
 	Functionttyname := CCallout
 		library: cLibrary
@@ -1296,7 +1296,7 @@ _libcUnistd_macOS class >> initializeFunction_ttyname_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_ttyname_r_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_ttyname_r_inLibrary: cLibrary [
 
 	Functionttyname_r := CCallout
 		library: cLibrary
@@ -1308,7 +1308,7 @@ _libcUnistd_macOS class >> initializeFunction_ttyname_r_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_ttyslot_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_ttyslot_inLibrary: cLibrary [
 
 	Functionttyslot := CCallout
 		library: cLibrary
@@ -1320,7 +1320,7 @@ _libcUnistd_macOS class >> initializeFunction_ttyslot_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_ualarm_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_ualarm_inLibrary: cLibrary [
 
 	Functionualarm := CCallout
 		library: cLibrary
@@ -1332,7 +1332,7 @@ _libcUnistd_macOS class >> initializeFunction_ualarm_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_unlink_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_unlink_inLibrary: cLibrary [
 
 	Functionunlink := CCallout
 		library: cLibrary
@@ -1344,7 +1344,7 @@ _libcUnistd_macOS class >> initializeFunction_unlink_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_unlinkat_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_unlinkat_inLibrary: cLibrary [
 
 	Functionunlinkat := CCallout
 		library: cLibrary
@@ -1356,7 +1356,7 @@ _libcUnistd_macOS class >> initializeFunction_unlinkat_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_usleep_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_usleep_inLibrary: cLibrary [
 
 	Functionusleep := CCallout
 		library: cLibrary
@@ -1368,7 +1368,7 @@ _libcUnistd_macOS class >> initializeFunction_usleep_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_vfork_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_vfork_inLibrary: cLibrary [
 
 	Functionvfork := CCallout
 		library: cLibrary
@@ -1380,7 +1380,7 @@ _libcUnistd_macOS class >> initializeFunction_vfork_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_vhangup_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_vhangup_inLibrary: cLibrary [
 
 	Functionvhangup := CCallout
 		library: cLibrary
@@ -1392,7 +1392,7 @@ _libcUnistd_macOS class >> initializeFunction_vhangup_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunction_write_inLibrary: cLibrary [
+_libc_unistd_macOS class >> initializeFunction_write_inLibrary: cLibrary [
 
 	Functionwrite := CCallout
 		library: cLibrary
@@ -1404,7 +1404,7 @@ _libcUnistd_macOS class >> initializeFunction_write_inLibrary: cLibrary [
 ]
 
 { #category : 'Initializing - private' }
-_libcUnistd_macOS class >> initializeFunctions [
+_libc_unistd_macOS class >> initializeFunctions [
 
 	| library |
 	library := CLibrary named: self libraryName.
@@ -1520,13 +1520,13 @@ _libcUnistd_macOS class >> initializeFunctions [
 ]
 
 { #category : 'accessing' }
-_libcUnistd_macOS class >> libraryName [
+_libc_unistd_macOS class >> libraryName [
 
 	^'/usr/lib/system/libsystem_c.dylib'
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> __getpgid: args errno: errnoHolder [
+_libc_unistd_macOS >> __getpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Function__getpgid
@@ -1535,7 +1535,7 @@ _libcUnistd_macOS >> __getpgid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> _exit: args errno: errnoHolder [
+_libc_unistd_macOS >> _exit: args errno: errnoHolder [
 	"Interpreted as #void from #( #'int32' )"
 
 	^Function_exit
@@ -1544,7 +1544,7 @@ _libcUnistd_macOS >> _exit: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> access: args errno: errnoHolder [
+_libc_unistd_macOS >> access: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int32' )"
 
 	^Functionaccess
@@ -1553,7 +1553,7 @@ _libcUnistd_macOS >> access: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> acct: args errno: errnoHolder [
+_libc_unistd_macOS >> acct: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionacct
@@ -1562,7 +1562,7 @@ _libcUnistd_macOS >> acct: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> alarm: args errno: errnoHolder [
+_libc_unistd_macOS >> alarm: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' )"
 
 	^Functionalarm
@@ -1571,7 +1571,7 @@ _libcUnistd_macOS >> alarm: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> brk: args errno: errnoHolder [
+_libc_unistd_macOS >> brk: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionbrk
@@ -1580,7 +1580,7 @@ _libcUnistd_macOS >> brk: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> chdir: args errno: errnoHolder [
+_libc_unistd_macOS >> chdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionchdir
@@ -1589,7 +1589,7 @@ _libcUnistd_macOS >> chdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> chown: args errno: errnoHolder [
+_libc_unistd_macOS >> chown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint32' )"
 
 	^Functionchown
@@ -1598,7 +1598,7 @@ _libcUnistd_macOS >> chown: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> chroot: args errno: errnoHolder [
+_libc_unistd_macOS >> chroot: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionchroot
@@ -1607,7 +1607,7 @@ _libcUnistd_macOS >> chroot: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> close: args errno: errnoHolder [
+_libc_unistd_macOS >> close: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionclose
@@ -1616,7 +1616,7 @@ _libcUnistd_macOS >> close: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> confstr: args errno: errnoHolder [
+_libc_unistd_macOS >> confstr: args errno: errnoHolder [
 	"Interpreted as #uint64 from #( #'int32' #'ptr' #'uint64' )"
 
 	^Functionconfstr
@@ -1625,7 +1625,7 @@ _libcUnistd_macOS >> confstr: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> crypt: args errno: errnoHolder [
+_libc_unistd_macOS >> crypt: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'const char*' #'const char*' )"
 
 	^Functioncrypt
@@ -1634,7 +1634,7 @@ _libcUnistd_macOS >> crypt: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> daemon: args errno: errnoHolder [
+_libc_unistd_macOS >> daemon: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
 	^Functiondaemon
@@ -1643,7 +1643,7 @@ _libcUnistd_macOS >> daemon: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> dup: args errno: errnoHolder [
+_libc_unistd_macOS >> dup: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functiondup
@@ -1652,7 +1652,7 @@ _libcUnistd_macOS >> dup: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> dup2: args errno: errnoHolder [
+_libc_unistd_macOS >> dup2: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
 	^Functiondup2
@@ -1661,7 +1661,7 @@ _libcUnistd_macOS >> dup2: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> endusershell: args errno: errnoHolder [
+_libc_unistd_macOS >> endusershell: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
 	^Functionendusershell
@@ -1670,7 +1670,7 @@ _libcUnistd_macOS >> endusershell: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execl: args errno: errnoHolder [
+_libc_unistd_macOS >> execl: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionexecl
@@ -1679,7 +1679,7 @@ _libcUnistd_macOS >> execl: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execle: args errno: errnoHolder [
+_libc_unistd_macOS >> execle: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionexecle
@@ -1688,7 +1688,7 @@ _libcUnistd_macOS >> execle: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execlp: args errno: errnoHolder [
+_libc_unistd_macOS >> execlp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionexeclp
@@ -1697,7 +1697,7 @@ _libcUnistd_macOS >> execlp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execv: args errno: errnoHolder [
+_libc_unistd_macOS >> execv: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionexecv
@@ -1706,7 +1706,7 @@ _libcUnistd_macOS >> execv: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execve: args errno: errnoHolder [
+_libc_unistd_macOS >> execve: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' #'ptr' )"
 
 	^Functionexecve
@@ -1715,7 +1715,7 @@ _libcUnistd_macOS >> execve: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> execvp: args errno: errnoHolder [
+_libc_unistd_macOS >> execvp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
 
 	^Functionexecvp
@@ -1724,7 +1724,7 @@ _libcUnistd_macOS >> execvp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> faccessat: args errno: errnoHolder [
+_libc_unistd_macOS >> faccessat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' #'int32' )"
 
 	^Functionfaccessat
@@ -1733,7 +1733,7 @@ _libcUnistd_macOS >> faccessat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fchdir: args errno: errnoHolder [
+_libc_unistd_macOS >> fchdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionfchdir
@@ -1742,7 +1742,7 @@ _libcUnistd_macOS >> fchdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fchown: args errno: errnoHolder [
+_libc_unistd_macOS >> fchown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'uint32' #'uint32' )"
 
 	^Functionfchown
@@ -1751,7 +1751,7 @@ _libcUnistd_macOS >> fchown: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fchownat: args errno: errnoHolder [
+_libc_unistd_macOS >> fchownat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'uint32' #'int32' )"
 
 	^Functionfchownat
@@ -1760,7 +1760,7 @@ _libcUnistd_macOS >> fchownat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fdatasync: args errno: errnoHolder [
+_libc_unistd_macOS >> fdatasync: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionfdatasync
@@ -1769,7 +1769,7 @@ _libcUnistd_macOS >> fdatasync: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fexecve: args errno: errnoHolder [
+_libc_unistd_macOS >> fexecve: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'ptr' )"
 
 	^Functionfexecve
@@ -1778,7 +1778,7 @@ _libcUnistd_macOS >> fexecve: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fork: args errno: errnoHolder [
+_libc_unistd_macOS >> fork: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionfork
@@ -1787,7 +1787,7 @@ _libcUnistd_macOS >> fork: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fpathconf: args errno: errnoHolder [
+_libc_unistd_macOS >> fpathconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'int32' )"
 
 	^Functionfpathconf
@@ -1796,7 +1796,7 @@ _libcUnistd_macOS >> fpathconf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> fsync: args errno: errnoHolder [
+_libc_unistd_macOS >> fsync: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionfsync
@@ -1805,7 +1805,7 @@ _libcUnistd_macOS >> fsync: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> ftruncate: args errno: errnoHolder [
+_libc_unistd_macOS >> ftruncate: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int64' )"
 
 	^Functionftruncate
@@ -1814,7 +1814,7 @@ _libcUnistd_macOS >> ftruncate: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getcwd: args errno: errnoHolder [
+_libc_unistd_macOS >> getcwd: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' #'uint64' )"
 
 	^Functiongetcwd
@@ -1823,7 +1823,7 @@ _libcUnistd_macOS >> getcwd: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getdomainname: args errno: errnoHolder [
+_libc_unistd_macOS >> getdomainname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
 	^Functiongetdomainname
@@ -1832,7 +1832,7 @@ _libcUnistd_macOS >> getdomainname: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getdtablesize: args errno: errnoHolder [
+_libc_unistd_macOS >> getdtablesize: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetdtablesize
@@ -1841,7 +1841,7 @@ _libcUnistd_macOS >> getdtablesize: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getegid: args errno: errnoHolder [
+_libc_unistd_macOS >> getegid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
 	^Functiongetegid
@@ -1850,7 +1850,7 @@ _libcUnistd_macOS >> getegid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getentropy: args errno: errnoHolder [
+_libc_unistd_macOS >> getentropy: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
 	^Functiongetentropy
@@ -1859,7 +1859,7 @@ _libcUnistd_macOS >> getentropy: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> geteuid: args errno: errnoHolder [
+_libc_unistd_macOS >> geteuid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
 	^Functiongeteuid
@@ -1868,7 +1868,7 @@ _libcUnistd_macOS >> geteuid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getgid: args errno: errnoHolder [
+_libc_unistd_macOS >> getgid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
 	^Functiongetgid
@@ -1877,7 +1877,7 @@ _libcUnistd_macOS >> getgid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getgroups: args errno: errnoHolder [
+_libc_unistd_macOS >> getgroups: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' )"
 
 	^Functiongetgroups
@@ -1886,7 +1886,7 @@ _libcUnistd_macOS >> getgroups: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> gethostid: args errno: errnoHolder [
+_libc_unistd_macOS >> gethostid: args errno: errnoHolder [
 	"Interpreted as #int64 from #( )"
 
 	^Functiongethostid
@@ -1895,7 +1895,7 @@ _libcUnistd_macOS >> gethostid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> gethostname: args errno: errnoHolder [
+_libc_unistd_macOS >> gethostname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
 	^Functiongethostname
@@ -1904,7 +1904,7 @@ _libcUnistd_macOS >> gethostname: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getlogin_r: args errno: errnoHolder [
+_libc_unistd_macOS >> getlogin_r: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' )"
 
 	^Functiongetlogin_r
@@ -1913,7 +1913,7 @@ _libcUnistd_macOS >> getlogin_r: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getlogin: args errno: errnoHolder [
+_libc_unistd_macOS >> getlogin: args errno: errnoHolder [
 	"Interpreted as #char* from #( )"
 
 	^Functiongetlogin
@@ -1922,7 +1922,7 @@ _libcUnistd_macOS >> getlogin: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getopt: args errno: errnoHolder [
+_libc_unistd_macOS >> getopt: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'const char*' )"
 
 	^Functiongetopt
@@ -1931,7 +1931,7 @@ _libcUnistd_macOS >> getopt: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getpagesize: args errno: errnoHolder [
+_libc_unistd_macOS >> getpagesize: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetpagesize
@@ -1940,7 +1940,7 @@ _libcUnistd_macOS >> getpagesize: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getpass: args errno: errnoHolder [
+_libc_unistd_macOS >> getpass: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'const char*' )"
 
 	^Functiongetpass
@@ -1949,7 +1949,7 @@ _libcUnistd_macOS >> getpass: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getpgid: args errno: errnoHolder [
+_libc_unistd_macOS >> getpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functiongetpgid
@@ -1958,7 +1958,7 @@ _libcUnistd_macOS >> getpgid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getpgrp: args errno: errnoHolder [
+_libc_unistd_macOS >> getpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetpgrp
@@ -1967,7 +1967,7 @@ _libcUnistd_macOS >> getpgrp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getpid: args errno: errnoHolder [
+_libc_unistd_macOS >> getpid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetpid
@@ -1976,7 +1976,7 @@ _libcUnistd_macOS >> getpid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getppid: args errno: errnoHolder [
+_libc_unistd_macOS >> getppid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functiongetppid
@@ -1985,7 +1985,7 @@ _libcUnistd_macOS >> getppid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getsid: args errno: errnoHolder [
+_libc_unistd_macOS >> getsid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functiongetsid
@@ -1994,7 +1994,7 @@ _libcUnistd_macOS >> getsid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getuid: args errno: errnoHolder [
+_libc_unistd_macOS >> getuid: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( )"
 
 	^Functiongetuid
@@ -2003,7 +2003,7 @@ _libcUnistd_macOS >> getuid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getusershell: args errno: errnoHolder [
+_libc_unistd_macOS >> getusershell: args errno: errnoHolder [
 	"Interpreted as #char* from #( )"
 
 	^Functiongetusershell
@@ -2012,7 +2012,7 @@ _libcUnistd_macOS >> getusershell: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> getwd: args errno: errnoHolder [
+_libc_unistd_macOS >> getwd: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'ptr' )"
 
 	^Functiongetwd
@@ -2021,7 +2021,7 @@ _libcUnistd_macOS >> getwd: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> isatty: args errno: errnoHolder [
+_libc_unistd_macOS >> isatty: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionisatty
@@ -2030,7 +2030,7 @@ _libcUnistd_macOS >> isatty: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> lchown: args errno: errnoHolder [
+_libc_unistd_macOS >> lchown: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint32' )"
 
 	^Functionlchown
@@ -2039,7 +2039,7 @@ _libcUnistd_macOS >> lchown: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> link: args errno: errnoHolder [
+_libc_unistd_macOS >> link: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionlink
@@ -2048,7 +2048,7 @@ _libcUnistd_macOS >> link: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> linkat: args errno: errnoHolder [
+_libc_unistd_macOS >> linkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' #'const char*' #'int32' )"
 
 	^Functionlinkat
@@ -2057,7 +2057,7 @@ _libcUnistd_macOS >> linkat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> lockf: args errno: errnoHolder [
+_libc_unistd_macOS >> lockf: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' #'int64' )"
 
 	^Functionlockf
@@ -2066,7 +2066,7 @@ _libcUnistd_macOS >> lockf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> lseek: args errno: errnoHolder [
+_libc_unistd_macOS >> lseek: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'int64' #'int32' )"
 
 	^Functionlseek
@@ -2075,7 +2075,7 @@ _libcUnistd_macOS >> lseek: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> nice: args errno: errnoHolder [
+_libc_unistd_macOS >> nice: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functionnice
@@ -2084,7 +2084,7 @@ _libcUnistd_macOS >> nice: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> pathconf: args errno: errnoHolder [
+_libc_unistd_macOS >> pathconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'const char*' #'int32' )"
 
 	^Functionpathconf
@@ -2093,7 +2093,7 @@ _libcUnistd_macOS >> pathconf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> pause: args errno: errnoHolder [
+_libc_unistd_macOS >> pause: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionpause
@@ -2102,7 +2102,7 @@ _libcUnistd_macOS >> pause: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> pipe: args errno: errnoHolder [
+_libc_unistd_macOS >> pipe: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' )"
 
 	^Functionpipe
@@ -2111,7 +2111,7 @@ _libcUnistd_macOS >> pipe: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> pread: args errno: errnoHolder [
+_libc_unistd_macOS >> pread: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'int64' )"
 
 	^Functionpread
@@ -2120,7 +2120,7 @@ _libcUnistd_macOS >> pread: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> profil: args errno: errnoHolder [
+_libc_unistd_macOS >> profil: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'ptr' #'uint64' #'uint64' #'uint32' )"
 
 	^Functionprofil
@@ -2129,7 +2129,7 @@ _libcUnistd_macOS >> profil: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> pwrite: args errno: errnoHolder [
+_libc_unistd_macOS >> pwrite: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'int64' )"
 
 	^Functionpwrite
@@ -2138,7 +2138,7 @@ _libcUnistd_macOS >> pwrite: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> read: args errno: errnoHolder [
+_libc_unistd_macOS >> read: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' )"
 
 	^Functionread
@@ -2147,7 +2147,7 @@ _libcUnistd_macOS >> read: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> readlink: args errno: errnoHolder [
+_libc_unistd_macOS >> readlink: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'const char*' #'ptr' #'uint64' )"
 
 	^Functionreadlink
@@ -2156,7 +2156,7 @@ _libcUnistd_macOS >> readlink: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> readlinkat: args errno: errnoHolder [
+_libc_unistd_macOS >> readlinkat: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'const char*' #'ptr' #'uint64' )"
 
 	^Functionreadlinkat
@@ -2165,7 +2165,7 @@ _libcUnistd_macOS >> readlinkat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> revoke: args errno: errnoHolder [
+_libc_unistd_macOS >> revoke: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionrevoke
@@ -2174,7 +2174,7 @@ _libcUnistd_macOS >> revoke: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> rmdir: args errno: errnoHolder [
+_libc_unistd_macOS >> rmdir: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionrmdir
@@ -2183,7 +2183,7 @@ _libcUnistd_macOS >> rmdir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sbrk: args errno: errnoHolder [
+_libc_unistd_macOS >> sbrk: args errno: errnoHolder [
 	"Interpreted as #ptr from #( #'int64' )"
 
 	^Functionsbrk
@@ -2192,7 +2192,7 @@ _libcUnistd_macOS >> sbrk: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setdomainname: args errno: errnoHolder [
+_libc_unistd_macOS >> setdomainname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint64' )"
 
 	^Functionsetdomainname
@@ -2201,7 +2201,7 @@ _libcUnistd_macOS >> setdomainname: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setegid: args errno: errnoHolder [
+_libc_unistd_macOS >> setegid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
 	^Functionsetegid
@@ -2210,7 +2210,7 @@ _libcUnistd_macOS >> setegid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> seteuid: args errno: errnoHolder [
+_libc_unistd_macOS >> seteuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
 	^Functionseteuid
@@ -2219,7 +2219,7 @@ _libcUnistd_macOS >> seteuid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setgid: args errno: errnoHolder [
+_libc_unistd_macOS >> setgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
 	^Functionsetgid
@@ -2228,7 +2228,7 @@ _libcUnistd_macOS >> setgid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sethostid: args errno: errnoHolder [
+_libc_unistd_macOS >> sethostid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int64' )"
 
 	^Functionsethostid
@@ -2237,7 +2237,7 @@ _libcUnistd_macOS >> sethostid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sethostname: args errno: errnoHolder [
+_libc_unistd_macOS >> sethostname: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'uint64' )"
 
 	^Functionsethostname
@@ -2246,7 +2246,7 @@ _libcUnistd_macOS >> sethostname: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setlogin: args errno: errnoHolder [
+_libc_unistd_macOS >> setlogin: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionsetlogin
@@ -2255,7 +2255,7 @@ _libcUnistd_macOS >> setlogin: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setpgid: args errno: errnoHolder [
+_libc_unistd_macOS >> setpgid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
 	^Functionsetpgid
@@ -2264,7 +2264,7 @@ _libcUnistd_macOS >> setpgid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setpgrp: args errno: errnoHolder [
+_libc_unistd_macOS >> setpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionsetpgrp
@@ -2273,7 +2273,7 @@ _libcUnistd_macOS >> setpgrp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setregid: args errno: errnoHolder [
+_libc_unistd_macOS >> setregid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' #'uint32' )"
 
 	^Functionsetregid
@@ -2282,7 +2282,7 @@ _libcUnistd_macOS >> setregid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setreuid: args errno: errnoHolder [
+_libc_unistd_macOS >> setreuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' #'uint32' )"
 
 	^Functionsetreuid
@@ -2291,7 +2291,7 @@ _libcUnistd_macOS >> setreuid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setsid: args errno: errnoHolder [
+_libc_unistd_macOS >> setsid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionsetsid
@@ -2300,7 +2300,7 @@ _libcUnistd_macOS >> setsid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setuid: args errno: errnoHolder [
+_libc_unistd_macOS >> setuid: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
 	^Functionsetuid
@@ -2309,7 +2309,7 @@ _libcUnistd_macOS >> setuid: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> setusershell: args errno: errnoHolder [
+_libc_unistd_macOS >> setusershell: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
 	^Functionsetusershell
@@ -2318,7 +2318,7 @@ _libcUnistd_macOS >> setusershell: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sleep: args errno: errnoHolder [
+_libc_unistd_macOS >> sleep: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' )"
 
 	^Functionsleep
@@ -2327,7 +2327,7 @@ _libcUnistd_macOS >> sleep: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> symlink: args errno: errnoHolder [
+_libc_unistd_macOS >> symlink: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'const char*' )"
 
 	^Functionsymlink
@@ -2336,7 +2336,7 @@ _libcUnistd_macOS >> symlink: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> symlinkat: args errno: errnoHolder [
+_libc_unistd_macOS >> symlinkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int32' #'const char*' )"
 
 	^Functionsymlinkat
@@ -2345,7 +2345,7 @@ _libcUnistd_macOS >> symlinkat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sync: args errno: errnoHolder [
+_libc_unistd_macOS >> sync: args errno: errnoHolder [
 	"Interpreted as #void from #( )"
 
 	^Functionsync
@@ -2354,7 +2354,7 @@ _libcUnistd_macOS >> sync: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> syscall: args errno: errnoHolder [
+_libc_unistd_macOS >> syscall: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int64' )"
 
 	^Functionsyscall
@@ -2363,7 +2363,7 @@ _libcUnistd_macOS >> syscall: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> sysconf: args errno: errnoHolder [
+_libc_unistd_macOS >> sysconf: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' )"
 
 	^Functionsysconf
@@ -2372,7 +2372,7 @@ _libcUnistd_macOS >> sysconf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> tcgetpgrp: args errno: errnoHolder [
+_libc_unistd_macOS >> tcgetpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' )"
 
 	^Functiontcgetpgrp
@@ -2381,7 +2381,7 @@ _libcUnistd_macOS >> tcgetpgrp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> tcsetpgrp: args errno: errnoHolder [
+_libc_unistd_macOS >> tcsetpgrp: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'int32' )"
 
 	^Functiontcsetpgrp
@@ -2390,7 +2390,7 @@ _libcUnistd_macOS >> tcsetpgrp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> truncate: args errno: errnoHolder [
+_libc_unistd_macOS >> truncate: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' #'int64' )"
 
 	^Functiontruncate
@@ -2399,7 +2399,7 @@ _libcUnistd_macOS >> truncate: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> ttyname_r: args errno: errnoHolder [
+_libc_unistd_macOS >> ttyname_r: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'ptr' #'uint64' )"
 
 	^Functionttyname_r
@@ -2408,7 +2408,7 @@ _libcUnistd_macOS >> ttyname_r: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> ttyname: args errno: errnoHolder [
+_libc_unistd_macOS >> ttyname: args errno: errnoHolder [
 	"Interpreted as #char* from #( #'int32' )"
 
 	^Functionttyname
@@ -2417,7 +2417,7 @@ _libcUnistd_macOS >> ttyname: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> ttyslot: args errno: errnoHolder [
+_libc_unistd_macOS >> ttyslot: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionttyslot
@@ -2426,7 +2426,7 @@ _libcUnistd_macOS >> ttyslot: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> ualarm: args errno: errnoHolder [
+_libc_unistd_macOS >> ualarm: args errno: errnoHolder [
 	"Interpreted as #uint32 from #( #'uint32' #'uint32' )"
 
 	^Functionualarm
@@ -2435,7 +2435,7 @@ _libcUnistd_macOS >> ualarm: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> unlink: args errno: errnoHolder [
+_libc_unistd_macOS >> unlink: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'const char*' )"
 
 	^Functionunlink
@@ -2444,7 +2444,7 @@ _libcUnistd_macOS >> unlink: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> unlinkat: args errno: errnoHolder [
+_libc_unistd_macOS >> unlinkat: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' )"
 
 	^Functionunlinkat
@@ -2453,7 +2453,7 @@ _libcUnistd_macOS >> unlinkat: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> usleep: args errno: errnoHolder [
+_libc_unistd_macOS >> usleep: args errno: errnoHolder [
 	"Interpreted as #int32 from #( #'uint32' )"
 
 	^Functionusleep
@@ -2462,7 +2462,7 @@ _libcUnistd_macOS >> usleep: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> vfork: args errno: errnoHolder [
+_libc_unistd_macOS >> vfork: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionvfork
@@ -2471,7 +2471,7 @@ _libcUnistd_macOS >> vfork: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> vhangup: args errno: errnoHolder [
+_libc_unistd_macOS >> vhangup: args errno: errnoHolder [
 	"Interpreted as #int32 from #( )"
 
 	^Functionvhangup
@@ -2480,7 +2480,7 @@ _libcUnistd_macOS >> vhangup: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libcUnistd_macOS >> write: args errno: errnoHolder [
+_libc_unistd_macOS >> write: args errno: errnoHolder [
 	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' )"
 
 	^Functionwrite

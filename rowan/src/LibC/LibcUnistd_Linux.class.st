@@ -6,5 +6,5 @@ Class {
 
 { #category : 'accessing' }
 LibcUnistd_Linux >> wrappedClass [
-	^ _libcUnistd_Linux
+	^ _libc_unistd_Linux
 ]
