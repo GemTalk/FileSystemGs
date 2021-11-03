@@ -47,6 +47,16 @@ UnixPlatform >> initialize [
 	self initializeLibc
 ]
 
+{ #category : 'initializing' }
+UnixPlatform >> initializeLibc [
+
+	libcDirent := self libcDirentClass new.
+	libcFcntl := self libcFcntlClass new.
+	libcUnistd := self libcUnistdClass new.
+	libcStat := self libcStatClass new.
+	libcStdio := self libcStdioClass new
+]
+
 { #category : 'testing' }
 UnixPlatform >> isUnix [
 	^ true
@@ -58,8 +68,20 @@ UnixPlatform >> libcDirent [
 ]
 
 { #category : 'accessing' }
+UnixPlatform >> libcDirentClass [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 UnixPlatform >> libcFcntl [
 	^libcFcntl
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcFcntlClass [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -69,14 +91,32 @@ UnixPlatform >> libcStat [
 ]
 
 { #category : 'accessing' }
+UnixPlatform >> libcStatClass [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 UnixPlatform >> libcStdio [
 
 	^libcStdio
 ]
 
 { #category : 'accessing' }
+UnixPlatform >> libcStdioClass [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 UnixPlatform >> libcUnistd [
 	^libcUnistd
+]
+
+{ #category : 'accessing' }
+UnixPlatform >> libcUnistdClass [
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

@@ -57,6 +57,36 @@ MacOSPlatform >> isMacOSX [
 ]
 
 { #category : 'accessing' }
+MacOSPlatform >> libcDirentClass [
+
+	^LibcDirent_macOS
+]
+
+{ #category : 'accessing' }
+MacOSPlatform >> libcFcntlClass [
+
+	^LibcFcntl_macOS
+]
+
+{ #category : 'accessing' }
+MacOSPlatform >> libcStatClass [
+
+	^LibcStat_macOS
+]
+
+{ #category : 'accessing' }
+MacOSPlatform >> libcStdioClass [
+
+	^LibcStdio_macOS
+]
+
+{ #category : 'accessing' }
+MacOSPlatform >> libcUnistdClass [
+
+	^LibcUnistd_macOS
+]
+
+{ #category : 'accessing' }
 MacOSPlatform >> lineEnding [
 
 	^ String lf

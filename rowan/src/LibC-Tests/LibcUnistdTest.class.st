@@ -2,14 +2,16 @@ Class {
 	#name : 'LibcUnistdTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'instance'
+		'instance',
+		'fcntlInstance'
 	],
 	#category : 'LibC-Tests'
 }
 
 { #category : 'support' }
 LibcUnistdTest >> setUp [
-	instance := LibcUnistd_Linux new
+	instance := OSPlatform current libcUnistdClass new.
+	fcntlInstance := OSPlatform current libcFcntlClass new
 ]
 
 { #category : 'tests' }
@@ -32,7 +34,7 @@ LibcUnistdTest >> testEOF [
 	| filename fd buf returned |
 	filename := 'testEof.empty'.	
 	"Flags: O_CREAT (8r100), O_RDONLY (0)"	"Mode: S_IRWXU"
-	fd := LibcFcntl new openPath: filename flags: 8r100 mode: 8r0700.
+	fd := fcntlInstance openPath: filename flags: 8r100 mode: 8r0700.
 	buf := CByteArray gcMalloc: 1024.
 	returned := instance readFromFileDescriptor: fd toBuffer: buf count: 1.
 	self assert: returned equals: 0.
@@ -49,7 +51,7 @@ LibcUnistdTest >> testReadBash [
 
 	| filename fd buffer numRead closeReturn |
 	filename := '/bin/bash'.
-	fd := LibcFcntl new openPath: filename flags: 0 mode: 0.
+	fd := fcntlInstance openPath: filename flags: 0 mode: 0.
 	self assert: fd > 0.
 	buffer := CByteArray gcMalloc: 4.
 	numRead := instance

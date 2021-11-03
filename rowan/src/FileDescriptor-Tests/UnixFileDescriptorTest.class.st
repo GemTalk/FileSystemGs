@@ -55,7 +55,7 @@ UnixFileDescriptorTest >> testOpenStdout [
 UnixFileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |
-	id := LibcFcntl new openPath: '/usr/bin/env' flags: 0 mode: 0.
+	id := OSPlatform current libcFcntlClass new openPath: '/usr/bin/env' flags: 0 mode: 0.
 	fd := UnixFileDescriptor id: id.
 	[bytes := fd read: 4] ensure: [fd close].
 	self

@@ -9,7 +9,7 @@ Class {
 
 { #category : 'support' }
 LibcDirentTest >> setUp [
-	instance := LibcDirent new
+	instance := OSPlatform current libcDirentClass new
 ]
 
 { #category : 'tests' }

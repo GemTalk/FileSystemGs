@@ -11,7 +11,7 @@ Class {
 LibcStatTest >> setUp [
 
 	super setUp.
-	instance := LibcStat new
+	instance := OSPlatform current libcStatClass new
 ]
 
 { #category : 'running' }
