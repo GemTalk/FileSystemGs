@@ -1,551 +1,382 @@
 Class {
 	#name : '_libc_stat_Linux',
 	#superclass : '_libc_stat',
-	#classVars : [
-		'Functionchmod',
-		'Functionfchmod',
-		'Functionfchmodat',
-		'Functionfstat',
-		'Functionfstatat',
-		'Functionfutimens',
-		'Functionlchmod',
-		'Functionlstat',
-		'Functionmkdir',
-		'Functionmkdirat',
-		'Functionmkfifo',
-		'Functionmkfifoat',
-		'Functionmknod',
-		'Functionmknodat',
-		'Functionstat',
-		'Functionumask',
-		'Functionutimensat',
-		'Function__fxstat',
-		'Function__fxstatat',
-		'Function__lxstat',
-		'Function__xmknod',
-		'Function__xmknodat',
-		'Function__xstat'
+	#instVars : [
+		'Function_chmod',
+		'Function_fchmod',
+		'Function_fchmodat',
+		'Function_fstat',
+		'Function_fstatat',
+		'Function_futimens',
+		'Function_lchmod',
+		'Function_lstat',
+		'Function_mkdir',
+		'Function_mkdirat',
+		'Function_mkfifo',
+		'Function_mkfifoat',
+		'Function_mknod',
+		'Function_mknodat',
+		'Function_stat',
+		'Function_umask',
+		'Function_utimensat',
+		'Function___fxstat',
+		'Function___fxstatat',
+		'Function___lxstat',
+		'Function___xmknod',
+		'Function___xmknodat',
+		'Function___xstat'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initialize [
+{ #category : 'initialization' }
+_libc_stat_Linux >> initialize [
 
-  self initializeFunctions
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___fxstat_inLibrary: cLibrary [
-
-	Function__fxstat := CCallout
-		library: cLibrary
-		name: '__fxstat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___fxstatat_inLibrary: cLibrary [
-
-	Function__fxstatat := CCallout
-		library: cLibrary
-		name: '__fxstatat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'const char*' #'ptr' #'int32')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___lxstat_inLibrary: cLibrary [
-
-	Function__lxstat := CCallout
-		library: cLibrary
-		name: '__lxstat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___xmknod_inLibrary: cLibrary [
-
-	Function__xmknod := CCallout
-		library: cLibrary
-		name: '__xmknod'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___xmknodat_inLibrary: cLibrary [
-
-	Function__xmknodat := CCallout
-		library: cLibrary
-		name: '__xmknodat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction___xstat_inLibrary: cLibrary [
-
-	Function__xstat := CCallout
-		library: cLibrary
-		name: '__xstat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_chmod_inLibrary: cLibrary [
-
-	Functionchmod := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: 'libc.so.6'.
+	Function_chmod := CCallout
 		library: cLibrary
 		name: 'chmod'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_fchmod_inLibrary: cLibrary [
-
-	Functionfchmod := CCallout
+	Function_fchmod := CCallout
 		library: cLibrary
 		name: 'fchmod'
 		result: #'int32'
 		args: #(#'int32' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_fchmodat_inLibrary: cLibrary [
-
-	Functionfchmodat := CCallout
+	Function_fchmodat := CCallout
 		library: cLibrary
 		name: 'fchmodat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'uint32' #'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_fstat_inLibrary: cLibrary [
-
-	Functionfstat := CCallout
+	Function_fstat := CCallout
 		library: cLibrary
 		name: 'fstat'
 		result: #'int32'
 		args: #(#'int32' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_fstatat_inLibrary: cLibrary [
-
-	Functionfstatat := CCallout
+	Function_fstatat := CCallout
 		library: cLibrary
 		name: 'fstatat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'ptr' #'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_futimens_inLibrary: cLibrary [
-
-	Functionfutimens := CCallout
+	Function_futimens := CCallout
 		library: cLibrary
 		name: 'futimens'
 		result: #'int32'
 		args: #(#'int32' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_lchmod_inLibrary: cLibrary [
-
-	Functionlchmod := CCallout
+	Function_lchmod := CCallout
 		library: cLibrary
 		name: 'lchmod'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_lstat_inLibrary: cLibrary [
-
-	Functionlstat := CCallout
+	Function_lstat := CCallout
 		library: cLibrary
 		name: 'lstat'
 		result: #'int32'
 		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mkdir_inLibrary: cLibrary [
-
-	Functionmkdir := CCallout
+	Function_mkdir := CCallout
 		library: cLibrary
 		name: 'mkdir'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mkdirat_inLibrary: cLibrary [
-
-	Functionmkdirat := CCallout
+	Function_mkdirat := CCallout
 		library: cLibrary
 		name: 'mkdirat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mkfifo_inLibrary: cLibrary [
-
-	Functionmkfifo := CCallout
+	Function_mkfifo := CCallout
 		library: cLibrary
 		name: 'mkfifo'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mkfifoat_inLibrary: cLibrary [
-
-	Functionmkfifoat := CCallout
+	Function_mkfifoat := CCallout
 		library: cLibrary
 		name: 'mkfifoat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mknod_inLibrary: cLibrary [
-
-	Functionmknod := CCallout
+	Function_mknod := CCallout
 		library: cLibrary
 		name: 'mknod'
 		result: #'int32'
 		args: #(#'const char*' #'uint32' #'uint64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_mknodat_inLibrary: cLibrary [
-
-	Functionmknodat := CCallout
+	Function_mknodat := CCallout
 		library: cLibrary
 		name: 'mknodat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'uint32' #'uint64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_stat_inLibrary: cLibrary [
-
-	Functionstat := CCallout
+	Function_stat := CCallout
 		library: cLibrary
 		name: 'stat'
 		result: #'int32'
 		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_umask_inLibrary: cLibrary [
-
-	Functionumask := CCallout
+	Function_umask := CCallout
 		library: cLibrary
 		name: 'umask'
 		result: #'uint32'
 		args: #(#'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunction_utimensat_inLibrary: cLibrary [
-
-	Functionutimensat := CCallout
+	Function_utimensat := CCallout
 		library: cLibrary
 		name: 'utimensat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'ptr' #'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_Linux class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: 'libc.so.6'.
-	self
-		initializeFunction_umask_inLibrary: library;
-		initializeFunction___fxstatat_inLibrary: library;
-		initializeFunction_chmod_inLibrary: library;
-		initializeFunction_mkdir_inLibrary: library;
-		initializeFunction___fxstat_inLibrary: library;
-		initializeFunction_mknod_inLibrary: library;
-		initializeFunction___xmknodat_inLibrary: library;
-		initializeFunction_lstat_inLibrary: library;
-		initializeFunction_fchmod_inLibrary: library;
-		initializeFunction___xmknod_inLibrary: library;
-		initializeFunction_lchmod_inLibrary: library;
-		initializeFunction_mkdirat_inLibrary: library;
-		initializeFunction___lxstat_inLibrary: library;
-		initializeFunction___xstat_inLibrary: library;
-		initializeFunction_mkfifo_inLibrary: library;
-		initializeFunction_fstat_inLibrary: library;
-		initializeFunction_fstatat_inLibrary: library;
-		initializeFunction_mknodat_inLibrary: library;
-		initializeFunction_stat_inLibrary: library;
-		initializeFunction_fchmodat_inLibrary: library;
-		initializeFunction_futimens_inLibrary: library;
-		initializeFunction_mkfifoat_inLibrary: library;
-		initializeFunction_utimensat_inLibrary: library;
-		yourself
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __fxstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'ptr' )"
-
-	^Function__fxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __fxstatat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'ptr' #'int32' )"
-
-	^Function__fxstatat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __lxstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
-
-	^Function__lxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xmknod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'ptr' )"
-
-	^Function__xmknod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xmknodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'uint32' #'ptr' )"
-
-	^Function__xmknodat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
-
-	^Function__xstat
-		callWith: args
-		errno: errnoHolder
+	Function___fxstat := CCallout
+		library: cLibrary
+		name: '__fxstat'
+		result: #'int32'
+		args: #(#'int32' #'int32' #'ptr')
+		varArgsAfter: -1.
+	Function___fxstatat := CCallout
+		library: cLibrary
+		name: '__fxstatat'
+		result: #'int32'
+		args: #(#'int32' #'int32' #'const char*' #'ptr' #'int32')
+		varArgsAfter: -1.
+	Function___lxstat := CCallout
+		library: cLibrary
+		name: '__lxstat'
+		result: #'int32'
+		args: #(#'int32' #'const char*' #'ptr')
+		varArgsAfter: -1.
+	Function___xmknod := CCallout
+		library: cLibrary
+		name: '__xmknod'
+		result: #'int32'
+		args: #(#'int32' #'const char*' #'uint32' #'ptr')
+		varArgsAfter: -1.
+	Function___xmknodat := CCallout
+		library: cLibrary
+		name: '__xmknodat'
+		result: #'int32'
+		args: #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')
+		varArgsAfter: -1.
+	Function___xstat := CCallout
+		library: cLibrary
+		name: '__xstat'
+		result: #'int32'
+		args: #(#'int32' #'const char*' #'ptr')
+		varArgsAfter: -1.
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> chmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Functionchmod
+	^Function_chmod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> fchmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'uint32' )"
+	"Interpreted as #'int32' from #(#'int32' #'uint32')"
 
-	^Functionfchmod
+	^Function_fchmod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> fchmodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'int32')"
 
-	^Functionfchmodat
+	^Function_fchmodat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> fstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'ptr' )"
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Functionfstat
+	^Function_fstat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> fstatat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr' #'int32')"
 
-	^Functionfstatat
+	^Function_fstatat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> futimens: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'ptr' )"
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Functionfutimens
+	^Function_futimens
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> lchmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Functionlchmod
+	^Function_lchmod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> lstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionlstat
+	^Function_lstat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mkdir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Functionmkdir
+	^Function_mkdir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mkdirat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32')"
 
-	^Functionmkdirat
+	^Function_mkdirat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mkfifo: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Functionmkfifo
+	^Function_mkfifo
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mkfifoat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32')"
 
-	^Functionmkfifoat
+	^Function_mkfifoat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mknod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint64' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32' #'uint64')"
 
-	^Functionmknod
+	^Function_mknod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> mknodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'uint64' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'uint64')"
 
-	^Functionmknodat
+	^Function_mknodat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> stat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionstat
+	^Function_stat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> umask: args errno: errnoHolder [
-	"Interpreted as #uint32 from #( #'uint32' )"
+	"Interpreted as #'uint32' from #(#'uint32')"
 
-	^Functionumask
+	^Function_umask
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_Linux >> utimensat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr' #'int32')"
 
-	^Functionutimensat
+	^Function_utimensat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __fxstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'ptr')"
+
+	^Function___fxstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __fxstatat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'ptr' #'int32')"
+
+	^Function___fxstatat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __lxstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
+
+	^Function___lxstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xmknod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'ptr')"
+
+	^Function___xmknod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xmknodat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')"
+
+	^Function___xmknodat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
+
+	^Function___xstat
 		callWith: args
 		errno: errnoHolder
 ]
