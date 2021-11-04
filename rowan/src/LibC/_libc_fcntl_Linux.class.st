@@ -1,183 +1,126 @@
 Class {
 	#name : '_libc_fcntl_Linux',
 	#superclass : '_libc_fcntl',
-	#classVars : [
-		'Functioncreat',
-		'Functionfcntl',
-		'Functionlockf',
-		'Functionopen',
-		'Functionopenat',
-		'Functionposix_fadvise',
-		'Functionposix_fallocate'
+	#instVars : [
+		'Function_creat',
+		'Function_fcntl',
+		'Function_lockf',
+		'Function_open',
+		'Function_openat',
+		'Function_posix_fadvise',
+		'Function_posix_fallocate'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initialize [
+{ #category : 'initialization' }
+_libc_fcntl_Linux >> initialize [
 
-  self initializeFunctions
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_creat_inLibrary: cLibrary [
-
-	Functioncreat := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: 'libc.so.6'.
+	Function_creat := CCallout
 		library: cLibrary
 		name: 'creat'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_fcntl_inLibrary: cLibrary [
-
-	Functionfcntl := CCallout
+	Function_fcntl := CCallout
 		library: cLibrary
 		name: 'fcntl'
 		result: #'int32'
 		args: #(#'int32' #'int32')
 		varArgsAfter: 2.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_lockf_inLibrary: cLibrary [
-
-	Functionlockf := CCallout
+	Function_lockf := CCallout
 		library: cLibrary
 		name: 'lockf'
 		result: #'int32'
 		args: #(#'int32' #'int32' #'int64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_open_inLibrary: cLibrary [
-
-	Functionopen := CCallout
+	Function_open := CCallout
 		library: cLibrary
 		name: 'open'
 		result: #'int32'
 		args: #(#'const char*' #'int32')
 		varArgsAfter: 2.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_openat_inLibrary: cLibrary [
-
-	Functionopenat := CCallout
+	Function_openat := CCallout
 		library: cLibrary
 		name: 'openat'
 		result: #'int32'
 		args: #(#'int32' #'const char*' #'int32')
 		varArgsAfter: 3.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_posix_fadvise_inLibrary: cLibrary [
-
-	Functionposix_fadvise := CCallout
+	Function_posix_fadvise := CCallout
 		library: cLibrary
 		name: 'posix_fadvise'
 		result: #'int32'
 		args: #(#'int32' #'int64' #'int64' #'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunction_posix_fallocate_inLibrary: cLibrary [
-
-	Functionposix_fallocate := CCallout
+	Function_posix_fallocate := CCallout
 		library: cLibrary
 		name: 'posix_fallocate'
 		result: #'int32'
 		args: #(#'int32' #'int64' #'int64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_Linux class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: 'libc.so.6'.
-	self
-		initializeFunction_open_inLibrary: library;
-		initializeFunction_posix_fadvise_inLibrary: library;
-		initializeFunction_posix_fallocate_inLibrary: library;
-		initializeFunction_fcntl_inLibrary: library;
-		initializeFunction_creat_inLibrary: library;
-		initializeFunction_lockf_inLibrary: library;
-		initializeFunction_openat_inLibrary: library;
-		yourself
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> creat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Functioncreat
+	^Function_creat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> fcntl: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
 
-	^Functionfcntl
+	^Function_fcntl
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> lockf: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'int64' )"
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'int64')"
 
-	^Functionlockf
+	^Function_lockf
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> open: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'int32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'int32')"
 
-	^Functionopen
+	^Function_open
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> openat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'int32')"
 
-	^Functionopenat
+	^Function_openat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> posix_fadvise: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'int64' #'int64' #'int32')"
 
-	^Functionposix_fadvise
+	^Function_posix_fadvise
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_Linux >> posix_fallocate: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' )"
+	"Interpreted as #'int32' from #(#'int32' #'int64' #'int64')"
 
-	^Functionposix_fallocate
+	^Function_posix_fallocate
 		callWith: args
 		errno: errnoHolder
 ]

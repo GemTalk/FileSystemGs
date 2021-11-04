@@ -1,298 +1,206 @@
 Class {
 	#name : '_libc_dirent_Linux',
 	#superclass : '_libc_dirent',
-	#classVars : [
-		'Functionalphasort',
-		'Functionclosedir',
-		'Functiondirfd',
-		'Functionfdopendir',
-		'Functiongetdirentries',
-		'Functionopendir',
-		'Functionreaddir',
-		'Functionreaddir_r',
-		'Functionrewinddir',
-		'Functionscandir',
-		'Functionseekdir',
-		'Functiontelldir'
+	#instVars : [
+		'Function_alphasort',
+		'Function_closedir',
+		'Function_dirfd',
+		'Function_fdopendir',
+		'Function_getdirentries',
+		'Function_opendir',
+		'Function_readdir',
+		'Function_readdir_r',
+		'Function_rewinddir',
+		'Function_scandir',
+		'Function_seekdir',
+		'Function_telldir'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initialize [
- 
-  self initializeFunctions
-]
+{ #category : 'initialization' }
+_libc_dirent_Linux >> initialize [
 
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_alphasort_inLibrary: cLibrary [
-
-	Functionalphasort := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: 'libc.so.6'.
+	Function_alphasort := CCallout
 		library: cLibrary
 		name: 'alphasort'
 		result: #'int32'
 		args: #(#'ptr' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_closedir_inLibrary: cLibrary [
-
-	Functionclosedir := CCallout
+	Function_closedir := CCallout
 		library: cLibrary
 		name: 'closedir'
 		result: #'int32'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_dirfd_inLibrary: cLibrary [
-
-	Functiondirfd := CCallout
+	Function_dirfd := CCallout
 		library: cLibrary
 		name: 'dirfd'
 		result: #'int32'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_fdopendir_inLibrary: cLibrary [
-
-	Functionfdopendir := CCallout
+	Function_fdopendir := CCallout
 		library: cLibrary
 		name: 'fdopendir'
 		result: #'ptr'
 		args: #(#'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_getdirentries_inLibrary: cLibrary [
-
-	Functiongetdirentries := CCallout
+	Function_getdirentries := CCallout
 		library: cLibrary
 		name: 'getdirentries'
 		result: #'int64'
 		args: #(#'int32' #'ptr' #'uint64' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_opendir_inLibrary: cLibrary [
-
-	Functionopendir := CCallout
+	Function_opendir := CCallout
 		library: cLibrary
 		name: 'opendir'
 		result: #'ptr'
 		args: #(#'const char*')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_readdir_inLibrary: cLibrary [
-
-	Functionreaddir := CCallout
+	Function_readdir := CCallout
 		library: cLibrary
 		name: 'readdir'
 		result: #'ptr'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_readdir_r_inLibrary: cLibrary [
-
-	Functionreaddir_r := CCallout
+	Function_readdir_r := CCallout
 		library: cLibrary
 		name: 'readdir_r'
 		result: #'int32'
 		args: #(#'ptr' #'ptr' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_rewinddir_inLibrary: cLibrary [
-
-	Functionrewinddir := CCallout
+	Function_rewinddir := CCallout
 		library: cLibrary
 		name: 'rewinddir'
 		result: #'void'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_scandir_inLibrary: cLibrary [
-
-	Functionscandir := CCallout
+	Function_scandir := CCallout
 		library: cLibrary
 		name: 'scandir'
 		result: #'int32'
 		args: #(#'const char*' #'ptr' #'ptr' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_seekdir_inLibrary: cLibrary [
-
-	Functionseekdir := CCallout
+	Function_seekdir := CCallout
 		library: cLibrary
 		name: 'seekdir'
 		result: #'void'
 		args: #(#'ptr' #'int64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunction_telldir_inLibrary: cLibrary [
-
-	Functiontelldir := CCallout
+	Function_telldir := CCallout
 		library: cLibrary
 		name: 'telldir'
 		result: #'int64'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_Linux class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: 'libc.so.6'.
-	self
-		initializeFunction_fdopendir_inLibrary: library;
-		initializeFunction_telldir_inLibrary: library;
-		initializeFunction_dirfd_inLibrary: library;
-		initializeFunction_seekdir_inLibrary: library;
-		initializeFunction_readdir_r_inLibrary: library;
-		initializeFunction_getdirentries_inLibrary: library;
-		initializeFunction_rewinddir_inLibrary: library;
-		initializeFunction_scandir_inLibrary: library;
-		initializeFunction_readdir_inLibrary: library;
-		initializeFunction_closedir_inLibrary: library;
-		initializeFunction_opendir_inLibrary: library;
-		initializeFunction_alphasort_inLibrary: library;
-		yourself
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> alphasort: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' #'ptr' )"
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
 
-	^Functionalphasort
+	^Function_alphasort
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> closedir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' )"
+	"Interpreted as #'int32' from #(#'ptr')"
 
-	^Functionclosedir
+	^Function_closedir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> dirfd: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' )"
+	"Interpreted as #'int32' from #(#'ptr')"
 
-	^Functiondirfd
+	^Function_dirfd
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> fdopendir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'int32' )"
+	"Interpreted as #'ptr' from #(#'int32')"
 
-	^Functionfdopendir
+	^Function_fdopendir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> getdirentries: args errno: errnoHolder [
-	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'ptr' )"
+	"Interpreted as #'int64' from #(#'int32' #'ptr' #'uint64' #'ptr')"
 
-	^Functiongetdirentries
+	^Function_getdirentries
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> opendir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'const char*' )"
+	"Interpreted as #'ptr' from #(#'const char*')"
 
-	^Functionopendir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_Linux >> readdir_r: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' #'ptr' #'ptr' )"
-
-	^Functionreaddir_r
+	^Function_opendir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> readdir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'ptr' )"
+	"Interpreted as #'ptr' from #(#'ptr')"
 
-	^Functionreaddir
+	^Function_readdir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_Linux >> readdir_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr' #'ptr')"
+
+	^Function_readdir_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> rewinddir: args errno: errnoHolder [
-	"Interpreted as #void from #( #'ptr' )"
+	"Interpreted as #'void' from #(#'ptr')"
 
-	^Functionrewinddir
+	^Function_rewinddir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> scandir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' #'ptr' #'ptr' )"
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr' #'ptr')"
 
-	^Functionscandir
+	^Function_scandir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> seekdir: args errno: errnoHolder [
-	"Interpreted as #void from #( #'ptr' #'int64' )"
+	"Interpreted as #'void' from #(#'ptr' #'int64')"
 
-	^Functionseekdir
+	^Function_seekdir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_Linux >> telldir: args errno: errnoHolder [
-	"Interpreted as #int64 from #( #'ptr' )"
+	"Interpreted as #'int64' from #(#'ptr')"
 
-	^Functiontelldir
+	^Function_telldir
 		callWith: args
 		errno: errnoHolder
 ]
