@@ -1,0 +1,82 @@
+input $ROWAN_PROJECTS_HOME/FileSystemGs/scripts/LibcLibraryGenerator.topaz
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'dirent';
+	header: (CHeader path: '/usr/include/dirent.h');
+	path: 'libc.so.6';
+	platform: 'Linux';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_dirent_Linux.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_dirent_Linux.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'fcntl';
+	header: (CHeader path: '/usr/include/fcntl.h');
+	path: 'libc.so.6';
+	platform: 'Linux';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_fcntl_Linux.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_fcntl_Linux.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'stat';
+	header: (CHeader path: '/usr/include/sys/stat.h');
+	path: 'libc.so.6';
+	platform: 'Linux';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stat_Linux.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stat_Linux.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'stdio';
+	header: (CHeader path: '/usr/include/stdio.h');
+	path: 'libc.so.6';
+	platform: 'Linux';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stdio_Linux.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stdio_Linux.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'unistd';
+	header: (CHeader path: '/usr/include/unistd.h');
+	path: 'libc.so.6';
+	platform: 'Linux';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_unistd_Linux.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_unistd_Linux.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
