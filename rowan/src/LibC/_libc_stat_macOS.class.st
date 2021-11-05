@@ -1,551 +1,446 @@
 Class {
 	#name : '_libc_stat_macOS',
 	#superclass : '_libc_stat',
-	#classVars : [
-		'Functionchmod',
-		'Functionfchmod',
-		'Functionfchmodat',
-		'Functionfstat',
-		'Functionfstatat',
-		'Functionfutimens',
-		'Functionlchmod',
-		'Functionlstat',
-		'Functionmkdir',
-		'Functionmkdirat',
-		'Functionmkfifo',
-		'Functionmkfifoat',
-		'Functionmknod',
-		'Functionmknodat',
-		'Functionstat',
-		'Functionumask',
-		'Functionutimensat',
-		'Function__fxstat',
-		'Function__fxstatat',
-		'Function__lxstat',
-		'Function__xmknod',
-		'Function__xmknodat',
-		'Function__xstat'
+	#instVars : [
+		'Function_chflags',
+		'Function_chmod',
+		'Function_chmodx_np',
+		'Function_fchflags',
+		'Function_fchmod',
+		'Function_fchmodx_np',
+		'Function_fstat',
+		'Function_fstat64',
+		'Function_fstatx64_np',
+		'Function_fstatx_np',
+		'Function_lchflags',
+		'Function_lchmod',
+		'Function_lstat',
+		'Function_lstat64',
+		'Function_lstatx64_np',
+		'Function_lstatx_np',
+		'Function_mkdir',
+		'Function_mkdirx_np',
+		'Function_mkfifo',
+		'Function_mkfifox_np',
+		'Function_mknod',
+		'Function_stat',
+		'Function_stat64',
+		'Function_statx64_np',
+		'Function_statx_np',
+		'Function_umask',
+		'Function_umaskx_np'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initialize [
+{ #category : 'initialization' }
+_libc_stat_macOS >> initialize [
 
-  self initializeFunctions
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___fxstat_inLibrary: cLibrary [
-
-	Function__fxstat := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	Function_chflags := CCallout
 		library: cLibrary
-		name: '__fxstat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___fxstatat_inLibrary: cLibrary [
-
-	Function__fxstatat := CCallout
-		library: cLibrary
-		name: '__fxstatat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'const char*' #'ptr' #'int32')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___lxstat_inLibrary: cLibrary [
-
-	Function__lxstat := CCallout
-		library: cLibrary
-		name: '__lxstat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___xmknod_inLibrary: cLibrary [
-
-	Function__xmknod := CCallout
-		library: cLibrary
-		name: '__xmknod'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___xmknodat_inLibrary: cLibrary [
-
-	Function__xmknodat := CCallout
-		library: cLibrary
-		name: '__xmknodat'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction___xstat_inLibrary: cLibrary [
-
-	Function__xstat := CCallout
-		library: cLibrary
-		name: '__xstat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_chmod_inLibrary: cLibrary [
-
-	Functionchmod := CCallout
-		library: cLibrary
-		name: 'chmod'
+		name: 'chflags'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_fchmod_inLibrary: cLibrary [
-
-	Functionfchmod := CCallout
+	Function_chmod := CCallout
 		library: cLibrary
-		name: 'fchmod'
+		name: 'chmod'
+		result: #'int32'
+		args: #(#'const char*' #'uint16')
+		varArgsAfter: -1.
+	Function_chmodx_np := CCallout
+		library: cLibrary
+		name: 'chmodx_np'
+		result: #'int32'
+		args: #(#'const char*' #'ptr')
+		varArgsAfter: -1.
+	Function_fchflags := CCallout
+		library: cLibrary
+		name: 'fchflags'
 		result: #'int32'
 		args: #(#'int32' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_fchmodat_inLibrary: cLibrary [
-
-	Functionfchmodat := CCallout
+	Function_fchmod := CCallout
 		library: cLibrary
-		name: 'fchmodat'
+		name: 'fchmod'
 		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32' #'int32')
+		args: #(#'int32' #'uint16')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_fstat_inLibrary: cLibrary [
-
-	Functionfstat := CCallout
+	Function_fchmodx_np := CCallout
+		library: cLibrary
+		name: 'fchmodx_np'
+		result: #'int32'
+		args: #(#'int32' #'ptr')
+		varArgsAfter: -1.
+	Function_fstat := CCallout
 		library: cLibrary
 		name: 'fstat'
 		result: #'int32'
 		args: #(#'int32' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_fstatat_inLibrary: cLibrary [
-
-	Functionfstatat := CCallout
+	Function_fstat64 := CCallout
 		library: cLibrary
-		name: 'fstatat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr' #'int32')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_futimens_inLibrary: cLibrary [
-
-	Functionfutimens := CCallout
-		library: cLibrary
-		name: 'futimens'
+		name: 'fstat64'
 		result: #'int32'
 		args: #(#'int32' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_lchmod_inLibrary: cLibrary [
-
-	Functionlchmod := CCallout
+	Function_fstatx64_np := CCallout
 		library: cLibrary
-		name: 'lchmod'
+		name: 'fstatx64_np'
+		result: #'int32'
+		args: #(#'int32' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_fstatx_np := CCallout
+		library: cLibrary
+		name: 'fstatx_np'
+		result: #'int32'
+		args: #(#'int32' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_lchflags := CCallout
+		library: cLibrary
+		name: 'lchflags'
 		result: #'int32'
 		args: #(#'const char*' #'uint32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_lstat_inLibrary: cLibrary [
-
-	Functionlstat := CCallout
+	Function_lchmod := CCallout
+		library: cLibrary
+		name: 'lchmod'
+		result: #'int32'
+		args: #(#'const char*' #'uint16')
+		varArgsAfter: -1.
+	Function_lstat := CCallout
 		library: cLibrary
 		name: 'lstat'
 		result: #'int32'
 		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mkdir_inLibrary: cLibrary [
-
-	Functionmkdir := CCallout
+	Function_lstat64 := CCallout
+		library: cLibrary
+		name: 'lstat64'
+		result: #'int32'
+		args: #(#'const char*' #'ptr')
+		varArgsAfter: -1.
+	Function_lstatx64_np := CCallout
+		library: cLibrary
+		name: 'lstatx64_np'
+		result: #'int32'
+		args: #(#'const char*' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_lstatx_np := CCallout
+		library: cLibrary
+		name: 'lstatx_np'
+		result: #'int32'
+		args: #(#'const char*' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_mkdir := CCallout
 		library: cLibrary
 		name: 'mkdir'
 		result: #'int32'
-		args: #(#'const char*' #'uint32')
+		args: #(#'const char*' #'uint16')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mkdirat_inLibrary: cLibrary [
-
-	Functionmkdirat := CCallout
+	Function_mkdirx_np := CCallout
 		library: cLibrary
-		name: 'mkdirat'
+		name: 'mkdirx_np'
 		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32')
+		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mkfifo_inLibrary: cLibrary [
-
-	Functionmkfifo := CCallout
+	Function_mkfifo := CCallout
 		library: cLibrary
 		name: 'mkfifo'
 		result: #'int32'
-		args: #(#'const char*' #'uint32')
+		args: #(#'const char*' #'uint16')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mkfifoat_inLibrary: cLibrary [
-
-	Functionmkfifoat := CCallout
+	Function_mkfifox_np := CCallout
 		library: cLibrary
-		name: 'mkfifoat'
+		name: 'mkfifox_np'
 		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32')
+		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mknod_inLibrary: cLibrary [
-
-	Functionmknod := CCallout
+	Function_mknod := CCallout
 		library: cLibrary
 		name: 'mknod'
 		result: #'int32'
-		args: #(#'const char*' #'uint32' #'uint64')
+		args: #(#'const char*' #'uint16' #'int32')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_mknodat_inLibrary: cLibrary [
-
-	Functionmknodat := CCallout
-		library: cLibrary
-		name: 'mknodat'
-		result: #'int32'
-		args: #(#'int32' #'const char*' #'uint32' #'uint64')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_stat_inLibrary: cLibrary [
-
-	Functionstat := CCallout
+	Function_stat := CCallout
 		library: cLibrary
 		name: 'stat'
 		result: #'int32'
 		args: #(#'const char*' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_umask_inLibrary: cLibrary [
-
-	Functionumask := CCallout
+	Function_stat64 := CCallout
+		library: cLibrary
+		name: 'stat64'
+		result: #'int32'
+		args: #(#'const char*' #'ptr')
+		varArgsAfter: -1.
+	Function_statx64_np := CCallout
+		library: cLibrary
+		name: 'statx64_np'
+		result: #'int32'
+		args: #(#'const char*' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_statx_np := CCallout
+		library: cLibrary
+		name: 'statx_np'
+		result: #'int32'
+		args: #(#'const char*' #'ptr' #'ptr')
+		varArgsAfter: -1.
+	Function_umask := CCallout
 		library: cLibrary
 		name: 'umask'
-		result: #'uint32'
-		args: #(#'uint32')
+		result: #'uint16'
+		args: #(#'uint16')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunction_utimensat_inLibrary: cLibrary [
-
-	Functionutimensat := CCallout
+	Function_umaskx_np := CCallout
 		library: cLibrary
-		name: 'utimensat'
+		name: 'umaskx_np'
 		result: #'int32'
-		args: #(#'int32' #'const char*' #'ptr' #'int32')
+		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_stat_macOS class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
-	self
-		initializeFunction_umask_inLibrary: library;
-		initializeFunction___fxstatat_inLibrary: library;
-		initializeFunction_chmod_inLibrary: library;
-		initializeFunction_mkdir_inLibrary: library;
-		initializeFunction___fxstat_inLibrary: library;
-		initializeFunction_mknod_inLibrary: library;
-		initializeFunction___xmknodat_inLibrary: library;
-		initializeFunction_lstat_inLibrary: library;
-		initializeFunction_fchmod_inLibrary: library;
-		initializeFunction___xmknod_inLibrary: library;
-		initializeFunction_lchmod_inLibrary: library;
-		initializeFunction_mkdirat_inLibrary: library;
-		initializeFunction___lxstat_inLibrary: library;
-		initializeFunction___xstat_inLibrary: library;
-		initializeFunction_mkfifo_inLibrary: library;
-		initializeFunction_fstat_inLibrary: library;
-		initializeFunction_fstatat_inLibrary: library;
-		initializeFunction_mknodat_inLibrary: library;
-		initializeFunction_stat_inLibrary: library;
-		initializeFunction_fchmodat_inLibrary: library;
-		initializeFunction_futimens_inLibrary: library;
-		initializeFunction_mkfifoat_inLibrary: library;
-		initializeFunction_utimensat_inLibrary: library;
-		yourself
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> __fxstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'ptr' )"
+_libc_stat_macOS >> chflags: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
-	^Function__fxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> __fxstatat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'ptr' #'int32' )"
-
-	^Function__fxstatat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> __lxstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
-
-	^Function__lxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> __xmknod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'ptr' )"
-
-	^Function__xmknod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> __xmknodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'const char*' #'uint32' #'ptr' )"
-
-	^Function__xmknodat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> __xstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' )"
-
-	^Function__xstat
+	^Function_chflags
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> chmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
 
-	^Functionchmod
+	^Function_chmod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> chmodx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_chmodx_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fchflags: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'uint32')"
+
+	^Function_fchflags
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> fchmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'uint32' )"
+	"Interpreted as #'int32' from #(#'int32' #'uint16')"
 
-	^Functionfchmod
+	^Function_fchmod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> fchmodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'int32' )"
+_libc_stat_macOS >> fchmodx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Functionfchmodat
+	^Function_fchmodx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> fstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'ptr' )"
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Functionfstat
+	^Function_fstat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> fstatat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
+_libc_stat_macOS >> fstat64: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Functionfstatat
+	^Function_fstat64
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> futimens: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'ptr' )"
+_libc_stat_macOS >> fstatx64_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
 
-	^Functionfutimens
+	^Function_fstatx64_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fstatx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
+
+	^Function_fstatx_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> lchflags: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
+
+	^Function_lchflags
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> lchmod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
 
-	^Functionlchmod
+	^Function_lchmod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> lstat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionlstat
+	^Function_lstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> lstat64: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_lstat64
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> lstatx64_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_lstatx64_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> lstatx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_lstatx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> mkdir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
 
-	^Functionmkdir
+	^Function_mkdir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> mkdirat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
+_libc_stat_macOS >> mkdirx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionmkdirat
+	^Function_mkdirx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> mkfifo: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
 
-	^Functionmkfifo
+	^Function_mkfifo
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> mkfifoat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' )"
+_libc_stat_macOS >> mkfifox_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionmkfifoat
+	^Function_mkfifox_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> mknod: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' #'uint64' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16' #'int32')"
 
-	^Functionmknod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> mknodat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'uint32' #'uint64' )"
-
-	^Functionmknodat
+	^Function_mknod
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> stat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' )"
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
 
-	^Functionstat
+	^Function_stat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> stat64: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_stat64
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> statx64_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_statx64_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> statx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_statx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_stat_macOS >> umask: args errno: errnoHolder [
-	"Interpreted as #uint32 from #( #'uint32' )"
+	"Interpreted as #'uint16' from #(#'uint16')"
 
-	^Functionumask
+	^Function_umask
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> utimensat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'ptr' #'int32' )"
+_libc_stat_macOS >> umaskx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
 
-	^Functionutimensat
+	^Function_umaskx_np
 		callWith: args
 		errno: errnoHolder
 ]

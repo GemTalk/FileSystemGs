@@ -1,0 +1,82 @@
+input $ROWAN_PROJECTS_HOME/FileSystemGs/scripts/LibcLibraryGenerator.topaz
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'dirent';
+	header: (CHeader path: '/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/dirent.h');
+	path: '/usr/lib/system/libsystem_c.dylib';
+	platform: 'macOS';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_dirent_macOS.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_dirent_macOS.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'fcntl';
+	header: (CHeader path: '/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/fcntl.h');
+	path: '/usr/lib/system/libsystem_c.dylib';
+	platform: 'macOS';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_fcntl_macOS.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_fcntl_macOS.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'stat';
+	header: (CHeader path: '/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/stat.h');
+	path: '/usr/lib/system/libsystem_c.dylib';
+	platform: 'macOS';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stat_macOS.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stat_macOS.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'stdio';
+	header: (CHeader path: '/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/stdio.h');
+	path: '/usr/lib/system/libsystem_c.dylib';
+	platform: 'macOS';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stdio_macOS.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_stdio_macOS.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+
+exec
+| tonel file |
+tonel := FsLibcLibraryGenerator new
+	name: 'unistd';
+	header: (CHeader path: '/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/unistd.h');
+	path: '/usr/lib/system/libsystem_c.dylib';
+	platform: 'macOS';
+	generate.
+GsFile removeServerFile: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_unistd_macOS.class.st'.
+file := GsFile openWrite: '$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/src/LibC/_libc_unistd_macOS.class.st'.
+file
+  nextPutAllUtf8: tonel;
+  flush;
+  close.
+%
+

@@ -1,183 +1,222 @@
 Class {
 	#name : '_libc_fcntl_macOS',
 	#superclass : '_libc_fcntl',
-	#classVars : [
-		'Functioncreat',
-		'Functionfcntl',
-		'Functionlockf',
-		'Functionopen',
-		'Functionopenat',
-		'Functionposix_fadvise',
-		'Functionposix_fallocate'
+	#instVars : [
+		'Function_creat',
+		'Function_fcntl',
+		'Function_filesec_dup',
+		'Function_filesec_free',
+		'Function_filesec_get_property',
+		'Function_filesec_init',
+		'Function_filesec_query_property',
+		'Function_filesec_set_property',
+		'Function_filesec_unset_property',
+		'Function_flock',
+		'Function_open',
+		'Function_openx_np',
+		'Function_open_dprotected_np'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initialize [
+{ #category : 'initialization' }
+_libc_fcntl_macOS >> initialize [
 
-  self initializeFunctions
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_creat_inLibrary: cLibrary [
-
-	Functioncreat := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	Function_creat := CCallout
 		library: cLibrary
 		name: 'creat'
 		result: #'int32'
-		args: #(#'const char*' #'uint32')
+		args: #(#'const char*' #'uint16')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_fcntl_inLibrary: cLibrary [
-
-	Functionfcntl := CCallout
+	Function_fcntl := CCallout
 		library: cLibrary
 		name: 'fcntl'
 		result: #'int32'
 		args: #(#'int32' #'int32')
 		varArgsAfter: 2.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_lockf_inLibrary: cLibrary [
-
-	Functionlockf := CCallout
+	Function_filesec_dup := CCallout
 		library: cLibrary
-		name: 'lockf'
-		result: #'int32'
-		args: #(#'int32' #'int32' #'int64')
+		name: 'filesec_dup'
+		result: #'ptr'
+		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_open_inLibrary: cLibrary [
-
-	Functionopen := CCallout
+	Function_filesec_free := CCallout
+		library: cLibrary
+		name: 'filesec_free'
+		result: #'void'
+		args: #(#'ptr')
+		varArgsAfter: -1.
+	Function_filesec_get_property := CCallout
+		library: cLibrary
+		name: 'filesec_get_property'
+		result: #'int32'
+		args: #(#'ptr' #'int32' #'ptr')
+		varArgsAfter: -1.
+	Function_filesec_init := CCallout
+		library: cLibrary
+		name: 'filesec_init'
+		result: #'ptr'
+		args: #()
+		varArgsAfter: -1.
+	Function_filesec_query_property := CCallout
+		library: cLibrary
+		name: 'filesec_query_property'
+		result: #'int32'
+		args: #(#'ptr' #'int32' #'ptr')
+		varArgsAfter: -1.
+	Function_filesec_set_property := CCallout
+		library: cLibrary
+		name: 'filesec_set_property'
+		result: #'int32'
+		args: #(#'ptr' #'int32' #'ptr')
+		varArgsAfter: -1.
+	Function_filesec_unset_property := CCallout
+		library: cLibrary
+		name: 'filesec_unset_property'
+		result: #'int32'
+		args: #(#'ptr' #'int32')
+		varArgsAfter: -1.
+	Function_flock := CCallout
+		library: cLibrary
+		name: 'flock'
+		result: #'int32'
+		args: #(#'int32' #'int32')
+		varArgsAfter: -1.
+	Function_open := CCallout
 		library: cLibrary
 		name: 'open'
 		result: #'int32'
 		args: #(#'const char*' #'int32')
 		varArgsAfter: 2.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_openat_inLibrary: cLibrary [
-
-	Functionopenat := CCallout
+	Function_openx_np := CCallout
 		library: cLibrary
-		name: 'openat'
+		name: 'openx_np'
 		result: #'int32'
-		args: #(#'int32' #'const char*' #'int32')
-		varArgsAfter: 3.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_posix_fadvise_inLibrary: cLibrary [
-
-	Functionposix_fadvise := CCallout
-		library: cLibrary
-		name: 'posix_fadvise'
-		result: #'int32'
-		args: #(#'int32' #'int64' #'int64' #'int32')
+		args: #(#'const char*' #'int32' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunction_posix_fallocate_inLibrary: cLibrary [
-
-	Functionposix_fallocate := CCallout
+	Function_open_dprotected_np := CCallout
 		library: cLibrary
-		name: 'posix_fallocate'
+		name: 'open_dprotected_np'
 		result: #'int32'
-		args: #(#'int32' #'int64' #'int64')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_fcntl_macOS class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
-	self
-		initializeFunction_open_inLibrary: library;
-		initializeFunction_posix_fadvise_inLibrary: library;
-		initializeFunction_posix_fallocate_inLibrary: library;
-		initializeFunction_fcntl_inLibrary: library;
-		initializeFunction_creat_inLibrary: library;
-		initializeFunction_lockf_inLibrary: library;
-		initializeFunction_openat_inLibrary: library;
-		yourself
+		args: #(#'const char*' #'int32' #'int32' #'int32')
+		varArgsAfter: 4.
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_macOS >> creat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'uint32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
 
-	^Functioncreat
+	^Function_creat
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_macOS >> fcntl: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' )"
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
 
-	^Functionfcntl
+	^Function_fcntl
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_fcntl_macOS >> lockf: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int32' #'int64' )"
+_libc_fcntl_macOS >> filesec_dup: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'ptr')"
 
-	^Functionlockf
+	^Function_filesec_dup
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_free: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_filesec_free
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_get_property: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32' #'ptr')"
+
+	^Function_filesec_get_property
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_init: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #()"
+
+	^Function_filesec_init
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_query_property: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32' #'ptr')"
+
+	^Function_filesec_query_property
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_set_property: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32' #'ptr')"
+
+	^Function_filesec_set_property
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> filesec_unset_property: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32')"
+
+	^Function_filesec_unset_property
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_macOS >> flock: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
+
+	^Function_flock
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_fcntl_macOS >> open: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'int32' )"
+	"Interpreted as #'int32' from #(#'const char*' #'int32')"
 
-	^Functionopen
+	^Function_open
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_fcntl_macOS >> openat: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'const char*' #'int32' )"
+_libc_fcntl_macOS >> openx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'int32' #'ptr')"
 
-	^Functionopenat
+	^Function_openx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_fcntl_macOS >> posix_fadvise: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' #'int32' )"
+_libc_fcntl_macOS >> open_dprotected_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'int32' #'int32' #'int32')"
 
-	^Functionposix_fadvise
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_fcntl_macOS >> posix_fallocate: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'int32' #'int64' #'int64' )"
-
-	^Functionposix_fallocate
+	^Function_open_dprotected_np
 		callWith: args
 		errno: errnoHolder
 ]

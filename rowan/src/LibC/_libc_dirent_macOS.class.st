@@ -1,298 +1,126 @@
 Class {
 	#name : '_libc_dirent_macOS',
 	#superclass : '_libc_dirent',
-	#classVars : [
-		'Functionalphasort',
-		'Functionclosedir',
-		'Functiondirfd',
-		'Functionfdopendir',
-		'Functiongetdirentries',
-		'Functionopendir',
-		'Functionreaddir',
-		'Functionreaddir_r',
-		'Functionrewinddir',
-		'Functionscandir',
-		'Functionseekdir',
-		'Functiontelldir'
+	#instVars : [
+		'Function_closedir',
+		'Function_opendir',
+		'Function_readdir',
+		'Function_readdir_r',
+		'Function_rewinddir',
+		'Function_seekdir',
+		'Function_telldir'
 	],
 	#category : 'LibC'
 }
 
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initialize [
- 
-  self initializeFunctions
-]
+{ #category : 'initialization' }
+_libc_dirent_macOS >> initialize [
 
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_alphasort_inLibrary: cLibrary [
-
-	Functionalphasort := CCallout
-		library: cLibrary
-		name: 'alphasort'
-		result: #'int32'
-		args: #(#'ptr' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_closedir_inLibrary: cLibrary [
-
-	Functionclosedir := CCallout
+	| cLibrary |
+	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	Function_closedir := CCallout
 		library: cLibrary
 		name: 'closedir'
 		result: #'int32'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_dirfd_inLibrary: cLibrary [
-
-	Functiondirfd := CCallout
-		library: cLibrary
-		name: 'dirfd'
-		result: #'int32'
-		args: #(#'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_fdopendir_inLibrary: cLibrary [
-
-	Functionfdopendir := CCallout
-		library: cLibrary
-		name: 'fdopendir'
-		result: #'ptr'
-		args: #(#'int32')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_getdirentries_inLibrary: cLibrary [
-
-	Functiongetdirentries := CCallout
-		library: cLibrary
-		name: 'getdirentries'
-		result: #'int64'
-		args: #(#'int32' #'ptr' #'uint64' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_opendir_inLibrary: cLibrary [
-
-	Functionopendir := CCallout
+	Function_opendir := CCallout
 		library: cLibrary
 		name: 'opendir'
 		result: #'ptr'
 		args: #(#'const char*')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_readdir_inLibrary: cLibrary [
-
-	Functionreaddir := CCallout
+	Function_readdir := CCallout
 		library: cLibrary
 		name: 'readdir'
 		result: #'ptr'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_readdir_r_inLibrary: cLibrary [
-
-	Functionreaddir_r := CCallout
+	Function_readdir_r := CCallout
 		library: cLibrary
 		name: 'readdir_r'
 		result: #'int32'
 		args: #(#'ptr' #'ptr' #'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_rewinddir_inLibrary: cLibrary [
-
-	Functionrewinddir := CCallout
+	Function_rewinddir := CCallout
 		library: cLibrary
 		name: 'rewinddir'
 		result: #'void'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_scandir_inLibrary: cLibrary [
-
-	Functionscandir := CCallout
-		library: cLibrary
-		name: 'scandir'
-		result: #'int32'
-		args: #(#'const char*' #'ptr' #'ptr' #'ptr')
-		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_seekdir_inLibrary: cLibrary [
-
-	Functionseekdir := CCallout
+	Function_seekdir := CCallout
 		library: cLibrary
 		name: 'seekdir'
 		result: #'void'
 		args: #(#'ptr' #'int64')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunction_telldir_inLibrary: cLibrary [
-
-	Functiontelldir := CCallout
+	Function_telldir := CCallout
 		library: cLibrary
 		name: 'telldir'
 		result: #'int64'
 		args: #(#'ptr')
 		varArgsAfter: -1.
-
-]
-
-{ #category : 'Initializing - private' }
-_libc_dirent_macOS class >> initializeFunctions [
-
-	| library |
-	library := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
-	self
-		initializeFunction_fdopendir_inLibrary: library;
-		initializeFunction_telldir_inLibrary: library;
-		initializeFunction_dirfd_inLibrary: library;
-		initializeFunction_seekdir_inLibrary: library;
-		initializeFunction_readdir_r_inLibrary: library;
-		initializeFunction_getdirentries_inLibrary: library;
-		initializeFunction_rewinddir_inLibrary: library;
-		initializeFunction_scandir_inLibrary: library;
-		initializeFunction_readdir_inLibrary: library;
-		initializeFunction_closedir_inLibrary: library;
-		initializeFunction_opendir_inLibrary: library;
-		initializeFunction_alphasort_inLibrary: library;
-		yourself
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> alphasort: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' #'ptr' )"
-
-	^Functionalphasort
-		callWith: args
-		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> closedir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' )"
+	"Interpreted as #'int32' from #(#'ptr')"
 
-	^Functionclosedir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> dirfd: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' )"
-
-	^Functiondirfd
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> fdopendir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'int32' )"
-
-	^Functionfdopendir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> getdirentries: args errno: errnoHolder [
-	"Interpreted as #int64 from #( #'int32' #'ptr' #'uint64' #'ptr' )"
-
-	^Functiongetdirentries
+	^Function_closedir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> opendir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'const char*' )"
+	"Interpreted as #'ptr' from #(#'const char*')"
 
-	^Functionopendir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> readdir_r: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'ptr' #'ptr' #'ptr' )"
-
-	^Functionreaddir_r
+	^Function_opendir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> readdir: args errno: errnoHolder [
-	"Interpreted as #ptr from #( #'ptr' )"
+	"Interpreted as #'ptr' from #(#'ptr')"
 
-	^Functionreaddir
+	^Function_readdir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_macOS >> readdir_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr' #'ptr')"
+
+	^Function_readdir_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> rewinddir: args errno: errnoHolder [
-	"Interpreted as #void from #( #'ptr' )"
+	"Interpreted as #'void' from #(#'ptr')"
 
-	^Functionrewinddir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_macOS >> scandir: args errno: errnoHolder [
-	"Interpreted as #int32 from #( #'const char*' #'ptr' #'ptr' #'ptr' )"
-
-	^Functionscandir
+	^Function_rewinddir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> seekdir: args errno: errnoHolder [
-	"Interpreted as #void from #( #'ptr' #'int64' )"
+	"Interpreted as #'void' from #(#'ptr' #'int64')"
 
-	^Functionseekdir
+	^Function_seekdir
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
 _libc_dirent_macOS >> telldir: args errno: errnoHolder [
-	"Interpreted as #int64 from #( #'ptr' )"
+	"Interpreted as #'int64' from #(#'ptr')"
 
-	^Functiontelldir
+	^Function_telldir
 		callWith: args
 		errno: errnoHolder
 ]
