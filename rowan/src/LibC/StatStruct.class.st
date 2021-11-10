@@ -189,7 +189,7 @@ StatStruct >> st_gid [
 { #category : 'private-accessing' }
 StatStruct >> st_ino [
 
-	^bytes uint64At: 0
+	^bytes uint64At: 8
 ]
 
 { #category : 'private-accessing' }
