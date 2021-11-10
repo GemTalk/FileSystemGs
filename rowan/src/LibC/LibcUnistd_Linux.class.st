@@ -27,7 +27,6 @@ LibcUnistd_Linux >> getCurrentDirName [
 	| errnoHolder result |
 	errnoHolder := { 0 }.
 	result := library
-		"getcwd: { CPointer newNull. 0 }" "Dynamically allocate a buffer for the full path."
 		getcwd: { nil. 0 } "Dynamically allocate a buffer for the full path."
 		errno: errnoHolder.
 	result == nil "The FFI will return nil for NULL char* return values."
