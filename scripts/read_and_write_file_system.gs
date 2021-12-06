@@ -1,3 +1,17 @@
+! Class implementation for 'RwAllowChangeRepositoryRevisionOnResolveNotification'
+
+!   Class methods for 'RwAllowChangeRepositoryRevisionOnResolveNotification'
+
+category: 'Instance creation'
+classmethod: RwAllowChangeRepositoryRevisionOnResolveNotification
+signal: aRwProjectLoadSpecificationV2
+  "An exception of the type associated with the receiver is signaled."
+
+  ^ self new
+    loadSpecification: aRwProjectLoadSpecificationV2;
+    signal
+%
+
 run
 	| projectSetModification visitor gsDirectory project projectSetDefinition fileSystemProject thePackageDict |
 	gsDirectory := '$GEMSTONE_STONE_DIR'.
