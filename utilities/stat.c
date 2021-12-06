@@ -26,9 +26,12 @@ int main() {
   printf("stat.st_size\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_size), sizeof(root.st_size));
   printf("stat.st_blksize\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_blksize), sizeof(root.st_blksize));
   printf("stat.st_blocks\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_blocks), sizeof(root.st_blocks));
-  printf("stat.st_atim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_atim), sizeof(root.st_atim));
-  printf("stat.st_mtim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_mtim), sizeof(root.st_mtim));
-  printf("stat.st_ctim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_ctim), sizeof(root.st_ctim));
+  //printf("stat.st_atim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_atim), sizeof(root.st_atim));
+  //printf("stat.st_mtim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_mtim), sizeof(root.st_mtim));
+  //printf("stat.st_ctim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_ctim), sizeof(root.st_ctim));
+  printf("stat.st_st_atimespec\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_atimespec), sizeof(root.st_atimespec));
+  printf("stat.st_mtimespec\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_mtimespec), sizeof(root.st_mtimespec));
+  printf("stat.st_ctimespec\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_ctimespec), sizeof(root.st_ctimespec));
 
   return result;
 }

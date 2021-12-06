@@ -56,7 +56,7 @@ Class {
 _libc_unistd_macOS >> initialize [
 
 	| cLibrary |
-	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	cLibrary := CLibrary named: '/usr/lib/libSystem.dylib'.
 	Function_access := CCallout
 		library: cLibrary
 		name: 'access'

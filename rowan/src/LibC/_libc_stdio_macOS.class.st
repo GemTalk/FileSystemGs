@@ -52,7 +52,7 @@ Class {
 _libc_stdio_macOS >> initialize [
 
 	| cLibrary |
-	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	cLibrary := CLibrary named: '/usr/lib/libSystem.dylib'.
 	Function_clearerr := CCallout
 		library: cLibrary
 		name: 'clearerr'

@@ -23,7 +23,7 @@ Class {
 _libc_fcntl_macOS >> initialize [
 
 	| cLibrary |
-	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	cLibrary := CLibrary named: '/usr/lib/libSystem.dylib'.
 	Function_creat := CCallout
 		library: cLibrary
 		name: 'creat'

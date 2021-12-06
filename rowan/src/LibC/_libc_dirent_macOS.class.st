@@ -17,7 +17,7 @@ Class {
 _libc_dirent_macOS >> initialize [
 
 	| cLibrary |
-	cLibrary := CLibrary named: '/usr/lib/system/libsystem_c.dylib'.
+	cLibrary := CLibrary named: '/usr/lib/libSystem.dylib'.
 	Function_closedir := CCallout
 		library: cLibrary
 		name: 'closedir'
