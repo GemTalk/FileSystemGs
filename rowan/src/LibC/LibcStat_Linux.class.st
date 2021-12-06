@@ -8,7 +8,7 @@ Class {
 LibcStat_Linux >> fstat: fd [
 
 	| statStruct errnoHolder status |
-	statStruct := StatStruct new.
+	statStruct := StatStruct_Linux new.
 	errnoHolder := { 0 }.
 	status := library
 		__fxstat: { 0 "_STAT_VER". fd. statStruct bytes. }
@@ -35,7 +35,7 @@ LibcStat_Linux >> mkdir: pathString [
 LibcStat_Linux >> stat: pathString [
 
 	| statStruct errnoHolder status |
-	statStruct := StatStruct new.
+	statStruct := StatStruct_Linux new.
 	errnoHolder := { 0 }.
 	status := library
 		__xstat: { 0 "_STAT_VER". pathString encodeAsUTF8. statStruct bytes. }

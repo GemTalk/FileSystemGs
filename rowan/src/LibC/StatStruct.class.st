@@ -44,186 +44,50 @@ StatStruct class >> new [
 ]
 
 { #category : 'accessing' }
-StatStruct class >> structSize [
-	"Returns the size in bytes of the C struct."
-
-	^144
-]
-
-{ #category : 'accessing' }
 StatStruct >> accessTime [
+	"Returns the access time associated with the file when stat was called."
 
-	^TimespecStruct forBytes: (self st_atim)
+	self subclassResponsibility
 ]
 
 { #category : 'testing' }
 StatStruct >> isDirectory [
+	"Returns true if the stat was performed on a directory."
 
-	^(self st_mode bitAnd: self s_ifmt) == self s_ifdir
+	self subclassResponsibility
 ]
 
 { #category : 'testing' }
 StatStruct >> isFile [
+	"Returns true if the stat was performed on a normal file."
 
-	^(self st_mode bitAnd: self s_ifmt) == self s_ifreg
+	self subclassResponsibility
 ]
 
 { #category : 'testing' }
 StatStruct >> isSymlink [
+	"Returns true if the stat was performed on a symbolic link."
 
-	^(self st_mode bitAnd: self s_ifmt) == self s_iflnk
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 StatStruct >> mode [
 	"Returns the mode of the file."
 
-	^self st_mode
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 StatStruct >> modificationTime [
+	"Returns the modification time associated with the file when stat was called."
 
-	^TimespecStruct forBytes: (self st_mtim)
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifblk [
-	"block device"
-
-	^8r0060000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifchr [
-	"character device"
-
-	^8r0020000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifdir [
-	"directory"
-
-	^8r0040000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ififo [
-	"FIFO"
-
-	^8r0010000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_iflnk [
-	"symbolic link"
-
-	^8r0120000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifmt [
-	"bit mask for the file type bit field"
-
-	^8r0170000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifreg [
-	"regular file"
-
-	^8r0100000
-]
-
-{ #category : 'private-masks' }
-StatStruct >> s_ifsock [
-	"socket"
-
-	^8r0140000
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 StatStruct >> size [
-	"Returns the size of the file in bytes."
+	"Returns the size of the file when stat was called."
 
-	^self st_size
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_atim [
-
-	^bytes CByteArrayFrom: 72 to: 87
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_blksize [
-
-	^bytes uint64At: 56
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_blocks [
-
-	^bytes uint64At: 64
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_ctim [
-
-	^bytes CByteArrayFrom: 104 to: 119
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_dev [
-
-	^bytes uint64At: 0
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_gid [
-
-	^bytes uint32At: 32
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_ino [
-
-	^bytes uint64At: 8
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_mode [
-
-	^bytes uint32At: 24
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_mtim [
-
-	^bytes CByteArrayFrom: 88 to: 103
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_nlink [
-
-	^bytes uint64At: 16
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_rdev [
-
-	^bytes uint64At: 40
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_size [
-
-	^bytes uint64At: 48
-]
-
-{ #category : 'private-accessing' }
-StatStruct >> st_uid [
-
-	^bytes uint32At: 28
+	self subclassResponsibility
 ]

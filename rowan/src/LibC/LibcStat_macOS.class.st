@@ -8,7 +8,7 @@ Class {
 LibcStat_macOS >> fstat: fd [
 
 	| statStruct errnoHolder status |
-	statStruct := StatStruct new.
+	statStruct := StatStruct_macOS new.
 	errnoHolder := { 0 }.
 	status := library
 		__fxstat: { 0 "_STAT_VER". fd. statStruct bytes. }
@@ -35,7 +35,7 @@ LibcStat_macOS >> mkdir: pathString [
 LibcStat_macOS >> stat: pathString [
 
 	| statStruct errnoHolder status |
-	statStruct := StatStruct new.
+	statStruct := StatStruct_macOS new.
 	errnoHolder := { 0 }.
 	status := library
 		stat: { pathString encodeAsUTF8. statStruct bytes. }
