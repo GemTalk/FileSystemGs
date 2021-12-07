@@ -36,5 +36,14 @@ int main() {
   printf("stat.st_ctim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_ctim), sizeof(root.st_ctim));
 #endif
 
+  printf("s_ifmt:   %07o\n", S_IFMT);
+  printf("s_ififo:  %07o\n", S_IFIFO);
+  printf("s_ifchr:  %07o\n", S_IFCHR);
+  printf("s_ifdir:  %07o\n", S_IFDIR);
+  printf("s_ifblk:  %07o\n", S_IFBLK);
+  printf("s_ifreg:  %07o\n", S_IFREG);
+  printf("s_iflnk:  %07o\n", S_IFLNK);
+  printf("s_ifsock: %07o\n", S_IFSOCK);
+
   return result;
 }
