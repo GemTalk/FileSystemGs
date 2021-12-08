@@ -11,7 +11,7 @@ LibcStat_macOS >> fstat: fd [
 	statStruct := StatStruct_macOS new.
 	errnoHolder := { 0 }.
 	status := library
-		__fxstat: { 0 "_STAT_VER". fd. statStruct bytes. }
+		__fxstat: { fd. statStruct bytes. }
 		errno: errnoHolder.
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
