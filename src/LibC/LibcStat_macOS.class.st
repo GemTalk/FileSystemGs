@@ -18,6 +18,19 @@ LibcStat_macOS >> fstat: fd [
 	^statStruct
 ]
 
+{ #category : 'initialization' }
+LibcStat_macOS >> initialize [
+
+	library := CLibrary named: self libraryName
+]
+
+{ #category : 'accessing' }
+LibcStat_macOS >> libraryName [
+	"Returns the name of the C library that should be used."
+
+	^'/usr/lib/libSystem.dylib'.
+]
+
 { #category : 'functions' }
 LibcStat_macOS >> mkdir: pathString [
 
@@ -35,10 +48,18 @@ LibcStat_macOS >> mkdir: pathString [
 LibcStat_macOS >> stat: pathString [
 
 	| statStruct errnoHolder status |
+	stat == nil
+		ifTrue:
+			[stat := CCallout
+				library: library
+				name: 'stat$INODE64'
+				result: #'int32'
+				args: #(#'const char*' #'ptr')
+				varArgsAfter: -1].
 	statStruct := StatStruct_macOS new.
 	errnoHolder := { 0 }.
-	status := library
-		stat: { pathString encodeAsUTF8. statStruct bytes. }
+	status := stat
+		callWith: { pathString encodeAsUTF8. statStruct bytes. }
 		errno: errnoHolder.
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].

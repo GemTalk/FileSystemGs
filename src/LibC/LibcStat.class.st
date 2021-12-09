@@ -1,6 +1,11 @@
 Class {
 	#name : 'LibcStat',
 	#superclass : 'LibcInterface',
+	#instVars : [
+		'fstat',
+		'stat',
+		'mkdir'
+	],
 	#category : 'LibC'
 }
 
