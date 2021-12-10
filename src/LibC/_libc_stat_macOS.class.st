@@ -33,6 +33,96 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_stat_macOS >> chflags: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
+
+	^Function_chflags
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> chmod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
+
+	^Function_chmod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> chmodx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_chmodx_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fchflags: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'uint32')"
+
+	^Function_fchflags
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fchmod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'uint16')"
+
+	^Function_fchmod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fchmodx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fchmodx_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fstat64: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fstat64
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fstatx_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
+
+	^Function_fstatx_np
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_macOS >> fstatx64_np: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
+
+	^Function_fstatx64_np
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_stat_macOS >> initialize [
 
@@ -203,96 +293,6 @@ _libc_stat_macOS >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> chflags: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
-
-	^Function_chflags
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> chmod: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint16')"
-
-	^Function_chmod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> chmodx_np: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_chmodx_np
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fchflags: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'uint32')"
-
-	^Function_fchflags
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fchmod: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'uint16')"
-
-	^Function_fchmod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fchmodx_np: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fchmodx_np
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fstat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fstat64: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fstat64
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fstatx64_np: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
-
-	^Function_fstatx64_np
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_macOS >> fstatx_np: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
-
-	^Function_fstatx_np
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_stat_macOS >> lchflags: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
@@ -329,19 +329,19 @@ _libc_stat_macOS >> lstat64: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> lstatx64_np: args errno: errnoHolder [
+_libc_stat_macOS >> lstatx_np: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
 
-	^Function_lstatx64_np
+	^Function_lstatx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> lstatx_np: args errno: errnoHolder [
+_libc_stat_macOS >> lstatx64_np: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
 
-	^Function_lstatx_np
+	^Function_lstatx64_np
 		callWith: args
 		errno: errnoHolder
 ]
@@ -394,10 +394,6 @@ _libc_stat_macOS >> mknod: args errno: errnoHolder [
 { #category : 'Functions' }
 _libc_stat_macOS >> stat: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_stat
-		callWith: args
-		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
@@ -410,19 +406,19 @@ _libc_stat_macOS >> stat64: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> statx64_np: args errno: errnoHolder [
+_libc_stat_macOS >> statx_np: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
 
-	^Function_statx64_np
+	^Function_statx_np
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stat_macOS >> statx_np: args errno: errnoHolder [
+_libc_stat_macOS >> statx64_np: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
 
-	^Function_statx_np
+	^Function_statx64_np
 		callWith: args
 		errno: errnoHolder
 ]

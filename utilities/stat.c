@@ -1,8 +1,10 @@
 /*
  *
- * The purpose of this program is to calculate the size and offset of fields within struct stat.
- * Not all fields are necessarily of interest and all may not be included.
- * It also provides an example calling of the stat function to determine if stat is a macro or function.
+ * The purpose of this program is to invoke each function in stat.h, that we use.
+ * Doing so allows us to figure out how function are invoked by the C compiler.
+ *
+ * This also serves as a means of obtaining the structure offsets for each platform
+ * for structures of interest.
  *
  */
 
@@ -13,7 +15,9 @@
 int main() {
   struct stat root;
 
-  int result = stat("/", &root);
+  int result = mkdir("/tmp/test.dir", 0777);
+  result = fstat(0, &root);
+  result = stat("/", &root);
 
   printf("stat\n\tsize:%ld\n", sizeof(struct stat));
   printf("stat.st_dev\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_dev), sizeof(root.st_dev));

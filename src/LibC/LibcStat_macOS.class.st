@@ -8,10 +8,18 @@ Class {
 LibcStat_macOS >> fstat: fd [
 
 	| statStruct errnoHolder status |
+	fstat == nil
+		ifTrue:
+			[fstat := CCallout
+				library: library
+				name: 'fstat$INODE64'
+				result: #'int32'
+				args: #(#'int32' #'ptr')
+				varArgsAfter: -1].
 	statStruct := StatStruct_macOS new.
 	errnoHolder := { 0 }.
-	status := library
-		__fxstat: { fd. statStruct bytes. }
+	status := fstat
+		callWith: { fd. statStruct bytes. }
 		errno: errnoHolder.
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
@@ -35,9 +43,17 @@ LibcStat_macOS >> libraryName [
 LibcStat_macOS >> mkdir: pathString [
 
 	| errnoHolder status |
+	mkdir == nil
+		ifTrue:
+			[mkdir := CCallout
+				library: library
+				name: 'mkdir'
+				result: #'int32'
+				args: #(#'const char*' #'uint16')
+				varArgsAfter: -1].
 	errnoHolder := { 0 }.
-	status := library
-		mkdir: { pathString encodeAsUTF8. 8r0777. }
+	status := mkdir
+		callWith: { pathString encodeAsUTF8. 8r0777. }
 		errno: errnoHolder.
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
