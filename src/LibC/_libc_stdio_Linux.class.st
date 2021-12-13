@@ -90,6 +90,438 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_stdio_Linux >> __getdelim: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'int32' #'ptr')"
+
+	^Function___getdelim
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> __overflow: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32')"
+
+	^Function___overflow
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> __uflow: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function___uflow
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> clearerr_unlocked: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_clearerr_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> clearerr: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_clearerr
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ctermid: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr')"
+
+	^Function_ctermid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> dprintf: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*')"
+
+	^Function_dprintf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fclose: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fclose
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fdopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'int32' #'const char*')"
+
+	^Function_fdopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> feof_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_feof_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> feof: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_feof
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ferror_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_ferror_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ferror: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_ferror
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fflush_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fflush_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fflush: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fflush
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fgetc_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fgetc_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fgetc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fgetc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fgetpos: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
+
+	^Function_fgetpos
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fgets: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr' #'int32' #'ptr')"
+
+	^Function_fgets
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fileno_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fileno_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fileno: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fileno
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> flockfile: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_flockfile
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fmemopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'ptr' #'uint64' #'const char*')"
+
+	^Function_fmemopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'const char*' #'const char*')"
+
+	^Function_fopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fprintf: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
+
+	^Function_fprintf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fputc_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fputc_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fputc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fputc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fputs: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_fputs
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fread_unlocked: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fread_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fread: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fread
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> freopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'const char*' #'const char*' #'ptr')"
+
+	^Function_freopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fscanf: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
+
+	^Function_fscanf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fseek: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
+
+	^Function_fseek
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fseeko: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
+
+	^Function_fseeko
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fsetpos: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
+
+	^Function_fsetpos
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ftell: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr')"
+
+	^Function_ftell
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ftello: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr')"
+
+	^Function_ftello
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> ftrylockfile: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_ftrylockfile
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> funlockfile: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_funlockfile
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fwrite_unlocked: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fwrite_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> fwrite: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fwrite
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getc_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_getc_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_getc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getchar_unlocked: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getchar_unlocked
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getchar: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getchar
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getdelim: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'int32' #'ptr')"
+
+	^Function_getdelim
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getline: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'ptr')"
+
+	^Function_getline
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_Linux >> getw: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_getw
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_stdio_Linux >> initialize [
 
@@ -602,411 +1034,6 @@ _libc_stdio_Linux >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> clearerr: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'ptr')"
-
-	^Function_clearerr
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> clearerr_unlocked: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'ptr')"
-
-	^Function_clearerr_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ctermid: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr')"
-
-	^Function_ctermid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> dprintf: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*')"
-
-	^Function_dprintf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fclose: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fclose
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fdopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'int32' #'const char*')"
-
-	^Function_fdopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> feof: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_feof
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> feof_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_feof_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ferror: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_ferror
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ferror_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_ferror_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fflush: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fflush
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fflush_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fflush_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fgetc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fgetc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fgetc_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fgetc_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fgetpos: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
-
-	^Function_fgetpos
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fgets: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr' #'int32' #'ptr')"
-
-	^Function_fgets
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fileno: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fileno
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fileno_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fileno_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> flockfile: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'ptr')"
-
-	^Function_flockfile
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fmemopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'ptr' #'uint64' #'const char*')"
-
-	^Function_fmemopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'const char*' #'const char*')"
-
-	^Function_fopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fprintf: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
-
-	^Function_fprintf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fputc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fputc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fputc_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fputc_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fputs: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_fputs
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fread: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fread
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fread_unlocked: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fread_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> freopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'const char*' #'const char*' #'ptr')"
-
-	^Function_freopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fscanf: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
-
-	^Function_fscanf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fseek: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
-
-	^Function_fseek
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fseeko: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
-
-	^Function_fseeko
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fsetpos: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
-
-	^Function_fsetpos
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ftell: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr')"
-
-	^Function_ftell
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ftello: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr')"
-
-	^Function_ftello
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> ftrylockfile: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_ftrylockfile
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> funlockfile: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'ptr')"
-
-	^Function_funlockfile
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fwrite: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fwrite
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> fwrite_unlocked: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fwrite_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_getc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getchar: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getchar
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getchar_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getchar_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getc_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_getc_unlocked
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getdelim: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'int32' #'ptr')"
-
-	^Function_getdelim
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getline: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'ptr')"
-
-	^Function_getline
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> getw: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_getw
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_stdio_Linux >> open_memstream: args errno: errnoHolder [
 	"Interpreted as #'ptr' from #(#'ptr' #'ptr')"
 
@@ -1052,19 +1079,19 @@ _libc_stdio_Linux >> printf: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> putc: args errno: errnoHolder [
+_libc_stdio_Linux >> putc_unlocked: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Function_putc
+	^Function_putc_unlocked
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> putchar: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
+_libc_stdio_Linux >> putc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
 
-	^Function_putchar
+	^Function_putc
 		callWith: args
 		errno: errnoHolder
 ]
@@ -1079,10 +1106,10 @@ _libc_stdio_Linux >> putchar_unlocked: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> putc_unlocked: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+_libc_stdio_Linux >> putchar: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
 
-	^Function_putc_unlocked
+	^Function_putchar
 		callWith: args
 		errno: errnoHolder
 ]
@@ -1232,19 +1259,19 @@ _libc_stdio_Linux >> tmpfile: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> tmpnam: args errno: errnoHolder [
+_libc_stdio_Linux >> tmpnam_r: args errno: errnoHolder [
 	"Interpreted as #'char*' from #(#'ptr')"
 
-	^Function_tmpnam
+	^Function_tmpnam_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_stdio_Linux >> tmpnam_r: args errno: errnoHolder [
+_libc_stdio_Linux >> tmpnam: args errno: errnoHolder [
 	"Interpreted as #'char*' from #(#'ptr')"
 
-	^Function_tmpnam_r
+	^Function_tmpnam
 		callWith: args
 		errno: errnoHolder
 ]
@@ -1326,33 +1353,6 @@ _libc_stdio_Linux >> vsscanf: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'const char*' #'ptr')"
 
 	^Function_vsscanf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> __getdelim: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr' #'ptr' #'int32' #'ptr')"
-
-	^Function___getdelim
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> __overflow: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'int32')"
-
-	^Function___overflow
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_Linux >> __uflow: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function___uflow
 		callWith: args
 		errno: errnoHolder
 ]

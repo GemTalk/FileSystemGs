@@ -13,6 +13,24 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_fcntl_Linux >> creat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
+
+	^Function_creat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_fcntl_Linux >> fcntl: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
+
+	^Function_fcntl
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_fcntl_Linux >> initialize [
 
@@ -60,24 +78,6 @@ _libc_fcntl_Linux >> initialize [
 		result: #'int32'
 		args: #(#'int32' #'int64' #'int64')
 		varArgsAfter: -1.
-]
-
-{ #category : 'Functions' }
-_libc_fcntl_Linux >> creat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
-
-	^Function_creat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_fcntl_Linux >> fcntl: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32')"
-
-	^Function_fcntl
-		callWith: args
-		errno: errnoHolder
 ]
 
 { #category : 'Functions' }

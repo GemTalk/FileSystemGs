@@ -107,4 +107,3 @@ ZnEncodedStream >> wrappedStream [
 ZnEncodedStream >> wrappedStreamName [
 	^ stream wrappedStreamName
 ]
-

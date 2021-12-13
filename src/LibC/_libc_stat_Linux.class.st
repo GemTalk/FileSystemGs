@@ -29,6 +29,114 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_stat_Linux >> __fxstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'ptr')"
+
+	^Function___fxstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __fxstatat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'ptr' #'int32')"
+
+	^Function___fxstatat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __lxstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
+
+	^Function___lxstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xmknod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'ptr')"
+
+	^Function___xmknod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xmknodat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')"
+
+	^Function___xmknodat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> __xstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
+
+	^Function___xstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> chmod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
+
+	^Function_chmod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> fchmod: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'uint32')"
+
+	^Function_fchmod
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> fchmodat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'int32')"
+
+	^Function_fchmodat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> fstat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fstat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> fstatat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr' #'int32')"
+
+	^Function_fstatat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stat_Linux >> futimens: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_futimens
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_stat_Linux >> initialize [
 
@@ -175,60 +283,6 @@ _libc_stat_Linux >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_stat_Linux >> chmod: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
-
-	^Function_chmod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> fchmod: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'uint32')"
-
-	^Function_fchmod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> fchmodat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'int32')"
-
-	^Function_fchmodat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> fstat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> fstatat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr' #'int32')"
-
-	^Function_fstatat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> futimens: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_futimens
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_stat_Linux >> lchmod: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'const char*' #'uint32')"
 
@@ -323,60 +377,6 @@ _libc_stat_Linux >> utimensat: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr' #'int32')"
 
 	^Function_utimensat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __fxstat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32' #'ptr')"
-
-	^Function___fxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __fxstatat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'ptr' #'int32')"
-
-	^Function___fxstatat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __lxstat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
-
-	^Function___lxstat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xmknod: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'ptr')"
-
-	^Function___xmknod
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xmknodat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32' #'const char*' #'uint32' #'ptr')"
-
-	^Function___xmknodat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stat_Linux >> __xstat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'ptr')"
-
-	^Function___xstat
 		callWith: args
 		errno: errnoHolder
 ]

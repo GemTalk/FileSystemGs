@@ -52,6 +52,240 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_unistd_macOS >> _exit: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'int32')"
+
+	^Function__exit
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> access: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'int32')"
+
+	^Function_access
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> alarm: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #(#'uint32')"
+
+	^Function_alarm
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> chdir: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*')"
+
+	^Function_chdir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> chown: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32' #'uint32')"
+
+	^Function_chown
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> close: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_close
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> dup: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_dup
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> dup2: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
+
+	^Function_dup2
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execl: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execl
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execle: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execle
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execlp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execlp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execv: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_execv
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execve: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_execve
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> execvp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_execvp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> fork: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_fork
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> fpathconf: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'int32' #'int32')"
+
+	^Function_fpathconf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getcwd: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr' #'uint64')"
+
+	^Function_getcwd
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getegid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getegid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> geteuid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_geteuid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getgid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getgid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getgroups: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_getgroups
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getlogin: args errno: errnoHolder [
+	"Interpreted as #'char*' from #()"
+
+	^Function_getlogin
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getpgrp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getpgrp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getpid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getpid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getppid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getppid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_macOS >> getuid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getuid
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_unistd_macOS >> initialize [
 
@@ -336,231 +570,6 @@ _libc_unistd_macOS >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_unistd_macOS >> access: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'int32')"
-
-	^Function_access
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> alarm: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #(#'uint32')"
-
-	^Function_alarm
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> chdir: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*')"
-
-	^Function_chdir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> chown: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint32' #'uint32')"
-
-	^Function_chown
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> close: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_close
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> dup: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_dup
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> dup2: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32')"
-
-	^Function_dup2
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execl: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execl
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execle: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execle
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execlp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execlp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execv: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_execv
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execve: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
-
-	^Function_execve
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> execvp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_execvp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> fork: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_fork
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> fpathconf: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'int32' #'int32')"
-
-	^Function_fpathconf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getcwd: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr' #'uint64')"
-
-	^Function_getcwd
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getegid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getegid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> geteuid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_geteuid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getgid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getgid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getgroups: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_getgroups
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getlogin: args errno: errnoHolder [
-	"Interpreted as #'char*' from #()"
-
-	^Function_getlogin
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getpgrp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getpgrp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getpid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getpid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getppid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getppid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> getuid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getuid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_unistd_macOS >> isatty: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'int32')"
 
@@ -705,19 +714,19 @@ _libc_unistd_macOS >> tcsetpgrp: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_unistd_macOS >> ttyname: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'int32')"
+_libc_unistd_macOS >> ttyname_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'uint64')"
 
-	^Function_ttyname
+	^Function_ttyname_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_unistd_macOS >> ttyname_r: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'uint64')"
+_libc_unistd_macOS >> ttyname: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'int32')"
 
-	^Function_ttyname_r
+	^Function_ttyname
 		callWith: args
 		errno: errnoHolder
 ]
@@ -736,15 +745,6 @@ _libc_unistd_macOS >> write: args errno: errnoHolder [
 	"Interpreted as #'int64' from #(#'int32' #'ptr' #'uint64')"
 
 	^Function_write
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_macOS >> _exit: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'int32')"
-
-	^Function__exit
 		callWith: args
 		errno: errnoHolder
 ]

@@ -113,6 +113,501 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_unistd_Linux >> __getpgid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function___getpgid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> _exit: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'int32')"
+
+	^Function__exit
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> access: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'int32')"
+
+	^Function_access
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> acct: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*')"
+
+	^Function_acct
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> alarm: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #(#'uint32')"
+
+	^Function_alarm
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> brk: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_brk
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> chdir: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*')"
+
+	^Function_chdir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> chown: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'uint32' #'uint32')"
+
+	^Function_chown
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> chroot: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*')"
+
+	^Function_chroot
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> close: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_close
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> confstr: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'int32' #'ptr' #'uint64')"
+
+	^Function_confstr
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> crypt: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'const char*' #'const char*')"
+
+	^Function_crypt
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> daemon: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
+
+	^Function_daemon
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> dup: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_dup
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> dup2: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int32')"
+
+	^Function_dup2
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> endusershell: args errno: errnoHolder [
+	"Interpreted as #'void' from #()"
+
+	^Function_endusershell
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execl: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execl
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execle: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execle
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execlp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
+
+	^Function_execlp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execv: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_execv
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execve: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
+
+	^Function_execve
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> execvp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_execvp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> faccessat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'int32' #'int32')"
+
+	^Function_faccessat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fchdir: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_fchdir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fchown: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'uint32' #'uint32')"
+
+	^Function_fchown
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fchownat: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'uint32' #'int32')"
+
+	^Function_fchownat
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fdatasync: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_fdatasync
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fexecve: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
+
+	^Function_fexecve
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fork: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_fork
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fpathconf: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'int32' #'int32')"
+
+	^Function_fpathconf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> fsync: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_fsync
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> ftruncate: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'int64')"
+
+	^Function_ftruncate
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getcwd: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr' #'uint64')"
+
+	^Function_getcwd
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getdomainname: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
+
+	^Function_getdomainname
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getdtablesize: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getdtablesize
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getegid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getegid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getentropy: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
+
+	^Function_getentropy
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> geteuid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_geteuid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getgid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getgid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getgroups: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_getgroups
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> gethostid: args errno: errnoHolder [
+	"Interpreted as #'int64' from #()"
+
+	^Function_gethostid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> gethostname: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
+
+	^Function_gethostname
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getlogin_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
+
+	^Function_getlogin_r
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getlogin: args errno: errnoHolder [
+	"Interpreted as #'char*' from #()"
+
+	^Function_getlogin
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getopt: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'const char*')"
+
+	^Function_getopt
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getpagesize: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getpagesize
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getpass: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'const char*')"
+
+	^Function_getpass
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getpgid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_getpgid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getpgrp: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getpgrp
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getpid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getpid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getppid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getppid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getsid: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32')"
+
+	^Function_getsid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getuid: args errno: errnoHolder [
+	"Interpreted as #'uint32' from #()"
+
+	^Function_getuid
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getusershell: args errno: errnoHolder [
+	"Interpreted as #'char*' from #()"
+
+	^Function_getusershell
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_unistd_Linux >> getwd: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr')"
+
+	^Function_getwd
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_unistd_Linux >> initialize [
 
@@ -763,483 +1258,6 @@ _libc_unistd_Linux >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_unistd_Linux >> access: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'int32')"
-
-	^Function_access
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> acct: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*')"
-
-	^Function_acct
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> alarm: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #(#'uint32')"
-
-	^Function_alarm
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> brk: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_brk
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> chdir: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*')"
-
-	^Function_chdir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> chown: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'uint32' #'uint32')"
-
-	^Function_chown
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> chroot: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*')"
-
-	^Function_chroot
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> close: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_close
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> confstr: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'int32' #'ptr' #'uint64')"
-
-	^Function_confstr
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> crypt: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'const char*' #'const char*')"
-
-	^Function_crypt
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> daemon: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32')"
-
-	^Function_daemon
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> dup: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_dup
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> dup2: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int32')"
-
-	^Function_dup2
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> endusershell: args errno: errnoHolder [
-	"Interpreted as #'void' from #()"
-
-	^Function_endusershell
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execl: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execl
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execle: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execle
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execlp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'const char*')"
-
-	^Function_execlp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execv: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_execv
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execve: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr' #'ptr')"
-
-	^Function_execve
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> execvp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_execvp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> faccessat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'int32' #'int32')"
-
-	^Function_faccessat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fchdir: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_fchdir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fchown: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'uint32' #'uint32')"
-
-	^Function_fchown
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fchownat: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'const char*' #'uint32' #'uint32' #'int32')"
-
-	^Function_fchownat
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fdatasync: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_fdatasync
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fexecve: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'ptr')"
-
-	^Function_fexecve
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fork: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_fork
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fpathconf: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'int32' #'int32')"
-
-	^Function_fpathconf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> fsync: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_fsync
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> ftruncate: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'int64')"
-
-	^Function_ftruncate
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getcwd: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr' #'uint64')"
-
-	^Function_getcwd
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getdomainname: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
-
-	^Function_getdomainname
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getdtablesize: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getdtablesize
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getegid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getegid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getentropy: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
-
-	^Function_getentropy
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> geteuid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_geteuid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getgid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getgid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getgroups: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_getgroups
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> gethostid: args errno: errnoHolder [
-	"Interpreted as #'int64' from #()"
-
-	^Function_gethostid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> gethostname: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
-
-	^Function_gethostname
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getlogin: args errno: errnoHolder [
-	"Interpreted as #'char*' from #()"
-
-	^Function_getlogin
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getlogin_r: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'uint64')"
-
-	^Function_getlogin_r
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getopt: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'const char*')"
-
-	^Function_getopt
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getpagesize: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getpagesize
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getpass: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'const char*')"
-
-	^Function_getpass
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getpgid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_getpgid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getpgrp: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getpgrp
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getpid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getpid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getppid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getppid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getsid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function_getsid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getuid: args errno: errnoHolder [
-	"Interpreted as #'uint32' from #()"
-
-	^Function_getuid
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getusershell: args errno: errnoHolder [
-	"Interpreted as #'char*' from #()"
-
-	^Function_getusershell
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> getwd: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr')"
-
-	^Function_getwd
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_unistd_Linux >> isatty: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'int32')"
 
@@ -1618,19 +1636,19 @@ _libc_unistd_Linux >> truncate: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_unistd_Linux >> ttyname: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'int32')"
+_libc_unistd_Linux >> ttyname_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr' #'uint64')"
 
-	^Function_ttyname
+	^Function_ttyname_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_unistd_Linux >> ttyname_r: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr' #'uint64')"
+_libc_unistd_Linux >> ttyname: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'int32')"
 
-	^Function_ttyname_r
+	^Function_ttyname
 		callWith: args
 		errno: errnoHolder
 ]
@@ -1703,24 +1721,6 @@ _libc_unistd_Linux >> write: args errno: errnoHolder [
 	"Interpreted as #'int64' from #(#'int32' #'ptr' #'uint64')"
 
 	^Function_write
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> _exit: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'int32')"
-
-	^Function__exit
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_unistd_Linux >> __getpgid: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32')"
-
-	^Function___getpgid
 		callWith: args
 		errno: errnoHolder
 ]

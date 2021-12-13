@@ -18,6 +18,51 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_dirent_Linux >> alphasort: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
+
+	^Function_alphasort
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_Linux >> closedir: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_closedir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_Linux >> dirfd: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_dirfd
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_Linux >> fdopendir: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'int32')"
+
+	^Function_fdopendir
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_dirent_Linux >> getdirentries: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'int32' #'ptr' #'uint64' #'ptr')"
+
+	^Function_getdirentries
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_dirent_Linux >> initialize [
 
@@ -98,51 +143,6 @@ _libc_dirent_Linux >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_dirent_Linux >> alphasort: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
-
-	^Function_alphasort
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_Linux >> closedir: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_closedir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_Linux >> dirfd: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_dirfd
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_Linux >> fdopendir: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'int32')"
-
-	^Function_fdopendir
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_dirent_Linux >> getdirentries: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'int32' #'ptr' #'uint64' #'ptr')"
-
-	^Function_getdirentries
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_dirent_Linux >> opendir: args errno: errnoHolder [
 	"Interpreted as #'ptr' from #(#'const char*')"
 
@@ -152,19 +152,19 @@ _libc_dirent_Linux >> opendir: args errno: errnoHolder [
 ]
 
 { #category : 'Functions' }
-_libc_dirent_Linux >> readdir: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'ptr')"
+_libc_dirent_Linux >> readdir_r: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr' #'ptr')"
 
-	^Function_readdir
+	^Function_readdir_r
 		callWith: args
 		errno: errnoHolder
 ]
 
 { #category : 'Functions' }
-_libc_dirent_Linux >> readdir_r: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr' #'ptr')"
+_libc_dirent_Linux >> readdir: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'ptr')"
 
-	^Function_readdir_r
+	^Function_readdir
 		callWith: args
 		errno: errnoHolder
 ]

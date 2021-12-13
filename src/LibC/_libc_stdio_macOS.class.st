@@ -48,6 +48,213 @@ Class {
 	#category : 'LibC'
 }
 
+{ #category : 'Functions' }
+_libc_stdio_macOS >> __sprintf_chk: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int32' #'uint64' #'const char*')"
+
+	^Function___sprintf_chk
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> clearerr: args errno: errnoHolder [
+	"Interpreted as #'void' from #(#'ptr')"
+
+	^Function_clearerr
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fclose: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fclose
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> feof: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_feof
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> ferror: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_ferror
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fflush: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fflush
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fgetc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_fgetc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fgetpos: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
+
+	^Function_fgetpos
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fgets: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr' #'int32' #'ptr')"
+
+	^Function_fgets
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'const char*' #'const char*')"
+
+	^Function_fopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fprintf: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
+
+	^Function_fprintf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fputc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'int32' #'ptr')"
+
+	^Function_fputc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fputs: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
+
+	^Function_fputs
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fread: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fread
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> freopen: args errno: errnoHolder [
+	"Interpreted as #'ptr' from #(#'const char*' #'const char*' #'ptr')"
+
+	^Function_freopen
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fscanf: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
+
+	^Function_fscanf
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fseek: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
+
+	^Function_fseek
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fsetpos: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
+
+	^Function_fsetpos
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> ftell: args errno: errnoHolder [
+	"Interpreted as #'int64' from #(#'ptr')"
+
+	^Function_ftell
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> fwrite: args errno: errnoHolder [
+	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
+
+	^Function_fwrite
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> getc: args errno: errnoHolder [
+	"Interpreted as #'int32' from #(#'ptr')"
+
+	^Function_getc
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> getchar: args errno: errnoHolder [
+	"Interpreted as #'int32' from #()"
+
+	^Function_getchar
+		callWith: args
+		errno: errnoHolder
+]
+
+{ #category : 'Functions' }
+_libc_stdio_macOS >> gets: args errno: errnoHolder [
+	"Interpreted as #'char*' from #(#'ptr')"
+
+	^Function_gets
+		callWith: args
+		errno: errnoHolder
+]
+
 { #category : 'initialization' }
 _libc_stdio_macOS >> initialize [
 
@@ -308,204 +515,6 @@ _libc_stdio_macOS >> initialize [
 ]
 
 { #category : 'Functions' }
-_libc_stdio_macOS >> clearerr: args errno: errnoHolder [
-	"Interpreted as #'void' from #(#'ptr')"
-
-	^Function_clearerr
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fclose: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fclose
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> feof: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_feof
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> ferror: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_ferror
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fflush: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fflush
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fgetc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_fgetc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fgetpos: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
-
-	^Function_fgetpos
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fgets: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr' #'int32' #'ptr')"
-
-	^Function_fgets
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'const char*' #'const char*')"
-
-	^Function_fopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fprintf: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
-
-	^Function_fprintf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fputc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'int32' #'ptr')"
-
-	^Function_fputc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fputs: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'const char*' #'ptr')"
-
-	^Function_fputs
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fread: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fread
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> freopen: args errno: errnoHolder [
-	"Interpreted as #'ptr' from #(#'const char*' #'const char*' #'ptr')"
-
-	^Function_freopen
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fscanf: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'const char*')"
-
-	^Function_fscanf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fseek: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'int64' #'int32')"
-
-	^Function_fseek
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fsetpos: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'ptr')"
-
-	^Function_fsetpos
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> ftell: args errno: errnoHolder [
-	"Interpreted as #'int64' from #(#'ptr')"
-
-	^Function_ftell
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> fwrite: args errno: errnoHolder [
-	"Interpreted as #'uint64' from #(#'ptr' #'uint64' #'uint64' #'ptr')"
-
-	^Function_fwrite
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> getc: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr')"
-
-	^Function_getc
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> getchar: args errno: errnoHolder [
-	"Interpreted as #'int32' from #()"
-
-	^Function_getchar
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> gets: args errno: errnoHolder [
-	"Interpreted as #'char*' from #(#'ptr')"
-
-	^Function_gets
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
 _libc_stdio_macOS >> perror: args errno: errnoHolder [
 	"Interpreted as #'void' from #(#'const char*')"
 
@@ -672,15 +681,6 @@ _libc_stdio_macOS >> vsprintf: args errno: errnoHolder [
 	"Interpreted as #'int32' from #(#'ptr' #'const char*' #'ptr')"
 
 	^Function_vsprintf
-		callWith: args
-		errno: errnoHolder
-]
-
-{ #category : 'Functions' }
-_libc_stdio_macOS >> __sprintf_chk: args errno: errnoHolder [
-	"Interpreted as #'int32' from #(#'ptr' #'int32' #'uint64' #'const char*')"
-
-	^Function___sprintf_chk
 		callWith: args
 		errno: errnoHolder
 ]
