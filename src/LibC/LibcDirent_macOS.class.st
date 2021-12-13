@@ -46,7 +46,7 @@ LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
 		ifTrue:
 			[opendir := CCallout
 				library: library
-				name: 'opendir'
+				name: 'opendir$INODE64'
 				result: #'ptr'
 				args: #(#'const char*' )
 				varArgsAfter: -1].
@@ -70,7 +70,7 @@ LibcDirent_macOS >> readFromDirectoryStream: dirPointer [
 		ifTrue:
 			[readdir := CCallout
 				library: library
-				name: 'readdir'
+				name: 'readdir$INODE64'
 				result: #'ptr'
 				args: #(#'ptr')
 				varArgsAfter: -1].

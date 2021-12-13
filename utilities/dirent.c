@@ -8,24 +8,25 @@
  *
  */
 
-#include <sys/stat.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <dirent.h>
 
 int main() {
-  struct dirent root;
+  DIR* root = opendir("/");
+  struct dirent *rootEntry = readdir(root);
+  int result = closedir(root);
 
   printf("dirent\n\tsize:%ld\n", sizeof(struct dirent));
 #ifdef __APPLE__
-  printf("dirent.d_fileno\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_fileno), sizeof(root.d_fileno));
-  printf("dirent.d_seekoff\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_seekoff), sizeof(root.d_seekoff));
-  printf("dirent.d_reclen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_reclen), sizeof(root.d_reclen));
-  printf("dirent.d_namlen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_namlen), sizeof(root.d_namlen));
-  printf("dirent.d_type\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_type), sizeof(root.d_type));
-  printf("dirent.d_name\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_name), sizeof(root.d_name));
+  printf("dirent.d_fileno\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_fileno), sizeof(rootEntry->d_fileno));
+  printf("dirent.d_seekoff\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_seekoff), sizeof(rootEntry->d_seekoff));
+  printf("dirent.d_reclen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_reclen), sizeof(rootEntry->d_reclen));
+  printf("dirent.d_namlen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_namlen), sizeof(rootEntry->d_namlen));
+  printf("dirent.d_type\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_type), sizeof(rootEntry->d_type));
+  printf("dirent.d_name\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_name), sizeof(rootEntry->d_name));
 #else
 #endif
 
-  return 0;
+  return result;
 }
