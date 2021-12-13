@@ -47,7 +47,7 @@ LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
 			[opendir := CCallout
 				library: library
 				name: 'opendir'
-				result: #'int32'
+				result: #'ptr'
 				args: #(#'const char*' )
 				varArgsAfter: -1].
 	errnoHolder := { 0 }.
