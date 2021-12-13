@@ -84,7 +84,7 @@ LibcDirent_macOS >> readFromDirectoryStream: dirPointer [
 		ifTrue: [self handleErrno: errno].
 	^isNull
 		ifTrue: [nil]
-		ifFalse: [DirentStruct forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize)]
+		ifFalse: [DirentStruct_macOS forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct_macOS structSize)]
 ]
 
 { #category : 'accessing' }

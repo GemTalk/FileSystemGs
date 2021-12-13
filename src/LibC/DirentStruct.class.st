@@ -14,6 +14,12 @@ DirentStruct >> basename [
 ]
 
 { #category : 'private-accessing' }
+DirentStruct >> d_name [
+
+	self subclassResponsibility
+]
+
+{ #category : 'private-accessing' }
 DirentStruct >> d_type [
 
 	self subclassResponsibility

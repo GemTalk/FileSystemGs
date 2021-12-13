@@ -47,7 +47,7 @@ LibcDirent_Linux >> readFromDirectoryStream: dirPointer [
 		ifTrue: [self handleErrno: errno].
 	^isNull
 		ifTrue: [nil]
-		ifFalse: [DirentStruct forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct structSize)]
+		ifFalse: [DirentStruct_Linux forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct_Linux structSize)]
 ]
 
 { #category : 'accessing' }
