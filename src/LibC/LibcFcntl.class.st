@@ -1,6 +1,9 @@
 Class {
 	#name : 'LibcFcntl',
 	#superclass : 'LibcInterface',
+	#instVars : [
+		'open'
+	],
 	#category : 'LibC'
 }
 

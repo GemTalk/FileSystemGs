@@ -1,6 +1,9 @@
 Class {
 	#name : 'LibcStdio',
 	#superclass : 'LibcInterface',
+	#instVars : [
+		'rename'
+	],
 	#category : 'LibC'
 }
 

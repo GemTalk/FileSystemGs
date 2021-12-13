@@ -36,7 +36,7 @@ LibcStat_macOS >> initialize [
 LibcStat_macOS >> libraryName [
 	"Returns the name of the C library that should be used."
 
-	^'/usr/lib/libSystem.dylib'.
+	^'/usr/lib/libSystem.dylib'
 ]
 
 { #category : 'functions' }
