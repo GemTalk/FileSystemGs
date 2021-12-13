@@ -1,6 +1,11 @@
 Class {
 	#name : 'LibcDirent',
 	#superclass : 'LibcInterface',
+	#instVars : [
+		'opendir',
+		'closedir',
+		'readdir'
+	],
 	#category : 'LibC'
 }
 
