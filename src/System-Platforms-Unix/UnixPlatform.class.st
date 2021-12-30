@@ -124,3 +124,10 @@ UnixPlatform >> lineEnding [
 
 	^ String lf
 ]
+
+{ #category : 'accessing' }
+UnixPlatform >> platformResolverClass [
+	"Returns the PlatformResolver subclass which should be used for this Platform."
+
+	^UnixResolver
+]

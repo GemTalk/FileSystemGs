@@ -14,6 +14,7 @@
 
 int main() {
   struct stat root;
+  struct timespec time;
 
   int result = mkdir("/tmp/test.dir", 0777);
   result = fstat(0, &root);
@@ -39,6 +40,10 @@ int main() {
   printf("stat.st_mtim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_mtim), sizeof(root.st_mtim));
   printf("stat.st_ctim\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct stat, st_ctim), sizeof(root.st_ctim));
 #endif
+
+  printf("timespec\n\tsize:%ld\n", sizeof(struct timespec));
+  printf("timespec.tv_sec\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct timespec, tv_sec), sizeof(time.tv_sec));
+  printf("timespec.tv_nsec\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct timespec, tv_nsec), sizeof(time.tv_nsec));
 
   printf("s_ifmt:   %07o\n", S_IFMT);
   printf("s_ififo:  %07o\n", S_IFIFO);

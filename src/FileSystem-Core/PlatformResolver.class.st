@@ -9,9 +9,8 @@ Class {
 
 { #category : 'instance creation' }
 PlatformResolver class >> forCurrentPlatform [
-	| platformName |
-	platformName :=  System gemVersionAt: 'osName' .
-	^ (self allSubclasses detect: [:ea | ea platformName = platformName]) new
+
+	^OSPlatform current platformResolverClass new
 ]
 
 { #category : 'accessing' }

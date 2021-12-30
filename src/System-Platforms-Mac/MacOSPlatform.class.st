@@ -91,3 +91,10 @@ MacOSPlatform >> lineEnding [
 
 	^ String lf
 ]
+
+{ #category : 'accessing' }
+MacOSPlatform >> platformResolverClass [
+	"Returns the PlatformResolver subclass which should be used for this Platform."
+
+	^MacOSResolver
+]

@@ -148,3 +148,10 @@ OSPlatform >> platformFamily [
 OSPlatform >> platformName [
 	^ self name
 ]
+
+{ #category : 'accessing' }
+OSPlatform >> platformResolverClass [
+	"Returns the PlatformResolver subclass which should be used for this Platform."
+
+	^self subclassResponsibility
+]
