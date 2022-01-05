@@ -19,11 +19,6 @@ FileSystemStore class >> delimiter [
 	^ self shouldBeImplemented 
 ]
 
-{ #category : 'accessing' }
-FileSystemStore class >> isCaseSensitive [
-	^ self shouldBeImplemented
-]
-
 { #category : 'instance creation' }
 FileSystemStore class >> new [
 
@@ -156,11 +151,6 @@ FileSystemStore >> filename: aByteString matches: aByteString2 [
 
 { #category : 'initialization' }
 FileSystemStore >> initialize [
-]
-
-{ #category : 'accessing' }
-FileSystemStore >> isCaseSensitive [
-	^ self class isCaseSensitive
 ]
 
 { #category : 'public' }

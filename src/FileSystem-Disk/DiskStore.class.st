@@ -13,9 +13,9 @@ Class {
 
 { #category : 'current' }
 DiskStore class >> activeClass [
-	self allSubclasses do: [:ea | 
-		ea isActiveClass ifTrue: [^ ea]].
-	^ self
+	"Returns the DiskStore subclass that should be used."
+
+	^OSPlatform current diskStoreClass
 ]
 
 { #category : 'current' }
@@ -46,13 +46,6 @@ DiskStore class >> currentFileSystem [
 { #category : 'public' }
 DiskStore class >> delimiter [
 	^ self current delimiter
-]
-
-{ #category : 'current' }
-DiskStore class >> isActiveClass [
-
-	^false
-	"^self delimiter = File delimiter"
 ]
 
 { #category : 'public' }
@@ -129,13 +122,13 @@ DiskStore >> currentWorkingDirectoryPath [
 { #category : 'accessing' }
 DiskStore >> defaultOptionsForRead [
 
-	^UnixFileOpeningOptions readOnly
+	^self fileOpeningOptionsClass readOnly
 ]
 
 { #category : 'accessing' }
 DiskStore >> defaultOptionsForWrite [
 
-	^UnixFileOpeningOptions writeOnly
+	^self fileOpeningOptionsClass writeOnly
 		create;
 		yourself
 ]
@@ -241,6 +234,13 @@ DiskStore >> exists: aPath [
 		on: FileDoesNotExistException
 		do: [:ex | ^false].
 	^true
+]
+
+{ #category : 'accessing' }
+DiskStore >> fileOpeningOptionsClass [
+	"Returns the appropriate class used to represent FileOpeningOptions."
+
+	^self subclassResponsibility
 ]
 
 { #category : 'printing' }

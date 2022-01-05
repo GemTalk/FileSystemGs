@@ -284,7 +284,13 @@ FileSystem >> initializeWithStore: aStore [
 
 { #category : 'public-testing' }
 FileSystem >> isCaseSensitive [
-	^ self store isCaseSensitive
+	"This method doesn't really make a whole lot of sense in this form.
+	On macOS and Linux, you could have a case-insensitive root but a
+	case-sensitive /mnt directory. This should move to FileReference
+	which should determine whether a specific entity is stored on a
+	case-sensitive file system."
+
+	^Error signal: 'FileSystem >> #isCaseSensitive requires rework.'
 ]
 
 { #category : 'public-testing' }

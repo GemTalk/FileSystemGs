@@ -32,6 +32,13 @@ MacOSPlatform >> defaultMaximumPathLength [
 ]
 
 { #category : 'accessing' }
+MacOSPlatform >> diskStoreClass [
+	"Returns the DiskStore subclass associated w/ this platform."
+
+	^MacOSStore
+]
+
+{ #category : 'accessing' }
 MacOSPlatform >> family [
 	^#MacOS
 ]

@@ -21,6 +21,13 @@ Linux64Platform class >> isActivePlatform [
 	^ self currentPlatformName = 'Linux'
 ]
 
+{ #category : 'accessing' }
+Linux64Platform >> diskStoreClass [
+	"Returns the DiskStore subclass associated w/ this platform."
+
+	^LinuxStore
+]
+
 { #category : 'testing' }
 Linux64Platform >> isLinux64 [
 	^ true

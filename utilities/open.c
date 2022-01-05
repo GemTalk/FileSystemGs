@@ -12,7 +12,6 @@
 #include <sys/stat.h>
 
 int main() {
-  int result = open("/tmp/test.dir", 0777);
 
   printf("O_RDONLY\n\tvalue:%07o\n", O_RDONLY);
   printf("O_WRONLY\n\tvalue:%07o\n", O_WRONLY);
@@ -29,5 +28,8 @@ int main() {
 //  printf("O_EVTONLY\n\tvalue:%07o\n", O_EVTONLY);
   printf("O_CLOEXEC\n\tvalue:%07o\n", O_CLOEXEC);
 
-  return result;
+  printf("O_WRONLY|O_CREAT\n\tvalue:%07o\n", O_WRONLY|O_CREAT);
+  int fd = open("/tmp/test.dir", O_WRONLY|O_CREAT, 0777);
+
+  return fd;
 }

@@ -23,11 +23,6 @@ MemoryStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : 'public' }
-MemoryStore class >> isCaseSensitive [
-	^ true
-]
-
 { #category : 'class initialization' }
 MemoryStore class >> reset [
 

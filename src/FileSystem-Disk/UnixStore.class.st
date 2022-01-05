@@ -12,20 +12,6 @@ UnixStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : 'current' }
-UnixStore class >> isActiveClass [
-	"This version of GemStone does not have any non-Unix VM platforms."
-
-	OSPlatform isGemStoneSpecific.
-	^ true
-]
-
-{ #category : 'public' }
-UnixStore class >> isCaseSensitive [
-
-	^ true
-]
-
 { #category : 'public' }
 UnixStore class >> maxFileNameLength [
 
