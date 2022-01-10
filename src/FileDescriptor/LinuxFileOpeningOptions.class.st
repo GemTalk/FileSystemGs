@@ -27,7 +27,7 @@ Class {
 LinuxFileOpeningOptions >> allowsRead [
 	"Returns whether these options allow reading."
 
-	^self isReadable
+	^self isReadable and: [self isPath not]
 ]
 
 { #category : 'testing' }
