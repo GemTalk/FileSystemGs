@@ -33,6 +33,12 @@ FileOpeningOptions >> improperOperationExceptionClass [
 	^ ImproperOperation
 ]
 
+{ #category : 'signaling' }
+FileOpeningOptions >> signalImproperOperation: messageText [
+
+	^self improperOperationExceptionClass signal: messageText
+]
+
 { #category : 'private' }
 FileOpeningOptions >> signalLateAccessChange [
 	self improperOperationExceptionClass

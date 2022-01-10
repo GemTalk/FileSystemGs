@@ -8,5 +8,5 @@ Class {
 LinuxStore >> fileOpeningOptionsClass [
 	"Returns the appropriate class used to represent FileOpeningOptions."
 
-	^UnixFileOpeningOptions
+	^LinuxFileOpeningOptions
 ]
