@@ -11,21 +11,27 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <dirent.h>
+#include "utils.h"
 
 int main() {
   DIR* root = opendir("/");
   struct dirent *rootEntry = readdir(root);
   int result = closedir(root);
 
-  printf("dirent\n\tsize:%ld\n", sizeof(struct dirent));
+  StructDetail(struct dirent);
 #ifdef __APPLE__
-  printf("dirent.d_fileno\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_fileno), sizeof(rootEntry->d_fileno));
-  printf("dirent.d_seekoff\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_seekoff), sizeof(rootEntry->d_seekoff));
-  printf("dirent.d_reclen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_reclen), sizeof(rootEntry->d_reclen));
-  printf("dirent.d_namlen\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_namlen), sizeof(rootEntry->d_namlen));
-  printf("dirent.d_type\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_type), sizeof(rootEntry->d_type));
-  printf("dirent.d_name\n\toffset: %ld\n\tsize: %ld\n", offsetof(struct dirent, d_name), sizeof(rootEntry->d_name));
+  MemberDetail(struct dirent, rootEntry, d_fileno);
+  MemberDetail(struct dirent, rootEntry, d_seekoff);
+  MemberDetail(struct dirent, rootEntry, d_reclen);
+  MemberDetail(struct dirent, rootEntry, d_namlen);
+  MemberDetail(struct dirent, rootEntry, d_type);
+  MemberDetail(struct dirent, rootEntry, d_name);
 #else
+  MemberDetail(struct dirent, rootEntry, d_ino);
+  MemberDetail(struct dirent, rootEntry, d_off);
+  MemberDetail(struct dirent, rootEntry, d_reclen);
+  MemberDetail(struct dirent, rootEntry, d_type);
+  MemberDetail(struct dirent, rootEntry, d_name);
 #endif
 
   return result;
