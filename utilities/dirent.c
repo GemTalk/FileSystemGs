@@ -1,10 +1,7 @@
 /*
  *
- * The purpose of this program is to invoke each function in dirent.h, that we use.
- * Doing so allows us to figure out how function are invoked by the C compiler.
- *
- * This also serves as a means of obtaining the structure offsets for each platform
- * for structures of interest.
+ * This programs calculates various details about
+ * functions, constants, and structs in <fcntl.h>
  *
  */
 

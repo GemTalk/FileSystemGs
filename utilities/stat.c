@@ -47,14 +47,32 @@ int main() {
   MemberDetail(struct timespec, time, tv_sec);
   MemberDetail(struct timespec, time, tv_nsec);
 
+  printf("\nFile types\n");
   ConstDetail(S_IFMT);
-  ConstDetail(S_IFIFO);
-  ConstDetail(S_IFCHR);
-  ConstDetail(S_IFDIR);
   ConstDetail(S_IFBLK);
+  ConstDetail(S_IFCHR);
+  ConstDetail(S_IFIFO);
   ConstDetail(S_IFREG);
+  ConstDetail(S_IFDIR);
   ConstDetail(S_IFLNK);
   ConstDetail(S_IFSOCK);
+
+  printf("\nFile modes\n");
+  ConstDetail(S_IRWXU);
+  ConstDetail(S_IRUSR);
+  ConstDetail(S_IWUSR);
+  ConstDetail(S_IXUSR);
+  ConstDetail(S_IRWXG);
+  ConstDetail(S_IRGRP);
+  ConstDetail(S_IWGRP);
+  ConstDetail(S_IXGRP);
+  ConstDetail(S_IRWXO);
+  ConstDetail(S_IROTH);
+  ConstDetail(S_IWOTH);
+  ConstDetail(S_IXOTH);
+  ConstDetail(S_ISUID);
+  ConstDetail(S_ISGID);
+  ConstDetail(S_ISVTX);
 
   return result;
 }

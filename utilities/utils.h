@@ -5,6 +5,7 @@
 
 #define MemberDetail(x_struct, x_example_struct, x_member) printf(#x_struct "." #x_member "\n\toffset: %ld\n\tsize: %ld\n", offsetof(x_struct, x_member), sizeof(x_example_struct->x_member))
 
-#define ConstDetail(x_const) printf(#x_const "\n\tvalue: %09o\n", x_const)
+#define ConstDetail(x_const) printf("%09o " #x_const "\n", x_const)
+#define ConstUnsupported(x_const) printf("--------- " #x_const "\n")
 
 #endif /* _FS_UTILS_H */
