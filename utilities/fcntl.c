@@ -22,7 +22,7 @@ int main() {
   ConstDetail(O_APPEND);
   ConstDetail(O_DSYNC);
   ConstDetail(O_NONBLOCK);
-  ConstDetail(O_RSYNC);
+//  ConstDetail(O_RSYNC);
   ConstDetail(O_SYNC);
 
   ConstDetail(O_ACCMODE);
