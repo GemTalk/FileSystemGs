@@ -14,7 +14,7 @@ MemoryFileOpeningOptions >> assertUnconfigured [
 	"Assert that the access mode has not yet been configured."
 
 	wasConfigured
-		ifTrue: [self signalLateAccessChange]
+		ifTrue: [self signalImproperOperation: 'Access mode must be set before adding any other options.']
 ]
 
 { #category : 'initializing' }

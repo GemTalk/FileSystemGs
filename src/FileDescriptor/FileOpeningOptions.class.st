@@ -28,9 +28,9 @@ FileOpeningOptions class >> writeOnly [
 
 { #category : 'private' }
 FileOpeningOptions >> improperOperationExceptionClass [
-
 	"GemStone-specific; will need factoring to platform-specific package upon first port."
-	^ ImproperOperation
+
+	^ImproperOperation
 ]
 
 { #category : 'signaling' }
@@ -41,6 +41,6 @@ FileOpeningOptions >> signalImproperOperation: messageText [
 
 { #category : 'private' }
 FileOpeningOptions >> signalLateAccessChange [
-	self improperOperationExceptionClass
-		signal: 'Access mode must be set before adding any other options.'
+
+	self signalImproperOperation: 'Access mode must be set before adding any other options.'
 ]
