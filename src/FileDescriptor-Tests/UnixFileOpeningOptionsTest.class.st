@@ -64,19 +64,6 @@ UnixFileOpeningOptionsTest >> testDefaultCreationMode [
 ]
 
 { #category : 'single option adding tests' }
-UnixFileOpeningOptionsTest >> testDirect [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance direct.
-	self
-		assert: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isDirect;
-		assert: instance flags equals: 8r40000
-]
-
-{ #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDirectory [
 	| instance |
 	instance := LinuxFileOpeningOptions readOnly.
@@ -102,54 +89,6 @@ UnixFileOpeningOptionsTest >> testExclusive [
 		assert: instance flags equals: 8r201
 ]
 
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testLateReadOnly [
-	"Can't add an access mode after other options."
-
-	| instance |
-	instance := LinuxFileOpeningOptions new.
-	instance append.
-	self
-		should: [ instance readOnly ]
-		raise: instance improperOperationExceptionClass
-]
-
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testLateReadWrite [
-	"Can't add an access mode after other options."
-
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	self
-		should: [ instance readWrite ]
-		raise: instance improperOperationExceptionClass
-]
-
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testLateWriteOnly [
-	"Can't add an access mode after other options."
-
-	| instance |
-	instance := LinuxFileOpeningOptions new.
-	instance create.
-	self
-		should: [ instance writeOnly ]
-		raise: instance improperOperationExceptionClass
-]
-
-{ #category : 'single option adding tests' }
-UnixFileOpeningOptionsTest >> testNoAccessTime [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance noAccessTime.
-	self
-		assert: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isNoAccessTime;
-		assert: instance flags equals: 8r1000000
-]
-
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testNoFollow [
 	| instance |
@@ -163,115 +102,6 @@ UnixFileOpeningOptionsTest >> testNoFollow [
 		assert: instance flags equals: 8r400000
 ]
 
-{ #category : 'single option adding tests' }
-UnixFileOpeningOptionsTest >> testPath [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance path.
-	self
-		deny: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isPath;
-		assert: instance flags equals: 8r10000000
-]
-
-{ #category : 'multiple option adding tests' }
-UnixFileOpeningOptionsTest >> testPath1 [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance
-		path;
-		closeOnExec;
-		directory;
-		noFollow;
-		path.
-	self
-		deny: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isPath;
-		assert: instance isCloseOnExec;
-		assert: instance isDirectory;
-		assert: instance isNoFollow;
-		deny: instance isDataSync;
-		assert: instance flags equals: 8r12600000
-]
-
-{ #category : 'multiple option adding tests' }
-UnixFileOpeningOptionsTest >> testPath2 [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance
-		noFollow;
-		directory;
-		closeOnExec;
-		path.
-	self
-		deny: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isPath;
-		assert: instance isCloseOnExec;
-		assert: instance isDirectory;
-		assert: instance isNoFollow;
-		deny: instance isDataSync;
-		assert: instance flags equals: 8r12600000
-]
-
-{ #category : 'multiple option adding tests' }
-UnixFileOpeningOptionsTest >> testPath3 [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance
-		noFollow;
-		path.
-	self
-		deny: instance allowsRead;
-		deny: instance allowsWrite;
-		assert: instance isReadOnly;
-		assert: instance isPath;
-		assert: instance isNoFollow;
-		deny: instance isDataSync;
-		assert: instance flags equals: 8r10400000
-]
-
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testPathPlusWhatever [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	instance path.
-	self
-		should: [ instance append ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance create ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance dataSync ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance direct ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance exclusive ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance noAccessTime ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance sync ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance tmpFile ]
-		raise: instance improperOperationExceptionClass;
-		should: [ instance truncate ]
-		raise: instance improperOperationExceptionClass
-]
-
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testPathPlusWrite [
-	
-	| instance |
-	instance := LinuxFileOpeningOptions readWrite.
-	self
-		should: [ instance path ]
-		raise: instance improperOperationExceptionClass
-]
-
 { #category : 'instance creation tests' }
 UnixFileOpeningOptionsTest >> testReadOnly [
 	| instance |
@@ -283,15 +113,6 @@ UnixFileOpeningOptionsTest >> testReadOnly [
 		deny: instance allowsWrite;
 		assert: instance allowsRead;
 		assert: instance flags equals: 0.
-]
-
-{ #category : 'bad option tests' }
-UnixFileOpeningOptionsTest >> testReadOnlyPlusTmpFile [
-	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
-	self
-		should: [ instance tmpFile ]
-		raise: instance improperOperationExceptionClass
 ]
 
 { #category : 'bad option tests' }
@@ -318,6 +139,37 @@ UnixFileOpeningOptionsTest >> testReadWrite [
 		assert: instance flags equals: 2
 ]
 
+{ #category : 'bad option tests' }
+UnixFileOpeningOptionsTest >> testSettingAccessModeMultipleTimes [
+	"Ensure Access Mode is only set once."
+
+	| instance |
+	instance := LinuxFileOpeningOptions new.
+	instance readOnly.
+	self
+		should: [instance readWrite]
+		raise: ImproperOperation.
+	self
+		should: [instance writeOnly]
+		raise: ImproperOperation.
+	instance := LinuxFileOpeningOptions new.
+	instance readWrite.
+	self
+		should: [instance readOnly]
+		raise: ImproperOperation.
+	self
+		should: [instance writeOnly]
+		raise: ImproperOperation.
+	instance := LinuxFileOpeningOptions new.
+	instance writeOnly.
+	self
+		should: [instance readWrite]
+		raise: ImproperOperation.
+	self
+		should: [instance readOnly]
+		raise: ImproperOperation.
+]
+
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testSync [
 	| instance |
@@ -329,19 +181,6 @@ UnixFileOpeningOptionsTest >> testSync [
 		assert: instance isReadOnly;
 		assert: instance isSync;
 		assert: instance flags equals: 8r4010000
-]
-
-{ #category : 'single option adding tests' }
-UnixFileOpeningOptionsTest >> testTmpFile [
-	| instance |
-	instance := LinuxFileOpeningOptions readWrite.
-	instance tmpFile.
-	self
-		assert: instance allowsRead;
-		assert: instance allowsWrite;
-		assert: instance isReadWrite;
-		assert: instance isTmpFile;
-		assert: instance flags equals: 8r20200002
 ]
 
 { #category : 'single option adding tests' }
