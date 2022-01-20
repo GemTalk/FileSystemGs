@@ -8,43 +8,43 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : 'MacOSPlatform',
-	#superclass : 'UnixPlatform',
+	#name : 'MacOSPlatform_x64',
+	#superclass : 'MacOSPlatform',
 	#category : 'System-Platforms-Mac'
 }
 
 { #category : 'testing' }
-MacOSPlatform class >> isActivePlatform [
+MacOSPlatform_x64 class >> isActivePlatform [
 	^ self isMacOS
 ]
 
 { #category : 'testing' }
-MacOSPlatform class >> isMacOS [
+MacOSPlatform_x64 class >> isMacOS [
 
 	^ self currentPlatformName = 'Darwin'
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> defaultMaximumPathLength [
+MacOSPlatform_x64 >> defaultMaximumPathLength [
 		"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. MacOS default PATH_MAX is 1024.  PATH_MAX is needed to avoid buffer overflow. In case PATH_MAX is not sufficient the method currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size."
 	 ^1024
 
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> diskStoreClass [
+MacOSPlatform_x64 >> diskStoreClass [
 	"Returns the DiskStore subclass associated w/ this platform."
 
 	^MacOSStore
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> family [
+MacOSPlatform_x64 >> family [
 	^#MacOS
 ]
 
 { #category : 'initialization' }
-MacOSPlatform >> initializeLibc [
+MacOSPlatform_x64 >> initializeLibc [
 
 	libcDirent := LibcDirent_macOS new.
 	libcFcntl := LibcFcntl_macOS new.
@@ -54,53 +54,53 @@ MacOSPlatform >> initializeLibc [
 ]
 
 { #category : 'testing' }
-MacOSPlatform >> isMacOS [
+MacOSPlatform_x64 >> isMacOS [
 	^ true
 ]
 
 { #category : 'testing' }
-MacOSPlatform >> isMacOSX [
+MacOSPlatform_x64 >> isMacOSX [
 	^ true
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> libcDirentClass [
+MacOSPlatform_x64 >> libcDirentClass [
 
 	^LibcDirent_macOS
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> libcFcntlClass [
+MacOSPlatform_x64 >> libcFcntlClass [
 
 	^LibcFcntl_macOS
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> libcStatClass [
+MacOSPlatform_x64 >> libcStatClass [
 
 	^LibcStat_macOS
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> libcStdioClass [
+MacOSPlatform_x64 >> libcStdioClass [
 
 	^LibcStdio_macOS
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> libcUnistdClass [
+MacOSPlatform_x64 >> libcUnistdClass [
 
 	^LibcUnistd_macOS
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> lineEnding [
+MacOSPlatform_x64 >> lineEnding [
 
 	^ String lf
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> platformResolverClass [
+MacOSPlatform_x64 >> platformResolverClass [
 	"Returns the PlatformResolver subclass which should be used for this Platform."
 
 	^MacOSResolver

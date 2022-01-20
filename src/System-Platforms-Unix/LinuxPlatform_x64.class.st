@@ -8,13 +8,13 @@ To get the current platform, you can evaluate:
 OSPlatform current.
 "
 Class {
-	#name : 'Linux64Platform',
-	#superclass : 'UnixPlatform',
+	#name : 'LinuxPlatform_x64',
+	#superclass : 'LinuxPlatform',
 	#category : 'System-Platforms-Unix'
 }
 
 { #category : 'testing' }
-Linux64Platform class >> isActivePlatform [
+LinuxPlatform_x64 class >> isActivePlatform [
 	"This version of GemStone is always 64-bit."
 
 	OSPlatform isGemStoneSpecific.
@@ -22,43 +22,43 @@ Linux64Platform class >> isActivePlatform [
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> diskStoreClass [
+LinuxPlatform_x64 >> diskStoreClass [
 	"Returns the DiskStore subclass associated w/ this platform."
 
 	^LinuxStore
 ]
 
 { #category : 'testing' }
-Linux64Platform >> isLinux64 [
+LinuxPlatform_x64 >> isLinux64 [
 	^ true
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> libcDirentClass [
+LinuxPlatform_x64 >> libcDirentClass [
 
 	^LibcDirent_Linux
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> libcFcntlClass [
+LinuxPlatform_x64 >> libcFcntlClass [
 
 	^LibcFcntl_Linux
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> libcStatClass [
+LinuxPlatform_x64 >> libcStatClass [
 
 	^LibcStat_Linux
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> libcStdioClass [
+LinuxPlatform_x64 >> libcStdioClass [
 
 	^LibcStdio_Linux
 ]
 
 { #category : 'accessing' }
-Linux64Platform >> libcUnistdClass [
+LinuxPlatform_x64 >> libcUnistdClass [
 
 	^LibcUnistd_Linux
 ]
