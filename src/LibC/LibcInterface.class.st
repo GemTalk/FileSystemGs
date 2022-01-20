@@ -34,10 +34,13 @@ LibcInterface >> handleErrno: errorNumber [
 
 { #category : 'initialization' }
 LibcInterface >> initialize [
-	library := self wrappedClass new
+
+	library := CLibrary named: self libraryName
 ]
 
 { #category : 'accessing' }
-LibcInterface >> wrappedClass [
-	self subclassResponsibility
+LibcInterface >> libraryName [
+	"Returns the name or path to the library that should be loaded."
+
+	^self subclassResponsibility
 ]

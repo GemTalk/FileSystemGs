@@ -17,8 +17,7 @@ Class {
 LinuxPlatform_x64 class >> isActivePlatform [
 	"This version of GemStone is always 64-bit."
 
-	OSPlatform isGemStoneSpecific.
-	^ self currentPlatformName = 'Linux'
+	^self platformName = 'Linux'
 ]
 
 { #category : 'accessing' }

@@ -26,12 +26,6 @@ LibcStat_macOS >> fstat: fd [
 	^statStruct
 ]
 
-{ #category : 'initialization' }
-LibcStat_macOS >> initialize [
-
-	library := CLibrary named: self libraryName
-]
-
 { #category : 'accessing' }
 LibcStat_macOS >> libraryName [
 	"Returns the name of the C library that should be used."
@@ -49,7 +43,7 @@ LibcStat_macOS >> mkdir: pathString [
 				library: library
 				name: 'mkdir'
 				result: #'int32'
-				args: #(#'const char*' #'uint16')
+				args: #(#'const char*' #'uint16') "Should this be unint32?"
 				varArgsAfter: -1].
 	errnoHolder := { 0 }.
 	status := mkdir
@@ -80,10 +74,4 @@ LibcStat_macOS >> stat: pathString [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
-]
-
-{ #category : 'accessing' }
-LibcStat_macOS >> wrappedClass [
-
-	^_libc_stat_macOS
 ]

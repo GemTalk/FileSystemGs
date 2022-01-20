@@ -23,20 +23,9 @@ OSPlatform class >> cacheKey [
 OSPlatform class >> current [
 	"Answer the instance for the currently executing OS platform."
 
-	| cached |
-	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
-		ifNil: [ 
-			cached := self determineActivePlatform new initialize.
-			SessionTemps current at: self cacheKey put: cached ].
-	^ cached
-]
-
-{ #category : 'system attributes' }
-OSPlatform class >> currentPlatformName [
-	"Return the name of the platform we're running on"
-
-	OSPlatform isGemStoneSpecific.
-	^ System gemVersionAt: 'osName'
+	^SessionTemps current
+		at: self cacheKey
+		ifAbsent: [self initializeCurrent]
 ]
 
 { #category : 'private' }
@@ -47,16 +36,34 @@ OSPlatform class >> determineActivePlatform [
 
 ]
 
+{ #category : 'accessing' }
+OSPlatform class >> initializeCurrent [
+	"initialize the current singleton"
+
+	| cached |
+	cached := self determineActivePlatform new initialize.
+	SessionTemps current at: self cacheKey put: cached.
+	^cached
+]
+
 { #category : 'private' }
 OSPlatform class >> isActivePlatform [
 	"Answer whether the receiver is the active platform"
 	^false
 ]
 
-{ #category : 'porting' }
-OSPlatform class >> isGemStoneSpecific [
-	"Methods that send this message will need to be refactored when 
-	porting from GemStone to another Smalltalk dialect."
+{ #category : 'system attributes' }
+OSPlatform class >> platformArchitecture [
+	"Return the platform architecture we're running on"
+
+	^System gemVersionAt: 'cpuArchitecture'
+]
+
+{ #category : 'system attributes' }
+OSPlatform class >> platformName [
+	"Return the name of the platform we're running on"
+
+	^System gemVersionAt: 'osName'
 ]
 
 { #category : 'accessing' }
@@ -143,7 +150,7 @@ OSPlatform >> lineEnding [
 OSPlatform >> name [
 	"Return the name of the platform we're running on"
 
-	^ self class currentPlatformName
+	^ self class platformName
 ]
 
 { #category : 'compatbility' }

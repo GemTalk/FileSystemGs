@@ -21,7 +21,7 @@ MacOSPlatform_x64 class >> isActivePlatform [
 { #category : 'testing' }
 MacOSPlatform_x64 class >> isMacOS [
 
-	^ self currentPlatformName = 'Darwin'
+	^ self platformName = 'Darwin'
 ]
 
 { #category : 'accessing' }
@@ -96,7 +96,7 @@ MacOSPlatform_x64 >> libcUnistdClass [
 { #category : 'accessing' }
 MacOSPlatform_x64 >> lineEnding [
 
-	^ String lf
+	^String lf
 ]
 
 { #category : 'accessing' }

@@ -4,33 +4,6 @@ Class {
 	#category : 'LibC'
 }
 
-{ #category : 'functions' }
-LibcDirent_macOS >> closeDirectoryStream: dirPtr [
-
-	| errnoHolder result |
-	closedir == nil
-		ifTrue:
-			[closedir := CCallout
-				library: library
-				name: 'closedir'
-				result: #'int32'
-				args: #(#'ptr')
-				varArgsAfter: -1].
-	errnoHolder := { 0 }.
-	result := closedir
-		callWith: { dirPtr }
-		errno: errnoHolder.
-	result == -1
-		ifTrue: [self handleErrno: errnoHolder first].
-	^result
-]
-
-{ #category : 'initialization' }
-LibcDirent_macOS >> initialize [
-
-	library := CLibrary named: self libraryName
-]
-
 { #category : 'accessing' }
 LibcDirent_macOS >> libraryName [
 	"Returns the name of the C library that should be used."
@@ -85,10 +58,4 @@ LibcDirent_macOS >> readFromDirectoryStream: dirPointer [
 	^isNull
 		ifTrue: [nil]
 		ifFalse: [DirentStruct_macOS forBytes: (CByteArray fromCPointer: direntPtr numBytes: DirentStruct_macOS structSize)]
-]
-
-{ #category : 'accessing' }
-LibcDirent_macOS >> wrappedClass [
-
-	^_libc_dirent_macOS
 ]
