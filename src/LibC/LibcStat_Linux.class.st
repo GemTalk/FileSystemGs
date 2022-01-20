@@ -16,7 +16,7 @@ LibcStat_Linux >> fstat: fd [
 				result: #'int32'
 				args: #(#'int32' #'int32' #'ptr')
 				varArgsAfter: -1].
-	statStruct := StatStruct_macOS new.
+	statStruct := StatStruct_Linux new.
 	errnoHolder := { 0 }.
 	status := fstat
 		callWith: { 0 "_STAT_VER". fd. statStruct bytes. }
@@ -66,7 +66,7 @@ LibcStat_Linux >> stat: pathString [
 				result: #'int32'
 				args: #(#'int32' #'const char*' #'ptr')
 				varArgsAfter: -1].
-	statStruct := StatStruct_macOS new.
+	statStruct := StatStruct_Linux new.
 	errnoHolder := { 0 }.
 	status := stat
 		callWith: { 0 "_STAT_VER". pathString encodeAsUTF8. statStruct bytes. }
