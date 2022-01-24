@@ -5,13 +5,6 @@ Class {
 }
 
 { #category : 'accessing' }
-StatStruct_Linux class >> structSize [
-	"Returns the size in bytes of the C struct."
-
-	^144
-]
-
-{ #category : 'accessing' }
 StatStruct_Linux >> accessTime [
 
 	^TimespecStruct forBytes: (self st_atim)
@@ -120,7 +113,7 @@ StatStruct_Linux >> st_atim [
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_blksize [
 
-	^bytes uint64At: 56
+	self subclassResponsibility
 ]
 
 { #category : 'private-accessing' }
@@ -144,7 +137,7 @@ StatStruct_Linux >> st_dev [
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_gid [
 
-	^bytes uint32At: 32
+	self subclassResponsibility
 ]
 
 { #category : 'private-accessing' }
@@ -156,7 +149,7 @@ StatStruct_Linux >> st_ino [
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_mode [
 
-	^bytes uint32At: 24
+	self subclassResponsibility
 ]
 
 { #category : 'private-accessing' }
@@ -168,13 +161,13 @@ StatStruct_Linux >> st_mtim [
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_nlink [
 
-	^bytes uint64At: 16
+	self subclassResponsibility
 ]
 
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_rdev [
 
-	^bytes uint64At: 40
+	self subclassResponsibility
 ]
 
 { #category : 'private-accessing' }
@@ -186,5 +179,5 @@ StatStruct_Linux >> st_size [
 { #category : 'private-accessing' }
 StatStruct_Linux >> st_uid [
 
-	^bytes uint32At: 28
+	self subclassResponsibility
 ]

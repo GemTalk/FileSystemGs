@@ -12,11 +12,11 @@ LibcStat_Linux >> fstat: fd [
 		ifTrue:
 			[fstat := CCallout
 				library: library
-				name: '__fxstat'
+				name: self fstatName
 				result: #'int32'
 				args: #(#'int32' #'int32' #'ptr')
 				varArgsAfter: -1].
-	statStruct := StatStruct_Linux new.
+	statStruct := self statStructClass new.
 	errnoHolder := { 0 }.
 	status := fstat
 		callWith: { 0 "_STAT_VER". fd. statStruct bytes. }
@@ -24,6 +24,13 @@ LibcStat_Linux >> fstat: fd [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
+]
+
+{ #category : 'accessing' }
+LibcStat_Linux >> fstatName [
+	"Returns the name of the fstat function"
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -62,11 +69,11 @@ LibcStat_Linux >> stat: pathString [
 		ifTrue:
 			[stat := CCallout
 				library: library
-				name: '__xstat'
+				name: self statName
 				result: #'int32'
 				args: #(#'int32' #'const char*' #'ptr')
 				varArgsAfter: -1].
-	statStruct := StatStruct_Linux new.
+	statStruct := self statStructClass new.
 	errnoHolder := { 0 }.
 	status := stat
 		callWith: { 0 "_STAT_VER". pathString encodeAsUTF8. statStruct bytes. }
@@ -74,4 +81,18 @@ LibcStat_Linux >> stat: pathString [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
+]
+
+{ #category : 'accessing' }
+LibcStat_Linux >> statName [
+	"Returns the name of the stat function"
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+LibcStat_Linux >> statStructClass [
+	"Returns the class that should be used as StatStruct."
+
+	self subclassResponsibility
 ]

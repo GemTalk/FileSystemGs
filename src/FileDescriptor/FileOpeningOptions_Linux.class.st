@@ -18,111 +18,111 @@ No API is provided for clearing bits in flags -- a new instance starts with them
 you should set only the ones you want set.
 "
 Class {
-	#name : 'LinuxFileOpeningOptions',
+	#name : 'FileOpeningOptions_Linux',
 	#superclass : 'UnixFileOpeningOptions',
 	#category : 'FileDescriptor'
 }
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_ACCMODE [
+FileOpeningOptions_Linux >> O_ACCMODE [
 	"Access mode"
 
 	^8r000000003
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_APPEND [
+FileOpeningOptions_Linux >> O_APPEND [
 	"Append to the file"
 
 	^8r000002000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_CLOEXEC [
+FileOpeningOptions_Linux >> O_CLOEXEC [
 	"Close file descriptor when calling any exec family function"
 
 	^8r002000000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_CREAT [
+FileOpeningOptions_Linux >> O_CREAT [
 	"Create file if it does not exist"
 
 	^8r000000100
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_DIRECTORY [
+FileOpeningOptions_Linux >> O_DIRECTORY [
 	"Fail opening a non-directory file."
 
-	^8r000200000
+	self subclassResponsibility
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_DSYNC [
+FileOpeningOptions_Linux >> O_DSYNC [
 	"Synchronized writes"
 
 	^8r000010000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_EXCL [
+FileOpeningOptions_Linux >> O_EXCL [
 	"Exclusive use flag"
 
 	^8r000000200
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_NOCTTY [
+FileOpeningOptions_Linux >> O_NOCTTY [
 	"Don't assign a controlling terminal"
 
 	^8r000000400
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_NOFOLLOW [
+FileOpeningOptions_Linux >> O_NOFOLLOW [
 	"Don't follow symlinks"
 
-	^8r000400000
+	self subclassResponsibility
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_NONBLOCK [
+FileOpeningOptions_Linux >> O_NONBLOCK [
 	"Non-blocking mode"
 
 	^8r000004000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_RDONLY [
+FileOpeningOptions_Linux >> O_RDONLY [
 	"Read-only mode"
 
 	^8r000000000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_RDWR [
+FileOpeningOptions_Linux >> O_RDWR [
 	"Read-write mode"
 
 	^8r000000002
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_SYNC [
+FileOpeningOptions_Linux >> O_SYNC [
 	"Synchronized writes"
 
 	^8r004010000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_TRUNC [
+FileOpeningOptions_Linux >> O_TRUNC [
 	"Truncate the file"
 
 	^8r000001000
 ]
 
 { #category : 'private-constants' }
-LinuxFileOpeningOptions >> O_WRONLY [
+FileOpeningOptions_Linux >> O_WRONLY [
 	"Write-only mode"
 
 	^8r000000001

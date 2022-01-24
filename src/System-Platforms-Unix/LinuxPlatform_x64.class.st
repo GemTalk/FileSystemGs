@@ -17,14 +17,14 @@ Class {
 LinuxPlatform_x64 class >> isActivePlatform [
 	"This version of GemStone is always 64-bit."
 
-	^self platformName = 'Linux'
+	^self platformName = 'Linux' and: [self platformArchitecture = 'x86-64']
 ]
 
 { #category : 'accessing' }
 LinuxPlatform_x64 >> diskStoreClass [
 	"Returns the DiskStore subclass associated w/ this platform."
 
-	^LinuxStore
+	^LinuxStore_x64
 ]
 
 { #category : 'testing' }
@@ -33,31 +33,7 @@ LinuxPlatform_x64 >> isLinux64 [
 ]
 
 { #category : 'accessing' }
-LinuxPlatform_x64 >> libcDirentClass [
-
-	^LibcDirent_Linux
-]
-
-{ #category : 'accessing' }
-LinuxPlatform_x64 >> libcFcntlClass [
-
-	^LibcFcntl_Linux
-]
-
-{ #category : 'accessing' }
 LinuxPlatform_x64 >> libcStatClass [
 
-	^LibcStat_Linux
-]
-
-{ #category : 'accessing' }
-LinuxPlatform_x64 >> libcStdioClass [
-
-	^LibcStdio_Linux
-]
-
-{ #category : 'accessing' }
-LinuxPlatform_x64 >> libcUnistdClass [
-
-	^LibcUnistd_Linux
+	^LibcStat_Linux_x64
 ]

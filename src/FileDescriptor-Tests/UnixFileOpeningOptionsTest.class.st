@@ -7,7 +7,7 @@ Class {
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testAppend [
 	| instance |
-	instance := LinuxFileOpeningOptions writeOnly.
+	instance := FileOpeningOptions_Linux_x64 writeOnly.
 	instance append.
 	self
 		assert: instance allowsWrite;
@@ -19,7 +19,7 @@ UnixFileOpeningOptionsTest >> testAppend [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testCloseOnExec [
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	instance closeOnExec.
 	self
 		assert: instance allowsRead;
@@ -31,7 +31,7 @@ UnixFileOpeningOptionsTest >> testCloseOnExec [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testCreate [
 	| instance |
-	instance := LinuxFileOpeningOptions readWrite.
+	instance := FileOpeningOptions_Linux_x64 readWrite.
 	instance create.
 	self
 		assert: instance allowsRead;
@@ -44,7 +44,7 @@ UnixFileOpeningOptionsTest >> testCreate [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDataSync [
 	| instance |
-	instance := LinuxFileOpeningOptions writeOnly.
+	instance := FileOpeningOptions_Linux_x64 writeOnly.
 	instance dataSync.
 	self
 		deny: instance allowsRead;
@@ -59,14 +59,14 @@ UnixFileOpeningOptionsTest >> testDefaultCreationMode [
 	"Mode that is given when no mode has been explicitly specified."
 
 	| instance |
-	instance := LinuxFileOpeningOptions writeOnly.
+	instance := FileOpeningOptions_Linux_x64 writeOnly.
 	self assert: instance modeBits equals: 8r666
 ]
 
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testDirectory [
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	instance directory.
 	self
 		assert: instance allowsRead;
@@ -79,7 +79,7 @@ UnixFileOpeningOptionsTest >> testDirectory [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testExclusive [
 	| instance |
-	instance := LinuxFileOpeningOptions writeOnly.
+	instance := FileOpeningOptions_Linux_x64 writeOnly.
 	instance exclusive.
 	self
 		deny: instance allowsRead;
@@ -92,7 +92,7 @@ UnixFileOpeningOptionsTest >> testExclusive [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testNoFollow [
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	instance noFollow.
 	self
 		assert: instance allowsRead;
@@ -105,7 +105,7 @@ UnixFileOpeningOptionsTest >> testNoFollow [
 { #category : 'instance creation tests' }
 UnixFileOpeningOptionsTest >> testReadOnly [
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	self
 		assert: instance isReadOnly;
 		deny: instance isWriteOnly;
@@ -120,7 +120,7 @@ UnixFileOpeningOptionsTest >> testReadOnlyPlusTruncate [
 	"Undefined behavior, prohibit it."
 
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	self
 		should: [ instance truncate ]
 		raise: instance improperOperationExceptionClass
@@ -129,7 +129,7 @@ UnixFileOpeningOptionsTest >> testReadOnlyPlusTruncate [
 { #category : 'instance creation tests' }
 UnixFileOpeningOptionsTest >> testReadWrite [
 	| instance |
-	instance := LinuxFileOpeningOptions readWrite.
+	instance := FileOpeningOptions_Linux_x64 readWrite.
 	self
 		deny: instance isWriteOnly;
 		assert: instance allowsWrite;
@@ -144,7 +144,7 @@ UnixFileOpeningOptionsTest >> testSettingAccessModeMultipleTimes [
 	"Ensure Access Mode is only set once."
 
 	| instance |
-	instance := LinuxFileOpeningOptions new.
+	instance := FileOpeningOptions_Linux_x64 new.
 	instance readOnly.
 	self
 		should: [instance readWrite]
@@ -152,7 +152,7 @@ UnixFileOpeningOptionsTest >> testSettingAccessModeMultipleTimes [
 	self
 		should: [instance writeOnly]
 		raise: ImproperOperation.
-	instance := LinuxFileOpeningOptions new.
+	instance := FileOpeningOptions_Linux_x64 new.
 	instance readWrite.
 	self
 		should: [instance readOnly]
@@ -160,7 +160,7 @@ UnixFileOpeningOptionsTest >> testSettingAccessModeMultipleTimes [
 	self
 		should: [instance writeOnly]
 		raise: ImproperOperation.
-	instance := LinuxFileOpeningOptions new.
+	instance := FileOpeningOptions_Linux_x64 new.
 	instance writeOnly.
 	self
 		should: [instance readWrite]
@@ -173,7 +173,7 @@ UnixFileOpeningOptionsTest >> testSettingAccessModeMultipleTimes [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testSync [
 	| instance |
-	instance := LinuxFileOpeningOptions readOnly.
+	instance := FileOpeningOptions_Linux_x64 readOnly.
 	instance sync.
 	self
 		assert: instance allowsRead;
@@ -186,7 +186,7 @@ UnixFileOpeningOptionsTest >> testSync [
 { #category : 'single option adding tests' }
 UnixFileOpeningOptionsTest >> testTruncate [
 	| instance |
-	instance := LinuxFileOpeningOptions readWrite.
+	instance := FileOpeningOptions_Linux_x64 readWrite.
 	instance truncate.
 	self
 		assert: instance allowsRead;
@@ -199,7 +199,7 @@ UnixFileOpeningOptionsTest >> testTruncate [
 { #category : 'instance creation tests' }
 UnixFileOpeningOptionsTest >> testWriteOnly [
 	| instance |
-	instance := LinuxFileOpeningOptions writeOnly.
+	instance := FileOpeningOptions_Linux_x64 writeOnly.
 	self
 		assert: instance isWriteOnly;
 		assert: instance allowsWrite;
