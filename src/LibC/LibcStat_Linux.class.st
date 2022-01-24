@@ -12,7 +12,7 @@ LibcStat_Linux >> fstat: fd [
 		ifTrue:
 			[fstat := CCallout
 				library: library
-				name: self fstatName
+				name: '__fxstat'
 				result: #'int32'
 				args: #(#'int32' #'int32' #'ptr')
 				varArgsAfter: -1].
@@ -24,13 +24,6 @@ LibcStat_Linux >> fstat: fd [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
-]
-
-{ #category : 'accessing' }
-LibcStat_Linux >> fstatName [
-	"Returns the name of the fstat function"
-
-	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -69,7 +62,7 @@ LibcStat_Linux >> stat: pathString [
 		ifTrue:
 			[stat := CCallout
 				library: library
-				name: self statName
+				name: '__xstat'
 				result: #'int32'
 				args: #(#'int32' #'const char*' #'ptr')
 				varArgsAfter: -1].
@@ -81,13 +74,6 @@ LibcStat_Linux >> stat: pathString [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
-]
-
-{ #category : 'accessing' }
-LibcStat_Linux >> statName [
-	"Returns the name of the stat function"
-
-	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
