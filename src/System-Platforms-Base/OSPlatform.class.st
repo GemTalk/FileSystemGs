@@ -67,6 +67,13 @@ OSPlatform class >> platformName [
 ]
 
 { #category : 'accessing' }
+OSPlatform >> architecture [
+	"Returns the name of the current cpu architecture"
+
+	^self class platformArchitecture
+]
+
+{ #category : 'accessing' }
 OSPlatform >> current [
 	^ self
 ]

@@ -19,7 +19,7 @@ LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
 		ifTrue:
 			[opendir := CCallout
 				library: library
-				name: 'opendir$INODE64'
+				name: self opendirName
 				result: #'ptr'
 				args: #(#'const char*' )
 				varArgsAfter: -1].
@@ -30,6 +30,20 @@ LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
 	result memoryAddress == 0 "NULL"
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
+]
+
+{ #category : 'accessing' }
+LibcDirent_macOS >> opendirName [
+	"Returns the name of the opendir function"
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+LibcDirent_macOS >> readdirName [
+	"Returns the name of the readdir function"
+
+	self subclassResponsibility
 ]
 
 { #category : 'functions' }
@@ -43,7 +57,7 @@ LibcDirent_macOS >> readFromDirectoryStream: dirPointer [
 		ifTrue:
 			[readdir := CCallout
 				library: library
-				name: 'readdir$INODE64'
+				name: self readdirName
 				result: #'ptr'
 				args: #(#'ptr')
 				varArgsAfter: -1].

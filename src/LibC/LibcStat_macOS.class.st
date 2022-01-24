@@ -12,7 +12,7 @@ LibcStat_macOS >> fstat: fd [
 		ifTrue:
 			[fstat := CCallout
 				library: library
-				name: 'fstat$INODE64'
+				name: self fstatName
 				result: #'int32'
 				args: #(#'int32' #'ptr')
 				varArgsAfter: -1].
@@ -24,6 +24,13 @@ LibcStat_macOS >> fstat: fd [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
+]
+
+{ #category : 'accessing' }
+LibcStat_macOS >> fstatName [
+	"Returns the name of the fstat function"
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -62,7 +69,7 @@ LibcStat_macOS >> stat: pathString [
 		ifTrue:
 			[stat := CCallout
 				library: library
-				name: 'stat$INODE64'
+				name: self statName
 				result: #'int32'
 				args: #(#'const char*' #'ptr')
 				varArgsAfter: -1].
@@ -74,4 +81,11 @@ LibcStat_macOS >> stat: pathString [
 	status == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^statStruct
+]
+
+{ #category : 'accessing' }
+LibcStat_macOS >> statName [
+	"Returns the name of the stat function"
+
+	self subclassResponsibility
 ]
