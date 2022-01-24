@@ -4,6 +4,12 @@ Class {
 	#category : 'System-Platforms-Mac'
 }
 
+{ #category : 'testing' }
+MacOSPlatform_arm64 class >> isActivePlatform [
+
+	^self isMacOS and: [self platformArchitecture = 'arm64']
+]
+
 { #category : 'accessing' }
 MacOSPlatform_arm64 >> libcDirentClass [
 

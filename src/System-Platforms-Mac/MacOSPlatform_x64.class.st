@@ -15,13 +15,8 @@ Class {
 
 { #category : 'testing' }
 MacOSPlatform_x64 class >> isActivePlatform [
-	^ self isMacOS
-]
 
-{ #category : 'testing' }
-MacOSPlatform_x64 class >> isMacOS [
-
-	^ self platformName = 'Darwin'
+	^self isMacOS and: [self platformArchitecture = 'x86-64']
 ]
 
 { #category : 'accessing' }
