@@ -13,6 +13,9 @@ LibcDirent_macOS >> libraryName [
 
 { #category : 'functions' }
 LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
+	"This result is not automatically freed.
+	The caller is expected to ensure
+	#closeDirectoryStream: is always called."
 
 	| result errnoHolder |
 	opendir == nil
@@ -27,7 +30,7 @@ LibcDirent_macOS >> openDirectoryStreamWithPath: pathString [
 	result := opendir
 		callWith: { pathString encodeAsUTF8 }
 		errno: errnoHolder.
-	result memoryAddress == 0 "NULL"
+	result isNull
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
 ]
@@ -65,7 +68,7 @@ LibcDirent_macOS >> readFromDirectoryStream: dirPointer [
 	direntPtr := readdir
 		callWith: { dirPointer }
 		errno: errnoHolder.
-	isNull := direntPtr memoryAddress == 0.
+	isNull := direntPtr isNull.
 	errno := errnoHolder first.
 	isNull & (errno ~~ 0)
 		ifTrue: [self handleErrno: errno].

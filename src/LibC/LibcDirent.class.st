@@ -32,6 +32,7 @@ LibcDirent >> closeDirectoryStream: dirPtr [
 
 { #category : 'functions' }
 LibcDirent >> openDirectoryStreamWithPath: pathString [
+	"See warnings in subclasses"
 
 	self subclassResponsibility
 ]
