@@ -18,6 +18,7 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'id',
+		'fd',
 		'registryEntry',
 		'libcUnistd'
 	],
@@ -28,10 +29,10 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> id: fileDescriptorInteger [
+UnixFileDescriptor class >> fd: fileDescriptorInteger [
 
 	^super new initialize
-		id: fileDescriptorInteger;
+		fd: fileDescriptorInteger;
 		yourself
 ]
 
@@ -67,7 +68,7 @@ UnixFileDescriptor class >> stdout [
 { #category : 'asserting' }
 UnixFileDescriptor >> assertUninitialized [
 
-	id ifNotNil: [UnixFileDescriptorAlreadyInitialized signal]
+	fd ifNotNil: [UnixFileDescriptorAlreadyInitialized signal]
 ]
 
 { #category : 'private' }
@@ -75,8 +76,7 @@ UnixFileDescriptor >> becomeStderr [
 	"Assume stderr is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stderr when I'm garbage collected."
 
-	self assertUninitialized.
-	id := 2
+	self fd: 2
 ]
 
 { #category : 'private' }
@@ -84,8 +84,7 @@ UnixFileDescriptor >> becomeStdin [
 	"Assume stdin is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdin when I'm garbage collected."
 
-	self assertUninitialized.
-	id := 0
+	self fd: 0
 ]
 
 { #category : 'private' }
@@ -93,8 +92,7 @@ UnixFileDescriptor >> becomeStdout [
 	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdout when I'm garbage collected."
 
-	self assertUninitialized.
-	id := 1
+	self fd: 1
 ]
 
 { #category : 'accessing' }
@@ -133,6 +131,23 @@ UnixFileDescriptor >> ensureClosed [
 	self close
 ]
 
+{ #category : 'private' }
+UnixFileDescriptor >> fd [
+
+	fd
+		ifNil: [ 
+			ImproperOperation
+				signal: 'Attempt to use a closed or otherwise invalid file descriptor' ].
+	^fd
+]
+
+{ #category : 'private' }
+UnixFileDescriptor >> fd: aFileDescriptorInteger [
+	
+	self assertUninitialized.
+	fd := aFileDescriptorInteger
+]
+
 { #category : 'finalization' }
 UnixFileDescriptor >> free [
 	"Sent by the ExternalObjectRegistry when there are no other
@@ -145,22 +160,6 @@ UnixFileDescriptor >> free [
 		ifFalse: [ self close ]
 ]
 
-{ #category : 'private' }
-UnixFileDescriptor >> id [
-	id
-		ifNil: [ 
-			ImproperOperation
-				signal: 'Attempt to use a closed or otherwise invalid file descriptor' ].
-	^ id
-]
-
-{ #category : 'private' }
-UnixFileDescriptor >> id: anInteger [
-	
-	self assertUninitialized.
-	id := anInteger
-]
-
 { #category : 'initialization' }
 UnixFileDescriptor >> initialize [
 
@@ -171,7 +170,7 @@ UnixFileDescriptor >> initialize [
 UnixFileDescriptor >> isOpen [
 	"Returns true if the receiver is open."
 
-	^id notNil
+	^fd notNil
 ]
 
 { #category : 'positioning' }
@@ -180,7 +179,7 @@ UnixFileDescriptor >> position [
 	| library |
 	library := OSPlatform current libcUnistd.
 	^library
-		lseek: id
+		lseek: fd
 		offset: 0
 		whence: 8r1. "SEEK_CUR"
 ]
@@ -196,23 +195,13 @@ UnixFileDescriptor >> privateClose [
 	EINTR is, according to some references, never returned on Linux. But if it is, 
 	it should be ignored, since the file descriptor has already been freed."
 
-	| cachedId |
-	id ifNil: [ ^ self ].
-	cachedId := id.
-
-	"[ 
-	[ libcUnistd fdatasyncFd: cachedId ]
-		on: EBADF
-		do: [ ^ self ] ]
-		on: EROFS , EINVAL
-		do: [  ]."
-	id := nil.
-	[ 
-	[ libcUnistd closeFd: cachedId ]
-		on: EBADF
-		do: [ ^ self ] ]
-		on: EINTR
-		do: [  ]
+	| fdToClose |
+	fd ifNil: [ ^ self ].
+	fdToClose := fd.
+	fd := nil.
+	[ libcUnistd closeFd: fdToClose ]
+		on: EBADF , EINTR
+		do: [ :ex | ex return ]
 ]
 
 { #category : 'private' }
@@ -223,7 +212,7 @@ UnixFileDescriptor >> read: count [
 	| buffer numBytesRead |
 	buffer := CByteArray gcMalloc: count.
 	numBytesRead := libcUnistd
-		readFromFileDescriptor: id
+		readFromFileDescriptor: fd
 		toBuffer: buffer
 		count: buffer size.
   numBytesRead == 0
@@ -239,7 +228,7 @@ UnixFileDescriptor >> setToEnd [
 	| library |
 	library := OSPlatform current libcUnistd.
 	^library
-		lseek: id
+		lseek: fd
 		offset: 0
 		whence: 8r2. "SEEK_END"
 ]
@@ -253,7 +242,7 @@ UnixFileDescriptor >> size [
 { #category : 'private' }
 UnixFileDescriptor >> stat [
 
-	^OSPlatform current libcStat fstat: id
+	^OSPlatform current libcStat fstat: fd
 ]
 
 { #category : 'public' }
@@ -263,7 +252,7 @@ UnixFileDescriptor >> truncateTo: length [
 	| library |
 	library := OSPlatform current libcUnistd.
 	^library
-		truncate: id
+		truncate: fd
 		to: length
 ]
 
@@ -277,7 +266,7 @@ UnixFileDescriptor >> write: aByteArray [
 	aByteArray _validateInstanceOf: ByteArray.
 	buffer := CByteArray withAll: aByteArray nullTerminate: false.
 	^libcUnistd
-		writeToFileDescriptor: id
+		writeToFileDescriptor: fd
 		fromBuffer: buffer
 		count: buffer size
 ]

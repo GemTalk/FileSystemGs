@@ -248,11 +248,6 @@ DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
 ]
 
-{ #category : 'accessing' }
-DiskStore >> handleClass [
-	^ UnixFileDescriptor
-]
-
 { #category : 'comparing' }
 DiskStore >> hash [
 	^ self species hash
@@ -361,7 +356,7 @@ options: options [
 				parent exists
 					ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
 					ifFalse: [self signalDirectoryDoesNotExist: parent]].
-	^UnixFileDescriptor id: fd
+	^UnixFileDescriptor fd: fd
 ]
 
 { #category : 'public' }

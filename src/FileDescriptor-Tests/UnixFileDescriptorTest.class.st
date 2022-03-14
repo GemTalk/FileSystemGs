@@ -32,7 +32,7 @@ UnixFileDescriptorTest >> testOpenStderr [
 
 	self
 		assert: stderr class equals: UnixFileDescriptor;
-		assert: stderr id equals: 2
+		assert: stderr fd equals: 2
 ]
 
 { #category : 'BasicTests' }
@@ -40,7 +40,7 @@ UnixFileDescriptorTest >> testOpenStdin [
 
 	self
 		assert: stdin class equals: UnixFileDescriptor;
-		assert: stdin id equals: 0
+		assert: stdin fd equals: 0
 ]
 
 { #category : 'BasicTests' }
@@ -48,7 +48,7 @@ UnixFileDescriptorTest >> testOpenStdout [
 
 	self
 		assert: stdout class equals: UnixFileDescriptor;
-		assert: stdout id equals: 1
+		assert: stdout fd equals: 1
 ]
 
 { #category : 'BasicTests' }
@@ -56,7 +56,7 @@ UnixFileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |
 	id := OSPlatform current libcFcntlClass new openPath: '/usr/bin/env' flags: 0 mode: 0.
-	fd := UnixFileDescriptor id: id.
+	fd := UnixFileDescriptor fd: id.
 	[bytes := fd read: 4] ensure: [fd close].
 	self
 		assert: bytes size

@@ -238,11 +238,6 @@ MemoryStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'memory://'
 ]
 
-{ #category : 'accessing' }
-MemoryStore >> handleClass [
-	^ MemoryHandle 
-]
-
 { #category : 'initialization' }
 MemoryStore >> initialize [ 
 	root := MemoryFileSystemDirectory new
