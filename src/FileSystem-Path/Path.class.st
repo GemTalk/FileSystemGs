@@ -259,6 +259,12 @@ Path >> asResolvedBy: anObject [
 	^ anObject resolvePath: self
 ]
 
+{ #category : 'converting' }
+Path >> asString [
+
+	^self printString
+]
+
 { #category : 'accessing' }
 Path >> base [
 	^self basenameWithoutExtension 
