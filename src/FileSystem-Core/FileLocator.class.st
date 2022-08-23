@@ -147,12 +147,10 @@ FileLocator class >> preferences [
 
 { #category : 'accessing' }
 FileLocator class >> resolver [
-	self fixMe.
-	^ " SessionTemps current at: #FileLocator_Resolver ifAbsentPut: ["
-		InteractiveResolver new
-			addResolver: SystemResolver new;
-			addResolver: PlatformResolver forCurrentPlatform;
-			yourself "]"
+
+	^SystemResolver new
+		addResolver: PlatformResolver forCurrentPlatform;
+		yourself
 ]
 
 { #category : 'origins' }
