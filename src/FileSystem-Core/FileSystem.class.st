@@ -20,6 +20,13 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
+{ #category : 'instance creation' }
+FileSystem class >> store: aStore [
+	"Create an instance of the appropriate FileSystem subclass."
+
+	^aStore fileSystemClass store: aStore
+]
+
 { #category : 'navigating' }
 FileSystem >> * anObject [
 	"Return a relative reference."

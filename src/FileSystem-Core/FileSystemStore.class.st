@@ -149,6 +149,13 @@ FileSystemStore >> filename: aByteString matches: aByteString2 [
 	^ aByteString = aByteString2
 ]
 
+{ #category : 'accessing' }
+FileSystemStore >> fileSystemClass [
+	"Defines the correct subclass of FileSystem to use with this store."
+
+	^self subclassResponsibility
+]
+
 { #category : 'initialization' }
 FileSystemStore >> initialize [
 ]

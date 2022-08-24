@@ -233,6 +233,13 @@ MemoryStore >> exists: aPath [
 		ifAbsent: [false]
 ]
 
+{ #category : 'accessing' }
+MemoryStore >> fileSystemClass [
+	"Defines the correct subclass of FileSystem to use with this store."
+
+	^MemoryFileSystem
+]
+
 { #category : 'printing' }
 MemoryStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'memory://'

@@ -1,8 +1,14 @@
+"
+DiskFileSystem is not a standard class in FileSystem. GemStone's implementation introduces this class to avoid committing platform-specific objects like LinuxStore_aarch64 instances. Instead, DiskFileSystem will lazily recreate its store. This class avoids committing any of its instance variables by marking itself as DbTransient.
+"
 Class {
 	#name : 'DiskFileSystem',
 	#superclass : 'FileSystem',
 	#instVars : [
 		'store'
+	],
+	#gs_options : [
+		'dbTransient'
 	],
 	#category : 'FileSystem-Disk'
 }

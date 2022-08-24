@@ -243,6 +243,13 @@ DiskStore >> fileOpeningOptionsClass [
 	^self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+DiskStore >> fileSystemClass [
+	"Defines the correct subclass of FileSystem to use with this store."
+
+	^DiskFileSystem
+]
+
 { #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '

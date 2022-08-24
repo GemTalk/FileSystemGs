@@ -1,3 +1,6 @@
+"
+MemoryFileSystem is not a standard class in FileSystem. GemStone's implementation introduces this class as a corallary to DiskFileSystem. There are no special options specified for this class.
+"
 Class {
 	#name : 'MemoryFileSystem',
 	#superclass : 'FileSystem',
