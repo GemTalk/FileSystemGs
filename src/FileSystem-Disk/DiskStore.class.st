@@ -25,7 +25,8 @@ DiskStore class >> cacheKey [
 
 { #category : 'current' }
 DiskStore class >> createDefault [
-	^ self new
+
+	^self activeClass new
 ]
 
 { #category : 'current' }
@@ -35,12 +36,10 @@ DiskStore class >> current [
 
 { #category : 'current' }
 DiskStore class >> currentFileSystem [
-	| cached |
-	(cached := SessionTemps current at: self cacheKey ifAbsent: [  ])
-		ifNil: [ 
-			cached := FileSystem store: self activeClass createDefault.
-			SessionTemps current at: self cacheKey put: cached ].
-	^ cached
+
+	^SessionTemps current
+		at: self cacheKey
+		ifAbsentPut: [DiskFileSystem store: self createDefault]
 ]
 
 { #category : 'public' }
@@ -55,7 +54,8 @@ DiskStore class >> maxFileNameLength [
 
 { #category : 'comparing' }
 DiskStore >> = other [
-	^ self species = other species
+
+	^self species = other species
 ]
 
 { #category : 'accessing' }
@@ -250,7 +250,8 @@ DiskStore >> forReferencePrintOn: aStream [
 
 { #category : 'comparing' }
 DiskStore >> hash [
-	^ self species hash
+
+	^self species hash
 ]
 
 { #category : 'initialization' }

@@ -17,18 +17,8 @@ FileSystem disk root
 Class {
 	#name : 'FileSystem',
 	#superclass : 'Object',
-	#instVars : [
-		'store'
-	],
 	#category : 'FileSystem-Core'
 }
-
-{ #category : 'instance creation' }
-FileSystem class >> store: aStore [
-	^ self basicNew
-		initializeWithStore: aStore;
-		yourself
-]
 
 { #category : 'navigating' }
 FileSystem >> * anObject [
@@ -54,7 +44,7 @@ FileSystem >> = other [
 FileSystem >> accessTimeOf: aResolvable [
 	"Returns the access date of aResolvable"
 
-	^store accessTimeOf: (self resolve: aResolvable)
+	^self store accessTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
@@ -62,7 +52,7 @@ FileSystem >> binaryReadStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable options: store defaultOptionsForRead)
+	^ (self open: aResolvable options: self store defaultOptionsForRead)
 		binaryReadStream
 ]
 
@@ -71,13 +61,16 @@ FileSystem >> binaryWriteStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a binary write stream for reading the file."
 
-	^ (self open: aResolvable options: store defaultOptionsForWrite)
+	^ (self open: aResolvable options: self store defaultOptionsForWrite)
 		binaryWriteStream
 ]
 
-{ #category : 'public' }
+{ #category : 'other' }
 FileSystem >> checkName: aString fixErrors: fixErrors [
-	^ store checkName: aString fixErrors: fixErrors
+
+	^self store
+		checkName: aString
+		fixErrors: fixErrors
 ]
 
 { #category : 'public-enumerating' }
@@ -88,7 +81,7 @@ do: aBlock [
 
 	| path |
 	path := self resolve: aResolvable.
-	store
+	self store
 		directoryAt: path
 		ifAbsent: [^absentBlock value]
 		ifNotDirectory: [^notDirectoryBlock value]
@@ -97,14 +90,15 @@ do: aBlock [
 
 { #category : 'public' }
 FileSystem >> close [
-	store close
+
+	self store close
 ]
 
 { #category : 'public' }
 FileSystem >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPresent: presentBlock [
 	"Copy the file referenced as sourcePath to the destination referred as destPath. Perform associate actions in case of problems."
 
-	store
+	self store
 		copy: (self resolve: sourcePath)
 		ifAbsent: absentBlock
 		to: (self resolve: destinationPath)
@@ -120,9 +114,9 @@ FileSystem >> copy: sourcePath to: destPath [
 	
 	self
 		copy: sourcePath
-		ifAbsent: [ store signalFileDoesNotExist: sourcePath ]
+		ifAbsent: [ self store signalFileDoesNotExist: sourcePath ]
 		to: destPath
-		ifPresent: [ store signalFileExists: destPath ]
+		ifPresent: [ self store signalFileExists: destPath ]
 ]
 
 { #category : 'public' }
@@ -134,13 +128,17 @@ FileSystem >> copy: aPath toReference: destinationReference [
 ]
 
 { #category : 'public' }
-FileSystem >> copy: aPath toRemote: destRef [
+FileSystem >> copy: aPath
+toRemote: destRef [
+
 	| inputStream path |
 	path := self resolve: aPath.
-	[ inputStream := self binaryReadStreamOn: path.
-	inputStream ifNil: [ store signalFileDoesNotExist: path ].
-	destRef fileSystem copyFrom: inputStream to: destRef path ]
-		ensure: [ inputStream ifNotNil: [ inputStream close ] ]
+	[inputStream := self binaryReadStreamOn: path.
+	inputStream ifNil: [self store signalFileDoesNotExist: path].
+	destRef fileSystem
+		copyFrom: inputStream
+		to: destRef path]
+		ensure: [inputStream ifNotNil: [inputStream close]]
 ]
 
 { #category : 'public' }
@@ -159,19 +157,21 @@ FileSystem >> copyAndDelete: sourcePath to: destination [
 	]
 ]
 
-{ #category : 'private' }
-FileSystem >> copyFrom: inputStream to: destPath [
+{ #category : 'other' }
+FileSystem >> copyFrom: inputStream
+to: destPath [
+
 	| buffer out |
 	out := nil.
 	(self exists: destPath)
-		ifTrue: [ store signalFileExists: destPath ].
-	^ [ 
-	out := self binaryWriteStreamOn: destPath.
+		ifTrue: [self store signalFileExists: destPath].
+	[out := self binaryWriteStreamOn: destPath.
 	buffer := ByteArray new: 1024.
-	[ inputStream atEnd ]
-		whileFalse: [ 
-			buffer := inputStream nextInto: buffer.
-			out nextPutAll: buffer ]] ensure: [ out ifNotNil: [ out close ]]
+	[inputStream atEnd]
+		whileFalse:
+			[buffer := inputStream nextInto: buffer.
+			out nextPutAll: buffer]]
+		ensure: [out ifNotNil: [out close]]
 ]
 
 { #category : 'public' }
@@ -179,38 +179,39 @@ FileSystem >> createDirectory: aResolvable [
 	"Resolve aResolvable into an absolute path, then as the store to create a directory there. 
 	The store is expected to raise an exception if it cannot do so."
 
-	^ store createDirectory: (self resolve: aResolvable)
+	^self store createDirectory: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
 FileSystem >> creationTimeOf: aResolvable [
 	"Returns the creation date of aResolvable"
 
-	^ store creationTimeOf: (self resolve: aResolvable)
+	^self store creationTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : 'accessing' }
 FileSystem >> defaultOptionsForRead [
 
-	^store defaultOptionsForRead
+	^self store defaultOptionsForRead
 ]
 
 { #category : 'accessing' }
 FileSystem >> defaultOptionsForWrite [
 
-	^store defaultOptionsForWrite
+	^self store defaultOptionsForWrite
 ]
 
 { #category : 'public' }
 FileSystem >> delete: aResolvable [
-	store delete: (self resolve: aResolvable)
+
+	self store delete: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
 FileSystem >> delimiter [
 	"Return path delimiter used by this filesystem."
 
-	^ store delimiter
+	^self store delimiter
 ]
 
 { #category : 'public-enumerating' }
@@ -223,7 +224,7 @@ do: aBlock [
 
 	| path |
 	path := self resolve: aResolvable.
-	store
+	self store
 		directoryAt: path
 		ifAbsent: [^anAbsentBlock value]
 		ifNotDirectory: [^notDirectoryBlock value]
@@ -235,7 +236,7 @@ FileSystem >> ensureCreateDirectory: aResolvable [
 	"Resolve the argument to an absolute path, then ask the store to make
 	sure that all the directories contained in the argument path exist or are created."
 	
-	store ensureCreateDirectory: (self resolve: aResolvable)
+	self store ensureCreateDirectory: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
@@ -243,7 +244,7 @@ FileSystem >> exists: aResolvable [
 	"Resolve the argument, and answer true if the there is
 	a file or directory at that path, false if there is not."
 	
-	^ store exists: (self resolve: aResolvable)
+	^self store exists: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
@@ -260,7 +261,7 @@ do: aBlock [
 
 	| path |
 	path := self resolve: aResolvable.
-	store
+	self store
 		directoryAt: path
 		ifAbsent: [^anAbsentBlock value]
 		ifNotDirectory: [^notDirectoryBlock value]
@@ -269,17 +270,14 @@ do: aBlock [
 
 { #category : 'printing' }
 FileSystem >> forReferencePrintOn: aStream [
-	store forReferencePrintOn: aStream
+
+	self store forReferencePrintOn: aStream
 ]
 
 { #category : 'comparing' }
 FileSystem >> hash [
-	^ store hash
-]
 
-{ #category : 'initialize-release' }
-FileSystem >> initializeWithStore: aStore [
-	store := aStore
+	^self store hash
 ]
 
 { #category : 'public-testing' }
@@ -298,7 +296,7 @@ FileSystem >> isDirectory: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
 
-	^ store isDirectory: (self resolve: aResolvable)
+	^self store isDirectory: (self resolve: aResolvable)
 ]
 
 { #category : 'public-testing' }
@@ -306,7 +304,7 @@ FileSystem >> isFile: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a file, false if it refers to a directory or doesn't exist."
 
-	^ store isFile: (self resolve: aResolvable)
+	^self store isFile: (self resolve: aResolvable)
 ]
 
 { #category : 'public-testing' }
@@ -322,7 +320,7 @@ FileSystem >> isSymlink: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
 
-	^ store isSymlink: (self resolve: aResolvable)
+	^self store isSymlink: (self resolve: aResolvable)
 ]
 
 { #category : 'public-testing' }
@@ -337,7 +335,7 @@ FileSystem >> isWritable: aResolvable [
 FileSystem >> modificationTimeOf: aResolvable [
 	"Returns the last date of modification of aResolvable"
 
-	^ store modificationTimeOf: (self resolve: aResolvable)
+	^self store modificationTimeOf: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }
@@ -369,7 +367,7 @@ FileSystem >> move: sourcePath to: destination [
 FileSystem >> open [
 	"Some kinds of filesystems need to open connections to external resources. Does nothing by default."
 	
-	store open
+	self store open
 ]
 
 { #category : 'public' }
@@ -380,7 +378,7 @@ options: openingOptions [
 
 	| path |
 	path := self resolve: aResolvable.
-	^store
+	^self store
 		open: (FileReference fileSystem: self path: path) 
 		options: openingOptions
 ]
@@ -392,19 +390,21 @@ FileSystem >> pathFromObject: anObject [
 
 { #category : 'converting' }
 FileSystem >> pathFromString: aString [
-	^ store pathFromString: aString
+
+	^self store pathFromString: aString
 ]
 
 { #category : 'public' }
 FileSystem >> permissions: aResolvable [
 	"Resolve the argument and return the Permissions for this file or directory "
 
-	^ store permissions: (self resolve: aResolvable)
+	^self store permissions: (self resolve: aResolvable)
 ]
 
 { #category : 'printing' }
 FileSystem >> printPath: aPath on: aStream [
-	store printPath: aPath on: aStream
+
+	self store printPath: aPath on: aStream
 ]
 
 { #category : 'public' }
@@ -412,7 +412,7 @@ FileSystem >> readStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable options: store defaultOptionsForRead) readStream.
+	^ (self open: aResolvable options: self store defaultOptionsForRead) readStream.
 ]
 
 { #category : 'public' }
@@ -425,7 +425,7 @@ FileSystem >> referenceTo: aResolvable [
 		path: (self pathFromObject: aResolvable)
 ]
 
-{ #category : 'public' }
+{ #category : 'other' }
 FileSystem >> rename: sourcePath ifAbsent: aBlock to: destPath ifPresent: pBlock [
 	"Rename the file referenced as sourcePath to the destination referred as destPath. 
 	Perform associate actions in case of problems."
@@ -433,13 +433,13 @@ FileSystem >> rename: sourcePath ifAbsent: aBlock to: destPath ifPresent: pBlock
 	| source destination |
 	source := self resolve: sourcePath.
 	destination := self resolve: destPath.
-	store
+	self store
 		rename: source
 		ifAbsent: aBlock
 		to: destination
 		ifPresent: pBlock
 		fileSystem: self.
-	^ destination
+	^destination
 ]
 
 { #category : 'public' }
@@ -447,11 +447,11 @@ FileSystem >> rename: sourcePath to: destName [
 	"Rename the file referenced as sourcePath to destPath.  Raise exceptions 
 	FileExists or FileDoesNotExist  if the operation fails"
 	
-	^ self
+	^self
 		rename: sourcePath
-		ifAbsent: [store signalFileDoesNotExist: sourcePath]
+		ifAbsent: [self store signalFileDoesNotExist: sourcePath]
 		to: destName
-		ifPresent: [store signalFileExists: destName]
+		ifPresent: [self store signalFileExists: destName]
 ]
 
 { #category : 'public' }
@@ -481,7 +481,7 @@ FileSystem >> resolveReference: aReference [
 FileSystem >> resolveString: aString [
 	"Returns the root of the receiver filesystem, i.e. / on unix"
 	
-	^ self workingDirectoryPath resolvePath: (store pathFromString: aString)
+	^self workingDirectoryPath resolvePath: (self store pathFromString: aString)
 ]
 
 { #category : 'accessing' }
@@ -493,24 +493,35 @@ FileSystem >> root [
 { #category : 'signaling' }
 FileSystem >> signalDirectoryDoesNotExist: aPath [
 
-	^store signalDirectoryDoesNotExist: aPath
+	^self store signalDirectoryDoesNotExist: aPath
 ]
 
 { #category : 'public' }
 FileSystem >> sizeOf: aResolvable [
 	"Resolve the argument and return the size for this file or directory "
 
-	^ store sizeOf: (self resolve: aResolvable)
+	^self store sizeOf: (self resolve: aResolvable)
 ]
 
 { #category : 'accessing' }
 FileSystem >> store [
-	^ store
+	"Subclasses all must have a store but subclasses options differ.
+	This accessor allows them to manage their variable lifetimes appropriately."
+
+	^self subclassResponsibility
+]
+
+{ #category : 'private-accessing' }
+FileSystem >> store: aStore [
+	"Set the store instance variable taking into account lifetime considerations."
+
+	self subclassResponsibility
 ]
 
 { #category : 'converting' }
 FileSystem >> stringFromPath: aPath [
-	^ store stringFromPath: aPath
+
+	^self store stringFromPath: aPath
 ]
 
 { #category : 'accessing' }
@@ -528,12 +539,12 @@ FileSystem >> workingDirectoryPath [
 	This may not be the same directory for the entire life of a VM, 
 	since it can be set programmatically."
 
-	^ store currentWorkingDirectoryPath
+	^self store currentWorkingDirectoryPath
 ]
 
-{ #category : 'public' }
+{ #category : 'other' }
 FileSystem >> writeStreamOn: aResolvable [
 	"Open a write stream on the file referred by the argument. It can be a string or a path"
 
-	^ (self open: aResolvable options: store defaultOptionsForWrite) writeStream.
+	^(self open: aResolvable options: self store defaultOptionsForWrite) writeStream
 ]

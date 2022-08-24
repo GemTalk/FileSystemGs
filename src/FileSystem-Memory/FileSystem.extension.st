@@ -9,10 +9,11 @@ FileSystem class >> currentMemoryFileSystem [
 { #category : '*FileSystem-Memory' }
 FileSystem class >> memory [
 
-	^self store: MemoryStore new
+	^MemoryFileSystem store: MemoryStore new
 ]
 
 { #category : '*FileSystem-Memory' }
 FileSystem >> isMemoryFileSystem [
-	^ store isMemoryFileSystem
+
+	^false
 ]

@@ -9,7 +9,8 @@ Class {
 
 { #category : 'initialize-release' }
 DiskFileSystemTest >> createFileSystem [
-	^ FileSystem store: (DiskStore activeClass createDefault)
+
+	^DiskFileSystem store: (DiskStore createDefault)
 ]
 
 { #category : 'tests' }

@@ -415,7 +415,7 @@ FileReferenceTest >> testContains [
 		assert: (alpha contains: beta path);
 		deny: (beta contains: alpha);
 		deny: (beta contains: alpha path).
-	secondFileSystem := FileSystem store: MemoryStore new.
+	secondFileSystem := MemoryFileSystem store: MemoryStore new.
 	secondAlpha := secondFileSystem root / 'alpha'.
 	self
 		deny: (secondAlpha contains: beta);

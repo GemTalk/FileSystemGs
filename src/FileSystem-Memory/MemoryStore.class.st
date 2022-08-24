@@ -15,7 +15,7 @@ MemoryStore class >> currentFileSystem [
 
 	^SessionTemps current
 		at: #MemoryStoreCurrentFS
-		ifAbsentPut: [FileSystem store: MemoryStore new]
+		ifAbsentPut: [MemoryFileSystem store: MemoryStore new]
 ]
 
 { #category : 'public' }
