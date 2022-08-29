@@ -31,7 +31,7 @@ FileSystem class >> store: aStore [
 FileSystem >> * anObject [
 	"Return a relative reference."
 	
-	^ self referenceTo:( Path * anObject)
+	^ self referenceTo: (Path * anObject)
 ]
 
 { #category : 'navigating' }
@@ -198,6 +198,7 @@ FileSystem >> creationTimeOf: aResolvable [
 
 { #category : 'accessing' }
 FileSystem >> defaultOptionsForRead [
+	"Returns a FileOpeningOptions instance with default options specified."
 
 	^self store defaultOptionsForRead
 ]
@@ -494,7 +495,8 @@ FileSystem >> resolveString: aString [
 { #category : 'accessing' }
 FileSystem >> root [
 	"Returns the root of the receiver filesystem, i.e. / on unix"
-	^ self referenceTo: Path root
+
+	^self referenceTo: Path root
 ]
 
 { #category : 'signaling' }
@@ -537,7 +539,7 @@ FileSystem >> workingDirectory [
 	This may not be the same directory for the entire life of a VM, 
 	since it can be set programmatically."
 
-	^ self referenceTo: self workingDirectoryPath
+	^self referenceTo: self workingDirectoryPath
 ]
 
 { #category : 'accessing' }

@@ -24,6 +24,13 @@ MacOSPlatform >> diskStoreClass [
 	^MacOSStore
 ]
 
+{ #category : 'accessing' }
+MacOSPlatform >> family [
+	"Return a compatible answer."
+
+	^#MacOSX
+]
+
 { #category : 'testing' }
 MacOSPlatform >> isMacOS [
 	^ true

@@ -109,6 +109,13 @@ MemoryStore >> creationTimeOf: aPath [
 ]
 
 { #category : 'accessing' }
+MemoryStore >> currentWorkingDirectoryPath [
+	"For in-memory file systems, the working directory is the root directory."
+
+	^Path root
+]
+
+{ #category : 'accessing' }
 MemoryStore >> defaultOptionsForRead [
 
 	^MemoryFileOpeningOptions readOnly

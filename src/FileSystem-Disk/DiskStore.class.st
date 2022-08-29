@@ -115,8 +115,10 @@ DiskStore >> currentWorkingDirectoryPath [
 	"Answer an absolute Path for the current working directory of the VM."
 
 	| pathString |
-	pathString := OSPlatform current currentWorkingDirectoryPath.
-	^ Path from: pathString delimiter: self delimiter
+	pathString := self libcUnistd getCurrentDirName.
+	^Path
+		from: pathString
+		delimiter: self delimiter
 ]
 
 { #category : 'accessing' }

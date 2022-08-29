@@ -84,7 +84,9 @@ FileSystemStore >> creationTimeOf: aPath [
 
 { #category : 'accessing' }
 FileSystemStore >> currentWorkingDirectoryPath [
-	^ Path root
+	"Returns the current working directory as a Path."
+
+	^self subclassResponsibility
 ]
 
 { #category : 'abstract' }
