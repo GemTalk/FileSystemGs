@@ -55,12 +55,15 @@ UnixFileDescriptorTest >> testOpenStdout [
 UnixFileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |
-	id := OSPlatform current libcFcntlClass new openPath: '/usr/bin/env' flags: 0 mode: 0.
+	id := DiskStore current libcFcntl openPath: '/usr/bin/env' flags: 0 mode: 0.
 	fd := UnixFileDescriptor fd: id.
 	[bytes := fd read: 4] ensure: [fd close].
 	self
 		assert: bytes size
 		equals: 4.
+	self
+		assert: bytes class
+		equals: ByteArray.
 	self
 		deny: bytes
 		equals: #[0 0 0 0]

@@ -6,7 +6,12 @@ Class {
 	#name : 'DiskStore',
 	#superclass : 'FileSystemStore',
 	#instVars : [
-		'maxFileNameLength'
+		'maxFileNameLength',
+		'libcDirent',
+		'libcFcntl',
+		'libcUnistd',
+		'libcStat',
+		'libcStdio'
 	],
 	#category : 'FileSystem-Disk'
 }
@@ -15,7 +20,9 @@ Class {
 DiskStore class >> activeClass [
 	"Returns the DiskStore subclass that should be used."
 
-	^OSPlatform current diskStoreClass
+	^DiskStore allSubclasses
+		detect: [:each | each isActiveStore]
+		ifNone: [self error: 'DiskStore does not support this Platform/OS']
 ]
 
 { #category : 'current' }
@@ -47,9 +54,24 @@ DiskStore class >> delimiter [
 	^ self current delimiter
 ]
 
+{ #category : 'testing' }
+DiskStore class >> isActiveStore [
+	"Returns true if this store is the active store for this platform."
+
+	^false
+]
+
 { #category : 'public' }
 DiskStore class >> maxFileNameLength [
 	self subclassResponsibility 
+]
+
+{ #category : 'testing' }
+DiskStore class >> osIs: anOS
+on: anArch [
+	"Determine if the OS and Architecture match this system"
+
+	^(System gemVersionAt: 'osName') = anOS and: [(System gemVersionAt: 'cpuArchitecture') = anArch]
 ]
 
 { #category : 'comparing' }
@@ -86,9 +108,9 @@ DiskStore >> createDirectory: path [
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
 
-	| pathString errnoHolder result parent |
+	| pathString result parent |
 	pathString := self stringFromPath: path.
-	[OSPlatform current libcStat mkdir: pathString]
+	[self libcStat mkdir: pathString]
 		on: UnixError
 		do:
 			[:ex |
@@ -329,13 +351,31 @@ DiskStore >> isWritable: aPath [
 { #category : 'accessing' }
 DiskStore >> libcDirent [
 
-	^OSPlatform current libcDirent
+	^libcDirent
+]
+
+{ #category : 'accessing' }
+DiskStore >> libcFcntl [
+
+	^libcFcntl
+]
+
+{ #category : 'accessing' }
+DiskStore >> libcStat [
+
+	^libcStat
+]
+
+{ #category : 'accessing' }
+DiskStore >> libcStdio [
+
+	^libcStdio
 ]
 
 { #category : 'accessing' }
 DiskStore >> libcUnistd [
 
-	^OSPlatform current libcUnistd
+	^libcUnistd
 ]
 
 { #category : 'public' }
@@ -355,7 +395,7 @@ DiskStore >> open: aFileReference
 options: options [
 
 	| fd |
-	fd := [OSPlatform current libcFcntl
+	fd := [self libcFcntl
 				openPath: aFileReference pathString
 				flags: options flags
 				mode: options modeBits]
@@ -383,7 +423,7 @@ DiskStore >> rename: sourcePath to: destinationPath [
 	| sourcePathString targetPathString |
 	sourcePathString := self stringFromPath: sourcePath.
 	targetPathString := self stringFromPath: destinationPath.
-	OSPlatform current libcStdio
+	self libcStdio
 		rename: sourcePathString
 		to: targetPathString
 ]
@@ -405,7 +445,7 @@ DiskStore >> stat: aPath [
 
 	| pathString |
 	pathString := self stringFromPath: aPath.
-	^[OSPlatform current libcStat stat: pathString]
+	^[self libcStat stat: pathString]
 		on: ENOENT
 		do: [:ex | self signalFileDoesNotExist: aPath]
 ]

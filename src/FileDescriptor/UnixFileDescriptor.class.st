@@ -163,7 +163,7 @@ UnixFileDescriptor >> free [
 { #category : 'initialization' }
 UnixFileDescriptor >> initialize [
 
-	libcUnistd := OSPlatform current libcUnistd
+	libcUnistd := DiskStore current libcUnistd
 ]
 
 { #category : 'testing' }
@@ -177,7 +177,7 @@ UnixFileDescriptor >> isOpen [
 UnixFileDescriptor >> position [
 
 	| library |
-	library := OSPlatform current libcUnistd.
+	library := DiskStore current libcUnistd.
 	^library
 		lseek: fd
 		offset: 0
@@ -226,7 +226,7 @@ UnixFileDescriptor >> read: count [
 UnixFileDescriptor >> setToEnd [
 
 	| library |
-	library := OSPlatform current libcUnistd.
+	library := DiskStore current libcUnistd.
 	^library
 		lseek: fd
 		offset: 0
@@ -242,7 +242,7 @@ UnixFileDescriptor >> size [
 { #category : 'private' }
 UnixFileDescriptor >> stat [
 
-	^OSPlatform current libcStat fstat: fd
+	^DiskStore current libcStat fstat: fd
 ]
 
 { #category : 'public' }
@@ -250,7 +250,7 @@ UnixFileDescriptor >> truncateTo: length [
 	"Truncate the open file to the specified length."
 
 	| library |
-	library := OSPlatform current libcUnistd.
+	library := DiskStore current libcUnistd.
 	^library
 		truncate: fd
 		to: length

@@ -1,7 +1,7 @@
 Class {
 	#name : 'MacOSPlatform',
 	#superclass : 'UnixPlatform',
-	#category : 'System-Platforms-Unix'
+	#category : 'System-Platforms-Mac'
 }
 
 { #category : 'testing' }
@@ -13,8 +13,8 @@ MacOSPlatform class >> isMacOS [
 { #category : 'accessing' }
 MacOSPlatform >> defaultMaximumPathLength [
 		"This method returns the default maximum path length for the getCurrentWorkingDirectory implementation. MacOS default PATH_MAX is 1024.  PATH_MAX is needed to avoid buffer overflow. In case PATH_MAX is not sufficient the method currentWorkingDirectoryWithBufferSize: can be used to give desired buffer size."
-	 ^1024
 
+	^1024
 ]
 
 { #category : 'accessing' }

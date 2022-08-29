@@ -10,7 +10,9 @@ Class {
 { #category : 'instance creation' }
 PlatformResolver class >> forCurrentPlatform [
 
-	^OSPlatform current platformResolverClass new
+	^(System gemVersionAt: 'osName') = 'Darwin'
+		ifTrue: [MacOSResolver new]
+		ifFalse: [UnixResolver new]
 ]
 
 { #category : 'accessing' }

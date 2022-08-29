@@ -9,7 +9,7 @@ Class {
 
 { #category : 'support' }
 LibcFcntlTest >> setUp [
-	instance := OSPlatform current libcFcntlClass new
+	instance := DiskStore current libcFcntl
 ]
 
 { #category : 'tests' }

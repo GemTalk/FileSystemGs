@@ -10,8 +10,11 @@ Class {
 
 { #category : 'support' }
 LibcUnistdTest >> setUp [
-	instance := OSPlatform current libcUnistdClass new.
-	fcntlInstance := OSPlatform current libcFcntlClass new
+
+	| store |
+	store := DiskStore current.
+	instance := store libcUnistd.
+	fcntlInstance := store libcFcntl
 ]
 
 { #category : 'tests' }
