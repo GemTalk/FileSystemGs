@@ -17,6 +17,12 @@ StatStruct_macOS >> accessTime [
 	^TimespecStruct forBytes: (self st_atimespec)
 ]
 
+{ #category : 'accessing' }
+StatStruct_macOS >> changeTime [
+
+	^TimespecStruct forBytes: (self st_ctimespec)
+]
+
 { #category : 'testing' }
 StatStruct_macOS >> isDirectory [
 

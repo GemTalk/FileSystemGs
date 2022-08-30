@@ -10,6 +10,12 @@ StatStruct_Linux >> accessTime [
 	^TimespecStruct forBytes: (self st_atim)
 ]
 
+{ #category : 'accessing' }
+StatStruct_Linux >> changeTime [
+
+	^TimespecStruct forBytes: (self st_ctim)
+]
+
 { #category : 'testing' }
 StatStruct_Linux >> isDirectory [
 

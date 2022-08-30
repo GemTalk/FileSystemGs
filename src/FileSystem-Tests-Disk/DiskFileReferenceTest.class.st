@@ -31,3 +31,20 @@ DiskFileReferenceTest >> tearDown [
 	sandbox deleteAll.
 	super tearDown
 ]
+
+{ #category : 'tests' }
+DiskFileReferenceTest >> testAccessTime [
+
+	self
+		assert: sandbox accessTime
+		isKindOf: DateAndTime
+]
+
+{ #category : 'tests' }
+DiskFileReferenceTest >> testCreationTime [
+	"See subclass implementations"
+
+	self
+		should: [sandbox creationTime]
+		raise: FileAttributeNotSupported
+]

@@ -34,6 +34,23 @@ MemoryStore class >> startUp [
 	self reset
 ]
 
+{ #category : 'accessing' }
+MemoryStore >> accessTimeOf: aPath [
+	"Return the accessTime for a specified path."
+
+	self signalUnsupportedAttribute: #accessTime
+]
+
+{ #category : 'accessing' }
+MemoryStore >> changeTimeOf: aPath [
+	"Return the date of change of the File described by aPath"
+
+	^self
+		entryAt: aPath
+		ifPresent: [:entry | entry modificationTime]
+		ifAbsent: [self signalFileDoesNotExist: aPath]
+]
+
 { #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].

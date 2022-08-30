@@ -26,3 +26,20 @@ MemoryFileReferenceTest >> tearDown [
 	sandbox deleteAll.
 	super tearDown
 ]
+
+{ #category : 'tests' }
+MemoryFileReferenceTest >> testAccessTime [
+
+	self
+		should: [sandbox accessTime]
+		raise: FileAttributeNotSupported
+]
+
+{ #category : 'tests' }
+MemoryFileReferenceTest >> testCreationTime [
+	"See subclass implementations"
+
+		self
+		assert: sandbox creationTime
+		isKindOf: DateAndTime
+]

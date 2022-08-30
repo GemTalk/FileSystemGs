@@ -2,7 +2,7 @@
 This Error is signaled when an attempting to access an attribute which is unsupported by the underlying FileSystem.
 "
 Class {
-	#name : 'UnsupportedFileReferenceAttribute',
+	#name : 'FileAttributeNotSupported',
 	#superclass : 'Error',
 	#instVars : [
 		'attribute'
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'signaling' }
-UnsupportedFileReferenceAttribute class >> signalWith: anAttributeName [
+FileAttributeNotSupported class >> signalWith: anAttributeName [
 
 	^self new
 		attribute: anAttributeName;
@@ -19,7 +19,7 @@ UnsupportedFileReferenceAttribute class >> signalWith: anAttributeName [
 ]
 
 { #category : 'accessing' }
-UnsupportedFileReferenceAttribute >> attribute [
+FileAttributeNotSupported >> attribute [
 	"Returns the name of an unsupported Attribute.
 	Example: #creationTime"
 
@@ -27,14 +27,14 @@ UnsupportedFileReferenceAttribute >> attribute [
 ]
 
 { #category : 'accessing' }
-UnsupportedFileReferenceAttribute >> attribute: anAttributeName [
+FileAttributeNotSupported >> attribute: anAttributeName [
 	"Sets the name of the unsupported attribute"
 
 	attribute := anAttributeName
 ]
 
 { #category : 'accessing' }
-UnsupportedFileReferenceAttribute >> messageText [
+FileAttributeNotSupported >> messageText [
 
 	^messageText ifNil: [self class name printString, ' does not support ', self attribute printString]
 ]

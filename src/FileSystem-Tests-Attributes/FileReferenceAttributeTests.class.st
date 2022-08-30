@@ -89,7 +89,7 @@ FileReferenceAttributeTests >> testCreationTime [
 
 	self
 		should: [self reference creationTime]
-		raise: UnsupportedFileReferenceAttribute.
+		raise: FileAttributeNotSupported.
 ]
 
 { #category : 'tests' }

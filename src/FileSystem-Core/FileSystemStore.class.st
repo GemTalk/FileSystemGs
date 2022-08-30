@@ -28,6 +28,13 @@ FileSystemStore class >> new [
 ]
 
 { #category : 'public' }
+FileSystemStore >> changeTimeOf: aPath [
+	"Return the date of change of the File described by aPath"
+
+	^self subclassResponsibility
+]
+
+{ #category : 'public' }
 FileSystemStore >> checkName: aString fixErrors: fixErrors [
 	^ self subclassResponsibility
 ]
@@ -266,7 +273,7 @@ FileSystemStore >> signalFileExists: aPath [
 { #category : 'error signalling' }
 FileSystemStore >> signalUnsupportedAttribute: attributeName [
 
-	^UnsupportedFileReferenceAttribute signalWith: attributeName
+	^FileAttributeNotSupported signalWith: attributeName
 ]
 
 { #category : 'public' }

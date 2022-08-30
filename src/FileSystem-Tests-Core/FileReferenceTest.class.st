@@ -32,6 +32,13 @@ identicalTo: bObject [
 	^self assert: anObject == bObject
 ]
 
+{ #category : 'asserting' }
+FileReferenceTest >> assert: anObject
+isKindOf: aClass [
+
+	^self assert: (anObject isKindOf: aClass)
+]
+
 { #category : 'support' }
 FileReferenceTest >> createDirectory: aString [
 
@@ -86,6 +93,13 @@ FileReferenceTest >> sandboxName [
 	"name of the sandbox directory"
 
 	^self subclassResponsibility
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testAccessTime [
+	"See subclass implementations"
+
+	self assert: false
 ]
 
 { #category : 'tests' }
@@ -312,6 +326,14 @@ FileReferenceTest >> testCanonicalization [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testChangeTime [
+
+	self
+		assert: sandbox changeTime
+		isKindOf: DateAndTime
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testChildDirectories [
 
 	| alpha beta gamma delta epsilon |
@@ -470,6 +492,13 @@ FileReferenceTest >> testCopyAllTo [
 	self
 		assert: source allChildren size
 		equals: destination allChildren size
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testCreationTime [
+	"See subclass implementations"
+
+	self assert: false
 ]
 
 { #category : 'tests' }
@@ -742,6 +771,14 @@ FileReferenceTest >> testMakeRelative [
 	child := sandbox / 'griffle' / 'plonk' / 'nurb'.
 	relative := parent makeRelative: child.
 	self assert: relative equals: (Path * 'plonk' / 'nurb')
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testModificationTime [
+
+	self
+		assert: sandbox modificationTime
+		isKindOf: DateAndTime
 ]
 
 { #category : 'tests' }

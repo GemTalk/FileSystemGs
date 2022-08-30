@@ -44,7 +44,8 @@ FileSystem >> / anObject [
 
 { #category : 'comparing' }
 FileSystem >> = other [
-	^ self species = other species and: [self store = other store]
+
+	^self species = other species and: [self store = other store]
 ]
 
 { #category : 'public' }
@@ -72,7 +73,14 @@ FileSystem >> binaryWriteStreamOn: aResolvable [
 		binaryWriteStream
 ]
 
-{ #category : 'other' }
+{ #category : 'public' }
+FileSystem >> changeTimeOf: aResolvable [
+	"Returns the change date of aResolvable"
+
+	^self store changeTimeOf: (self resolve: aResolvable)
+]
+
+{ #category : 'public' }
 FileSystem >> checkName: aString fixErrors: fixErrors [
 
 	^self store
@@ -164,7 +172,7 @@ FileSystem >> copyAndDelete: sourcePath to: destination [
 	]
 ]
 
-{ #category : 'other' }
+{ #category : 'private' }
 FileSystem >> copyFrom: inputStream
 to: destPath [
 
@@ -433,7 +441,7 @@ FileSystem >> referenceTo: aResolvable [
 		path: (self pathFromObject: aResolvable)
 ]
 
-{ #category : 'other' }
+{ #category : 'public' }
 FileSystem >> rename: sourcePath ifAbsent: aBlock to: destPath ifPresent: pBlock [
 	"Rename the file referenced as sourcePath to the destination referred as destPath. 
 	Perform associate actions in case of problems."
@@ -551,7 +559,7 @@ FileSystem >> workingDirectoryPath [
 	^self store currentWorkingDirectoryPath
 ]
 
-{ #category : 'other' }
+{ #category : 'public' }
 FileSystem >> writeStreamOn: aResolvable [
 	"Open a write stream on the file referred by the argument. It can be a string or a path"
 

@@ -120,6 +120,13 @@ FileReference >> binaryWriteStream [
 	^ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
+{ #category : 'accessing' }
+FileReference >> changeTime [
+	"Returns the change time of the referenced entity."
+
+	^filesystem changeTimeOf: self path
+]
+
 { #category : 'comparing' }
 FileReference >> containsReference: aReference [
 	^  aReference fileSystem = filesystem and: [path contains: aReference path]
