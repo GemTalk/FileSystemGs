@@ -29,3 +29,13 @@ LibcDirentTest >> testListDirectory [
 	returned := instance closeDirectoryStream: dir.
 	self assert: returned equals: 0
 ]
+
+{ #category : 'tests' }
+LibcDirentTest >> testListFile [
+	"Ensure reading a file results in an ENOTDIR"
+
+	| dir names dirent returned |
+	self
+		should: [instance openDirectoryStreamWithPath: '/usr/bin/env']
+		raise: ENOTDIR
+]
