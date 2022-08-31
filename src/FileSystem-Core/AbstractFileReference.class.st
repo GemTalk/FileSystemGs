@@ -745,6 +745,13 @@ AbstractFileReference >> streamWritable: writable do: aBlock [
 ]
 
 { #category : 'accessing' }
+AbstractFileReference >> targetPath [
+	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."
+
+	^self resolve targetPath
+]
+
+{ #category : 'accessing' }
 AbstractFileReference >> uri [
 	"Convert my path into a file:// type url. For odd characters use %20 notation."
 

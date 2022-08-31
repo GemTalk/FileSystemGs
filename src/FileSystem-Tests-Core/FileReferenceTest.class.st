@@ -1004,6 +1004,17 @@ FileReferenceTest >> testSlash [
 		equals: sandbox
 ]
 
+{ #category : 'compatibility tests' }
+FileReferenceTest >> testTargetPath [
+	"See subclass implementations"
+
+	| file |
+	file := self createFile: 'target-path'.
+	self
+		should: [file targetPath]
+		raise: FileAttributeNotSupported
+]
+
 { #category : 'tests' }
 FileReferenceTest >> testTempFilePrefixSuffix [
 	| fileRef |

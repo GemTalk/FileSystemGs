@@ -438,6 +438,13 @@ FileReference >> size [
 	^ filesystem sizeOf: path
 ]
 
+{ #category : 'accessing' }
+FileReference >> targetPath [
+	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."
+
+	^filesystem targetPathOf: self path
+]
+
 { #category : 'streams' }
 FileReference >> writeStream [
 	

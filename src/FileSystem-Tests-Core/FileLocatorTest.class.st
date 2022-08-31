@@ -221,6 +221,14 @@ FileLocatorTest >> testSlash [
 ]
 
 { #category : 'compatibility tests' }
+FileLocatorTest >> testTargetPath [
+
+	self
+		should: [FileLocator temp targetPath]
+		raise: FileAttributeNotSupported
+]
+
+{ #category : 'compatibility tests' }
 FileLocatorTest >> testWithExtensionAddsExtension [
 	locator := FileLocator image / 'griffle'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'

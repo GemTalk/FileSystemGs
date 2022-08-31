@@ -316,3 +316,12 @@ FileSystemStore >> stringFromPath: aPath [
 	^ String streamContents: [ :out | 
 		self printPath: aPath on: out ]
 ]
+
+{ #category : 'public-attributes' }
+FileSystemStore >> targetPathOf: aPath [
+	"Return a path of the actual file location.
+	For regular files, that is itself.
+	For symlinks, that is the file pointed to."
+
+	self signalUnsupportedAttribute
+]

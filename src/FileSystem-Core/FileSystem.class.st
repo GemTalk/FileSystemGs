@@ -555,6 +555,15 @@ FileSystem >> stringFromPath: aPath [
 	^self store stringFromPath: aPath
 ]
 
+{ #category : 'public' }
+FileSystem >> targetPathOf: aResolvable [
+	"Return a path of the actual file location.
+	For regular files, that is itself.
+	For symlinks, that is the file pointed to."
+
+	^self store targetPathOf: (self resolve: aResolvable)
+]
+
 { #category : 'accessing' }
 FileSystem >> workingDirectory [
 	"Returns a reference to the current working directory of the VM.
