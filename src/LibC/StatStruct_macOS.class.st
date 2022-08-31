@@ -23,6 +23,13 @@ StatStruct_macOS >> changeTime [
 	^TimespecStruct forBytes: (self st_ctimespec)
 ]
 
+{ #category : 'accessing' }
+StatStruct_macOS >> inode [
+	"Return the inode."
+
+	^self st_ino
+]
+
 { #category : 'testing' }
 StatStruct_macOS >> isDirectory [
 
@@ -52,6 +59,13 @@ StatStruct_macOS >> mode [
 StatStruct_macOS >> modificationTime [
 
 	^TimespecStruct forBytes: (self st_mtimespec)
+]
+
+{ #category : 'accessing' }
+StatStruct_macOS >> numberOfHardLinks [
+	"Return the number of hard links."
+
+	^self st_nlink
 ]
 
 { #category : 'private-masks' }

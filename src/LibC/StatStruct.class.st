@@ -50,6 +50,13 @@ StatStruct >> accessTime [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+StatStruct >> inode [
+	"Return the inode."
+
+	self subclassResponsibility
+]
+
 { #category : 'testing' }
 StatStruct >> isDirectory [
 	"Returns true if the stat was performed on a directory."
@@ -81,6 +88,13 @@ StatStruct >> mode [
 { #category : 'accessing' }
 StatStruct >> modificationTime [
 	"Returns the modification time associated with the file when stat was called."
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+StatStruct >> numberOfHardLinks [
+	"Return the number of hard links."
 
 	self subclassResponsibility
 ]

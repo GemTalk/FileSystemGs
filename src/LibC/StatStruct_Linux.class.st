@@ -16,6 +16,13 @@ StatStruct_Linux >> changeTime [
 	^TimespecStruct forBytes: (self st_ctim)
 ]
 
+{ #category : 'accessing' }
+StatStruct_Linux >> inode [
+	"Return the inode."
+
+	^self st_ino
+]
+
 { #category : 'testing' }
 StatStruct_Linux >> isDirectory [
 
@@ -45,6 +52,13 @@ StatStruct_Linux >> mode [
 StatStruct_Linux >> modificationTime [
 
 	^TimespecStruct forBytes: (self st_mtim)
+]
+
+{ #category : 'accessing' }
+StatStruct_Linux >> numberOfHardLinks [
+	"Return the number of hard links."
+
+	^self st_nlink
 ]
 
 { #category : 'private-masks' }

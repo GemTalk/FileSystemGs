@@ -27,11 +27,18 @@ FileSystemStore class >> new [
 		yourself
 ]
 
-{ #category : 'public' }
-FileSystemStore >> changeTimeOf: aPath [
-	"Return the date of change of the File described by aPath"
+{ #category : 'public-attributes' }
+FileSystemStore >> accessTimeOf: aPath [
+	"Return the access time of the File described by aPath"
 
-	^self subclassResponsibility
+	self signalUnsupportedAttribute
+]
+
+{ #category : 'public-attributes' }
+FileSystemStore >> changeTimeOf: aPath [
+	"Return the change time of the File described by aPath"
+
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'public' }
@@ -82,11 +89,11 @@ FileSystemStore >> createDirectory: aPath [
 	self subclassResponsibility 
 ]
 
-{ #category : 'public' }
+{ #category : 'public-attributes' }
 FileSystemStore >> creationTimeOf: aPath [
-	"Return the date of creation of the File described by aPath"
+	"Return the creation time of the File described by aPath"
 
-	^self subclassResponsibility
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'accessing' }
@@ -113,7 +120,7 @@ FileSystemStore >> delimiter [
 	^ self class delimiter
 ]
 
-{ #category : 'public' }
+{ #category : 'public-enumerating' }
 FileSystemStore >> directoryAt: aPath
 ifAbsent: absentBlock
 directoryNamesDo: aBlock [
@@ -147,7 +154,7 @@ FileSystemStore >> ensureCreateDirectory: aPath [
 	self createDirectory: aPath
 ]
 
-{ #category : 'public' }
+{ #category : 'public-testing' }
 FileSystemStore >> exists: aPath [
 
 	self subclassResponsibility
@@ -169,35 +176,49 @@ FileSystemStore >> fileSystemClass [
 FileSystemStore >> initialize [
 ]
 
-{ #category : 'public' }
+{ #category : 'public-attributes' }
+FileSystemStore >> inodeOf: aPath [
+	"Return the size of the File described by aPath"
+
+	self signalUnsupportedAttribute
+]
+
+{ #category : 'public-testing' }
 FileSystemStore >> isDirectory: aPath [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'public' }
+{ #category : 'public-testing' }
 FileSystemStore >> isFile: aPath [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'public' }
+{ #category : 'public-testing' }
 FileSystemStore >> isSymlink: aPath [
 
 	^self subclassResponsibility
 ]
 
-{ #category : 'public' }
+{ #category : 'public-testing' }
 FileSystemStore >> isWritable: aPath [
 
 	self subclassResponsibility
 ]
 
-{ #category : 'public' }
+{ #category : 'public-attributes' }
 FileSystemStore >> modificationTimeOf: aPath [
-	"Returns the last date of modification of the File described by aPath"
+	"Return the modification time of the File described by aPath"
 
-	^self subclassresponsibility
+	self signalUnsupportedAttribute
+]
+
+{ #category : 'public-attributes' }
+FileSystemStore >> numberOfHardLinksOf: aPath [
+	"Return the number of hard links of the File described by aPath"
+
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'abstract' }
@@ -220,10 +241,11 @@ FileSystemStore >> pathFromString: aString [
 	^ Path from: aString delimiter: self delimiter
 ]
 
-{ #category : 'public' }
+{ #category : 'public-attributes' }
 FileSystemStore >> permissions: aPath [
+	"Returns the permissions for the entity at <aPath>"
 
-	^self subclassResponsibility
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'converting' }
@@ -271,16 +293,22 @@ FileSystemStore >> signalFileExists: aPath [
 ]
 
 { #category : 'error signalling' }
+FileSystemStore >> signalUnsupportedAttribute [
+
+	^FileAttributeNotSupported signalWith: self
+]
+
+{ #category : 'error signalling' }
 FileSystemStore >> signalUnsupportedAttribute: attributeName [
 
 	^FileAttributeNotSupported signalWith: attributeName
 ]
 
-{ #category : 'public' }
+{ #category : 'public-attributes' }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
 
-	self subclassResponsibility
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'converting' }

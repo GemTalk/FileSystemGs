@@ -35,13 +35,6 @@ MemoryStore class >> startUp [
 ]
 
 { #category : 'accessing' }
-MemoryStore >> accessTimeOf: aPath [
-	"Return the accessTime for a specified path."
-
-	self signalUnsupportedAttribute: #accessTime
-]
-
-{ #category : 'accessing' }
 MemoryStore >> changeTimeOf: aPath [
 	"Return the date of change of the File described by aPath"
 

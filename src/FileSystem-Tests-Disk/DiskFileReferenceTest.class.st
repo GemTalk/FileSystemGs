@@ -41,10 +41,20 @@ DiskFileReferenceTest >> testAccessTime [
 ]
 
 { #category : 'tests' }
-DiskFileReferenceTest >> testCreationTime [
-	"See subclass implementations"
+DiskFileReferenceTest >> testInode [
 
 	self
-		should: [sandbox creationTime]
-		raise: FileAttributeNotSupported
+		assert: sandbox inode
+		isKindOf: Integer
+]
+
+{ #category : 'compatibility tests' }
+DiskFileReferenceTest >> testNumberOfHardLinks [
+	"See subclass implementations"
+
+	| file |
+	file := self createFile: 'hard-links'.
+	self
+		assert: file numberOfHardLinks
+		equals: 1
 ]

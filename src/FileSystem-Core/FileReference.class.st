@@ -273,6 +273,13 @@ FileReference >> hash [
 	^ path hash bitXor: filesystem hash
 ]
 
+{ #category : 'accessing' }
+FileReference >> inode [
+	"Returns the inode for this file."
+
+	^filesystem inodeOf: self path
+]
+
 { #category : 'testing' }
 FileReference >> isAbsolute [
 	^ path isAbsolute
@@ -328,6 +335,13 @@ FileReference >> moveTo: aReference [
 		to: aReference resolve.
 	result ifNotNil: [
 		self setFileSystem: result fileSystem path: result path ].		
+]
+
+{ #category : 'accessing' }
+FileReference >> numberOfHardLinks [
+	"Returns the number of hard links to this file."
+
+	^filesystem numberOfHardLinksOf: self path
 ]
 
 { #category : 'streams' }

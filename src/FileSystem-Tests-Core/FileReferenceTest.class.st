@@ -97,9 +97,11 @@ FileReferenceTest >> sandboxName [
 
 { #category : 'tests' }
 FileReferenceTest >> testAccessTime [
-	"See subclass implementations"
+	"See subclass implementations if supported."
 
-	self assert: false
+	self
+		should: [sandbox accessTime]
+		raise: FileAttributeNotSupported
 ]
 
 { #category : 'tests' }
@@ -496,9 +498,11 @@ FileReferenceTest >> testCopyAllTo [
 
 { #category : 'tests' }
 FileReferenceTest >> testCreationTime [
-	"See subclass implementations"
+	"See subclass implementations if supported."
 
-	self assert: false
+	self
+		should: [sandbox creationTime]
+		raise: FileAttributeNotSupported
 ]
 
 { #category : 'tests' }
@@ -696,6 +700,15 @@ FileReferenceTest >> testIndicator [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testInode [
+	"See subclass implementations."
+
+	self
+		should: [sandbox inode]
+		raise: FileAttributeNotSupported
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsAbsolute [
 
 	self
@@ -779,6 +792,17 @@ FileReferenceTest >> testModificationTime [
 	self
 		assert: sandbox modificationTime
 		isKindOf: DateAndTime
+]
+
+{ #category : 'compatibility tests' }
+FileReferenceTest >> testNumberOfHardLinks [
+	"See subclass implementations"
+
+	| file |
+	file := self createFile: 'hard-links'.
+	self
+		should: [file numberOfHardLinks]
+		raise: FileAttributeNotSupported
 ]
 
 { #category : 'tests' }

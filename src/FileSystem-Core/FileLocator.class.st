@@ -277,11 +277,6 @@ FileLocator >> doesNotUnderstand: aMessage [
 	^ super doesNotUnderstand: aMessage.
 ]
 
-{ #category : 'accessing' }
-FileLocator >> fullPath [
-	^ self resolve path
-]
-
 { #category : 'comparing' }
 FileLocator >> hash [
 	^ origin hash bitXor: path hash

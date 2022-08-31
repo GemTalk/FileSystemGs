@@ -296,6 +296,13 @@ FileSystem >> hash [
 	^self store hash
 ]
 
+{ #category : 'public' }
+FileSystem >> inodeOf: aResolvable [
+	"Returns the access date of aResolvable"
+
+	^self store inodeOf: (self resolve: aResolvable)
+]
+
 { #category : 'public-testing' }
 FileSystem >> isCaseSensitive [
 	"This method doesn't really make a whole lot of sense in this form.
@@ -377,6 +384,13 @@ FileSystem >> move: sourcePath to: destination [
 	] ifFalse:
 		[ self copyAndDelete: sourcePath to: fullDestination ].
 	^fullDestination
+]
+
+{ #category : 'public' }
+FileSystem >> numberOfHardLinksOf: aResolvable [
+	"Returns the hard links of aResolvable"
+
+	^self store numberOfHardLinksOf: (self resolve: aResolvable)
 ]
 
 { #category : 'public' }

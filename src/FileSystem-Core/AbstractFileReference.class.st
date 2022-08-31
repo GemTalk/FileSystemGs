@@ -7,11 +7,6 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
-{ #category : 'hacks' }
-AbstractFileReference class >> fixMe [
-	"Senders of this message should be fixed before release."
-]
-
 { #category : 'copying' }
 AbstractFileReference >> , extension [
 	^ self resolve, extension
@@ -37,6 +32,13 @@ AbstractFileReference >> absolutePath [
 ]
 
 { #category : 'accessing' }
+AbstractFileReference >> accessTime [
+	"Returns the access time for the referenced file."
+
+	^self resolve accessTime
+]
+
+{ #category : 'enumerating' }
 AbstractFileReference >> allChildren [
 	"Returns all children of the receiver."
 
@@ -114,13 +116,6 @@ AbstractFileReference >> asResolvedBy: anObject [
 ]
 
 { #category : 'accessing' }
-AbstractFileReference >> attributes [
-	"Return a FileAttributes w/ information about the reference."
-
-	^self resolve attributes
-]
-
-{ #category : 'accessing' }
 AbstractFileReference >> base [
 	"Returns the base of the basename, i.e. /foo/gloops.taz base is 'gloops'"
 	^ self fullPath base
@@ -152,12 +147,12 @@ AbstractFileReference >> basenameWithoutExtension: anExtension [
 	^ self fullPath basenameWithoutExtension: anExtension
 ]
 
-{ #category : 'streams-compatibility' }
+{ #category : 'streams' }
 AbstractFileReference >> binaryReadStream [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'streams-compatibility' }
+{ #category : 'streams' }
 AbstractFileReference >> binaryReadStreamDo: aBlock [
 	| stream |
 	stream := self binaryReadStream.
@@ -165,14 +160,14 @@ AbstractFileReference >> binaryReadStreamDo: aBlock [
 		ensure: [ stream close ]
 ]
 
-{ #category : 'streams-compatibility' }
+{ #category : 'streams' }
 AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
 	^ self isFile 
 		ifTrue: [ self binaryReadStreamDo: doBlock ]
 		ifFalse: absentBlock
 ]
 
-{ #category : 'streams-compatibility' }
+{ #category : 'streams' }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
 	^ self isFile
 		ifTrue: [ self binaryReadStream ]
@@ -209,6 +204,13 @@ AbstractFileReference >> canonicalize [
 	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
 
 	^ self withPath: self resolve path canonicalize
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> changeTime [
+	"Returns the change time for the referenced file."
+
+	^self resolve changeTime
 ]
 
 { #category : 'enumerating' }
@@ -450,7 +452,14 @@ AbstractFileReference >> fullNameWithIndicator [
 AbstractFileReference >> fullPath [
 	"Returns the absolute path, better use absolutePath"
 	
-	^ self subclassResponsibility
+	^self resolve path
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> gid [
+	"Return the group id associated with this file."
+
+	^self flag: 'Implement me'
 ]
 
 { #category : 'testing' }
@@ -580,6 +589,13 @@ AbstractFileReference >> moveTo: aReference [
 	(FileSystem disk workingDirectory / 'paf' ) moveTo: (FileSystem disk workingDirectory / 'fooFolder' / 'paf')
 	"
 	^ self resolve moveTo: aReference
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> numberOfHardLinks [
+	"Returns the number of hard links to this file."
+
+	^self resolve numberOfHardLinks
 ]
 
 { #category : 'streams' }
@@ -772,6 +788,13 @@ AbstractFileReference >> writeStreamDo: aBlock [
 ]
 
 { #category : 'streams' }
+AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
+	^ self isFile
+		ifTrue: presentBlock
+		ifFalse: [ self writeStreamDo: doBlock ]
+]
+
+{ #category : 'streams' }
 AbstractFileReference >> writeStreamEncoded: anEncoding [
 
 	^ ZnCharacterWriteStream
@@ -785,4 +808,11 @@ AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
 	stream := self writeStreamEncoded: anEncoding.
 	^ [ aBlock value: stream ]
 		ensure: [ stream close ]
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> writeStreamIfPresent: presentBlock [
+	^ self isFile 
+		ifTrue: presentBlock
+		ifFalse: [ self writeStream ]
 ]

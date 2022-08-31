@@ -133,13 +133,6 @@ DiskStore >> createDirectory: path [
 ]
 
 { #category : 'accessing' }
-DiskStore >> creationTimeOf: aPath [
-	"Return the size of the File described by aPath"
-
-	self signalUnsupportedAttribute: #creationTime
-]
-
-{ #category : 'accessing' }
 DiskStore >> currentWorkingDirectoryPath [
 	"Answer an absolute Path for the current working directory of the VM."
 
@@ -298,6 +291,13 @@ DiskStore >> initialize [
 	maxFileNameLength := 255.
 ]
 
+{ #category : 'accessing' }
+DiskStore >> inodeOf: aPath [
+	"Returns the path's inode"
+
+	^(self stat: aPath) inode
+]
+
 { #category : 'testing' }
 DiskStore >> isDirectory: aPath [
 
@@ -395,6 +395,13 @@ DiskStore >> modificationTimeOf: aPath [
 	"Return the size of the File described by aPath"
 
 	^(self stat: aPath) modificationTime asDateAndTime
+]
+
+{ #category : 'public-attributes' }
+DiskStore >> numberOfHardLinksOf: aPath [
+	"Return the number of hard links of the File described by aPath"
+
+	^(self stat: aPath) numberOfHardLinks
 ]
 
 { #category : 'public' }

@@ -10,6 +10,13 @@ Class {
 	#category : 'FileSystem-Tests-Core'
 }
 
+{ #category : 'asserting' }
+FileLocatorTest >> assert: anObject
+isKindOf: aClass [
+
+	^self assert: (anObject isKindOf: aClass)
+]
+
 { #category : 'compatibility tests' }
 FileLocatorTest >> testAsAbsolute [
 	locator := FileLocator image.
@@ -81,6 +88,16 @@ FileLocatorTest >> testImageDirectory [
 ]
 
 { #category : 'compatibility tests' }
+FileLocatorTest >> testInode [
+
+	| temp |
+	temp := FileLocator temp.
+	self
+		assert: temp inode
+		isKindOf: Integer
+]
+
+{ #category : 'compatibility tests' }
 FileLocatorTest >> testIsAbsolute [
 	locator := FileLocator image.
 	self assert: locator isAbsolute
@@ -121,6 +138,14 @@ FileLocatorTest >> testMoveTo [
 		old ensureDelete.
 		new ensureDelete.
 	]
+]
+
+{ #category : 'compatibility tests' }
+FileLocatorTest >> testNumberOfHardLinks [
+
+	| temp |
+	temp := FileLocator temp.
+	self assert: temp numberOfHardLinks > 0
 ]
 
 { #category : 'compatibility tests' }
