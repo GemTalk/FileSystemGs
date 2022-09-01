@@ -683,6 +683,47 @@ FileReferenceTest >> testHasFiles [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIfExistsIfAbsent [
+
+	| marker file result |
+	marker := Object new.
+	file := sandbox / 'ifExists-ifAbsent'.
+
+	self deny: file exists.
+	result := file ifAbsent: [marker].
+	self
+		assert: result
+		equals: marker.
+	result := file ifExists: [marker].
+	self
+		assert: result
+		equals: file.
+	result := file
+		ifExists: [self assert: false]
+		ifAbsent: [marker].
+	self
+		assert: result
+		equals: marker.
+
+	file createFile.
+	self assert: file exists.
+	result := file ifAbsent: [self assert: false].
+	self
+		assert: result
+		equals: file.
+	result := file ifExists: [marker].
+	self
+		assert: result
+		equals: marker.
+	result := file
+		ifExists: [marker]
+		ifAbsent: [self assert: false].
+	self
+		assert: result
+		equals: marker
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIndicator [
 
 	| referenceToNothing file |
