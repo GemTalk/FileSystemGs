@@ -93,3 +93,10 @@ MemoryFileSystemDirectory >> initialize [
 MemoryFileSystemDirectory >> isDirectory [
 	^ true
 ]
+
+{ #category : 'accessing' }
+MemoryFileSystemDirectory >> permissions [
+	"Return the closest posix permissions for this entity."
+
+	^FileSystemPermission posixPermissions: 8r777
+]

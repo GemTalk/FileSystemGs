@@ -87,8 +87,9 @@ FileLocatorTest >> testIfExistsIfAbsent [
 	| marker file result |
 	marker := Object new.
 	file := FileLocator temp / 'ifExists-ifAbsent'.
+	file ensureDelete.
 
-	self deny: file exists.
+	[self deny: file exists.
 	result := file ifAbsent: [marker].
 	self
 		assert: result
@@ -119,7 +120,8 @@ FileLocatorTest >> testIfExistsIfAbsent [
 		ifAbsent: [self assert: false].
 	self
 		assert: result
-		equals: marker
+		equals: marker]
+	ensure: [file ensureDelete]
 ]
 
 { #category : 'resolution tests' }

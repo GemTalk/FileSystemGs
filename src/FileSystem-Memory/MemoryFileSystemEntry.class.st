@@ -86,3 +86,10 @@ MemoryFileSystemEntry >> modificationTime: anObject [
 MemoryFileSystemEntry >> modified [
 	modificationTime := DateAndTime now.
 ]
+
+{ #category : 'accessing' }
+MemoryFileSystemEntry >> permissions [
+	"Return the closest posix permissions for this entity."
+
+	self subclassResponsibility
+]

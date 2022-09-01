@@ -292,6 +292,23 @@ DiskStore >> inodeOf: aPath [
 ]
 
 { #category : 'testing' }
+DiskStore >> isBlock: aPath [
+	"Return true if the argument refers to a block device."
+
+	aPath isRoot ifTrue: [^false].
+	^[(self stat: aPath) isBlock]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
+]
+
+{ #category : 'testing' }
+DiskStore >> isCharacter: aPath [
+	"Return true if the argument refers to a character device."
+
+	^(self stat: aPath) isCharacter
+]
+
+{ #category : 'testing' }
 DiskStore >> isDirectory: aPath [
 
 	aPath isRoot ifTrue: [^true].
@@ -305,7 +322,17 @@ DiskStore >> isDiskFileSystem [
 	^ true
 ]
 
-{ #category : 'public' }
+{ #category : 'testing' }
+DiskStore >> isFifo: aPath [
+	"Return true if the argument refers to a fifo file."
+
+	aPath isRoot ifTrue: [^false].
+	^[(self stat: aPath) isFifo]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
+]
+
+{ #category : 'testing' }
 DiskStore >> isFile: aPath [
 
 	aPath isRoot ifTrue: [^false].
@@ -324,6 +351,23 @@ DiskStore >> isReadable: aPath [
 			"File close: id."
 			^ true].
 	^ false
+]
+
+{ #category : 'testing' }
+DiskStore >> isRegular: aPath [
+	"Return true if the argument refers to a regular file."
+
+	^self isFile: aPath
+]
+
+{ #category : 'testing' }
+DiskStore >> isSocket: aPath [
+	"Return true if the argument refers to a socket file."
+
+	aPath isRoot ifTrue: [^false].
+	^[(self stat: aPath) isSocket]
+		on: FileDoesNotExistException
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'public' }

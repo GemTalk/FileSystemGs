@@ -268,12 +268,40 @@ MemoryStore >> initialize [
 ]
 
 { #category : 'testing' }
+MemoryStore >> isBlock: aPath [
+	"We do not have block devices in a memory file system."
+
+	^false
+]
+
+{ #category : 'testing' }
+MemoryStore >> isCharacter: aPath [
+	"We do not have character devices in a memory file system."
+
+	^false
+]
+
+{ #category : 'testing' }
 MemoryStore >> isDirectory: aPath [
 
 	^self
 		entryAt: aPath
 		ifPresent: [:entry | entry isDirectory]
 		ifAbsent: [false]
+]
+
+{ #category : 'testing' }
+MemoryStore >> isExecutable: aPath [
+	"Files are not executable but directories always are in the unix sense."
+
+	^self isDirectory: aPath
+]
+
+{ #category : 'testing' }
+MemoryStore >> isFifo: aPath [
+	"We do not have fifo  files in a memory file system."
+
+	^false
 ]
 
 { #category : 'testing' }
@@ -288,6 +316,20 @@ MemoryStore >> isFile: aPath [
 { #category : 'testing' }
 MemoryStore >> isMemoryFileSystem [
 	^ true
+]
+
+{ #category : 'testing' }
+MemoryStore >> isRegular: aPath [
+	"Return true if the argument refers to a regular file."
+
+	^self isFile: aPath
+]
+
+{ #category : 'testing' }
+MemoryStore >> isSocket: aPath [
+	"We do not have socket files in a memory file system."
+
+	^false
 ]
 
 { #category : 'testing' }

@@ -24,15 +24,43 @@ StatStruct_Linux >> inode [
 ]
 
 { #category : 'testing' }
+StatStruct_Linux >> isBlock [
+	"true for a block device"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifblk
+]
+
+{ #category : 'testing' }
+StatStruct_Linux >> isCharacter [
+	"true for a character device"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifchr
+]
+
+{ #category : 'testing' }
 StatStruct_Linux >> isDirectory [
 
 	^(self st_mode bitAnd: self s_ifmt) == self s_ifdir
 ]
 
 { #category : 'testing' }
+StatStruct_Linux >> isFifo [
+	"true for a fifio"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ififo
+]
+
+{ #category : 'testing' }
 StatStruct_Linux >> isFile [
 
 	^(self st_mode bitAnd: self s_ifmt) == self s_ifreg
+]
+
+{ #category : 'testing' }
+StatStruct_Linux >> isSocket [
+	"true for a socket"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifsock
 ]
 
 { #category : 'testing' }

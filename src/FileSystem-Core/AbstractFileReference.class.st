@@ -546,6 +546,20 @@ AbstractFileReference >> isAbsolute [
 ]
 
 { #category : 'testing' }
+AbstractFileReference >> isBlock [
+	"Is this reference to a block device?"
+
+	^self resolve isBlock
+]
+
+{ #category : 'testing' }
+AbstractFileReference >> isCharacter [
+	"Is this reference to a character device?"
+
+	^self resolve isCharacter
+]
+
+{ #category : 'testing' }
 AbstractFileReference >> isChildOf: anObject [
 	^ self parent = anObject
 ]
@@ -562,6 +576,22 @@ AbstractFileReference >> isDirectory [
 ]
 
 { #category : 'testing' }
+AbstractFileReference >> isExecutable [
+	"Is this reference to a something that is executable?"
+	"This probably needs to take into account whether the 
+	file owner is the process owner."
+
+	^self permissions ownerExecute
+]
+
+{ #category : 'testing' }
+AbstractFileReference >> isFifo [
+	"Is this reference to a fifo file?"
+
+	^self resolve isFifo
+]
+
+{ #category : 'testing' }
 AbstractFileReference >> isFile [
 	^ self resolve isFile
 ]
@@ -572,6 +602,13 @@ AbstractFileReference >> isReadable [
 ]
 
 { #category : 'testing' }
+AbstractFileReference >> isRegular [
+	"Is this reference to a regular file?"
+
+	^self resolve isRegular
+]
+
+{ #category : 'testing' }
 AbstractFileReference >> isRelative [ 
 	self subclassResponsibility 
 ]
@@ -579,6 +616,13 @@ AbstractFileReference >> isRelative [
 { #category : 'testing' }
 AbstractFileReference >> isRoot [
 	^ self resolve isRoot
+]
+
+{ #category : 'testing' }
+AbstractFileReference >> isSocket [
+	"Is this reference to a socket?"
+
+	^self resolve isSocket
 ]
 
 { #category : 'testing' }

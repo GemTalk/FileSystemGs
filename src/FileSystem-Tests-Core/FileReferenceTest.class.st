@@ -758,6 +758,20 @@ FileReferenceTest >> testIsAbsolute [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIsBlock [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsCharacter [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsChildOf [
 
 	| alpha beta gamma alphaPath |
@@ -789,6 +803,20 @@ FileReferenceTest >> testIsDirectory [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIsExecutable [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsFifo [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsFile [
 
 	| doesNotExist file |
@@ -799,6 +827,13 @@ FileReferenceTest >> testIsFile [
 		deny: sandbox isFile;
 		deny: doesNotExist isFile;
 		assert: file isFile
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsRegular [
+	"See subclass implementations."
+
+	self assert: false
 ]
 
 { #category : 'tests' }
@@ -815,6 +850,13 @@ FileReferenceTest >> testIsRoot [
 	self
 		assert: self fileSystem root isRoot;
 		deny: sandbox isRoot
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsSocket [
+	"See subclass implementations."
+
+	self assert: false
 ]
 
 { #category : 'tests' }

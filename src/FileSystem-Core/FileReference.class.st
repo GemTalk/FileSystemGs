@@ -286,8 +286,29 @@ FileReference >> isAbsolute [
 ]
 
 { #category : 'testing' }
+FileReference >> isBlock [
+	"Is this reference to a block device?"
+
+	^filesystem isBlock: self path
+]
+
+{ #category : 'testing' }
+FileReference >> isCharacter [
+	"Is this reference to a character device?"
+
+	^filesystem isCharacter: self path
+]
+
+{ #category : 'testing' }
 FileReference >> isDirectory [
 	^ filesystem isDirectory: path
+]
+
+{ #category : 'testing' }
+FileReference >> isFifo [
+	"Is this reference to a fifo file?"
+
+	^filesystem isFifo: self path
 ]
 
 { #category : 'testing' }
@@ -301,6 +322,13 @@ FileReference >> isReadable [
 ]
 
 { #category : 'testing' }
+FileReference >> isRegular [
+	"Is this reference to a regular file?"
+
+	^filesystem isRegular: self path
+]
+
+{ #category : 'testing' }
 FileReference >> isRelative [
 	^ path isRelative
 ]
@@ -308,6 +336,13 @@ FileReference >> isRelative [
 { #category : 'testing' }
 FileReference >> isRoot [
 	^ path isRoot
+]
+
+{ #category : 'testing' }
+FileReference >> isSocket [
+	"Is this reference to a socket?"
+
+	^filesystem isSocket: self path
 ]
 
 { #category : 'testing' }

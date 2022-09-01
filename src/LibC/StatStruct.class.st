@@ -58,6 +58,20 @@ StatStruct >> inode [
 ]
 
 { #category : 'testing' }
+StatStruct >> isBlock [
+	"true for a block device"
+
+	self subclassResponsibility
+]
+
+{ #category : 'testing' }
+StatStruct >> isCharacter [
+	"true for a character device"
+
+	self subclassResponsibility
+]
+
+{ #category : 'testing' }
 StatStruct >> isDirectory [
 	"Returns true if the stat was performed on a directory."
 
@@ -65,8 +79,22 @@ StatStruct >> isDirectory [
 ]
 
 { #category : 'testing' }
+StatStruct >> isFifo [
+	"true for a fifio"
+
+	self subclassResponsibility
+]
+
+{ #category : 'testing' }
 StatStruct >> isFile [
 	"Returns true if the stat was performed on a normal file."
+
+	self subclassResponsibility
+]
+
+{ #category : 'testing' }
+StatStruct >> isSocket [
+	"true for a socket"
 
 	self subclassResponsibility
 ]

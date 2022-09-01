@@ -304,6 +304,13 @@ FileSystem >> inodeOf: aResolvable [
 ]
 
 { #category : 'public-testing' }
+FileSystem >> isBlock: aResolvable [
+	"Return true if the argument refers to a block device."
+
+	^self store isBlock: (self resolve: aResolvable)
+]
+
+{ #category : 'public-testing' }
 FileSystem >> isCaseSensitive [
 	"This method doesn't really make a whole lot of sense in this form.
 	On macOS and Linux, you could have a case-insensitive root but a
@@ -315,11 +322,25 @@ FileSystem >> isCaseSensitive [
 ]
 
 { #category : 'public-testing' }
+FileSystem >> isCharacter: aResolvable [
+	"Return true if the argument refers to a character device."
+
+	^self store isCharacter: (self resolve: aResolvable)
+]
+
+{ #category : 'public-testing' }
 FileSystem >> isDirectory: aResolvable [
 	"Resolve the argument, and answer true if the result refers
 	to a directory, false if it refers to a file or doesn't exist."
 
 	^self store isDirectory: (self resolve: aResolvable)
+]
+
+{ #category : 'public-testing' }
+FileSystem >> isFifo: aResolvable [
+	"Return true if the argument refers to a fifo file."
+
+	^self store isFifo: (self resolve: aResolvable)
 ]
 
 { #category : 'public-testing' }
@@ -336,6 +357,20 @@ FileSystem >> isReadable: aResolvable [
 	a file or directory that can be read from."
 	
 	^ (self permissions: aResolvable) isReadable
+]
+
+{ #category : 'public-testing' }
+FileSystem >> isRegular: aResolvable [
+	"Return true if the argument refers to a regular file."
+
+	^self store isRegular: (self resolve: aResolvable)
+]
+
+{ #category : 'public-testing' }
+FileSystem >> isSocket: aResolvable [
+	"Return true if the argument refers to a socket file."
+
+	^self store isSocket: (self resolve: aResolvable)
 ]
 
 { #category : 'public-testing' }

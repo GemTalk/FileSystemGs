@@ -129,6 +129,13 @@ MemoryFileSystemFile >> isDirectory [
 	^ false
 ]
 
+{ #category : 'accessing' }
+MemoryFileSystemFile >> permissions [
+	"Return the closest posix permissions for this entity."
+
+	^FileSystemPermission posixPermissions: 8r666
+]
+
 { #category : 'stream-protocol' }
 MemoryFileSystemFile >> readStream [
 	^ ReadStream on: self bytes asString from: 1 to: size

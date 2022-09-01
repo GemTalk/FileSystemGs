@@ -31,15 +31,43 @@ StatStruct_macOS >> inode [
 ]
 
 { #category : 'testing' }
+StatStruct_macOS >> isBlock [
+	"true for a block device"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifblk
+]
+
+{ #category : 'testing' }
+StatStruct_macOS >> isCharacter [
+	"true for a character device"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifchr
+]
+
+{ #category : 'testing' }
 StatStruct_macOS >> isDirectory [
 
 	^(self st_mode bitAnd: self s_ifmt) == self s_ifdir
 ]
 
 { #category : 'testing' }
+StatStruct_macOS >> isFifo [
+	"true for a fifio"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ififo
+]
+
+{ #category : 'testing' }
 StatStruct_macOS >> isFile [
 
 	^(self st_mode bitAnd: self s_ifmt) == self s_ifreg
+]
+
+{ #category : 'testing' }
+StatStruct_macOS >> isSocket [
+	"true for a socket"
+
+	^(self st_mode bitAnd: self s_ifmt) == self s_ifsock
 ]
 
 { #category : 'testing' }
