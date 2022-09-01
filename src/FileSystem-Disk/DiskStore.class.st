@@ -6,7 +6,6 @@ Class {
 	#name : 'DiskStore',
 	#superclass : 'FileSystemStore',
 	#instVars : [
-		'maxFileNameLength',
 		'libcDirent',
 		'libcFcntl',
 		'libcUnistd',
@@ -285,12 +284,6 @@ DiskStore >> hash [
 	^self species hash
 ]
 
-{ #category : 'initialization' }
-DiskStore >> initialize [
-	super initialize.
-	maxFileNameLength := 255.
-]
-
 { #category : 'accessing' }
 DiskStore >> inodeOf: aPath [
 	"Returns the path's inode"
@@ -387,7 +380,9 @@ DiskStore >> libcUnistd [
 
 { #category : 'public' }
 DiskStore >> maxFileNameLength [
-	^ maxFileNameLength
+	"Returns the max file name length for this store."
+
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

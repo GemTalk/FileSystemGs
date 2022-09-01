@@ -13,3 +13,10 @@ MacOSStore >> fileOpeningOptionsClass [
 
 	^MacOSFileOpeningOptions
 ]
+
+{ #category : 'accessing' }
+MacOSStore >> maxFileNameLength [
+	"Returns the max file name length"
+
+	^1024
+]
