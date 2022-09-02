@@ -4,15 +4,10 @@ FileSystem doesn't have an standard document describing the classes and methods 
 
 Pharo 10's FileSystem implementation will serve as our development target. Not all classes or methods from the Pharo implementation will exist in GemStone.
 
-## Known Deviations
-
-GemStone's FileSystem does not include code to support Classic Mac OS. Mac OS X was renamed to macOS with the introduction of macOS 11. GemStone reflects this change. Evaluating `OSPlatform current family` on macOS will result in `#MacOSX` for compatibility reasons.
-
 ## Shared Interface
 
 The classes provided in the list below server as interfaces GemStone will implement. Methods are not explicitly enumerated due to both number of methods and the likelihood of them changing. GemStone will provide critical high-level methods. It may not include methods like `FileLocator class>>#A` since this is a Windows construct. 
 
-- OSPlatform
 - AbstractFileReference
   - FileLocator
   - FileReference
