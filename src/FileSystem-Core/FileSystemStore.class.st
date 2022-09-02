@@ -167,6 +167,15 @@ FileSystemStore >> exists: aPath [
 	self subclassResponsibility
 ]
 
+{ #category : 'public-operations' }
+FileSystemStore >> file: aPath
+uid: uid
+gid: gid [
+	"Set the uid and gid for the specified file."
+
+	self signalUnsupportedAttribute
+]
+
 { #category : 'private' }
 FileSystemStore >> filename: aByteString matches: aByteString2 [
 	^ aByteString = aByteString2

@@ -73,6 +73,12 @@ on: anArch [
 	^(System gemVersionAt: 'osName') = anOS and: [(System gemVersionAt: 'cpuArchitecture') = anArch]
 ]
 
+{ #category : 'current' }
+DiskStore class >> resetCurrent [
+
+	SessionTemps current removeKey: self cacheKey
+]
+
 { #category : 'comparing' }
 DiskStore >> = other [
 
@@ -264,6 +270,23 @@ DiskStore >> exists: aPath [
 		on: FileDoesNotExistException
 		do: [:ex | ^false].
 	^true
+]
+
+{ #category : 'public-operations' }
+DiskStore >> file: aPath
+uid: uid
+gid: gid [
+	"Set the uid and gid for the specified file."
+
+	| pathString |
+	pathString := self stringFromPath: aPath.
+	[self libcUnistd
+		chown: pathString
+		uid: uid
+		gid: gid]
+		on: ENOENT
+		do: [:ex | FileDoesNotExistException signal: aPath].
+	^nil
 ]
 
 { #category : 'accessing' }

@@ -9,10 +9,34 @@ Class {
 		'rmdir',
 		'ftruncate',
 		'unlink',
-		'write'
+		'write',
+		'chown'
 	],
 	#category : 'LibC'
 }
+
+{ #category : 'functions' }
+LibcUnistd >> chown: pathString
+uid: uidInteger
+gid: gidInteger [
+
+	| errnoHolder result |
+	chown == nil
+		ifTrue:
+			[chown := CCallout
+				library: library
+				name: 'chown'
+				result: #'int32'
+				args: #(#'const char*' #'uint32' #'uint32')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := chown
+		callWith: { pathString. uidInteger. gidInteger }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
 
 { #category : 'functions' }
 LibcUnistd >> closeFd: fdInteger [

@@ -501,6 +501,19 @@ FileReference >> uid [
 	^filesystem uidOf: self path
 ]
 
+{ #category : 'operations' }
+FileReference >> uid: uid
+gid: gid [
+	"Set the user and group ID for the represented file."
+	"A reliable method of testing this has not yet been found.
+	For now, no SUnit exists."
+
+	^filesystem
+		file: self path
+		uid: uid
+		gid: gid
+]
+
 { #category : 'streams' }
 FileReference >> writeStream [
 	

@@ -275,6 +275,18 @@ FileSystem >> extensionDelimiter [
 	^ $.
 ]
 
+{ #category : 'public-operations' }
+FileSystem >> file: aResolvable
+uid: uid
+gid: gid [
+	"Set the uid and gid for the specified file."
+
+	^self store
+		file: (self resolve: aResolvable)
+		uid: uid
+		gid: gid
+]
+
 { #category : 'public-enumerating' }
 FileSystem >> fileNamesAt: aResolvable
 ifAbsent: anAbsentBlock
