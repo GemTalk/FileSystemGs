@@ -68,6 +68,12 @@ FileSystemPermission >> groupWrite [
 	^ self permissionBitAt: 5
 ]
 
+{ #category : 'comparing' }
+FileSystemPermission >> hash [
+
+	^self species hash bitXor: self posixPermission hash
+]
+
 { #category : 'initialization' }
 FileSystemPermission >> initialize [
 ]
