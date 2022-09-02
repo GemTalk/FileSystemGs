@@ -8,4 +8,6 @@
 #define ConstDetail(x_const) printf("%09o " #x_const "\n", x_const)
 #define ConstUnsupported(x_const) printf("--------- " #x_const "\n")
 
+#define TypeDetail(type) printf(#type "\n\tsize:%ld\n", sizeof(type))
+
 #endif /* _FS_UTILS_H */

@@ -35,6 +35,10 @@ int main() {
   ConstUnsupported(O_SEARCH);
   ConstDetail(O_WRONLY);
 
+  TypeDetail(mode_t);
+
+  int result = chmod("/does/not/exist", 0777);
+
   int fd = open("/tmp/test.dir", O_WRONLY|O_CREAT, 0777);
   return fd;
 }
