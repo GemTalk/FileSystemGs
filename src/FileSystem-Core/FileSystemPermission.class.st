@@ -38,6 +38,12 @@ FileSystemPermission >> <= other [
 ]
 
 { #category : 'comparing' }
+FileSystemPermission >> = permissions [
+
+	^self species = permissions species and: [self posixPermission = permissions posixPermission]
+]
+
+{ #category : 'comparing' }
 FileSystemPermission >> > other [
 	^ other posixPermission < posixPermission
 ]

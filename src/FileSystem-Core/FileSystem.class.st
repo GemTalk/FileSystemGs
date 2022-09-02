@@ -277,6 +277,16 @@ FileSystem >> extensionDelimiter [
 
 { #category : 'public-operations' }
 FileSystem >> file: aResolvable
+posixPermission: posixPermission [
+	"Set the permissions for the specified file."
+
+	^self store
+		file: (self resolve: aResolvable)
+		posixPermission: posixPermission
+]
+
+{ #category : 'public-operations' }
+FileSystem >> file: aResolvable
 uid: uid
 gid: gid [
 	"Set the uid and gid for the specified file."

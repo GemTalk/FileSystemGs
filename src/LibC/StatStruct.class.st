@@ -142,6 +142,13 @@ StatStruct >> numberOfHardLinks [
 ]
 
 { #category : 'accessing' }
+StatStruct >> permission [
+	"Returns the permission of the file."
+
+	^self mode bitAnd: 8r777 "This should be a mask"
+]
+
+{ #category : 'accessing' }
 StatStruct >> size [
 	"Returns the size of the file when stat was called."
 

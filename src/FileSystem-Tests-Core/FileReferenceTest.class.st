@@ -941,6 +941,13 @@ FileReferenceTest >> testParentUpTo [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testPermissions [
+	"See subclasses implementations if supported."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testReadStream [
 
 	| plonk absent directory |

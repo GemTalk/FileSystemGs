@@ -88,3 +88,15 @@ MemoryFileReferenceTest >> testIsSocket [
 		deny: sandbox isSocket;
 		deny: (self createFile: 'not-socket') isSocket
 ]
+
+{ #category : 'tests' }
+MemoryFileReferenceTest >> testPermissions [
+	"See subclasses implementations if supported."
+
+	self
+		assert: sandbox permissions
+		isKindOf: FileSystemPermission.
+	self
+		should: [sandbox permissions: (FileSystemPermission posixPermissions: 8r777)]
+		raise: FileAttributeNotSupported
+]

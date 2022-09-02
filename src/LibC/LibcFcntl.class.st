@@ -2,10 +2,18 @@ Class {
 	#name : 'LibcFcntl',
 	#superclass : 'LibcInterface',
 	#instVars : [
-		'open'
+		'open',
+		'chmod'
 	],
 	#category : 'LibC'
 }
+
+{ #category : 'functions' }
+LibcFcntl >> chmod: pathString
+posixPermission: posixPermission [
+
+	self subclassResponsibility
+]
 
 { #category : 'functions' }
 LibcFcntl >> openPath: pathString flags: flagsInteger mode: modeInteger [

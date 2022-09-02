@@ -169,6 +169,14 @@ FileSystemStore >> exists: aPath [
 
 { #category : 'public-operations' }
 FileSystemStore >> file: aPath
+posixPermission: posixPermission [
+	"Set the permissions for the specified file."
+
+	self signalUnsupportedAttribute
+]
+
+{ #category : 'public-operations' }
+FileSystemStore >> file: aPath
 uid: uid
 gid: gid [
 	"Set the uid and gid for the specified file."

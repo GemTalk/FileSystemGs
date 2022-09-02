@@ -423,6 +423,15 @@ FileReference >> permissions [
 	^ filesystem permissions: self path
 ]
 
+{ #category : 'operations' }
+FileReference >> permissions: permissions [
+	"Set file permissions to those specified in the argument"
+
+	^filesystem
+		file: self path
+		posixPermission: permissions posixPermission
+]
+
 { #category : 'printing' }
 FileReference >> printOn: aStream [
 	filesystem forReferencePrintOn: aStream.

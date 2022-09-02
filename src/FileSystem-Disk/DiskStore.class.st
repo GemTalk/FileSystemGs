@@ -274,6 +274,21 @@ DiskStore >> exists: aPath [
 
 { #category : 'public-operations' }
 DiskStore >> file: aPath
+posixPermission: posixPermission [
+	"Set the permissions for the specified file."
+
+	| pathString |
+	pathString := self stringFromPath: aPath.
+	[self libcFcntl
+		chmod: pathString
+		mode: posixPermission]
+		on: ENOENT
+		do: [:ex | FileDoesNotExistException signal: aPath].
+	^nil
+]
+
+{ #category : 'public-operations' }
+DiskStore >> file: aPath
 uid: uid
 gid: gid [
 	"Set the uid and gid for the specified file."
@@ -504,7 +519,7 @@ DiskStore >> permissions: aPath [
 
 	| stat |
 	stat := self stat: aPath.
-	^FileSystemPermission posixPermissions: stat mode
+	^FileSystemPermission posixPermissions: stat permission
 ]
 
 { #category : 'public' }

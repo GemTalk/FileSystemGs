@@ -164,6 +164,28 @@ DiskFileReferenceTest >> testNumberOfHardLinks [
 ]
 
 { #category : 'tests' }
+DiskFileReferenceTest >> testPermissions [
+	"See subclasses implementations if supported."
+
+	| rw rwe original |
+	rw := FileSystemPermission posixPermissions: 8r666.
+	rwe := FileSystemPermission posixPermissions: 8r777.
+	original := sandbox permissions.
+	self
+		assert: original
+		isKindOf: FileSystemPermission.
+	sandbox permissions: rw.
+	self
+		assert: sandbox permissions
+		equals: rw.
+	sandbox permissions: rwe.
+	self
+		assert: sandbox permissions
+		equals: rwe.
+	sandbox permissions: original
+]
+
+{ #category : 'tests' }
 DiskFileReferenceTest >> testUid [
 
 	self
