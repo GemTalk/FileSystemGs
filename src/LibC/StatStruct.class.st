@@ -51,6 +51,20 @@ StatStruct >> accessTime [
 ]
 
 { #category : 'accessing' }
+StatStruct >> deviceId [
+	"Return the device id associated with this file."
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+StatStruct >> gid [
+	"Return the group id associated with this file."
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 StatStruct >> inode [
 	"Return the inode."
 
@@ -130,6 +144,13 @@ StatStruct >> numberOfHardLinks [
 { #category : 'accessing' }
 StatStruct >> size [
 	"Returns the size of the file when stat was called."
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+StatStruct >> uid [
+	"Return the user id associated with this file."
 
 	self subclassResponsibility
 ]

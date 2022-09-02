@@ -199,6 +199,13 @@ FileReference >> deleteIfAbsent: aBlock [
 		ifFalse: aBlock
 ]
 
+{ #category : 'accessing' }
+FileReference >> deviceId [
+	"Returns the device identifier associated with this reference."
+
+	^filesystem deviceIdOf: self path
+]
+
 { #category : 'operations' }
 FileReference >> ensureCreateDirectory [
 	"Create if necessary a directory for the receiver."
@@ -227,6 +234,13 @@ FileReference >> fullName [
 { #category : 'accessing' }
 FileReference >> fullPath [
 	^ self path
+]
+
+{ #category : 'accessing' }
+FileReference >> gid [
+	"Return the group id associated with this file."
+
+	^filesystem gidOf: self path
 ]
 
 { #category : 'testing' }
@@ -478,6 +492,13 @@ FileReference >> targetPath [
 	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."
 
 	^filesystem targetPathOf: self path
+]
+
+{ #category : 'accessing' }
+FileReference >> uid [
+	"Return the user id associated with this file."
+
+	^filesystem uidOf: self path
 ]
 
 { #category : 'streams' }

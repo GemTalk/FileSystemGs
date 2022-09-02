@@ -318,6 +318,13 @@ AbstractFileReference >> deleteIfAbsent: aBlock [
 	self resolve deleteIfAbsent: aBlock
 ]
 
+{ #category : 'accessing' }
+AbstractFileReference >> deviceId [
+	"Returns the device identifier associated with this reference."
+
+	^self resolve deviceId
+]
+
 { #category : 'enumerating' }
 AbstractFileReference >> directories [
 	"Return all the directories (by opposition to files) contained in the receiver"
@@ -459,7 +466,7 @@ AbstractFileReference >> fullPath [
 AbstractFileReference >> gid [
 	"Return the group id associated with this file."
 
-	^self flag: 'Implement me'
+	^self resolve gid
 ]
 
 { #category : 'testing' }
@@ -814,6 +821,13 @@ AbstractFileReference >> targetPath [
 	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."
 
 	^self resolve targetPath
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> uid [
+	"Return the user id associated with this file."
+
+	^self resolve uid
 ]
 
 { #category : 'accessing' }

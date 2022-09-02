@@ -230,6 +230,13 @@ FileSystem >> delimiter [
 	^self store delimiter
 ]
 
+{ #category : 'public-accessing' }
+FileSystem >> deviceIdOf: aResolvable [
+	"Return the device id associated with this file."
+
+	^self store deviceIdOf: (self resolve: aResolvable)
+]
+
 { #category : 'public-enumerating' }
 FileSystem >> directoryNamesAt: aResolvable
 ifAbsent: anAbsentBlock
@@ -288,6 +295,13 @@ do: aBlock [
 FileSystem >> forReferencePrintOn: aStream [
 
 	self store forReferencePrintOn: aStream
+]
+
+{ #category : 'public-accessing' }
+FileSystem >> gidOf: aResolvable [
+	"Return the group id associated with this file."
+
+	^self store gidOf: (self resolve: aResolvable)
 ]
 
 { #category : 'comparing' }
@@ -597,6 +611,13 @@ FileSystem >> targetPathOf: aResolvable [
 	For symlinks, that is the file pointed to."
 
 	^self store targetPathOf: (self resolve: aResolvable)
+]
+
+{ #category : 'public-accessing' }
+FileSystem >> uidOf: aResolvable [
+	"Return the user id associated with this file."
+
+	^self store uidOf: (self resolve: aResolvable)
 ]
 
 { #category : 'accessing' }

@@ -17,6 +17,20 @@ StatStruct_Linux >> changeTime [
 ]
 
 { #category : 'accessing' }
+StatStruct_Linux >> deviceId [
+	"Return the device id associated with this file."
+
+	^self st_dev
+]
+
+{ #category : 'accessing' }
+StatStruct_Linux >> gid [
+	"Return the group id associated with this file."
+
+	^self st_gid
+]
+
+{ #category : 'accessing' }
 StatStruct_Linux >> inode [
 	"Return the inode."
 
@@ -228,4 +242,11 @@ StatStruct_Linux >> st_size [
 StatStruct_Linux >> st_uid [
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+StatStruct_Linux >> uid [
+	"Return the user id associated with this file."
+
+	^self st_uid
 ]

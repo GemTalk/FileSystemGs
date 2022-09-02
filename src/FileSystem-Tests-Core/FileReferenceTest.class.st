@@ -554,6 +554,15 @@ FileReferenceTest >> testDeleteIfAbsent [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testDeviceId [
+	"See subclass implementations if supported."
+
+	self
+		should: [sandbox deviceId]
+		raise: FileAttributeNotSupported
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testEnsureDelete [
 
 	| plonk |
@@ -635,6 +644,15 @@ FileReferenceTest >> testExists [
 	self assert: alpha exists.
 	alpha delete.
 	self deny: alpha exists
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testGid [
+	"See subclass implementations if supported."
+
+	self
+		should: [sandbox gid]
+		raise: FileAttributeNotSupported
 ]
 
 { #category : 'tests' }
@@ -1104,6 +1122,15 @@ FileReferenceTest >> testTempFilePrefixSuffix [
 	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
 	self assert: (fileRef isKindOf: FileReference).
 	self assert: fileRef exists not.
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testUid [
+	"See subclass implementations if supported."
+
+	self
+		should: [sandbox uid]
+		raise: FileAttributeNotSupported
 ]
 
 { #category : 'tests' }

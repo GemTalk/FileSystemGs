@@ -24,6 +24,20 @@ StatStruct_macOS >> changeTime [
 ]
 
 { #category : 'accessing' }
+StatStruct_macOS >> deviceId [
+	"Return the device id associated with this file."
+
+	^self st_dev
+]
+
+{ #category : 'accessing' }
+StatStruct_macOS >> gid [
+	"Return the group id associated with this file."
+
+	^self st_gid
+]
+
+{ #category : 'accessing' }
 StatStruct_macOS >> inode [
 	"Return the inode."
 
@@ -235,4 +249,11 @@ StatStruct_macOS >> st_size [
 StatStruct_macOS >> st_uid [
 
 	^bytes uint32At: 16
+]
+
+{ #category : 'accessing' }
+StatStruct_macOS >> uid [
+	"Return the user id associated with this file."
+
+	^self st_uid
 ]

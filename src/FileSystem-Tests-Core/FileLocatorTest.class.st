@@ -17,6 +17,17 @@ isKindOf: aClass [
 	^self assert: (anObject isKindOf: aClass)
 ]
 
+{ #category : 'accessing' }
+FileLocatorTest >> exampleLocator [
+
+	| example |
+	example := FileLocator temp.
+	self
+		assert: example
+		isKindOf: FileLocator.
+	^example
+]
+
 { #category : 'compatibility tests' }
 FileLocatorTest >> testAsAbsolute [
 	locator := FileLocator image.
@@ -61,6 +72,14 @@ FileLocatorTest >> testContainsReference [
 ]
 
 { #category : 'compatibility tests' }
+FileLocatorTest >> testDeviceId [
+
+	self
+		assert: self exampleLocator deviceId
+		isKindOf: Integer
+]
+
+{ #category : 'compatibility tests' }
 FileLocatorTest >> testEqual [
 	| a b |
 	a := FileLocator image.
@@ -79,6 +98,14 @@ FileLocatorTest >> testExtension [
 FileLocatorTest >> testFileSystem [
 	locator := FileLocator image.
 	self assert: (locator fileSystem isKindOf: FileSystem)
+]
+
+{ #category : 'compatibility tests' }
+FileLocatorTest >> testGid [
+
+	self
+		assert: self exampleLocator gid
+		isKindOf: Integer
 ]
 
 { #category : 'compatibility tests' }
@@ -269,6 +296,14 @@ FileLocatorTest >> testTargetPath [
 	self
 		should: [FileLocator temp targetPath]
 		raise: FileAttributeNotSupported
+]
+
+{ #category : 'compatibility tests' }
+FileLocatorTest >> testUid [
+
+	self
+		assert: self exampleLocator uid
+		isKindOf: Integer
 ]
 
 { #category : 'compatibility tests' }

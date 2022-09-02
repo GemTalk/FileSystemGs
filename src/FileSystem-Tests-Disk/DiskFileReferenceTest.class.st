@@ -57,6 +57,22 @@ DiskFileReferenceTest >> testAccessTime [
 ]
 
 { #category : 'tests' }
+DiskFileReferenceTest >> testDeviceId [
+
+	self
+		assert: sandbox deviceId
+		isKindOf: Integer
+]
+
+{ #category : 'tests' }
+DiskFileReferenceTest >> testGid [
+
+	self
+		assert: sandbox gid
+		isKindOf: Integer
+]
+
+{ #category : 'tests' }
 DiskFileReferenceTest >> testInode [
 
 	self
@@ -145,4 +161,12 @@ DiskFileReferenceTest >> testNumberOfHardLinks [
 	self
 		assert: file numberOfHardLinks
 		equals: 1
+]
+
+{ #category : 'tests' }
+DiskFileReferenceTest >> testUid [
+
+	self
+		assert: sandbox uid
+		isKindOf: Integer
 ]

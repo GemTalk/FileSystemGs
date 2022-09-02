@@ -120,6 +120,13 @@ FileSystemStore >> delimiter [
 	^ self class delimiter
 ]
 
+{ #category : 'public-attributes' }
+FileSystemStore >> deviceIdOf: aPath [
+	"Return the device id associated with this file."
+
+	self signalUnsupportedAttribute
+]
+
 { #category : 'public-enumerating' }
 FileSystemStore >> directoryAt: aPath
 ifAbsent: absentBlock
@@ -170,6 +177,13 @@ FileSystemStore >> fileSystemClass [
 	"Defines the correct subclass of FileSystem to use with this store."
 
 	^self subclassResponsibility
+]
+
+{ #category : 'public-attributes' }
+FileSystemStore >> gidOf: aPath [
+	"Return the group id associated with this file."
+
+	self signalUnsupportedAttribute
 ]
 
 { #category : 'initialization' }
@@ -322,6 +336,13 @@ FileSystemStore >> targetPathOf: aPath [
 	"Return a path of the actual file location.
 	For regular files, that is itself.
 	For symlinks, that is the file pointed to."
+
+	self signalUnsupportedAttribute
+]
+
+{ #category : 'public-attributes' }
+FileSystemStore >> uidOf: aPath [
+	"Return the user id associated with this file."
 
 	self signalUnsupportedAttribute
 ]

@@ -168,6 +168,13 @@ DiskStore >> delete: path [
 		ifFalse: [self libcUnistd unlinkPath: pathString]
 ]
 
+{ #category : 'public-attributes' }
+DiskStore >> deviceIdOf: aPath [
+	"Return the device id associated with this file."
+
+	^(self stat: aPath) deviceId
+]
+
 { #category : 'public' }
 DiskStore >> directoryAt: aPath
 ifAbsent: absentBlock
@@ -276,6 +283,13 @@ DiskStore >> fileSystemClass [
 { #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'File @ '
+]
+
+{ #category : 'public-attributes' }
+DiskStore >> gidOf: aPath [
+	"Return the group id associated with this file."
+
+	^(self stat: aPath) gid
 ]
 
 { #category : 'comparing' }
@@ -501,4 +515,11 @@ DiskStore >> stat: aPath [
 	^[self libcStat stat: pathString]
 		on: ENOENT
 		do: [:ex | self signalFileDoesNotExist: aPath]
+]
+
+{ #category : 'public-attributes' }
+DiskStore >> uidOf: aPath [
+	"Return the user id associated with this file."
+
+	^(self stat: aPath) uid
 ]
