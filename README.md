@@ -2,53 +2,24 @@
 
 Port of Pharo FileSystem implementation derived from [pharo-project/pharo](https://github.com/pharo-project/pharo).
 
-```
-## GsDevKit_home installation for GemStone3.2.15
+## Installation
 
-# GsDevKit_home installation
-#
-git clone https://github.com/GsDevKit/GsDevKit_home.git
-cd GsDevKit_home
-. bin/defHOME_PATH.env    # define GS_HOME env var and put $GS_HOME into PATH
-installServerClient
+1. Set Environment variables
+	1. `ROWAN_PROJECTS_HOME`
+	2. `TOPAZ_SRC_DIRECTORY` - topaz src files will be generated into this location
+	3. `GEMSTONE`
+	4. `ARCHBASE` - should correspond to the repo version used to build `$GEMSTONE`
+2. Clone repositories in `$ROWAN_PROJECTS_HOME`
+	1. FileSystemGs
+		- URL: `https://github.com/GemTalk/FileSystemGs`
+		- Branch: `development`
+	2. Rowan
+		- URL: `https://github.com/GemTalk/Rowan`
+		- Branch: `kurt.IntegrateWithFileSystemGs`
+3. Start NetLDI
+4. Start Stone with a Rowan extent
+5. Generate topaz source files by evaluating `$ROWAN_PROJECTS_HOME/FileSystemGs/scripts/read_and_write_file_system.gs` in topaz.
+7. Restart Stone using a non-Rowan extent.
+8. Install Rowan and FileSystemGs by evaluating `$ROWAN_PROJECTS_HOME/FileSystemGs/scripts/installRowan.tpz` in topaz.
+9. Load test cases by evaulating `(Rowan projectNamed: 'Rowan') loadProjectSet: Rowan platformConditionalAttributes, #('tests' 'v2' 'v2Only' 'testsV2' 'stubs' 'tonel')` in Topaz. Ensure you commit after this expression if you want the tests to stick around.
 
-# create a filesystem stone
-#
-export stone_name=filesystem_3215
-createStone -fg $stone_name 3.2.15
-
-# clone Rowan
-#
-cd $GS_HOME/shared/repos
-git clone git@github.com:dalehenrich/Rowan.git
-
-#clone FileSystemGs
-#
-cd $GS_HOME/shared/repos
-git clone git@git.gemtalksystems.com:FileSystemGs.git
-
-
-# setup custom_stone.env for netldi and FileSystemGs build script
-#
-cat -- >> $GS_HOME/server/stones/$stone_name/custom_stone.env << EOF
-export ROWAN_PROJECTS_HOME=\$GS_HOME/shared/repos
-EOF
-
-stopNetldi $stone_name
-startNetldi $stone_name
-
-ln -s $GS_HOME/shared/repos/FileSystemGs/platforms/gemstone/gsdevkit/stones/newBuild_SystemUser_rowan_filesystem \
-	$GS_HOME//server/stones/$stone_name/
-
-# install Rowan and FileSystemGs into a fresh stone
-#
-$GS_HOME/server/stones/$stone_name/newBuild_SystemUser_rowan_filesystem
-```
-
-## Useful Smalltalk expressions
-```smalltalk
-Rowan projectTools load
-    loadProjectFromSpecUrl: 'file:$ROWAN_PROJECTS_HOME/FileSystemGs/rowan/specs/FileSystemGs.ston'.
-Rowan projectTools delete 
-	deleteProjectNamed: 'FileSystemGs'.
-```
