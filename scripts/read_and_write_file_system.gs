@@ -14,7 +14,7 @@ signal: aRwProjectLoadSpecificationV2
 
 run
 	| projectSetModification visitor gsDirectory project projectSetDefinition fileSystemProject thePackageDict |
-	gsDirectory := '$GEMSTONE_STONE_DIR'.
+	gsDirectory := '$TOPAZ_SRC_DIRECTORY'.
 	project := Rowan 
 		projectFromUrl: 'file:$ROWAN_PROJECTS_HOME/Rowan/rowan/specs/Rowan.ston'
 		gitUrl: 'file:$ROWAN_PROJECTS_HOME/Rowan'.

@@ -10,7 +10,7 @@
 
 	input $ROWAN_PROJECTS_HOME/Rowan/platforms/gemstone/topaz/3.7.0/project_src_v2/RowanV2_tonel.gs
 commit
-	input $GEMSTONE_STONE_DIR/RowanFileSystemGs.gs
+	input $TOPAZ_SRC_DIRECTORY/RowanFileSystemGs.gs
 commit
 	input $GEMSTONE/upgrade/bootstrap/GemStone-Rowan.gs
 commit
