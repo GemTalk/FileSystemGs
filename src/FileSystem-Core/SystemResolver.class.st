@@ -102,3 +102,10 @@ SystemResolver >> tranlog [
 
 	^ self  resolveString: (System stoneConfigurationReport at: #StnCurrentTranLogNames)
 ]
+
+{ #category : 'origins' }
+SystemResolver >> workingDirectory [
+	"Returns the current working directory"
+
+	^FileSystem disk workingDirectory
+]
