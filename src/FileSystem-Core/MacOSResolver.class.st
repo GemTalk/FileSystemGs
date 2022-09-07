@@ -18,16 +18,6 @@ MacOSResolver >> cache [
 ]
 
 { #category : 'origins' }
-MacOSResolver >> desktop [
-	^ self home / 'Desktop'
-]
-
-{ #category : 'origins' }
-MacOSResolver >> documents [
-	^ self home / 'Documents'
-]
-
-{ #category : 'origins' }
 MacOSResolver >> home [
 	^ self directoryFromEnvVariableNamed: 'HOME'
 ]
@@ -39,7 +29,8 @@ MacOSResolver >> library [
 
 { #category : 'origins' }
 MacOSResolver >> preferences [ 
-	^ self home / 'Library' / 'Preferences'
+
+	^self library / 'Preferences'
 ]
 
 { #category : 'resolving' }

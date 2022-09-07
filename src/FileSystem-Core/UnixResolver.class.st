@@ -21,12 +21,12 @@ UnixResolver >> cache [
 
 { #category : 'origins' }
 UnixResolver >> desktop [
-	^ (self xdgUserDir: 'DESKTOP') ifNil: [ self home / 'Desktop' ]
+	^ (self xdgUserDir: 'DESKTOP') ifNil: [ super desktop ]
 ]
 
 { #category : 'origins' }
 UnixResolver >> documents [
-	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ self home / 'Documents' ]
+	^ (self xdgUserDir: 'DOCUMENTS') ifNil: [ super documents ]
 ]
 
 { #category : 'origins' }

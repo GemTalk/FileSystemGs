@@ -33,7 +33,8 @@ PlatformResolver >> cantFindOriginError [
 
 { #category : 'origins' }
 PlatformResolver >> desktop [
-	^ self subclassResponsibility
+
+	^self home / 'Desktop'
 ]
 
 { #category : 'private' }
@@ -55,7 +56,14 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 
 { #category : 'origins' }
 PlatformResolver >> documents [
-	^ self subclassResponsibility
+
+	^self home / 'Documents'
+]
+
+{ #category : 'origins' }
+PlatformResolver >> downloads [
+
+	^self home / 'Downloads'
 ]
 
 { #category : 'origins' }
