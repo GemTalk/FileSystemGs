@@ -14,8 +14,7 @@ Class {
 	#name : 'FileReference',
 	#superclass : 'AbstractFileReference',
 	#instVars : [
-		'filesystem',
-		'path'
+		'filesystem'
 	],
 	#category : 'FileSystem-Core'
 }
@@ -403,12 +402,6 @@ FileReference >> openWritable: isWritable [
 	^filesystem
 		open: path
 		options: options
-]
-
-{ #category : 'accessing' }
-FileReference >> path [
-	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
-	^ path
 ]
 
 { #category : 'printing' }

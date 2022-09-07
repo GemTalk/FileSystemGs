@@ -4,6 +4,9 @@ I am an abstract superclass for FileLocator and FileReference. By implementing m
 Class {
 	#name : 'AbstractFileReference',
 	#superclass : 'Object',
+	#instVars : [
+		'path'
+	],
 	#category : 'FileSystem-Core'
 }
 
@@ -217,14 +220,13 @@ AbstractFileReference >> changeTime [
 AbstractFileReference >> childNames [
 	"Return the names of entries in a directory."
 
-	| reference fileSystem path names |
+	| reference fileSystem names |
 	reference := self resolve.
 	fileSystem := reference fileSystem.
-	path := reference path.
 	names := {}.
 	fileSystem
-		childNamesAt: path
-		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+		childNamesAt: reference path
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: reference path]
 		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | names add: name].
 	^names
@@ -329,16 +331,16 @@ AbstractFileReference >> deviceId [
 AbstractFileReference >> directories [
 	"Return all the directories (by opposition to files) contained in the receiver"
 
-	| reference fileSystem path directories |
+	| reference fileSystem parentPath directories |
 	reference := self resolve.
 	fileSystem := reference fileSystem.
-	path := reference path.
+	parentPath := reference path.
 	directories := {}.
 	fileSystem
-		directoryNamesAt: path
-		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
-		ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: path]
-		do: [:name | directories add: (self withPath: path / name)].
+		directoryNamesAt: parentPath
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: parentPath]
+		ifNotDirectory: [fileSystem signalDirectoryDoesNotExist: parentPath]
+		do: [:name | directories add: (self withPath: parentPath / name)].
 	^directories
 ]
 
@@ -425,16 +427,16 @@ AbstractFileReference >> fileNames [
 AbstractFileReference >> files [
 	"Return all the files (as opposed to folders) contained in the receiver"
 	
-	| reference fileSystem path files |
+	| reference fileSystem parentPath files |
 	reference := self resolve.
 	fileSystem := reference fileSystem.
-	path := reference path.
+	parentPath := reference path.
 	files := {}.
 	fileSystem
-		fileNamesAt: path
-		ifAbsent: [fileSystem signalDirectoryDoesNotExist: path]
+		fileNamesAt: parentPath
+		ifAbsent: [fileSystem signalDirectoryDoesNotExist: parentPath]
 		ifNotDirectory: [DirectoryRequired signalWith: reference]
-		do: [:name | files add: (self withPath: path / name)].
+		do: [:name | files add: (self withPath: parentPath / name)].
 	^files
 ]
 
@@ -683,6 +685,12 @@ AbstractFileReference >> parent [
 { #category : 'delegated' }
 AbstractFileReference >> parentUpTo: aParentDirName [
 	^ self withPath: (self path parentUpTo: aParentDirName)
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> path [
+	"Return the path internal representation that denotes the receiver in the context of its filesystem. "
+	^ path
 ]
 
 { #category : 'accessing' }
