@@ -12,6 +12,9 @@ Class {
 		'libcStat',
 		'libcStdio'
 	],
+	#gs_options : [
+		'instancesNonPersistent'
+	],
 	#category : 'FileSystem-Disk'
 }
 

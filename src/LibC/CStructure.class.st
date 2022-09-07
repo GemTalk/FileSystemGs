@@ -13,6 +13,9 @@ Class {
 		'bytes',
 		'pointer'
 	],
+	#gs_options : [
+		'instancesNonPersistent'
+	],
 	#category : 'LibC'
 }
 

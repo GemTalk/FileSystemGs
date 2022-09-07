@@ -12,6 +12,9 @@ Class {
 	#instVars : [
 		'library'
 	],
+	#gs_options : [
+		'instancesNonPersistent'
+	],
 	#category : 'LibC'
 }
 
