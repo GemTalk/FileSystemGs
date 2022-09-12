@@ -18,6 +18,25 @@ LibcUnistdTest >> setUp [
 ]
 
 { #category : 'tests' }
+LibcUnistdTest >> testChdir [
+
+	| initialWD newWD |
+	initialWD := self workingDirectoryPathString.
+	newWD := '/tmp'.
+	self
+		deny: initialWD
+		equals: newWD.
+	instance chdir: newWD.
+	self
+		assert: self workingDirectoryPathString
+		equals: newWD.
+	instance chdir: initialWD.
+	self
+		assert: self workingDirectoryPathString
+		equals: initialWD
+]
+
+{ #category : 'tests' }
 LibcUnistdTest >> testEbadf [
 	"This test relies on the gem not having a file descriptor numbered 123.
 	This should be true most of the time, but is not guaranteed."
@@ -86,4 +105,10 @@ LibcUnistdTest >> testWriteToStdout [
 	numWritten := instance writeToFileDescriptor: 1 fromBuffer: buf count: message size.
 	self assert: numWritten equals: message size
 	"Manually determine that the message was written to the gem log or topaz stdout."
+]
+
+{ #category : 'accessing' }
+LibcUnistdTest >> workingDirectoryPathString [
+
+	^FileSystem disk workingDirectoryPath pathString
 ]

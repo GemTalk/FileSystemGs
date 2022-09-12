@@ -10,10 +10,32 @@ Class {
 		'ftruncate',
 		'unlink',
 		'write',
-		'chown'
+		'chown',
+		'chdir'
 	],
 	#category : 'LibC'
 }
+
+{ #category : 'functions' }
+LibcUnistd >> chdir: pathString [
+
+	| errnoHolder result |
+	chdir == nil
+		ifTrue:
+			[chdir := CCallout
+				library: library
+				name: 'chdir'
+				result: #'int32'
+				args: #(#'const char*')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := chdir
+		callWith: { pathString }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
 
 { #category : 'functions' }
 LibcUnistd >> chown: pathString

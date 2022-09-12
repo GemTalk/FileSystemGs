@@ -1103,6 +1103,15 @@ FileReferenceTest >> testResolve [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testSetAsWorkingDirectory [
+	"See subclass implementations for supported filesystems"
+
+	self
+		should: [sandbox setAsWorkingDirectory]
+		raise: FileAttributeNotSupported
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testSlash [
 
 	| alpha |

@@ -186,6 +186,36 @@ DiskFileReferenceTest >> testPermissions [
 ]
 
 { #category : 'tests' }
+DiskFileReferenceTest >> testSetAsWorkingDirectory [
+
+	| diskStore initialWD targetWD file |
+	diskStore := FileSystem disk.
+	initialWD := diskStore workingDirectory.
+	targetWD := FileLocator temp resolve.
+	self
+		assert: targetWD
+		isKindOf: FileReference.
+	self
+		deny: initialWD
+		equals: targetWD.
+	[targetWD setAsWorkingDirectory.
+	self
+		assert: diskStore workingDirectory
+		equals: targetWD]
+		ensure: [initialWD setAsWorkingDirectory].
+	file := self createFile: 'hello-world'.
+	self
+		should: [file setAsWorkingDirectory]
+		raise: DirectoryRequired.
+	self
+		should: [self characterDeviceReference setAsWorkingDirectory]
+		raise: DirectoryRequired.
+	self
+		should: ['/does/not/exist' asFileReference setAsWorkingDirectory]
+		raise: DirectoryDoesNotExist
+]
+
+{ #category : 'tests' }
 DiskFileReferenceTest >> testUid [
 
 	self

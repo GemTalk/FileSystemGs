@@ -303,6 +303,13 @@ FileSystemStore >> rename: sourcePath to: destinationPath [
 	self subclassResponsibility 
 ]
 
+{ #category : 'public-operations' }
+FileSystemStore >> setWorkingDirectory: aResolveable [
+	"Set the working directory to the path provided."
+
+	self signalUnsupportedAttribute
+]
+
 { #category : 'error signalling' }
 FileSystemStore >> signalDirectoryDoesNotExist: aPath [
 	^ DirectoryDoesNotExist signalWith: aPath

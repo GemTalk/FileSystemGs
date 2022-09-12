@@ -592,6 +592,13 @@ FileSystem >> root [
 	^self referenceTo: Path root
 ]
 
+{ #category : 'public-operations' }
+FileSystem >> setWorkingDirectory: aResolvable [
+	"Set the current working directory"
+
+	^self store setWorkingDirectory: (self resolve: aResolvable)
+]
+
 { #category : 'signaling' }
 FileSystem >> signalDirectoryDoesNotExist: aPath [
 

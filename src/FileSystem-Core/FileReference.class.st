@@ -478,6 +478,13 @@ FileReference >> resolveString: aString [
 	^ filesystem referenceTo: (path resolve: thePath)
 ]
 
+{ #category : 'operations' }
+FileReference >> setAsWorkingDirectory [
+	"Set the current reference as the working directory"
+
+	^filesystem setWorkingDirectory: self path
+]
+
 { #category : 'initialize-release' }
 FileReference >> setFileSystem: aFilesystem path: aPath [
 	filesystem := aFilesystem.
