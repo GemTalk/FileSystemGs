@@ -14,7 +14,7 @@ Some of the behavior that results, and how it's implemented:
 * In order to keep the FileDescriptor from dropping out of memory even if it's committed, the RegistryEphemeron must never be committed, or allowed to be stubbed as a transient object. This is accomplished by setting RegistryEphemeron to be #instancesNonPersistent and, when available, #noAggressiveStubbing. Being #instancesNonPersistent assures that there is an unbroken chain of transient objects from session state to the RegistryEphemeron, so it cannot itself drop out of memory. #noAggressiveStubbing ensures that the RegistryEphemeron's state must remain a direct memory reference, and not be replaced with an oop reference. An oop reference could allow the FileDescriptor to drop from memory if committed.
 "
 Class {
-	#name : 'UnixFileDescriptor',
+	#name : 'FileDescriptor',
 	#superclass : 'Object',
 	#instVars : [
 		'id',
@@ -29,7 +29,7 @@ Class {
 }
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> fd: fileDescriptorInteger [
+FileDescriptor class >> fd: fileDescriptorInteger [
 
 	^super new initialize
 		fd: fileDescriptorInteger;
@@ -37,12 +37,12 @@ UnixFileDescriptor class >> fd: fileDescriptorInteger [
 ]
 
 { #category : 'Instance non-creation' }
-UnixFileDescriptor class >> new [
+FileDescriptor class >> new [
 	self shouldNotImplement: #new
 ]
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> stderr [
+FileDescriptor class >> stderr [
 
 	^super new initialize
 		becomeStderr;
@@ -50,7 +50,7 @@ UnixFileDescriptor class >> stderr [
 ]
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> stdin [
+FileDescriptor class >> stdin [
 
 	^super new initialize
 		becomeStdin;
@@ -58,7 +58,7 @@ UnixFileDescriptor class >> stdin [
 ]
 
 { #category : 'Instance Creation' }
-UnixFileDescriptor class >> stdout [
+FileDescriptor class >> stdout [
 
 	^super new initialize
 		becomeStdout;
@@ -66,13 +66,13 @@ UnixFileDescriptor class >> stdout [
 ]
 
 { #category : 'asserting' }
-UnixFileDescriptor >> assertUninitialized [
+FileDescriptor >> assertUninitialized [
 
-	fd ifNotNil: [UnixFileDescriptorAlreadyInitialized signal]
+	fd ifNotNil: [FileDescriptorAlreadyInitialized signal]
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> becomeStderr [
+FileDescriptor >> becomeStderr [
 	"Assume stderr is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stderr when I'm garbage collected."
 
@@ -80,7 +80,7 @@ UnixFileDescriptor >> becomeStderr [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> becomeStdin [
+FileDescriptor >> becomeStdin [
 	"Assume stdin is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdin when I'm garbage collected."
 
@@ -88,7 +88,7 @@ UnixFileDescriptor >> becomeStdin [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> becomeStdout [
+FileDescriptor >> becomeStdout [
 	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdout when I'm garbage collected."
 
@@ -96,19 +96,19 @@ UnixFileDescriptor >> becomeStdout [
 ]
 
 { #category : 'accessing' }
-UnixFileDescriptor >> binaryReadStream [
+FileDescriptor >> binaryReadStream [
 
 	^BinaryFileStream on: self
 ]
 
 { #category : 'accessing' }
-UnixFileDescriptor >> binaryWriteStream [
+FileDescriptor >> binaryWriteStream [
 
 	^BinaryFileStream on: self
 ]
 
 { #category : 'public' }
-UnixFileDescriptor >> close [
+FileDescriptor >> close [
 	"Closing should silently succeed even if I'm invalid,
 	since I don't represent anything open."
 
@@ -117,14 +117,14 @@ UnixFileDescriptor >> close [
 ]
 
 { #category : 'testing' }
-UnixFileDescriptor >> closed [
+FileDescriptor >> closed [
 	"Returns true if the receiver has been closed."
 
 	^self isOpen not
 ]
 
 { #category : 'public' }
-UnixFileDescriptor >> ensureClosed [
+FileDescriptor >> ensureClosed [
 	"Closing should silently succeed even if I'm invalid,
 	since I don't represent anything open."
 
@@ -132,7 +132,7 @@ UnixFileDescriptor >> ensureClosed [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> fd [
+FileDescriptor >> fd [
 
 	fd
 		ifNil: [ 
@@ -142,14 +142,14 @@ UnixFileDescriptor >> fd [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> fd: aFileDescriptorInteger [
+FileDescriptor >> fd: aFileDescriptorInteger [
 	
 	self assertUninitialized.
 	fd := aFileDescriptorInteger
 ]
 
 { #category : 'finalization' }
-UnixFileDescriptor >> free [
+FileDescriptor >> free [
 	"Sent by the ExternalObjectRegistry when there are no other
 	references to me.
 	If I'm committed, I may be referenced by a committed object
@@ -161,20 +161,20 @@ UnixFileDescriptor >> free [
 ]
 
 { #category : 'initialization' }
-UnixFileDescriptor >> initialize [
+FileDescriptor >> initialize [
 
 	libcUnistd := DiskStore current libcUnistd
 ]
 
 { #category : 'testing' }
-UnixFileDescriptor >> isOpen [
+FileDescriptor >> isOpen [
 	"Returns true if the receiver is open."
 
 	^fd notNil
 ]
 
 { #category : 'positioning' }
-UnixFileDescriptor >> position [
+FileDescriptor >> position [
 
 	| library |
 	library := DiskStore current libcUnistd.
@@ -185,7 +185,7 @@ UnixFileDescriptor >> position [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> privateClose [
+FileDescriptor >> privateClose [
 	"Close the file. Fsync it first so we are notified of any errors during the flush.
 	Report some errors when flushing (I/O error, out-of-space, quota exceeded)
 	Ignore EBADF, which indicates that my descriptor is already somehow closed,
@@ -205,7 +205,7 @@ UnixFileDescriptor >> privateClose [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> read: count [
+FileDescriptor >> read: count [
 	"Read up to <count> number of bytes from
 	the backing file descriptor."
 
@@ -223,7 +223,7 @@ UnixFileDescriptor >> read: count [
 ]
 
 { #category : 'positioning' }
-UnixFileDescriptor >> setToEnd [
+FileDescriptor >> setToEnd [
 
 	| library |
 	library := DiskStore current libcUnistd.
@@ -234,19 +234,19 @@ UnixFileDescriptor >> setToEnd [
 ]
 
 { #category : 'accessing' }
-UnixFileDescriptor >> size [
+FileDescriptor >> size [
 
 	^self stat size
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> stat [
+FileDescriptor >> stat [
 
 	^DiskStore current libcStat fstat: fd
 ]
 
 { #category : 'public' }
-UnixFileDescriptor >> truncateTo: length [
+FileDescriptor >> truncateTo: length [
 	"Truncate the open file to the specified length."
 
 	| library |
@@ -257,7 +257,7 @@ UnixFileDescriptor >> truncateTo: length [
 ]
 
 { #category : 'private' }
-UnixFileDescriptor >> write: aByteArray [
+FileDescriptor >> write: aByteArray [
 	"Write the provided bytes to the file descriptor.
 	Returns the number of bytes actually written to
 	the file descriptor."

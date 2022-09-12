@@ -1,11 +1,11 @@
 Class {
-	#name : 'UnixFileDescriptorAlreadyInitialized',
+	#name : 'FileDescriptorAlreadyInitialized',
 	#superclass : 'Error',
 	#category : 'FileDescriptor'
 }
 
 { #category : 'accessing' }
-UnixFileDescriptorAlreadyInitialized >> messageText [
+FileDescriptorAlreadyInitialized >> messageText [
 
 	^super messageText ifNil: ['Cannot set file descriptor ID more than once.']
 ]

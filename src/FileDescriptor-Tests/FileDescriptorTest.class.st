@@ -1,5 +1,5 @@
 Class {
-	#name : 'UnixFileDescriptorTest',
+	#name : 'FileDescriptorTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'stdin',
@@ -10,53 +10,53 @@ Class {
 }
 
 { #category : 'initializing' }
-UnixFileDescriptorTest >> setUp [
+FileDescriptorTest >> setUp [
 	"Configure the known file descriptors"
 
 	super setUp.
-	stdin := UnixFileDescriptor stdin.
-	stdout := UnixFileDescriptor stdout.
-	stderr := UnixFileDescriptor stderr
+	stdin := FileDescriptor stdin.
+	stdout := FileDescriptor stdout.
+	stderr := FileDescriptor stderr
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testNoNew [
+FileDescriptorTest >> testNoNew [
 
 	self
-		should: [UnixFileDescriptor new]
+		should: [FileDescriptor new]
 		raise: Error
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testOpenStderr [
+FileDescriptorTest >> testOpenStderr [
 
 	self
-		assert: stderr class equals: UnixFileDescriptor;
+		assert: stderr class equals: FileDescriptor;
 		assert: stderr fd equals: 2
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testOpenStdin [
+FileDescriptorTest >> testOpenStdin [
 
 	self
-		assert: stdin class equals: UnixFileDescriptor;
+		assert: stdin class equals: FileDescriptor;
 		assert: stdin fd equals: 0
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testOpenStdout [
+FileDescriptorTest >> testOpenStdout [
 
 	self
-		assert: stdout class equals: UnixFileDescriptor;
+		assert: stdout class equals: FileDescriptor;
 		assert: stdout fd equals: 1
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testReadFromUsrBinEnv [
+FileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |
 	id := DiskStore current libcFcntl openPath: '/usr/bin/env' flags: 0 mode: 0.
-	fd := UnixFileDescriptor fd: id.
+	fd := FileDescriptor fd: id.
 	[bytes := fd read: 4] ensure: [fd close].
 	self
 		assert: bytes size
@@ -70,7 +70,7 @@ UnixFileDescriptorTest >> testReadFromUsrBinEnv [
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testWriteStringErrors [
+FileDescriptorTest >> testWriteStringErrors [
 
 	self
 		should: [stdout write: 'Hello, World!']
@@ -78,7 +78,7 @@ UnixFileDescriptorTest >> testWriteStringErrors [
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testWriteToStderr [
+FileDescriptorTest >> testWriteToStderr [
 
 	| message count |
 	message := Character lf asString, 'Running #testWriteToStderr'.
@@ -89,7 +89,7 @@ UnixFileDescriptorTest >> testWriteToStderr [
 ]
 
 { #category : 'BasicTests' }
-UnixFileDescriptorTest >> testWriteToStdout [
+FileDescriptorTest >> testWriteToStdout [
 
 	| message count |
 	message := Character lf asString, 'Running #testWriteToStdout'.

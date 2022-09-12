@@ -514,7 +514,7 @@ options: options [
 				parent exists
 					ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
 					ifFalse: [self signalDirectoryDoesNotExist: parent]].
-	^UnixFileDescriptor fd: fd
+	^FileDescriptor fd: fd
 ]
 
 { #category : 'public' }
