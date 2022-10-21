@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 SUnit test for FileLocator
 "
 Class {

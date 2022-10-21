@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I'm a specific store for Unix file systems
 "
 Class {

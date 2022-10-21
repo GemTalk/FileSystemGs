@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am an exception that notifies that a file already exists.
 "
 Class {

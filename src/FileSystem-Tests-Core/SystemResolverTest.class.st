@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 SUnit tests for SystemResolver
 "
 Class {

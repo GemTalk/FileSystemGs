@@ -1,5 +1,9 @@
 "
-I am raised when I an operation is attempted inside a directory that does not exist. 
+Part of FileSystem
+
+=========
+
+I am raised when I an operation is attempted inside a directory that does not exist.
 "
 Class {
 	#name : 'DirectoryDoesNotExist',

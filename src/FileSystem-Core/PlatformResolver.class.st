@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am an abstract superclass for platform-specific resolvers.
 "
 Class {

@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am raised when an operation is attempted on a file that does not exist.
 
 The method used to signal the exception depends on the form the file name exists in:
@@ -11,7 +15,6 @@ The method used to signal the exception depends on the form the file name exists
 Applications that want to offer the user the opportunity to select a different file can use:
 
 	UIManager default fileDoesNotExistsDefaultAction: exception
-
 "
 Class {
 	#name : 'FileDoesNotExistException',

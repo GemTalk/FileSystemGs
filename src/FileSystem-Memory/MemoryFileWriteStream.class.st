@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 A file write stream - but within memory
 "
 Class {

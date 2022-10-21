@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am an expert on Unix filesystem conventions. I resolve origins according to these conventions.
 "
 Class {

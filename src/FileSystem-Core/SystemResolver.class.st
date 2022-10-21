@@ -1,5 +1,9 @@
 "
-I resolve origins that are related to the currently running Smalltalk system, using primitives provided by the VM. 
+Part of FileSystem
+
+=========
+
+I resolve origins that are related to the currently running Smalltalk system, using primitives provided by the VM.
 "
 Class {
 	#name : 'SystemResolver',

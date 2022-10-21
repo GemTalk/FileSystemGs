@@ -1,6 +1,9 @@
 "
-I am an abstract superclass for disk store implementations. My subclasses provide access to the actual data storage of a particular kind of filesystem. 
+Part of FileSystem
 
+=========
+
+I am an abstract superclass for disk store implementations. My subclasses provide access to the actual data storage of a particular kind of filesystem.
 "
 Class {
 	#name : 'DiskStore',
@@ -48,7 +51,7 @@ DiskStore class >> currentFileSystem [
 
 	^SessionTemps current
 		at: self cacheKey
-		ifAbsentPut: [DiskFileSystem store: self createDefault]
+		ifAbsentPut: [FsDiskFileSystem store: self createDefault]
 ]
 
 { #category : 'public' }
@@ -123,10 +126,10 @@ DiskStore >> createDirectory: path [
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
 
-	| pathString result parent |
+	| pathString parent |
 	pathString := self stringFromPath: path.
 	[self libcStat mkdir: pathString]
-		on: UnixError
+		on: FsUnixError
 		do:
 			[:ex |
 			(self exists: path)
@@ -214,8 +217,8 @@ entriesDo: aBlock [
 	dir := [self libcDirent openDirectoryStreamWithPath: pathString]
 		onException:
 			{
-				ENOTDIR.
-				ENOENT.
+				FsENOTDIR.
+				FsENOENT.
 			}
 		do:
 			{
@@ -285,7 +288,7 @@ posixPermission: posixPermission [
 	[self libcFcntl
 		chmod: pathString
 		mode: posixPermission]
-		on: ENOENT
+		on: FsENOENT
 		do: [:ex | FileDoesNotExistException signal: aPath].
 	^nil
 ]
@@ -302,7 +305,7 @@ gid: gid [
 		chown: pathString
 		uid: uid
 		gid: gid]
-		on: ENOENT
+		on: FsENOENT
 		do: [:ex | FileDoesNotExistException signal: aPath].
 	^nil
 ]
@@ -318,7 +321,7 @@ DiskStore >> fileOpeningOptionsClass [
 DiskStore >> fileSystemClass [
 	"Defines the correct subclass of FileSystem to use with this store."
 
-	^DiskFileSystem
+	^FsDiskFileSystem
 ]
 
 { #category : 'printing' }
@@ -507,14 +510,14 @@ options: options [
 				openPath: aFileReference pathString
 				flags: options flags
 				mode: options modeBits]
-			on: ENOENT
+			on: FsENOENT
 			do:
 				[:ex | | parent |
 				parent := aFileReference parent.
 				parent exists
 					ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
 					ifFalse: [self signalDirectoryDoesNotExist: parent]].
-	^FileDescriptor fd: fd
+	^FsFileDescriptor fd: fd
 ]
 
 { #category : 'public' }
@@ -549,10 +552,10 @@ DiskStore >> setWorkingDirectory: aPath [
 	pathString := self stringFromPath: aPath.
 	[[self libcUnistd
 		chdir: pathString]
-		on: ENOENT
+		on: FsENOENT
 		do: [:ex | DirectoryDoesNotExist signal: aPath]]
-		on: ENOTDIR
-		do: [:ex | DirectoryRequired signal: aPath].
+		on: FsENOTDIR
+		do: [:ex | FsDirectoryRequired signal: aPath].
 	^true
 ]
 
@@ -569,7 +572,7 @@ DiskStore >> stat: aPath [
 	| pathString |
 	pathString := self stringFromPath: aPath.
 	^[self libcStat stat: pathString]
-		on: ENOENT
+		on: FsENOENT
 		do: [:ex | self signalFileDoesNotExist: aPath]
 ]
 

@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am an abstract superclass for FileLocator and FileReference. By implementing most of the methods on myself most code duplucation between the locator and the reference can be avoided
 "
 Class {
@@ -227,7 +231,7 @@ AbstractFileReference >> childNames [
 	fileSystem
 		childNamesAt: reference path
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: reference path]
-		ifNotDirectory: [DirectoryRequired signalWith: reference]
+		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
 		do: [:name | names add: name].
 	^names
 ]
@@ -435,7 +439,7 @@ AbstractFileReference >> files [
 	fileSystem
 		fileNamesAt: parentPath
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: parentPath]
-		ifNotDirectory: [DirectoryRequired signalWith: reference]
+		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
 		do: [:name | files add: (self withPath: parentPath / name)].
 	^files
 ]

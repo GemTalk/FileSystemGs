@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 SUnit tests for file reference.
 
 This test case assumes that #tearDown will appropriately cleanup the sandbox directory. Files placed anywhere else should be cleaned up by the test itself.
@@ -262,7 +266,7 @@ FileReferenceTest >> testBinaryReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FileRequired
+		raise: FsFileRequired
 ]
 
 { #category : 'tests' }
@@ -296,7 +300,7 @@ FileReferenceTest >> testBinaryWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FileRequired
+		raise: FsFileRequired
 ]
 
 { #category : 'tests' }
@@ -355,10 +359,10 @@ FileReferenceTest >> testChildDirectories [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: DirectoryRequired
+		raise: FsDirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -381,10 +385,10 @@ FileReferenceTest >> testChildFiles [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: DirectoryRequired
+		raise: FsDirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -407,10 +411,10 @@ FileReferenceTest >> testChildren [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [beta children]
-		raise: DirectoryRequired
+		raise: FsDirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -967,7 +971,7 @@ FileReferenceTest >> testReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FileRequired
+		raise: FsFileRequired
 ]
 
 { #category : 'tests' }
@@ -987,7 +991,7 @@ FileReferenceTest >> testReadStreamDo [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStreamDo: [:stream |]]
-		raise: FileRequired
+		raise: FsFileRequired
 ]
 
 { #category : 'tests' }
@@ -1240,7 +1244,7 @@ FileReferenceTest >> testWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FileRequired
+		raise: FsFileRequired
 ]
 
 { #category : 'tests' }
@@ -1260,5 +1264,5 @@ FileReferenceTest >> testWriteStreamDo [
 	"Ensure #writeStreamDo: send to a directory raises an exception."
 	self
 		should: [directory writeStreamDo: [:stream | ]]
-		raise: FileRequired
+		raise: FsFileRequired
 ]

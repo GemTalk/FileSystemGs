@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I'm a specific store for memory file system
 "
 Class {
@@ -15,7 +19,7 @@ MemoryStore class >> currentFileSystem [
 
 	^SessionTemps current
 		at: #MemoryStoreCurrentFS
-		ifAbsentPut: [MemoryFileSystem store: MemoryStore new]
+		ifAbsentPut: [FsMemoryFileSystem store: MemoryStore new]
 ]
 
 { #category : 'public' }
@@ -128,13 +132,13 @@ MemoryStore >> currentWorkingDirectoryPath [
 { #category : 'accessing' }
 MemoryStore >> defaultOptionsForRead [
 
-	^MemoryFileOpeningOptions readOnly
+	^FsMemoryFileOpeningOptions readOnly
 ]
 
 { #category : 'accessing' }
 MemoryStore >> defaultOptionsForWrite [
 
-	^MemoryFileOpeningOptions writeOnly
+	^FsMemoryFileOpeningOptions writeOnly
 ]
 
 { #category : 'public' }
@@ -254,7 +258,7 @@ MemoryStore >> exists: aPath [
 MemoryStore >> fileSystemClass [
 	"Defines the correct subclass of FileSystem to use with this store."
 
-	^MemoryFileSystem
+	^FsMemoryFileSystem
 ]
 
 { #category : 'printing' }

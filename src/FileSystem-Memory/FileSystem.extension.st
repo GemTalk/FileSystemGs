@@ -9,7 +9,7 @@ FileSystem class >> currentMemoryFileSystem [
 { #category : '*FileSystem-Memory' }
 FileSystem class >> memory [
 
-	^MemoryFileSystem store: MemoryStore new
+	^FsMemoryFileSystem store: MemoryStore new
 ]
 
 { #category : '*FileSystem-Memory' }

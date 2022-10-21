@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I represent a memory file system entry for a directory
 "
 Class {

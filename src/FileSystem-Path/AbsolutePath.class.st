@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I represent an absolute path (a position starting from Path root)
 "
 Class {

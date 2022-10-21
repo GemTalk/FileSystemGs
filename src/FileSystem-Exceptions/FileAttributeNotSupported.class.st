@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 This Error is signaled when an attempting to access an attribute which is unsupported by the underlying FileSystem.
 "
 Class {

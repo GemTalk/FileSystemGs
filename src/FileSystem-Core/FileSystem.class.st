@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I present a low-level protocol for interacting with filesystems. I hold a reference to
 a store (a subinstance of FileSystemStore) which takes care of the details of performing 
 file and directory operations on the filesystem I represent. 
@@ -11,8 +15,6 @@ FileSystem instances know two methods that return a Reference object: workingDir
 
 FileSystem disk workingDirectory
 FileSystem disk root
-
-
 "
 Class {
 	#name : 'FileSystem',

@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I combine a filesystem and path, which is sufficient to refer to a concrete file or directory. I provide methods for navigating my filesystem, performing filesystem operations and opening and closing files.  I am the primary mechanism for working with files and directories. 
 
 | working |
@@ -106,7 +110,7 @@ FileReference >> binaryReadStream [
 	self exists
 		ifFalse: [^FileDoesNotExistException signalWith: self].
 	self isFile
-		ifFalse: [^FileRequired signalWith: self pathString].
+		ifFalse: [^FsFileRequired signalWith: self pathString].
 	^filesystem binaryReadStreamOn: self path
 ]
 
@@ -115,7 +119,7 @@ FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
 	(self exists and: [self isFile not])
-		ifTrue: [^FileRequired signalWith: self].
+		ifTrue: [^FsFileRequired signalWith: self].
 	^ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 

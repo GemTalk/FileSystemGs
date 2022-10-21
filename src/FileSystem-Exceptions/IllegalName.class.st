@@ -1,6 +1,9 @@
 "
-I am raised on an attempt to use an illegal file name
+Part of FileSystem
 
+=========
+
+I am raised on an attempt to use an illegal file name
 "
 Class {
 	#name : 'IllegalName',

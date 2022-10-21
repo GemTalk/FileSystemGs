@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 Common superclass for exceptions while using file streams
 "
 Class {
