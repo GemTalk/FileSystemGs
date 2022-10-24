@@ -48,7 +48,10 @@ ZnUTF8Encoder class >> newForEncoding: string [
 ZnUTF8Encoder >> backOnStream: stream [
 	"Move back one character on stream"
 
-	self error: 'not currently supported'
+	[stream position = 0
+		ifTrue: [Error signal: 'Cannot move backward past the start of the stream.'].
+	stream skip: -1.
+	(stream peek bitAnd: 2r11000000) == 2r10000000 ] whileTrue
 ]
 
 { #category : 'convenience' }
@@ -103,6 +106,21 @@ ZnUTF8Encoder >> encodeString: string [
 	^ string encodeAsUTF8 asByteArray
 ]
 
+{ #category : 'error handling' }
+ZnUTF8Encoder >> errorIllegalContinuationByte [
+	^ self error: 'Illegal continuation byte for utf-8 encoding'
+]
+
+{ #category : 'error handling' }
+ZnUTF8Encoder >> errorIllegalLeadingByte [
+	^ self error: 'Illegal leading byte for utf-8 encoding'
+]
+
+{ #category : 'error handling' }
+ZnUTF8Encoder >> errorOverlong [
+	^ self error: 'Overlong utf-8 encoding (non-shortest form)'
+]
+
 { #category : 'accessing' }
 ZnUTF8Encoder >> identifier [
 	^ #utf8
@@ -119,7 +137,40 @@ ZnUTF8Encoder >> next: count putAll: string startingAt: offset toStream: stream 
 ZnUTF8Encoder >> nextCodePointFromStream: stream [
 	"Read and return the next integer code point from stream"
 
-	self error: 'not currently supported'
+	| code byte next |
+	(byte := stream next ifNil: [ ^ self errorIncomplete ]) < 128
+		ifTrue: [ ^ byte ].
+	(byte bitAnd: 2r11100000) == 2r11000000
+		ifTrue: [ 
+			code := byte bitAnd: 2r00011111.
+			((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+				ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
+				ifFalse: [ ^ self errorIllegalContinuationByte ].
+			code < 128 ifTrue: [ ^ self errorOverlong ].
+			^ code ].
+	(byte bitAnd: 2r11110000) == 2r11100000
+		ifTrue: [ 
+			code := byte bitAnd: 2r00001111.
+			2 timesRepeat: [ 
+				((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+					ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
+					ifFalse: [ ^ self errorIllegalContinuationByte ] ].
+			code < 2048 ifTrue: [ ^ self errorOverlong ].
+			(self isSurrogateCodePoint: code) ifTrue: [ ^ self errorOutsideRange ].
+			code = 65279 "Unicode Byte Order Mark" ifTrue: [ 
+				stream atEnd ifTrue: [ ^ self errorIncomplete ].
+				^ self nextCodePointFromStream: stream ].
+			^ code ].
+	(byte bitAnd: 2r11111000) == 2r11110000
+		ifTrue: [ 
+			code := byte bitAnd: 2r00000111.
+			3 timesRepeat: [ 
+				((next := stream next ifNil: [ ^ self errorIncomplete ]) bitAnd: 2r11000000) == 2r10000000
+					ifTrue: [ code := (code bitShift: 6) + (next bitAnd: 2r00111111) ]
+					ifFalse: [ ^ self errorIllegalContinuationByte ] ].
+			code < 65535 ifTrue: [ ^ self errorOverlong ].
+			^ code ].
+	^ self errorIllegalLeadingByte
 ]
 
 { #category : 'converting' }
@@ -130,18 +181,16 @@ ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 ]
 
 { #category : 'convenience' }
-ZnUTF8Encoder >> readInto: aCollection startingAt: offset count: requestedCount fromStream: stream [
+ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromStream: stream [
 	"Read requestedCount characters into string starting at offset,
-	returning the number read, there could be less available when stream is atEnd"
+	returning the number read, there could be less available when stream is atEnd.
+	I signal a ZnByteStringBecameWideString notification if necessary"
 
-	| decodedCollection pos |
-	pos := stream position.
-	decodedCollection := self decodeBytes: stream contents.
-	aCollection 
-		replaceFrom: offset 
-		to: offset + (requestedCount min: decodedCollection size) - 1
-		with: decodedCollection
-		startingAt: pos + 1.
-	stream setToEnd.
-	^ 	requestedCount min: decodedCollection size
+	| stringBuffer |
+	stringBuffer := string.
+	offset to: offset + requestedCount - 1 do: [ :index | | codePoint |
+		stream atEnd ifTrue: [ ^ index - offset ].  
+		codePoint := self nextCodePointFromStream: stream.
+		stringBuffer codePointAt: index put: codePoint ].
+	^ requestedCount
 ]

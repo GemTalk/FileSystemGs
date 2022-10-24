@@ -80,6 +80,13 @@ FsBinaryFileStream >> isBinary [
 ]
 
 { #category : 'reading' }
+FsBinaryFileStream >> next [
+	"Return the next byte"
+
+	^(self next: 1) at: 1
+]
+
+{ #category : 'reading' }
 FsBinaryFileStream >> next: count [
 
 	^descriptor read: count
