@@ -126,6 +126,13 @@ ZnUTF8Encoder >> identifier [
 	^ #utf8
 ]
 
+{ #category : 'testing' }
+ZnUTF8Encoder >> isSurrogateCodePoint: codePoint [
+	"Surrogate Code Points should not be encoded or decoded because they are not Unicode scalar values"
+	
+	^ codePoint between: 16rD800 and: 16rDFFF
+]
+
 { #category : 'convenience' }
 ZnUTF8Encoder >> next: count putAll: string startingAt: offset toStream: stream [
 	"Write count characters from string starting at offset to stream."
@@ -191,6 +198,13 @@ ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromS
 	offset to: offset + requestedCount - 1 do: [ :index | | codePoint |
 		stream atEnd ifTrue: [ ^ index - offset ].  
 		codePoint := self nextCodePointFromStream: stream.
-		stringBuffer codePointAt: index put: codePoint ].
+		[stringBuffer codePointAt: index put: codePoint]
+			on: OutOfRange
+			do:
+				[:ex |
+				codePoint > 65535
+					ifTrue: [stringBuffer _convertToQuadByte]
+					ifFalse: [stringBuffer _convertToDoubleByte].
+				ex retry]].
 	^ requestedCount
 ]
