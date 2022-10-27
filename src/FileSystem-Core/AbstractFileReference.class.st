@@ -835,6 +835,16 @@ AbstractFileReference >> targetPath [
 	^self resolve targetPath
 ]
 
+{ #category : 'streams' }
+AbstractFileReference >> truncatedWriteStreamDo: aBlock [
+	"Create a write stream but ensure the file is truncated before evaluating the argument."
+
+	self writeStreamDo:
+		[:stream |
+		stream truncate.
+		aBlock value: stream]
+]
+
 { #category : 'accessing' }
 AbstractFileReference >> uid [
 	"Return the user id associated with this file."
