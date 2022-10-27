@@ -399,18 +399,6 @@ DiskStore >> isFile: aPath [
 		do: [:ex | ex return: false]
 ]
 
-{ #category : 'public' }
-DiskStore >> isReadable: aPath [
-	(self exists: aPath) ifFalse: [ ^ false ].
-	self flag: 'TODO: Make this work properly'.
-	self error: 'ToBeImplemented'.
-	(self basicOpen: aPath writable: #read) 
-		ifNotNil: [ :id|
-			"File close: id."
-			^ true].
-	^ false
-]
-
 { #category : 'testing' }
 DiskStore >> isRegular: aPath [
 	"Return true if the argument refers to a regular file."
@@ -435,19 +423,6 @@ DiskStore >> isSymlink: aPath [
 	^[(self stat: aPath) isSymlink]
 		on: FileDoesNotExistException
 		do: [:ex | ex return: false]
-]
-
-{ #category : 'public' }
-DiskStore >> isWritable: aPath [
-	(self exists: aPath)
-		ifFalse: [ ^ false ].
-	self flag: 'TODO: Make this work properly'.
-	self error: 'ToBeImplemented'.
-	(self basicOpen: aPath writable: #'write')
-		ifNotNil: [ :id | 
-			"File close: id."
-			^ true ].
-	^ false
 ]
 
 { #category : 'accessing' }
