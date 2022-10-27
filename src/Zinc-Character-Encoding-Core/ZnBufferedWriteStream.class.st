@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am ZnBufferedWriteStream.
 I wrap a write stream and add buffering.
 

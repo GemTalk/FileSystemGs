@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases for dirent.h interface
+"
 Class {
 	#name : 'FsLibcDirentTest',
 	#superclass : 'TestCase',

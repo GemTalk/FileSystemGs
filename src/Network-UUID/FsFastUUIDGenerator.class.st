@@ -1,5 +1,12 @@
+"
+Part of FileSystem
+
+=========
+
+Support generation of various UUID versions.
+"
 Class {
-	#name : 'FastUUIDGenerator',
+	#name : 'FsFastUUIDGenerator',
 	#superclass : 'Object',
 	#instVars : [
 		'bits1',
@@ -13,14 +20,14 @@ Class {
 }
 
 { #category : 'private' }
-FastUUIDGenerator class >> _defaultKey [
+FsFastUUIDGenerator class >> _defaultKey [
 
 	^ #'UUID_DEFAULT'
 
 ]
 
 { #category : 'accessing' }
-FastUUIDGenerator class >> default [
+FsFastUUIDGenerator class >> default [
 	^(SessionTemps current at: self _defaultKey ifAbsent: [])
 		ifNil: [
 			| default |
@@ -30,14 +37,14 @@ FastUUIDGenerator class >> default [
 ]
 
 { #category : 'initialization' }
-FastUUIDGenerator class >> initialize [
+FsFastUUIDGenerator class >> initialize [
 
 	SessionTemps current removeKey: self _defaultKey ifAbsent: []
 
 ]
 
 { #category : 'accessing' }
-FastUUIDGenerator class >> next [
+FsFastUUIDGenerator class >> next [
 	"Return a UUID using the shared generator"
 	
 	"self next"
@@ -48,7 +55,7 @@ FastUUIDGenerator class >> next [
 ]
 
 { #category : 'instance creation' }
-FastUUIDGenerator >> generateBytes: aPlaceHolder forVersion: aVersion [
+FsFastUUIDGenerator >> generateBytes: aPlaceHolder forVersion: aVersion [
 	aVersion = 4 ifTrue: [self generateFieldsVersion4]
 		ifFalse: [self error: 'Unsupported version'].
 	self placeFields: aPlaceHolder.
@@ -56,7 +63,7 @@ FastUUIDGenerator >> generateBytes: aPlaceHolder forVersion: aVersion [
 ]
 
 { #category : 'instance creation' }
-FastUUIDGenerator >> generateFieldsVersion4 [
+FsFastUUIDGenerator >> generateFieldsVersion4 [
 
 	semaphoreForGenerator critical: 
 			[bits1 := random integer.
@@ -69,7 +76,7 @@ FastUUIDGenerator >> generateFieldsVersion4 [
 ]
 
 { #category : 'instance creation' }
-FastUUIDGenerator >> initialize [
+FsFastUUIDGenerator >> initialize [
 
 	random := Random new.
 	semaphoreForGenerator := Semaphore forMutualExclusion
@@ -77,18 +84,18 @@ FastUUIDGenerator >> initialize [
 ]
 
 { #category : 'accessing' }
-FastUUIDGenerator >> next [
+FsFastUUIDGenerator >> next [
 
-	"Return the next UUID"
+	"Return the next FsUUID"
 	
 	| uuid |
-	uuid := UUID nilUUID.
+	uuid := FsUUID nilUUID.
 	self generateBytes: uuid forVersion: 4.
 	^ uuid
 ]
 
 { #category : 'instance creation' }
-FastUUIDGenerator >> placeFields: aPlaceHolder [
+FsFastUUIDGenerator >> placeFields: aPlaceHolder [
 
 	aPlaceHolder
 		unsigned32At: 1 put: bits1;

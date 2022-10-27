@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases for stat.h interface
+"
 Class {
 	#name : 'FsLibcStatTest',
 	#superclass : 'TestCase',

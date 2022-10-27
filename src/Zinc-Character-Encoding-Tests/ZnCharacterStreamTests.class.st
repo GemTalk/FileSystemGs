@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases for ZnCharacterStream
+"
 Class {
 	#name : 'ZnCharacterStreamTests',
 	#superclass : 'TestCase',

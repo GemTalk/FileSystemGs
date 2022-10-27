@@ -1,5 +1,12 @@
+"
+Part of FileSystem
+
+=========
+
+Class which represents a UUID. Prefixed to prevent nameing clashes.
+"
 Class {
-	#name : 'UUID',
+	#name : 'FsUUID',
 	#superclass : 'ByteArray',
 	#classVars : [
 		'GeneratorClass'
@@ -8,12 +15,12 @@ Class {
 }
 
 { #category : 'private' }
-UUID class >> _generatorClass [
+FsUUID class >> _generatorClass [
   ^ GeneratorClass
 ]
 
 { #category : 'instance creation' }
-UUID class >> fromString: aString [
+FsUUID class >> fromString: aString [
 	| object |
 	aString size ~= 36 ifTrue: [Error signal].
 	object := self nilUUID. 
@@ -22,36 +29,36 @@ UUID class >> fromString: aString [
 ]
 
 { #category : 'accessing' }
-UUID class >> generatorClass [
-  self _generatorClass ifNil: [ ^ FastUUIDGenerator ].
+FsUUID class >> generatorClass [
+  self _generatorClass ifNil: [ ^ FsFastUUIDGenerator ].
   ^ self _generatorClass
 ]
 
 { #category : 'accessing' }
-UUID class >> generatorClass: aClass [
+FsUUID class >> generatorClass: aClass [
   GeneratorClass := aClass.
   aClass ifNotNil: [ aClass initialize ]
 ]
 
 { #category : 'instance creation' }
-UUID class >> new [
+FsUUID class >> new [
   ^ (self new: 16) initialize
 ]
 
 { #category : 'instance creation' }
-UUID class >> nilUUID [
+FsUUID class >> nilUUID [
 	"Must call basicNew: here because I have a non-trivial initialize method."
 
 	^self basicNew: 16
 ]
 
 { #category : 'private' }
-UUID >> _primMakeUUID [
+FsUUID >> _primMakeUUID [
   self class generatorClass default generateBytes: self forVersion: 4
 ]
 
 { #category : 'comparing' }
-UUID >> < aMagnitude [
+FsUUID >> < aMagnitude [
   "Answer whether the receiver is less than the argument."
 
   self size = aMagnitude size
@@ -63,27 +70,27 @@ UUID >> < aMagnitude [
 ]
 
 { #category : 'comparing' }
-UUID >> <= uuid [
+FsUUID >> <= uuid [
 	^ (self = uuid) or: [ self < uuid ]
 ]
 
 { #category : 'comparing' }
-UUID >> > uuid [
+FsUUID >> > uuid [
 	^ uuid < self
 ]
 
 { #category : 'comparing' }
-UUID >> >= uuid [
+FsUUID >> >= uuid [
 	^ (self = uuid) or: [ uuid < self ]
 ]
 
 { #category : 'converting' }
-UUID >> asInteger [
+FsUUID >> asInteger [
   ^ self inject: 0 into: [ :sum :each | sum * 256 + each ]
 ]
 
 { #category : 'converting' }
-UUID >> asString [
+FsUUID >> asString [
 	| result data |
 	data := String new: 36.
 	result := WriteStream on: data.
@@ -100,7 +107,7 @@ UUID >> asString [
 ]
 
 { #category : 'converting' }
-UUID >> asString36 [
+FsUUID >> asString36 [
 	"Encode the UUID as a base 36 string using 0-9 and lowercase a-z.
 	This is the shortest representation still being able to work as
 	filenames etc since it does not depend on case nor characters
@@ -118,7 +125,7 @@ UUID >> asString36 [
 ]
 
 { #category : 'converting' }
-UUID >> asUUID: aString [
+FsUUID >> asUUID: aString [
 	| stream token byte sz |
 	stream := ReadStream on: (aString copyReplaceAll: '-' with: '') asUppercase.
 	sz := stream _collection size.
@@ -130,12 +137,12 @@ UUID >> asUUID: aString [
 ]
 
 { #category : 'initialization' }
-UUID >> initialize [
+FsUUID >> initialize [
   self _primMakeUUID
 ]
 
 { #category : 'testing' }
-UUID >> isNilUUID [
+FsUUID >> isNilUUID [
   1 to: self size do: [ :i | 
     (self at: i) ~= 0
       ifTrue: [ ^ false ] ].
@@ -143,7 +150,7 @@ UUID >> isNilUUID [
 ]
 
 { #category : 'converting' }
-UUID >> printHexAt: index to: aStream [
+FsUUID >> printHexAt: index to: aStream [
 	| map v |
 	map := '0123456789abcdef'.
 	v := self at: index.
@@ -152,14 +159,14 @@ UUID >> printHexAt: index to: aStream [
 ]
 
 { #category : 'printing' }
-UUID >> printOn: aStream [
+FsUUID >> printOn: aStream [
 	aStream nextPutAll: 'an UUID('.
 	self asString printOn: aStream.
 	aStream nextPutAll: ')'
 ]
 
 { #category : 'printing' }
-UUID >> printString [
+FsUUID >> printString [
 
 	^self asString
 ]

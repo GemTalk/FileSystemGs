@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am ZnBufferedReadWriteStream.
 I wrap a buffered read stream and a buffered write stream on the same file.
 

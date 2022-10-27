@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am ZnCharacterEncodingError.
 I am an Error.
 

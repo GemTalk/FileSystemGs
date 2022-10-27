@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases against various GemStone behaviors.
+"
 Class {
 	#name : 'FsGemStoneKernelTests',
 	#superclass : 'TestCase',

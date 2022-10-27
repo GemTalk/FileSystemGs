@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases for ZnBufferedWriteStream
+"
 Class {
 	#name : 'ZnBufferedWriteStreamTests',
 	#superclass : 'TestCase',

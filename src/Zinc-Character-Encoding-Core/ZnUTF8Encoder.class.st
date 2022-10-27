@@ -1,4 +1,8 @@
 "
+Part of FileSystem
+
+=========
+
 I am the GemStone/S implementation of ZnUTF8Encoder.
 I implement the variable length UTF-8 encoding and decoding of Unicode according to RFC 3629.
 
@@ -6,7 +10,7 @@ Wikipedia reference http://en.wikipedia.org/wiki/UTF-8
 
 Part of Zinc HTTP Components.
 
-I use the ICU library to encode strings and decode ByteArray and Utf8 instances ... 
+I use the ICU library to encode strings and decode ByteArray and Utf8 instances ...
 "
 Class {
 	#name : 'ZnUTF8Encoder',

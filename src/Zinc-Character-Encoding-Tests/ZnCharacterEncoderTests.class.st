@@ -1,3 +1,10 @@
+"
+Part of FileSystem
+
+=========
+
+Test cases for character encoding
+"
 Class {
 	#name : 'ZnCharacterEncoderTests',
 	#superclass : 'TestCase',

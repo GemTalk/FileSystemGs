@@ -49,7 +49,7 @@ FileReferenceAttributeTests >> setUp [
 
 	| ws bufferedStream |
 	reference := FileLocator temp asFileReference
-		/ ('FileAttributesTests-' , FastUUIDGenerator next asString , '.txt').
+		/ ('FileAttributesTests-' , FsFastUUIDGenerator next asString , '.txt').
 	beforeCreationTime := DateAndTime now.
 	self shortDelay.
 	ws := reference writeStream.
