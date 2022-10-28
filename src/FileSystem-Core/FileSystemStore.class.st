@@ -70,14 +70,14 @@ FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath if
 	out := nil.
 	buffer := nil.
 	[
-		in := aFilesystem binaryReadStreamOn: sourcePath.
+		in := (aFilesystem referenceTo: sourcePath) binaryReadStream.
 		in ifNil: [ ^ absentBlock value ].
 		
 		(self exists: destinationPath)
 			ifTrue: [ "cannot overwrite destination"
 				^ presentBlock value ].
 			
-		out := aFilesystem binaryWriteStreamOn: destinationPath.
+		out := (aFilesystem referenceTo: destinationPath) binaryWriteStream.
 		
 		[ in atEnd ]
 			whileFalse: [ 

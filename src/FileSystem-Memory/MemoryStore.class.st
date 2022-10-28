@@ -129,18 +129,6 @@ MemoryStore >> currentWorkingDirectoryPath [
 	^Path root
 ]
 
-{ #category : 'accessing' }
-MemoryStore >> defaultOptionsForRead [
-
-	^FsMemoryFileOpeningOptions readOnly
-]
-
-{ #category : 'accessing' }
-MemoryStore >> defaultOptionsForWrite [
-
-	^FsMemoryFileOpeningOptions writeOnly
-]
-
 { #category : 'public' }
 MemoryStore >> delete: path [
 
@@ -252,6 +240,13 @@ MemoryStore >> exists: aPath [
 		entryAt: aPath
 		ifPresent: [:entry | true]
 		ifAbsent: [false]
+]
+
+{ #category : 'accessing' }
+MemoryStore >> fileOpeningOptionsClass [
+	"Returns the associated subclass of FsFileOpeningOptions."
+
+	^FsMemoryFileOpeningOptions
 ]
 
 { #category : 'accessing' }

@@ -154,20 +154,6 @@ DiskStore >> currentWorkingDirectoryPath [
 		delimiter: self delimiter
 ]
 
-{ #category : 'accessing' }
-DiskStore >> defaultOptionsForRead [
-
-	^self fileOpeningOptionsClass readOnly
-]
-
-{ #category : 'accessing' }
-DiskStore >> defaultOptionsForWrite [
-
-	^self fileOpeningOptionsClass writeOnly
-		create;
-		yourself
-]
-
 { #category : 'public' }
 DiskStore >> delete: path [
 

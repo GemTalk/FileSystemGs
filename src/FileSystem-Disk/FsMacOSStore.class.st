@@ -15,7 +15,7 @@ Class {
 FsMacOSStore >> fileOpeningOptionsClass [
 	"Returns the appropriate class used to represent FileOpeningOptions."
 
-	^FsMacOSFileOpeningOptions
+	^FsFileOpeningOptions_macOS
 ]
 
 { #category : 'accessing' }

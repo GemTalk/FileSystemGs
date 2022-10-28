@@ -3,6 +3,8 @@ Part of FileSystem
 
 =========
 
+Users of FileOpeningOptions should use the interface as defined in FsFileOpeningOptions, FsMemoryFileOpeningOptions, and FsUnixFileOpeningOptions. All subclasses of these classes are implementation-defined and subject to change at anytime.
+
 This subclass provides the architecture-specific values for various constants.
 "
 Class {

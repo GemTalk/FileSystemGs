@@ -72,6 +72,15 @@ FsDiskFileReferenceTest >> testDeviceId [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testFileOpeningOptionsClass [
+	"This test shoud be handled in a subclass"
+
+	| theClass |
+	theClass := sandbox fileOpeningOptionsClass.
+	self assert: ({FsFileOpeningOptions_Linux_aarch64. FsFileOpeningOptions_Linux_x64. FsFileOpeningOptions_macOS} includes: theClass)
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testGid [
 
 	self

@@ -24,6 +24,13 @@ FsMemoryFileOpeningOptions >> assertUnconfigured [
 		ifTrue: [self signalImproperOperation: 'Access mode must be set before adding any other options.']
 ]
 
+{ #category : 'private access modes' }
+FsMemoryFileOpeningOptions >> create [
+	"NOP. Files are automatically created in a In-Memory FileSystem when writting.
+	This method enables default options to be specified in FileReference rather than in
+	the FileSystem Store."
+]
+
 { #category : 'initializing' }
 FsMemoryFileOpeningOptions >> initialize [
 

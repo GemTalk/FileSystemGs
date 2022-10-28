@@ -651,6 +651,13 @@ FileReferenceTest >> testExists [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testFileOpeningOptionsClass [
+	"This test shoud be handled in a subclass"
+
+	self subclassResponsibility
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testGid [
 	"See subclass implementations if supported."
 

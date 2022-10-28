@@ -58,24 +58,6 @@ FileSystem >> accessTimeOf: aResolvable [
 ]
 
 { #category : 'public' }
-FileSystem >> binaryReadStreamOn: aResolvable [
-	"Resolve the argument into an absolute path and open a file handle on the file
-	at that path. Ask the handle to give us a read stream for reading the file."
-
-	^ (self open: aResolvable options: self store defaultOptionsForRead)
-		binaryReadStream
-]
-
-{ #category : 'public' }
-FileSystem >> binaryWriteStreamOn: aResolvable [
-	"Resolve the argument into an absolute path and open a file handle on the file
-	at that path. Ask the handle to give us a binary write stream for reading the file."
-
-	^ (self open: aResolvable options: self store defaultOptionsForWrite)
-		binaryWriteStream
-]
-
-{ #category : 'public' }
 FileSystem >> changeTimeOf: aResolvable [
 	"Returns the change date of aResolvable"
 
@@ -150,7 +132,7 @@ toRemote: destRef [
 
 	| inputStream path |
 	path := self resolve: aPath.
-	[inputStream := self binaryReadStreamOn: path.
+	[inputStream := (self referenceTo: path) binaryReadStream.
 	inputStream ifNil: [self store signalFileDoesNotExist: path].
 	destRef fileSystem
 		copyFrom: inputStream
@@ -182,7 +164,7 @@ to: destPath [
 	out := nil.
 	(self exists: destPath)
 		ifTrue: [self store signalFileExists: destPath].
-	[out := self binaryWriteStreamOn: destPath.
+	[out := (self referenceTo: destPath) binaryWriteStream.
 	buffer := ByteArray new: 1024.
 	[inputStream atEnd]
 		whileFalse:
@@ -204,19 +186,6 @@ FileSystem >> creationTimeOf: aResolvable [
 	"Returns the creation date of aResolvable"
 
 	^self store creationTimeOf: (self resolve: aResolvable)
-]
-
-{ #category : 'accessing' }
-FileSystem >> defaultOptionsForRead [
-	"Returns a FileOpeningOptions instance with default options specified."
-
-	^self store defaultOptionsForRead
-]
-
-{ #category : 'accessing' }
-FileSystem >> defaultOptionsForWrite [
-
-	^self store defaultOptionsForWrite
 ]
 
 { #category : 'public' }
@@ -313,6 +282,13 @@ do: aBlock [
 		ifAbsent: [^anAbsentBlock value]
 		ifNotDirectory: [^notDirectoryBlock value]
 		fileNamesDo: aBlock
+]
+
+{ #category : 'accessing' }
+FileSystem >> fileOpeningOptionsClass [
+	"Return the proper subclass of FsFileOpeningOptions for this FileSystem."
+
+	^self store fileOpeningOptionsClass
 ]
 
 { #category : 'printing' }
@@ -515,7 +491,7 @@ FileSystem >> readStreamOn: aResolvable [
 	"Resolve the argument into an absolute path and open a file handle on the file
 	at that path. Ask the handle to give us a read stream for reading the file."
 
-	^ (self open: aResolvable options: self store defaultOptionsForRead) readStream.
+	^ (self open: aResolvable options: self defaultOptionsForRead) readStream
 ]
 
 { #category : 'public' }
@@ -673,5 +649,5 @@ FileSystem >> workingDirectoryPath [
 FileSystem >> writeStreamOn: aResolvable [
 	"Open a write stream on the file referred by the argument. It can be a string or a path"
 
-	^(self open: aResolvable options: self store defaultOptionsForWrite) writeStream
+	^(self open: aResolvable options: self defaultOptionsForWrite) writeStream
 ]

@@ -3,6 +3,8 @@ Part of FileSystem
 
 =========
 
+Users of FileOpeningOptions should use the interface as defined in FsFileOpeningOptions, FsMemoryFileOpeningOptions, and FsUnixFileOpeningOptions. All subclasses of these classes are implementation-defined and subject to change at anytime.
+
 Represents the flags and mode arguments to the Unix open() call.
 See 'man 2 open' for documentation of the various options.
 

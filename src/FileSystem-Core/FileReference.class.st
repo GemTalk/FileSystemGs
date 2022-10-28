@@ -107,20 +107,24 @@ FileReference >> asString [
 { #category : 'streams' }
 FileReference >> binaryReadStream [
 
+	| fileDescriptor |
 	self exists
 		ifFalse: [^FileDoesNotExistException signalWith: self].
 	self isFile
 		ifFalse: [^FsFileRequired signalWith: self pathString].
-	^filesystem binaryReadStreamOn: self path
+	fileDescriptor := self openOptions: self defaultOptionsForRead.
+	^fileDescriptor binaryReadStream
 ]
 
 { #category : 'streams' }
 FileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
+	| fileDescriptor |
 	(self exists and: [self isFile not])
 		ifTrue: [^FsFileRequired signalWith: self].
-	^ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
+	fileDescriptor := self openOptions: self defaultOptionsForWrite.
+	^ZnBufferedWriteStream on: fileDescriptor binaryWriteStream
 ]
 
 { #category : 'accessing' }
@@ -164,6 +168,22 @@ FileReference >> copyWithPath: newPath [
 { #category : 'accessing' }
 FileReference >> creationTime [ 
 	^ filesystem creationTimeOf: self path
+]
+
+{ #category : 'accessing' }
+FileReference >> defaultOptionsForRead [
+	"Return the default options used when reading a file."
+
+	^self fileOpeningOptionsClass readOnly
+]
+
+{ #category : 'accessing' }
+FileReference >> defaultOptionsForWrite [
+	"Return the default options used when writing a file."
+
+	^self fileOpeningOptionsClass writeOnly
+		create;
+		yourself
 ]
 
 { #category : 'operations' }
@@ -220,6 +240,13 @@ FileReference >> ensureCreateDirectory [
 FileReference >> exists [
 
 	^ filesystem exists: path
+]
+
+{ #category : 'accessing' }
+FileReference >> fileOpeningOptionsClass [
+	"Returns the appropriate subclass of FsFileOpeningOptions for this entity."
+
+	^filesystem fileOpeningOptionsClass
 ]
 
 { #category : 'accessing' }
@@ -396,16 +423,23 @@ FileReference >> numberOfHardLinks [
 	^filesystem numberOfHardLinksOf: self path
 ]
 
+{ #category : 'operations' }
+FileReference >> openOptions: options [
+	"Open the file using the specified options."
+
+	^filesystem
+		open: path
+		options: options
+]
+
 { #category : 'streams' }
 FileReference >> openWritable: isWritable [
 
 	| options |
 	options := isWritable
-		ifTrue: [filesystem defaultOptionsForWrite]
-		ifFalse: [filesystem defaultOptionsForRead].
-	^filesystem
-		open: path
-		options: options
+		ifTrue: [self defaultOptionsForWrite]
+		ifFalse: [self defaultOptionsForRead].
+	^self openOptions: options
 ]
 
 { #category : 'printing' }

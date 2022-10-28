@@ -43,6 +43,15 @@ FsMemoryFileReferenceTest >> testCreationTime [
 ]
 
 { #category : 'tests' }
+FsMemoryFileReferenceTest >> testFileOpeningOptionsClass [
+	"This test shoud be handled in a subclass"
+
+	self
+		assert: sandbox fileOpeningOptionsClass
+		equals: FsMemoryFileOpeningOptions
+]
+
+{ #category : 'tests' }
 FsMemoryFileReferenceTest >> testIsBlock [
 	"Block devices unsupported"
 
