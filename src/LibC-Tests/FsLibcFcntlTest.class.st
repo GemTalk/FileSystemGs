@@ -27,7 +27,7 @@ FsLibcFcntlTest >> testFailOpen [
 	| filename  fd |
 	filename := 'testFailOpen'.
 	self
-		should: [ fd := instance openPath: filename flags: 0 mode: 0 ]
+		should: [ fd := instance open: filename flags: 0 mode: 0 ]
 		raise: FsENOENT.
 	self assert: fd equals: nil
 ]
@@ -39,7 +39,7 @@ FsLibcFcntlTest >> testOpenCloseBash [
 
 	| filename fd closeReturn |
 	filename := '/bin/bash'.
-	fd := instance openPath: filename flags: 0 mode: 0.
+	fd := instance open: filename flags: 0 mode: 0.
 	self assert: fd > 0.
 
 	closeReturn := FsLibcUnistd_Linux new closeFd: fd.

@@ -23,7 +23,7 @@ posixPermission: posixPermission [
 ]
 
 { #category : 'functions' }
-FsLibcFcntl >> openPath: pathString flags: flagsInteger mode: modeInteger [
+FsLibcFcntl >> open: pathString flags: flagsInteger mode: modeInteger [
 
 	| errnoHolder result |
 	open == nil

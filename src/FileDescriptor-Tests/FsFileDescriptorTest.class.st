@@ -62,7 +62,7 @@ FsFileDescriptorTest >> testOpenStdout [
 FsFileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |
-	id := DiskStore current libcFcntl openPath: '/usr/bin/env' flags: 0 mode: 0.
+	id := DiskStore current libcFcntl open: '/usr/bin/env' flags: 0 mode: 0.
 	fd := FsFileDescriptor fd: id.
 	[bytes := fd read: 4] ensure: [fd close].
 	self

@@ -468,7 +468,7 @@ options: options [
 
 	| fd |
 	fd := [self libcFcntl
-				openPath: aFileReference pathString
+				open: aFileReference pathString
 				flags: options flags
 				mode: options modeBits]
 			on: FsENOENT

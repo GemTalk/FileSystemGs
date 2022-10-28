@@ -63,7 +63,7 @@ FsLibcUnistdTest >> testEOF [
 	| filename fd buf returned |
 	filename := 'testEof.empty'.	
 	"Flags: O_CREAT (8r100), O_RDONLY (0)"	"Mode: S_IRWXU"
-	fd := fcntlInstance openPath: filename flags: 8r100 mode: 8r0700.
+	fd := fcntlInstance open: filename flags: 8r100 mode: 8r0700.
 	buf := CByteArray gcMalloc: 1024.
 	returned := instance readFromFileDescriptor: fd toBuffer: buf count: 1.
 	self assert: returned equals: 0.
@@ -80,7 +80,7 @@ FsLibcUnistdTest >> testReadBash [
 
 	| filename fd buffer numRead closeReturn |
 	filename := '/bin/bash'.
-	fd := fcntlInstance openPath: filename flags: 0 mode: 0.
+	fd := fcntlInstance open: filename flags: 0 mode: 0.
 	self assert: fd > 0.
 	buffer := CByteArray gcMalloc: 4.
 	numRead := instance
