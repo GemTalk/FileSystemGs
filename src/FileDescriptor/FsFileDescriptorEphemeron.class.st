@@ -10,7 +10,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'fileDescriptor',
-		'object',
 		'registry',
 		'index'
 	],

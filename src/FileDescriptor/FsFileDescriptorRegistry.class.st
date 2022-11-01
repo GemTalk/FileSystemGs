@@ -11,7 +11,6 @@ Class {
 	#name : 'FsFileDescriptorRegistry',
 	#superclass : 'Object',
 	#instVars : [
-		'tally',
 		'freeHead',
 		'list'
 	],

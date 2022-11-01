@@ -21,10 +21,7 @@ Class {
 	#name : 'FsFileDescriptor',
 	#superclass : 'Object',
 	#instVars : [
-		'id',
 		'fd',
-		'registryEntry',
-		'guardian',
 		'ephemeron',
 		'libcUnistd'
 	],
