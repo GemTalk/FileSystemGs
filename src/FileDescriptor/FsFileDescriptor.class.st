@@ -24,10 +24,12 @@ Class {
 		'id',
 		'fd',
 		'registryEntry',
+		'guardian',
+		'ephemeron',
 		'libcUnistd'
 	],
 	#gs_options : [
-		'dbTransient'
+		'instancesNonPersistent'
 	],
 	#category : 'FileDescriptor'
 }
@@ -69,6 +71,46 @@ FsFileDescriptor class >> stdout [
 		yourself
 ]
 
+{ #category : 'private' }
+FsFileDescriptor >> _close [
+	"Close the file. Fsync it first so we are notified of any errors during the flush.
+	Report some errors when flushing (I/O error, out-of-space, quota exceeded)
+	Ignore FsEBADF, which indicates that my descriptor is already somehow closed,
+	so we silently succeed.
+	Other errors on fsync must be ignored (EROFS, EINVAL) since they just say 
+	that fsync isn't supported on this kind of fd.
+	FsEINTR is, according to some references, never returned on Linux. But if it is, 
+	it should be ignored, since the file descriptor has already been freed."
+
+	| fdToClose |
+	fd ifNil: [ ^ self ].
+	fdToClose := fd.
+	fd := nil.
+	[ libcUnistd closeFd: fdToClose ]
+		on: FsEBADF , FsEINTR
+		do: [ :ex | ex return ]
+]
+
+{ #category : 'private' }
+FsFileDescriptor >> _ephemeron: anEphemeron [
+
+	ephemeron := anEphemeron
+]
+
+{ #category : 'private' }
+FsFileDescriptor >> _fd [
+	"This is provided purely for testing purposes. You should never use this."
+
+	^fd
+]
+
+{ #category : 'private' }
+FsFileDescriptor >> _fd: aFileDescriptorInteger [
+	
+	self assertUninitialized.
+	fd := aFileDescriptorInteger
+]
+
 { #category : 'asserting' }
 FsFileDescriptor >> assertUninitialized [
 
@@ -80,7 +122,7 @@ FsFileDescriptor >> becomeStderr [
 	"Assume stderr is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stderr when I'm garbage collected."
 
-	self fd: 2
+	self _fd: 2
 ]
 
 { #category : 'private' }
@@ -88,7 +130,7 @@ FsFileDescriptor >> becomeStdin [
 	"Assume stdin is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdin when I'm garbage collected."
 
-	self fd: 0
+	self _fd: 0
 ]
 
 { #category : 'private' }
@@ -96,7 +138,7 @@ FsFileDescriptor >> becomeStdout [
 	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
 	since we don't want to close stdout when I'm garbage collected."
 
-	self fd: 1
+	self _fd: 1
 ]
 
 { #category : 'accessing' }
@@ -113,11 +155,14 @@ FsFileDescriptor >> binaryWriteStream [
 
 { #category : 'public' }
 FsFileDescriptor >> close [
-	"Closing should silently succeed even if I'm invalid,
-	since I don't represent anything open."
+	"Esure the receiver is closed.
+	This selector can be repeatedly sent."
 
-	self privateClose.
-	registryEntry ifNotNil: [ registryEntry deregister ]
+	self _close.
+	ephemeron ifNotNil:
+			[:eph |
+			ephemeron := nil.
+			eph deregister]
 ]
 
 { #category : 'testing' }
@@ -136,32 +181,10 @@ FsFileDescriptor >> ensureClosed [
 ]
 
 { #category : 'private' }
-FsFileDescriptor >> fd [
-
-	fd
-		ifNil: [ 
-			ImproperOperation
-				signal: 'Attempt to use a closed or otherwise invalid file descriptor' ].
-	^fd
-]
-
-{ #category : 'private' }
 FsFileDescriptor >> fd: aFileDescriptorInteger [
 	
-	self assertUninitialized.
-	fd := aFileDescriptorInteger
-]
-
-{ #category : 'finalization' }
-FsFileDescriptor >> free [
-	"Sent by the ExternalObjectRegistry when there are no other
-	references to me.
-	If I'm committed, I may be referenced by a committed object
-	that has dropped from memory. In that case, should stay open
-	and be kept alive by the registry until the session logs out."
-
-	self isCommitted
-		ifFalse: [ self close ]
+	self _fd: aFileDescriptorInteger.
+	FsFileDescriptorRegistry current register: self
 ]
 
 { #category : 'initialization' }
@@ -186,26 +209,6 @@ FsFileDescriptor >> position [
 		lseek: fd
 		offset: 0
 		whence: 8r1. "SEEK_CUR"
-]
-
-{ #category : 'private' }
-FsFileDescriptor >> privateClose [
-	"Close the file. Fsync it first so we are notified of any errors during the flush.
-	Report some errors when flushing (I/O error, out-of-space, quota exceeded)
-	Ignore FsEBADF, which indicates that my descriptor is already somehow closed,
-	so we silently succeed.
-	Other errors on fsync must be ignored (EROFS, EINVAL) since they just say 
-	that fsync isn't supported on this kind of fd.
-	FsEINTR is, according to some references, never returned on Linux. But if it is, 
-	it should be ignored, since the file descriptor has already been freed."
-
-	| fdToClose |
-	fd ifNil: [ ^ self ].
-	fdToClose := fd.
-	fd := nil.
-	[ libcUnistd closeFd: fdToClose ]
-		on: FsEBADF , FsEINTR
-		do: [ :ex | ex return ]
 ]
 
 { #category : 'private' }
@@ -247,6 +250,14 @@ FsFileDescriptor >> size [
 FsFileDescriptor >> stat [
 
 	^DiskStore current libcStat fstat: fd
+]
+
+{ #category : 'Instance Creation' }
+FsFileDescriptor >> stdin [
+
+	^super new initialize
+		becomeStdin;
+		yourself
 ]
 
 { #category : 'public' }

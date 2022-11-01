@@ -39,7 +39,7 @@ FsFileDescriptorTest >> testOpenStderr [
 
 	self
 		assert: stderr class equals: FsFileDescriptor;
-		assert: stderr fd equals: 2
+		assert: stderr _fd equals: 2
 ]
 
 { #category : 'BasicTests' }
@@ -47,7 +47,7 @@ FsFileDescriptorTest >> testOpenStdin [
 
 	self
 		assert: stdin class equals: FsFileDescriptor;
-		assert: stdin fd equals: 0
+		assert: stdin _fd equals: 0
 ]
 
 { #category : 'BasicTests' }
@@ -55,7 +55,7 @@ FsFileDescriptorTest >> testOpenStdout [
 
 	self
 		assert: stdout class equals: FsFileDescriptor;
-		assert: stdout fd equals: 1
+		assert: stdout _fd equals: 1
 ]
 
 { #category : 'BasicTests' }
