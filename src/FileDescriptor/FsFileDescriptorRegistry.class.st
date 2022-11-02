@@ -22,7 +22,7 @@ Class {
 
 { #category : 'private' }
 FsFileDescriptorRegistry class >> cacheKey [
-	^ #'FsFileDescriptorRegistrySingleton'
+	^ #'GsFsFileDescriptorRegistrySingleton'
 ]
 
 { #category : 'accessing' }
@@ -107,7 +107,7 @@ FsFileDescriptorRegistry >> register: aFileDescriptor [
 		DO NOT step through this method without considering the risk."
 
 	| ephemeron index |
-	"CRITCIAL SECTION"
+	"CRITICIAL SECTION"
 	freeHead = 0
 		ifTrue: [index := list size + 1]
 		ifFalse:

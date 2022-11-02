@@ -84,8 +84,8 @@ FsFileDescriptor >> _close [
 	fdToClose := fd.
 	fd := nil.
 	[ libcUnistd closeFd: fdToClose ]
-		on: FsEBADF , FsEINTR
-		do: [ :ex | ex return ]
+		onException: { FsEBADF. FsEINTR}
+		do: {[ :ex | ex return ]. [:ex | ex retry]}
 ]
 
 { #category : 'private' }
