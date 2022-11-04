@@ -104,7 +104,7 @@ FsFileDescriptorRegistry >> register: aFileDescriptor [
 
 	| ephemeron index |
 	"CRITICIAL SECTION"
-	freeHead = 0
+	freeHead == 0
 		ifTrue:
 			[index := list size + 1.
 			list at: index put: 0 "We need to grow the Array within the critical section and we don't yet have the element."]
