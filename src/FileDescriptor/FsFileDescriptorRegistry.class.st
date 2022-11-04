@@ -79,12 +79,6 @@ FsFileDescriptorRegistry >> deregisterAt: index [
 	"END CRITICAL SECTION"
 ]
 
-{ #category : 'accessing' }
-FsFileDescriptorRegistry >> elementClass [
-
-	^FsFileDescriptorEphemeron
-]
-
 { #category : 'initialization' }
 FsFileDescriptorRegistry >> initialize [
 	"Initialize the list of Ephemerons"
@@ -118,7 +112,7 @@ FsFileDescriptorRegistry >> register: aFileDescriptor [
 			[index := freeHead.
 			freeHead := list at: index].
 	"END CRITICAL SECTION"
-	ephemeron := self elementClass
+	ephemeron := FsFileDescriptorEphemeron
 		fileDescriptor: aFileDescriptor
 		registry: self
 		index: index.
