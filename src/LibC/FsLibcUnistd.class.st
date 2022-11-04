@@ -89,6 +89,13 @@ FsLibcUnistd >> closeFd: fdInteger [
 ]
 
 { #category : 'functions' }
+FsLibcUnistd >> ftruncate: fileDescriptor
+to: length [
+
+	self subclassResponsibility
+]
+
+{ #category : 'functions' }
 FsLibcUnistd >> getCurrentDirName [
 	"Possible exceptions:
 	EACCESS  if the user doesn't have read or search permission on a component of the path
@@ -176,13 +183,6 @@ FsLibcUnistd >> rmdir: pathString [
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
-]
-
-{ #category : 'functions' }
-FsLibcUnistd >> truncate: fileDescriptor
-to: length [
-
-	self subclassResponsibility
 ]
 
 { #category : 'functions' }

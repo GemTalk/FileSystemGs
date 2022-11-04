@@ -46,25 +46,28 @@ FsFileDescriptor class >> new [
 
 { #category : 'Instance Creation' }
 FsFileDescriptor class >> stderr [
+	"_fd: bypassess the Registry and ensures we don't close stderr unexpectedly."
 
 	^super new initialize
-		becomeStderr;
+		_fd: 2;
 		yourself
 ]
 
 { #category : 'Instance Creation' }
 FsFileDescriptor class >> stdin [
+	"_fd: bypassess the Registry and ensures we don't close stdin unexpectedly."
 
 	^super new initialize
-		becomeStdin;
+		_fd: 0;
 		yourself
 ]
 
 { #category : 'Instance Creation' }
 FsFileDescriptor class >> stdout [
+	"_fd: bypassess the Registry and ensures we don't close stdout unexpectedly."
 
 	^super new initialize
-		becomeStdout;
+		_fd: 1;
 		yourself
 ]
 
@@ -98,44 +101,13 @@ FsFileDescriptor >> _ephemeron: anEphemeron [
 FsFileDescriptor >> _fd [
 	"This is provided purely for testing purposes. You should never use this."
 
-	^fd
+	^fd ifNil: [self invalidException signal]
 ]
 
 { #category : 'private' }
 FsFileDescriptor >> _fd: aFileDescriptorInteger [
-	
-	self assertUninitialized.
+
 	fd := aFileDescriptorInteger
-]
-
-{ #category : 'asserting' }
-FsFileDescriptor >> assertUninitialized [
-
-	fd ifNotNil: [FsFileDescriptorAlreadyInitialized signal]
-]
-
-{ #category : 'private' }
-FsFileDescriptor >> becomeStderr [
-	"Assume stderr is already open, and don't register me with the ExternalObjectRegistry,
-	since we don't want to close stderr when I'm garbage collected."
-
-	self _fd: 2
-]
-
-{ #category : 'private' }
-FsFileDescriptor >> becomeStdin [
-	"Assume stdin is already open, and don't register me with the ExternalObjectRegistry,
-	since we don't want to close stdin when I'm garbage collected."
-
-	self _fd: 0
-]
-
-{ #category : 'private' }
-FsFileDescriptor >> becomeStdout [
-	"Assume stdout is already open, and don't register me with the ExternalObjectRegistry,
-	since we don't want to close stdout when I'm garbage collected."
-
-	self _fd: 1
 ]
 
 { #category : 'accessing' }
@@ -190,6 +162,13 @@ FsFileDescriptor >> initialize [
 	libcUnistd := DiskStore current libcUnistd
 ]
 
+{ #category : 'accessing' }
+FsFileDescriptor >> invalidException [
+	"Returns a FsFileDescriptorInvalid exception"
+
+	^FsFileDescriptorInvalid fileDescriptor: self
+]
+
 { #category : 'testing' }
 FsFileDescriptor >> isOpen [
 	"Returns true if the receiver is open."
@@ -199,13 +178,14 @@ FsFileDescriptor >> isOpen [
 
 { #category : 'positioning' }
 FsFileDescriptor >> position [
+	"Returns the current position in the file."
 
-	| library |
-	library := DiskStore current libcUnistd.
-	^library
-		lseek: fd
+	^[libcUnistd
+		lseek: self _fd
 		offset: 0
-		whence: 8r1. "SEEK_CUR"
+		whence: 8r1. "SEEK_CUR"]
+		on: FsEBADF
+		do: [:ex | ex resignalAs: self invalidException]
 ]
 
 { #category : 'private' }
@@ -215,10 +195,12 @@ FsFileDescriptor >> read: count [
 
 	| buffer numBytesRead |
 	buffer := CByteArray gcMalloc: count.
-	numBytesRead := libcUnistd
-		readFromFileDescriptor: fd
+	numBytesRead := [libcUnistd
+		readFromFileDescriptor: self _fd
 		toBuffer: buffer
-		count: buffer size.
+		count: buffer size]
+		onException: {FsEBADF. FsEINTR}
+		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}.
   numBytesRead == 0
     ifTrue: [^#[]].
 	^buffer
@@ -229,12 +211,12 @@ FsFileDescriptor >> read: count [
 { #category : 'positioning' }
 FsFileDescriptor >> setToEnd [
 
-	| library |
-	library := DiskStore current libcUnistd.
-	^library
-		lseek: fd
+	^[libcUnistd
+		lseek: self _fd
 		offset: 0
-		whence: 8r2. "SEEK_END"
+		whence: 8r2. "SEEK_END"]
+		on: FsEBADF
+		do: [:ex | ex resignalAs: self invalidException]
 ]
 
 { #category : 'accessing' }
@@ -246,26 +228,20 @@ FsFileDescriptor >> size [
 { #category : 'private' }
 FsFileDescriptor >> stat [
 
-	^DiskStore current libcStat fstat: fd
-]
-
-{ #category : 'Instance Creation' }
-FsFileDescriptor >> stdin [
-
-	^super new initialize
-		becomeStdin;
-		yourself
+	^[DiskStore current libcStat fstat: self _fd]
+		on: FsEBADF
+		do: [:ex | ex resignalAs: self invalidException]
 ]
 
 { #category : 'public' }
 FsFileDescriptor >> truncateTo: length [
 	"Truncate the open file to the specified length."
 
-	| library |
-	library := DiskStore current libcUnistd.
-	^library
-		truncate: fd
-		to: length
+	^[libcUnistd
+		ftruncate: self _fd
+		to: length]
+		on: FsEBADF
+		do: [:ex | ex resignalAs: self invalidException]
 ]
 
 { #category : 'private' }
@@ -277,8 +253,10 @@ FsFileDescriptor >> write: aByteArray [
 	| buffer |
 	aByteArray _validateInstanceOf: ByteArray.
 	buffer := CByteArray withAll: aByteArray nullTerminate: false.
-	^libcUnistd
-		writeToFileDescriptor: fd
+	^[libcUnistd
+		writeToFileDescriptor: self _fd
 		fromBuffer: buffer
-		count: buffer size
+		count: buffer size]
+		onException: {FsEBADF. FsEINTR}
+		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}
 ]

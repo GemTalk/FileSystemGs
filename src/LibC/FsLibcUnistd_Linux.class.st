@@ -11,15 +11,8 @@ Class {
 	#category : 'LibC'
 }
 
-{ #category : 'accessing' }
-FsLibcUnistd_Linux >> libraryName [
-	"Returns the name of the C library that should be used."
-
-	^'libc.so.6'
-]
-
 { #category : 'functions' }
-FsLibcUnistd_Linux >> truncate: fileDescriptor
+FsLibcUnistd_Linux >> ftruncate: fileDescriptor
 to: length [
 
 	| errnoHolder result |
@@ -38,4 +31,11 @@ to: length [
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
+]
+
+{ #category : 'accessing' }
+FsLibcUnistd_Linux >> libraryName [
+	"Returns the name of the C library that should be used."
+
+	^'libc.so.6'
 ]

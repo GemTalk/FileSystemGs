@@ -11,15 +11,8 @@ Class {
 	#category : 'LibC'
 }
 
-{ #category : 'accessing' }
-FsLibcUnistd_macOS >> libraryName [
-	"Returns the name of the C library that should be used."
-
-	^'/usr/lib/libSystem.dylib'
-]
-
 { #category : 'functions' }
-FsLibcUnistd_macOS >> truncate: fileDescriptor
+FsLibcUnistd_macOS >> ftruncate: fileDescriptor
 to: length [
 
 	| errnoHolder result |
@@ -38,4 +31,11 @@ to: length [
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].
 	^result
+]
+
+{ #category : 'accessing' }
+FsLibcUnistd_macOS >> libraryName [
+	"Returns the name of the C library that should be used."
+
+	^'/usr/lib/libSystem.dylib'
 ]
