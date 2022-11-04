@@ -3,19 +3,13 @@ Part of FileSystem
 
 =========
 
-Each of my instances represents an open Unix file descriptor and allows operations on it.
+FsFileDescriptor serves as a wrapper for an OS file descriptor. It provides a reasonable Smalltalk interface for used functions.
 
-FileDescriptors are dbTransient. Thus, they can be committed but their contents will be nil upon re-fault. This is to allow them to be committed as part of a continuation, rather than failing the commit as would be done with #instancesNonPersistent.
+Instances are instancesNonPersistent as they cannot be committed to the database. A closely related class, FsBinaryFileStream is dbTransient. Referenced instances of FsFileDescriptor are kept alive indirectly (via a chain of instancesNonPersistent objects) which start at SessionTemps and terminates with FsFileDescriptorEphemeron.
 
-Some of the behavior that results, and how it's implemented:
+When the last reference to an FsFileDescriptorInstance is released, the associated Ephemeron will be mourned. Mourning will properly close the file descriptor (if it hasn't been already) and removed the FsFileDescriptor instance the associated FsFileDescriptorRegistry. Users should ensure they maintain a direct and transient reference a FsFileDescriptor instance to ensure it isn't garbage collected and closed prematurely.
 
-* If re-faulted in another session the FileDescriptor will be invalid. Methods detect nil contents and react appropriately.
-
-* If the FileDescriptor is not committed, it is automatically closed and freed if dereferenced. To implement this, it is always referenced from a RegistryEphemeron.
-
-* If the FileDescriptor is committed, it will stay open until the end of the session unless sent #close. This is because it might be referenced from a committed object that has dropped from memory, but we cannot allow the FileDescriptor to lose its state during the session while its underlying OS descriptor is live. This is implemented by checking to for committed state in UnixFileDescriptor>>free.
-
-* In order to keep the FileDescriptor from dropping out of memory even if it's committed, the RegistryEphemeron must never be committed, or allowed to be stubbed as a transient object. This is accomplished by setting RegistryEphemeron to be #instancesNonPersistent and, when available, #noAggressiveStubbing. Being #instancesNonPersistent assures that there is an unbroken chain of transient objects from session state to the RegistryEphemeron, so it cannot itself drop out of memory. #noAggressiveStubbing ensures that the RegistryEphemeron's state must remain a direct memory reference, and not be replaced with an oop reference. An oop reference could allow the FileDescriptor to drop from memory if committed.
+In many cases, the only reference to the underlying FsFileDescriptor will be the FsBinaryFileStream instance. Avoid committing associated streams unless you hold a transient reference to the FsFileDescriptor instance elsewhere.
 "
 Class {
 	#name : 'FsFileDescriptor',

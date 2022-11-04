@@ -22,7 +22,9 @@ Class {
 
 { #category : 'private' }
 FsFileDescriptorRegistry class >> cacheKey [
-	^ #'GsFsFileDescriptorRegistrySingleton'
+	"Return the key defined for the FsFileDescriptorRegistry singleton in SessionTemps"
+
+	^#'GsFsFileDescriptorRegistrySingleton'
 ]
 
 { #category : 'accessing' }
