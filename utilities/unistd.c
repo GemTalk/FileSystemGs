@@ -16,6 +16,9 @@ int main() {
 
   TypeDetail(uid_t);
   TypeDetail(gid_t);
+  ConstDetail(SEEK_SET);
+  ConstDetail(SEEK_CUR);
+  ConstDetail(SEEK_END);
   result = chown("/", 0, 0);
 
   return result;

@@ -59,6 +59,32 @@ FsFileDescriptorTest >> testOpenStdout [
 ]
 
 { #category : 'BasicTests' }
+FsFileDescriptorTest >> testPosition [
+
+	| id fd size |
+	id := DiskStore current libcFcntl open: '/usr/bin/env' flags: 0 mode: 0.
+	fd := FsFileDescriptor fd: id.
+	self
+		assert: fd position
+		equals: 0.
+	size := fd size.
+	fd position: size - 1.
+	self
+		assert: fd position
+		equals: size - 1.
+	fd position: size. "Ensure we can go beyond the end of the file."
+	self
+		assert: fd position
+		equals: size.
+	self
+		should: [fd position: -1]
+		raise: OutOfRange.
+	self
+		assert: fd position
+		equals: size
+]
+
+{ #category : 'BasicTests' }
 FsFileDescriptorTest >> testReadFromUsrBinEnv [
 
 	| id fd bytes |

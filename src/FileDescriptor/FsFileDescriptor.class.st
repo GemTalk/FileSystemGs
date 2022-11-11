@@ -182,6 +182,18 @@ FsFileDescriptor >> position [
 		do: [:ex | ex resignalAs: self invalidException]
 ]
 
+{ #category : 'positioning' }
+FsFileDescriptor >> position: newPosition [
+	"Returns the current position in the file."
+
+	^[libcUnistd
+		lseek: self _fd
+		offset: newPosition
+		whence: 8r0. "SEEK_SET"]
+		onException: {FsEBADF. FsEINVAL}
+		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex resignalAs: (OutOfRange new name: 'position' min: 0 max: (self size - 2) actual: newPosition; yourself)]}
+]
+
 { #category : 'private' }
 FsFileDescriptor >> read: count [
 	"Read up to <count> number of bytes from
