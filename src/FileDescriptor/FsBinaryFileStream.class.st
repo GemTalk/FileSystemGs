@@ -45,13 +45,10 @@ FsBinaryFileStream >> closed [
 
 { #category : 'accessing' }
 FsBinaryFileStream >> contents [
+	"Return the full contents of the file."
 
-	^ByteArray
-		streamContents:
-			[:stream | | bytes |
-			[bytes := descriptor read: 4096.
-			stream nextPutAll: bytes.
-			bytes size == 4096] whileTrue]
+	descriptor position: 0.
+	^self upToEnd
 ]
 
 { #category : 'accessing' }
@@ -127,6 +124,23 @@ FsBinaryFileStream >> truncate [
 	"Truncate the file to the current position."
 
 	descriptor truncateTo: self position
+]
+
+{ #category : 'reading' }
+FsBinaryFileStream >> upToEnd [
+	"Return all bytes from the current position until the end of the file."
+
+	| size bytesRead |
+	size := descriptor size.
+	bytesRead := self position.
+	^ByteArray
+		new: size - bytesRead
+		streamContents:
+			[:stream | | bytes |
+			[bytes := descriptor read: (4096 min: size - bytesRead).
+			stream nextPutAll: bytes.
+			bytesRead := bytesRead + bytes size.
+			bytesRead < size] whileTrue]
 ]
 
 { #category : 'accessing' }
