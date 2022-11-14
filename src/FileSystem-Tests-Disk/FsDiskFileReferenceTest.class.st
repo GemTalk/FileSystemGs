@@ -122,7 +122,7 @@ FsDiskFileReferenceTest >> testIsCharacter [
 { #category : 'tests' }
 FsDiskFileReferenceTest >> testIsExecutable [
 	"I expect /usr/bin/env to be on every system we support.
-	Even FHS linux distros like NixOS have this file."
+	Even non-FHS linux distros like NixOS have this file."
 
 	| exe file |
 	exe := self fileSystem referenceTo: '/usr/bin/env'.
@@ -146,6 +146,25 @@ FsDiskFileReferenceTest >> testIsFifo [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testIsReadable [
+	"Ensure #isReadable returns correct results"
+
+	| file permissions |
+	file := self
+		createFile: 'testIsReadable'
+		contents: 'Permissions are tricky.'.
+	self assert: file isReadable.
+
+	permissions := FileSystemPermission posixPermissions: 8r000.
+	file permissions: permissions.
+	self deny: file isReadable.
+
+	permissions := FileSystemPermission posixPermissions: 8r600.
+	file permissions: permissions.
+	file delete
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testIsRegular [
 	"See subclass implementations."
 
@@ -166,6 +185,25 @@ FsDiskFileReferenceTest >> testIsSocket [
 		deny: self characterDeviceReference isSocket;
 		deny: ((self createFile: 'not-fifo') isSocket);
 		deny: sandbox isSocket
+]
+
+{ #category : 'tests' }
+FsDiskFileReferenceTest >> testIsWritable [
+	"Ensure #isWritable returns correct results"
+
+	| file permissions |
+	file := self
+		createFile: 'testIsWriteable'
+		contents: 'Permissions are tricky.'.
+	self assert: file isWritable.
+
+	permissions := FileSystemPermission posixPermissions: 8r000.
+	file permissions: permissions.
+	self deny: file isWritable.
+
+	permissions := FileSystemPermission posixPermissions: 8r600.
+	file permissions: permissions.
+	file delete
 ]
 
 { #category : 'compatibility tests' }

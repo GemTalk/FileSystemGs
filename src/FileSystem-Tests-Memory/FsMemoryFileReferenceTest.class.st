@@ -89,6 +89,17 @@ FsMemoryFileReferenceTest >> testIsFifo [
 ]
 
 { #category : 'tests' }
+FsMemoryFileReferenceTest >> testIsReadable [
+	"Ensure #isReadable returns correct results"
+
+	| file |
+	file := self
+		createFile: 'testIsReadable'
+		contents: 'Permissions are tricky.'.
+	self assert: file isReadable
+]
+
+{ #category : 'tests' }
 FsMemoryFileReferenceTest >> testIsRegular [
 
 	self
@@ -103,6 +114,17 @@ FsMemoryFileReferenceTest >> testIsSocket [
 	self
 		deny: sandbox isSocket;
 		deny: (self createFile: 'not-socket') isSocket
+]
+
+{ #category : 'tests' }
+FsMemoryFileReferenceTest >> testIsWritable [
+	"Ensure #isWritable returns correct results"
+
+	| file |
+	file := self
+		createFile: 'testIsWriteable'
+		contents: 'Permissions are tricky.'.
+	self assert: file isWritable
 ]
 
 { #category : 'tests' }

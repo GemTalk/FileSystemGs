@@ -362,7 +362,11 @@ FileReference >> isFile [
 
 { #category : 'testing' }
 FileReference >> isReadable [
-	^ filesystem isReadable: path
+	"Return true if the file can be read by this user."
+
+	^[self binaryReadStreamDo: [:stream | true]]
+		on: FsPermissionDenied
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'testing' }
@@ -396,7 +400,11 @@ FileReference >> isSymlink [
 
 { #category : 'testing' }
 FileReference >> isWritable [
-	^ filesystem isWritable: path
+	"Return true if the file can be written by this user."
+
+	^[self binaryWriteStreamDo: [:stream | true]]
+		on: FsPermissionDenied
+		do: [:ex | ex return: false]
 ]
 
 { #category : 'accessing' }

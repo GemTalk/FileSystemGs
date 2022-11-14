@@ -471,13 +471,17 @@ options: options [
 				open: aFileReference pathString
 				flags: options flags
 				mode: options modeBits]
-			on: FsENOENT
+			onException: {FsENOENT. FsEACCES}
 			do:
-				[:ex | | parent |
-				parent := aFileReference parent.
-				parent exists
-					ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
-					ifFalse: [self signalDirectoryDoesNotExist: parent]].
+				{
+					[:ex | | parent |
+					parent := aFileReference parent.
+					parent exists
+						ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
+						ifFalse: [self signalDirectoryDoesNotExist: parent]].
+
+					[:ex | ex resignalAs: (FsPermissionDenied reference: aFileReference)]
+				}.
 	^FsFileDescriptor fd: fd
 ]
 

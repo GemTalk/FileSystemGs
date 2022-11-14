@@ -950,6 +950,13 @@ FileReferenceTest >> testIsFile [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testIsReadable [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIsRegular [
 	"See subclass implementations."
 
@@ -974,6 +981,13 @@ FileReferenceTest >> testIsRoot [
 
 { #category : 'tests' }
 FileReferenceTest >> testIsSocket [
+	"See subclass implementations."
+
+	self assert: false
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testIsWritable [
 	"See subclass implementations."
 
 	self assert: false
