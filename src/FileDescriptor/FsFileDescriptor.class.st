@@ -207,8 +207,8 @@ FsFileDescriptor >> read: count [
 		count: buffer size]
 		onException: {FsEBADF. FsEINTR}
 		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}.
-  numBytesRead == 0
-    ifTrue: [^#[]].
+	numBytesRead == 0
+		ifTrue: [^#[]].
 	^buffer
 		byteArrayFrom: 0
 		to: numBytesRead - 1

@@ -30,7 +30,7 @@ contents: contentsString [
 { #category : 'accessing' }
 FsFileDescriptorRegistryTest >> ephemeronFor: aFileDescriptor [
 
-	^self registry _list detect: [:each | each _fileDescriptor = aFileDescriptor]
+	^self registry _list detect: [:each | each _isSmallInteger not and: [each _fileDescriptor = aFileDescriptor]]
 ]
 
 { #category : 'accessing' }

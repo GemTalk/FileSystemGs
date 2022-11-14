@@ -130,17 +130,13 @@ FsBinaryFileStream >> truncate [
 FsBinaryFileStream >> upToEnd [
 	"Return all bytes from the current position until the end of the file."
 
-	| size bytesRead |
-	size := descriptor size.
-	bytesRead := self position.
 	^ByteArray
-		new: size - bytesRead
+		new: descriptor size - self position
 		streamContents:
 			[:stream | | bytes |
-			[bytes := descriptor read: (4096 min: size - bytesRead).
+			[bytes := descriptor read: 16384.
 			stream nextPutAll: bytes.
-			bytesRead := bytesRead + bytes size.
-			bytesRead < size] whileTrue]
+			bytes size > 0] whileTrue]
 ]
 
 { #category : 'accessing' }
