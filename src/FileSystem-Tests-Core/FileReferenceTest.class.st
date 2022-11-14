@@ -1180,6 +1180,24 @@ FileReferenceTest >> testSetAsWorkingDirectory [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testSize [
+
+	| file0 file10 |
+	file0 := self
+		createFile: 'file-size-0'
+		contents: ''.
+	file10 := self
+		createFile: 'file-size-10'
+		contents: '1234567890'.
+	self
+		assert: file0 size
+		equals: 0.
+	self
+		assert: file10 size
+		equals: 10
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testSlash [
 
 	| alpha |
