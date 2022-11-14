@@ -769,6 +769,17 @@ FileReferenceTest >> testHasFiles [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testHash [
+
+	| refA refB |
+	refA := sandbox / 'testHash'.
+	refB := sandbox / 'testHash'.
+	self
+		assert: refA hash
+		equals: refB hash
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testIfExistsIfAbsent [
 
 	| marker file result |
