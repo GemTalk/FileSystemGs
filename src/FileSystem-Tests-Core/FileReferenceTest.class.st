@@ -715,6 +715,29 @@ FileReferenceTest >> testFileOpeningOptionsClass [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testFullName [
+
+	| pathString ref |
+	pathString := '/tmp/testFullName'.
+	ref := self fileSystem referenceTo: pathString.
+	self
+		assert: ref fullName
+		equals: pathString
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testFullPath [
+
+	| pathString expectedPath ref |
+	pathString := '/tmp/testFullPath'.
+	expectedPath := Path from: pathString.
+	ref := self fileSystem referenceTo: pathString.
+	self
+		assert: ref fullPath
+		equals: expectedPath
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testGid [
 	"See subclass implementations if supported."
 
