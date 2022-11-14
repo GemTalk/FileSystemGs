@@ -80,7 +80,11 @@ FsBinaryFileStream >> isBinary [
 FsBinaryFileStream >> next [
 	"Return the next byte"
 
-	^(self next: 1) at: 1
+	| bytes |
+	bytes := self next: 1.
+	^bytes size == 0
+		ifTrue: [nil]
+		ifFalse: [bytes at: 1]
 ]
 
 { #category : 'reading' }
