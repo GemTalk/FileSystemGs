@@ -501,12 +501,69 @@ FileReferenceTest >> testCopyAllTo [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testCopyTo [
+
+	| src dst |
+	src := self
+		createFile: 'testCopy-src-file'
+		contents: 'This is a file used to test #copyTo:'.
+	dst := src parent / 'testCopy-dst-file'.
+	self
+		assert: src exists;
+		deny: dst exists.
+	src copyTo: dst.
+	self
+		assert: src exists;
+		assert: dst exists.
+	self
+		assert: (src binaryReadStreamDo: [:stream | stream contents])
+		equals: (dst binaryReadStreamDo: [:stream | stream contents]).
+	src delete.
+	dst delete.
+	src := self createDirectory: 'testCopy-src-directory'.
+	dst := src parent / 'testCopy-dst-directory'.
+	self
+		assert: src exists;
+		deny: dst exists.
+	src copyTo: dst.
+	self
+		assert: src exists;
+		assert: dst exists;
+		assert: dst isDirectory
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testCreationTime [
 	"See subclass implementations if supported."
 
 	self
 		should: [sandbox creationTime]
 		raise: FileAttributeNotSupported
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testDelete [
+
+	| file dir dirWithChildren |
+	file := self
+		createFile: 'testDelete-file'
+		contents: 'testDelete file'.
+	dir := self createDirectory: 'testDelete-directory'.
+	dirWithChildren := self createDirectory: 'testDelete-directory-with-children'.
+	self createDirectory: 'testDelete-directory-with-children/child'.
+	self
+		assert: file exists;
+		assert: dir exists;
+		deny: dir hasChildren;
+		assert: dirWithChildren exists;
+		assert: dirWithChildren hasChildren.
+	file delete.
+	self deny: file exists.
+	dir delete.
+	self deny: dir exists.
+	self
+		should: [dirWithChildren delete]
+		raise: DirectoryIsNotEmpty.
 ]
 
 { #category : 'tests' }
