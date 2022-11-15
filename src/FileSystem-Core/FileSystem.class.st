@@ -366,14 +366,6 @@ FileSystem >> isFile: aResolvable [
 ]
 
 { #category : 'public-testing' }
-FileSystem >> isReadable: aResolvable [
-	"Resolve the argument, and answer true if the there is
-	a file or directory that can be read from."
-	
-	^ (self permissions: aResolvable) isReadable
-]
-
-{ #category : 'public-testing' }
 FileSystem >> isRegular: aResolvable [
 	"Return true if the argument refers to a regular file."
 
@@ -393,14 +385,6 @@ FileSystem >> isSymlink: aResolvable [
 	to a directory, false if it refers to a file or doesn't exist."
 
 	^self store isSymlink: (self resolve: aResolvable)
-]
-
-{ #category : 'public-testing' }
-FileSystem >> isWritable: aResolvable [
-	"Resolve the argument, and answer true if the there is
-	a file that can be written to or directory that can be changed."
-	
-	^  (self permissions: aResolvable) isWritable
 ]
 
 { #category : 'public' }
