@@ -44,7 +44,7 @@ ZnBufferedReadStreamTests >> testReadInto [
 	| stream buffer count |
 	stream := ZnBufferedReadStream on: '0123456789' readStreamPortable.
 	stream sizeBuffer: 8.
-	buffer := String new: 6 withAll: Character space.
+	buffer := (String new: 6) atAllPut: Character space; yourself.
 	stream skip: 1.
 	stream readInto: buffer startingAt: 4 count: 3.
 	self assert: buffer equals: '   123'.
