@@ -80,7 +80,7 @@ FsFileDescriptor >> _close [
 	fd ifNil: [ ^ self ].
 	fdToClose := fd.
 	fd := nil.
-	[ libcUnistd closeFd: fdToClose ]
+	[ libcUnistd close: fdToClose ]
 		onException: { FsEBADF. FsEINTR}
 		do: {[ :ex | ex return ]. [:ex | ex retry]}
 ]
@@ -170,6 +170,24 @@ FsFileDescriptor >> isOpen [
 	^fd notNil
 ]
 
+{ #category : 'private' }
+FsFileDescriptor >> peek [
+	"Return the byte at the current position without advancing position."
+
+	| buffer numBytesRead |
+	buffer := CByteArray gcMalloc: 1.
+	numBytesRead := [libcUnistd
+		pread: self _fd
+		into: buffer
+		count: 1
+		startingAt: self position]
+		onException: {FsEBADF. FsEINTR}
+		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}.
+	numBytesRead == 0
+		ifTrue: [^nil].
+	^buffer uint8At: 0
+]
+
 { #category : 'positioning' }
 FsFileDescriptor >> position [
 	"Returns the current position in the file."
@@ -202,8 +220,8 @@ FsFileDescriptor >> read: count [
 	| buffer numBytesRead |
 	buffer := CByteArray gcMalloc: count.
 	numBytesRead := [libcUnistd
-		readFromFileDescriptor: self _fd
-		toBuffer: buffer
+		read: self _fd
+		into: buffer
 		count: buffer size]
 		onException: {FsEBADF. FsEINTR}
 		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}.
@@ -260,8 +278,8 @@ FsFileDescriptor >> write: aByteArray [
 	aByteArray _validateInstanceOf: ByteArray.
 	buffer := CByteArray withAll: aByteArray nullTerminate: false.
 	^[libcUnistd
-		writeToFileDescriptor: self _fd
-		fromBuffer: buffer
+		write: self _fd
+		from: buffer
 		count: buffer size]
 		onException: {FsEBADF. FsEINTR}
 		do: {[:ex | ex resignalAs: self invalidException]. [:ex | ex retry]}

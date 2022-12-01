@@ -105,6 +105,13 @@ FsBinaryFileStream >> nextPutAll: aByteArray [
 	descriptor write: aByteArray
 ]
 
+{ #category : 'reading' }
+FsBinaryFileStream >> peek [
+	"Return the byte at the current position."
+
+	^descriptor peek
+]
+
 { #category : 'positioning' }
 FsBinaryFileStream >> position [
 
@@ -121,6 +128,13 @@ FsBinaryFileStream >> setToEnd [
 FsBinaryFileStream >> size [
 
 	^descriptor size
+]
+
+{ #category : 'positioning' }
+FsBinaryFileStream >> skip: anInteger [
+	"Adjust my position by <anInteger>."
+
+	descriptor position: descriptor position + anInteger
 ]
 
 { #category : 'writing' }
