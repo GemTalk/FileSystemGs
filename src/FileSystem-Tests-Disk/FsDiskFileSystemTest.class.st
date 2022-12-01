@@ -63,7 +63,7 @@ FsDiskFileSystemTest >> testMoveMemoryToDisk [
 FsDiskFileSystemTest >> testWorkingDirectory [
 	| ref x y |
 	"self fail." "Should this use GsFile?"
-	true ifTrue: [ "bypass" ^ self ].
 	ref := filesystem workingDirectory.
-	self assert: ((x := GsFile _expandEnvVariable: 'PWD' isClient:false) beginsWith: (y := ref pathString))
+	x := GsFile serverRealPath: (GsFile _expandEnvVariable: 'PWD' isClient:false).
+	self assert: (x beginsWith: (y := ref pathString))
 ]

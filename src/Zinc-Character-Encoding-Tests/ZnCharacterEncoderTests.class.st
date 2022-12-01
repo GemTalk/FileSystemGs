@@ -99,7 +99,6 @@ ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
 { #category : 'testing' }
 ZnCharacterEncoderTests >> testConvencienceMethods [
 	| encoder string |
-	true ifTrue: [ "bypass" ^ self ].
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
 	self assertCharacterCollection: (encoder decodeBytes: (encoder encodeString: string)) equals: string.
@@ -168,7 +167,6 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 { #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 	| input encoder bytes readStream string read |
-	true ifTrue: [ "bypass" ^ self ].
 	encoder := ZnUTF8Encoder new.
 	input := 'élève'.
 	bytes := encoder encodeString: input.
@@ -182,7 +180,6 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 { #category : 'testing' }
 ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 	| input encoder bytes readStream string read |
-	true ifTrue: [ "bypass" ^ self ].
 	encoder := ZnUTF8Encoder new.
 	input := '_élève_'.
 	bytes := encoder encodeString: input.
@@ -216,7 +213,6 @@ ZnCharacterEncoderTests >> testStringEncoding [
 { #category : 'testing' }
 ZnCharacterEncoderTests >> testUTF8Back [
 	| encoder stream |
-	true ifTrue: [ "bypass" ^ self ].
 	encoder := ZnUTF8Encoder new.
 	stream := (encoder encodeString: 'Les élèves Françaises') readStream.
 	self should: [ encoder backOnStream: stream ] raise: Error.
