@@ -148,7 +148,7 @@ DiskStore >> currentWorkingDirectoryPath [
 	"Answer an absolute Path for the current working directory of the VM."
 
 	| pathString |
-	pathString := self libcUnistd getCurrentDirName.
+	pathString := self libcUnistd getcwd.
 	^Path
 		from: pathString
 		delimiter: self delimiter

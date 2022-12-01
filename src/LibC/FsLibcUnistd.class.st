@@ -18,7 +18,8 @@ Class {
 		'unlink',
 		'write',
 		'chown',
-		'chdir'
+		'chdir',
+		'pread'
 	],
 	#category : 'LibC'
 }
@@ -68,7 +69,7 @@ gid: gidInteger [
 ]
 
 { #category : 'functions' }
-FsLibcUnistd >> closeFd: fdInteger [
+FsLibcUnistd >> close: fdInteger [
 
 	| errnoHolder result |
 	close == nil
@@ -96,7 +97,7 @@ to: length [
 ]
 
 { #category : 'functions' }
-FsLibcUnistd >> getCurrentDirName [
+FsLibcUnistd >> getcwd [
 	"Possible exceptions:
 	EACCESS  if the user doesn't have read or search permission on a component of the path
 	ENOENT if the current working directory has been unlinked
@@ -144,7 +145,31 @@ whence: whence [
 ]
 
 { #category : 'functions' }
-FsLibcUnistd >> readFromFileDescriptor: fd toBuffer: buf count: bytes [
+FsLibcUnistd >> pread: fd
+into: buf
+count: bytes
+startingAt: offset [
+
+	| errnoHolder result |
+	pread == nil
+		ifTrue:
+			[pread := CCallout
+				library: library
+				name: 'pread'
+				result: #'int64'
+				args: #(#'int32' #'ptr' #'uint64' #'uint64')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := pread
+		callWith: { fd. buf. bytes. offset. }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'functions' }
+FsLibcUnistd >> read: fd into: buf count: bytes [
 
 	| errnoHolder result |
 	read == nil
@@ -207,7 +232,7 @@ FsLibcUnistd >> unlinkPath: pathString [
 ]
 
 { #category : 'functions' }
-FsLibcUnistd >> writeToFileDescriptor: fd fromBuffer: buf count: bytes [
+FsLibcUnistd >> write: fd from: buf count: bytes [
 
 	| errnoHolder result |
 	write == nil

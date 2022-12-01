@@ -21,5 +21,13 @@ int main() {
   ConstDetail(SEEK_END);
   result = chown("/", 0, 0);
 
+
+  TypeDetail(int);
+  TypeDetail(void*);
+  TypeDetail(size_t);
+  TypeDetail(off_t);
+  result = read(-1, NULL, 0);
+  result = pread(-1, NULL, 0, 0);
+
   return result;
 }
