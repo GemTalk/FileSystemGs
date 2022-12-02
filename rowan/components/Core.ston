@@ -4,7 +4,7 @@ RwSimpleProjectLoadComponentV2 {
 	#projectNames : [ ],
 	#componentNames : [
 		'gemstone3.2/Core',
-		'tests/Core_dev'
+		'tests/Core'
 	],
 	#packageNames : [
 		'FileDescriptor',
