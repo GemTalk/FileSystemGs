@@ -1,5 +1,5 @@
 RwSimpleProjectLoadComponentV2 {
-	#name : 'tests/Core_dev',
+	#name : 'tests/Core',
 	#condition : 'tests',
 	#projectNames : [ ],
 	#componentNames : [ ],
@@ -13,5 +13,5 @@ RwSimpleProjectLoadComponentV2 {
 		'Network-UUID-Tests',
 		'FileSystem-Tests-GemStone'
 	],
-	#comment : 'Basic configuration for FileSystemGs. For now all packages are expected to be loaded into Globals by SystemUser'
+	#comment : 'Basic configuration for FileSystemGs. All packages are expected to be loaded into Globals by SystemUser'
 }

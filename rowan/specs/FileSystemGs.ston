@@ -1,0 +1,19 @@
+RwLoadSpecificationV2 {
+	#specName : 'FileSystemGs',
+	#projectName : 'FileSystemGs',
+	#gitUrl : 'git@git.gemtalksystems.com:FileSystemGs.git',
+	#revision : 'gs-3.7.x',
+	#projectSpecFile : 'rowan/project.ston',
+	#componentNames : [
+		'Core'
+	],
+	#customConditionalAttributes : [ ],
+	#platformProperties : {
+		'gemstone' : {
+			'SystemUser' : {
+				#defaultSymbolDictName : 'Globals'
+			}
+		}
+	},
+	#comment : 'Load spec for installing FileSystem'
+}
