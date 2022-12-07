@@ -194,21 +194,12 @@ ZnUTF8Encoder >> nextPutCodePoint: codePoint toStream: stream [
 { #category : 'convenience' }
 ZnUTF8Encoder >> readInto: string startingAt: offset count: requestedCount fromStream: stream [
 	"Read requestedCount characters into string starting at offset,
-	returning the number read, there could be less available when stream is atEnd.
-	I signal a ZnByteStringBecameWideString notification if necessary"
+	returning the number read, there could be less available when stream is atEnd."
 
 	| stringBuffer |
 	stringBuffer := string.
-	offset to: offset + requestedCount - 1 do: [ :index | | codePoint |
+	offset to: offset + requestedCount - 1 do: [ :index | 
 		stream atEnd ifTrue: [ ^ index - offset ].  
-		codePoint := self nextCodePointFromStream: stream.
-		[stringBuffer codePointAt: index put: codePoint]
-			on: OutOfRange
-			do:
-				[:ex |
-				codePoint > 65535
-					ifTrue: [stringBuffer _convertToQuadByte]
-					ifFalse: [stringBuffer _convertToDoubleByte].
-				ex retry]].
+		stringBuffer codePointAt: index put: (self nextCodePointFromStream: stream)].
 	^ requestedCount
 ]
