@@ -46,11 +46,26 @@ ZnCharacterReadStream >> nextElement [
 
 { #category : 'accessing' }
 ZnCharacterReadStream >> nextLine [
-	"Read a CR, LF or CRLF terminated line, returning the contents of the line without the EOL. Return nil when the receiver is #atEnd."
-	
-	self atEnd ifTrue: [ ^ nil ].
-	^ self collectionSpecies streamContents: [ :out |
-		out nextPutAll: (self encoder decodeBytes: stream nextLine) ]
+	"Answer next line (may be empty) without line end delimiters, or nil if at end.
+		Leave the stream positioned after the line delimiter(s).
+		Handle a zoo of line delimiters CR, LF, or CR-LF pair"
+
+	| cr lf chrcls result ch |
+	self atEnd
+		ifTrue: [ ^ nil ].
+	cr := (chrcls := Character) cr.
+	lf := chrcls lf.
+	result := self collectionSpecies new.
+	[ 
+	ch := self next.
+	(ch == cr or: [ ch == lf ])
+		ifTrue: [ 
+			ch == cr
+				ifTrue: [ self peekFor: lf ].
+			^ result ].
+	result add: ch.
+	self atEnd ] whileFalse.
+	^ result
 ]
 
 { #category : 'accessing' }
