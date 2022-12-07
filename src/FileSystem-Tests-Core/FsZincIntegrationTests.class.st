@@ -14,6 +14,12 @@ Class {
 	#category : 'FileSystem-Tests-Core'
 }
 
+{ #category : 'testing' }
+FsZincIntegrationTests class >> isAbstract [
+
+	^self == FsZincIntegrationTests
+]
+
 { #category : 'support' }
 FsZincIntegrationTests >> createFile: aString
 contents: contentsString [

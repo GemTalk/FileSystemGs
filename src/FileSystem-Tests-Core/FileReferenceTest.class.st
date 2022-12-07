@@ -1064,6 +1064,18 @@ FileReferenceTest >> testPermissions [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testPosition [
+
+	| file binaryStream |
+	file := self
+		createFile: 'file-size-10'
+		contents: '1234567890'.
+	binaryStream := file binaryReadStream.
+	binaryStream position: 5.
+	self assert: binaryStream next equals: $6 codePoint
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testReadStream [
 
 	| plonk absent directory |

@@ -119,6 +119,12 @@ FsBinaryFileStream >> position [
 ]
 
 { #category : 'positioning' }
+FsBinaryFileStream >> position: aPosition  [
+
+	^descriptor position: aPosition 
+]
+
+{ #category : 'positioning' }
 FsBinaryFileStream >> setToEnd [
 
   ^descriptor setToEnd
