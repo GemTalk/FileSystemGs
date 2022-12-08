@@ -1164,7 +1164,7 @@ FileReferenceTest >> testReadStreamIfAbsent [
 { #category : 'tests' }
 FileReferenceTest >> testRelativeTo [
 
-	| alpha beta reference path result |
+	| alpha beta |
 	alpha := sandbox / 'alpha'.
 	beta := alpha / 'beta'.
 	self
@@ -1326,7 +1326,7 @@ FileReferenceTest >> testWithExtension [
 { #category : 'tests' }
 FileReferenceTest >> testWithoutExtension [
 
-	| reference result |
+	| reference |
 	reference := sandbox / 'alpha.beta.gamma'.
 	reference := reference withoutExtension.
 	self
