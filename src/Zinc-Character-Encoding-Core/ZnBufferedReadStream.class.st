@@ -407,9 +407,9 @@ ZnBufferedReadStream >> upTo: value [
 	This could be further optimzed."
 	
 	^ self collectionSpecies 
-		streamContents: [ :writeStream | | element |
-			[ self atEnd or: [ (element := self next) = value ] ] whileFalse: [ 
-				writeStream nextPut: element ] ]
+		streamContents: [ :writeStream |
+			[ self atEnd or: [ (self peek) = value ] ] whileFalse: [ 
+				writeStream nextPut: self next ] ]
 ]
 
 { #category : 'accessing' }
@@ -417,11 +417,15 @@ ZnBufferedReadStream >> upToAll: aCollection [
 "Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
 
 | startPos endMatch result x |
+aCollection isEmpty ifTrue: [ ^aCollection ].
 startPos := self position.
+"upTo: will stop before aCollection first"
 x := self upTo: aCollection first.
-self atEnd ifTrue: [ ^ x ].
-2 to: aCollection size do: [:i |
-	self peek = (aCollection at: i)
+(self atEnd or: [aCollection size = 1 ])
+	ifTrue: [ ^ x ].
+self next. "move past the matching char from upTo:"
+2 to: aCollection size do: [:i | | y |
+	(y := self peek) = (aCollection at: i)
 		ifTrue: [ self next ]
 		ifFalse: [ self position: startPos.
 		^ self upToEnd ] ].

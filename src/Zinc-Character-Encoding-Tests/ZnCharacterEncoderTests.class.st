@@ -34,6 +34,33 @@ ZnCharacterEncoderTests class >> unicodeCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '         ', 'éèçüäßñα', '€∏'
 ]
 
+{ #category : 'Testing' }
+ZnCharacterEncoderTests class >> isAbstract [
+  "Override to true if a TestCase subclass is Abstract and should not have
+	TestCase instances built from it"
+
+  ^ self sunitName = #'ZnCharacterEncoderTests'
+]
+
+{ #category : 'private' }
+ZnCharacterEncoderTests >> _encoderId [
+		self subclassResponsibility
+]
+
+{ #category : 'private' }
+ZnCharacterEncoderTests >> _sourceClass [
+		self subclassResponsibility
+]
+
+{ #category : 'public' }
+ZnCharacterEncoderTests >> assert: anObject unicodeEquals: otherObj [
+	"allow comparison of unicode and legacy strings"
+
+	self
+		assert: (anObject _unicodeEqual: otherObj)
+		description: anObject printString , ' is not equal to ' , otherObj printString.	
+]
+
 { #category : 'public' }
 ZnCharacterEncoderTests >> assertCharacterCollection: anObject equals: otherObj [
 	"allow comparison between unitcode and legacy strings in legacy mode"
@@ -45,17 +72,7 @@ ZnCharacterEncoderTests >> assertCharacterCollection: anObject equals: otherObj 
 
 { #category : 'private' }
 ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
-true 
-	ifTrue: [ 
-	"GemStone does not support streamed decoding ... hack for tests"
-	^ bytes decodeFromUTF8
-	] ifFalse: [ 
-
-	| input |
-	input := bytes readStream.
-	^ String streamContents: [ :stream |
-		[ input atEnd ] whileFalse: [ 
-			stream nextPut: (encoder nextFromStream: input) ] ] ]
+	self subclassResponsibility
 ]
 
 { #category : 'private' }
@@ -68,16 +85,6 @@ ZnCharacterEncoderTests >> encodeString: string with: encoder [
 	^ ByteArray streamContents: [ :stream |
 		string do: [ :each |
 			encoder nextPut: each toStream: stream ] ]
-]
-
-{ #category : 'testing' }
-ZnCharacterEncoderTests >> testByteDecoding [
-	| encoder bytes |
-	encoder := ZnUTF8Encoder new.
-	bytes := encoder encodeString: 'élève en Français'.
-	self assert: (bytes decodeWith: encoder) equals: (encoder decodeBytes: bytes).
-	self assert: (bytes decodeWith: #utf8) equals: (encoder decodeBytes: bytes).
-	self assert: bytes utf8Decoded equals: (encoder decodeBytes: bytes)
 ]
 
 { #category : 'testing' }

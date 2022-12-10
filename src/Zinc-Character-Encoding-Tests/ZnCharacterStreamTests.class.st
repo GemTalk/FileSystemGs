@@ -12,11 +12,34 @@ Class {
 }
 
 { #category : 'testing' }
+ZnCharacterStreamTests >> assertUpTo: array [
+	| encodingStream |
+	encodingStream := array first class == String
+		ifTrue: [ self eightBitReadStreamOn: array first ]
+		ifFalse: [ self utf8ReadStreamOn: array first ].
+	self assert: (array first readStream upTo: array second) equals: array third.
+	self assert: (encodingStream upTo: array second) equals: array third
+]
+
+{ #category : 'testing' }
 ZnCharacterStreamTests >> assertUpToAll: array [
-	| utf8Stream |
-	utf8Stream := self utf8ReadStreamOn: array first.
+	| encodingStream |
+	encodingStream := array first class == String
+		ifTrue: [ self eightBitReadStreamOn: array first ]
+		ifFalse: [ self utf8ReadStreamOn: array first ].
 	self assert: (array first readStream upToAll: array second) equals: array third.
-	self assert: (utf8Stream upToAll: array second) equals: array third
+	self assert: (encodingStream upToAll: array second) equals: array third
+]
+
+{ #category : 'testing' }
+ZnCharacterStreamTests >> eightBitReadStreamOn: string [
+	| bytes stream |
+	bytes := Zn8BITEncoder new encodeString: string.
+	stream := ZnBufferedReadStream on: (ZnCharacterReadStream
+		on: bytes readStreamPortable
+		encoding: #'8bit').
+	stream sizeBuffer: string size.
+	^stream
 ]
 
 { #category : 'testing' }
@@ -56,7 +79,6 @@ ZnCharacterStreamTests >> testNextLine [
 { #category : 'testing' }
 ZnCharacterStreamTests >> testPeek [
 	| string bytes readStream |
-	true ifTrue: [ "bypass" ^ self ].
 	string := 'élève en Français'.
 	bytes := ZnUTF8Encoder new encodeString: string.
 	readStream := ZnBufferedReadStream on: (ZnCharacterReadStream on: bytes readStreamPortable).
@@ -114,8 +136,61 @@ ZnCharacterStreamTests >> testSimpleUTF8WriteStream [
 ]
 
 { #category : 'testing' }
+ZnCharacterStreamTests >> testUpTo [
+	| char1 char2 string1 string2 |
+  char1 := (Character codePoint: 257). 
+	string1 := '', char1. "DoubleByteString"
+	char2 := (Character codePoint:16rffff1).
+	string2 :=  '', char2. "QuadByteString"
+	{
+		"extended ASCII String"
+		{''     . $ß . ''   } .
+		{'ß'    . $ß . ''   } .
+		{'ße'   . $ß . ''   } .
+		{'ß'    . $e . 'ß'  } .
+		{'ße'   . $e . 'ß'  } .
+		{'ßen'  . $e . 'ß'  } .
+		{'ißen' . $e . 'iß' } .
+		{'iß'   . $ß . 'i'  } .
+		{'iße'  . $ß . 'i'  } .
+
+		"DoubleByteString"
+		{''                 . char1 . ''           } .
+		{string1            . char1 . ''           } .
+		{(string1, 'e')     . char1 . ''           } .
+		{string1            . $e    . string1      } .
+		{(string1, 'e')     . $e    . string1      } .
+		{(string1, 'en')    . $e    . string1      } .
+		{'i', string1, 'en' . $e    . 'i', string1 } .
+		{'i', string1       . char1 . 'i'          } .
+		{'i', string1, 'e'  . char1 . 'i'          } .
+
+		"QuadByteString"
+		{''                 . char2 . ''           } .
+		{string2            . char2 . ''           } .
+		{(string2, 'e')     . char2 . ''           } .
+		{string2            . $e    . string2      } .
+		{(string2, 'e')     . $e    . string2      } .
+		{(string2, 'en')    . $e    . string2      } .
+		{'i', string2, 'en' . $e    . 'i', string2 }.
+		{'i', string2       . char2 . 'i'          } .
+		{'i', string2, 'e'  . char2 . 'i'          } .
+
+		"ASCII String"
+		{'a'   . $a . ''    } .
+		{'a'   . $b . 'a'   } .
+		{'ab'  . $a . ''    } .
+		{'ab'  . $b . 'a'   } .
+		{'ab'  . $c . 'ab'  } .
+		{'abc' . $a . ''    } .
+		{'abc' . $b . 'a'   } .
+		{'abc' . $c . 'ab'  } .
+		{'abc' . $d . 'abc' } .
+	} do: [ :array | self assertUpTo: array ]
+]
+
+{ #category : 'testing' }
 ZnCharacterStreamTests >> testUpToAll [
-	true ifTrue: [ "upToAll: not supported for buffered streams ... skip test for now" ^ self ].
 	#(
 		('' '' '')
 		('' 'ß' '')
@@ -136,6 +211,7 @@ ZnCharacterStreamTests >> testUpToAll [
 		('ißend' 'en' 'iß')
 		('iß' 'ß' 'i')
 		('iße' 'ß' 'i')
+		('eißen' 'ße' 'ei')
 		('eißen' 'ßend' 'eißen')
 		('abcdefgh' 'cd' 'ab')
 		('a' '' '')
@@ -159,15 +235,23 @@ ZnCharacterStreamTests >> testUpToAll [
 
 { #category : 'testing' }
 ZnCharacterStreamTests >> testUpToAllTwice [
-	| utf8Stream stream |
-	true ifTrue: [ "upToAll: not supported for buffered streams ... skip test for now" ^ self ].
-	utf8Stream := self utf8ReadStreamOn: 'eißendeße'.
+	| string utf8Stream stream eightBitStream a b |
+
+	string := 'eißendeße'.
+	stream :=  string readStreamPortable.
+	self assert: (stream upToAll: 'ße') equals: 'ei'.
+	self assert: (stream upToAll: 'ße') equals: 'nde'.
+
+	utf8Stream := self utf8ReadStreamOn: string.
 	self assert: (utf8Stream upToAll: 'ße') equals: 'ei'.
 	self assert: (utf8Stream upToAll: 'ße') equals: 'nde'.
 
-	stream := 'eißendeße' readStreamPortable.
-	self assert: (stream upToAll: 'ße') equals: 'ei'.
-	self assert: (stream upToAll: 'ße') equals: 'nde'
+	a := 'ABC', (Character codePoint: 128), (Character codePoint: 255).
+	b := '', (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
+	eightBitStream := self eightBitReadStreamOn: ( a, '123', b, '123').
+	self assert: (eightBitStream upToAll: '123') equals: a.
+	self assert: (eightBitStream upToAll: '123') equals: b
+
 ]
 
 { #category : 'testing' }
