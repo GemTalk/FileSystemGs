@@ -24,11 +24,11 @@ ZnCharacterStreamTests >> assertUpTo: array [
 { #category : 'testing' }
 ZnCharacterStreamTests >> assertUpToAll: array [
 	| encodingStream |
-	encodingStream := array first class == String
-		ifTrue: [ self eightBitReadStreamOn: array first ]
-		ifFalse: [ self utf8ReadStreamOn: array first ].
 	self assert: (array first readStream upToAll: array second) equals: array third.
-	self assert: (encodingStream upToAll: array second) equals: array third
+	encodingStream := self utf8ReadStreamOn: array first .
+	self assert: (encodingStream upToAll: array second) equals: array third.
+	encodingStream := self eightBitReadStreamOn: array first.
+	self assert: (encodingStream upToAll: array second) equals: array third.
 ]
 
 { #category : 'testing' }
@@ -213,6 +213,7 @@ ZnCharacterStreamTests >> testUpToAll [
 		('iße' 'ß' 'i')
 		('eißen' 'ße' 'ei')
 		('eißen' 'ßend' 'eißen')
+		('eißendeße' 'ße' 'ei')
 		('abcdefgh' 'cd' 'ab')
 		('a' '' '')
 		('a' 'a' '')
@@ -239,11 +240,15 @@ ZnCharacterStreamTests >> testUpToAllTwice [
 
 	string := 'eißendeße'.
 	stream :=  string readStreamPortable.
-	self assert: (stream upToAll: 'ße') equals: 'ei'.
-	self assert: (stream upToAll: 'ße') equals: 'nde'.
-
+	eightBitStream := self eightBitReadStreamOn: string.
 	utf8Stream := self utf8ReadStreamOn: string.
+
+	self assert: (stream upToAll: 'ße') equals: 'ei'.
+	self assert: (eightBitStream upToAll: 'ße') equals: 'ei'.
 	self assert: (utf8Stream upToAll: 'ße') equals: 'ei'.
+
+	self assert: (stream upToAll: 'ße') equals: 'nde'.
+	self assert: (eightBitStream upToAll: 'ße') equals: 'nde'.
 	self assert: (utf8Stream upToAll: 'ße') equals: 'nde'.
 
 	a := 'ABC', (Character codePoint: 128), (Character codePoint: 255).
