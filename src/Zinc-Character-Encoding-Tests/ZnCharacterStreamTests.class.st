@@ -25,10 +25,11 @@ ZnCharacterStreamTests >> assertUpTo: array [
 ZnCharacterStreamTests >> assertUpToAll: array [
 	| encodingStream |
 	self assert: (array first readStream upToAll: array second) equals: array third.
-	encodingStream := self utf8ReadStreamOn: array first .
-	self assert: (encodingStream upToAll: array second) equals: array third.
 	encodingStream := self eightBitReadStreamOn: array first.
 	self assert: (encodingStream upToAll: array second) equals: array third.
+	encodingStream := self utf8ReadStreamOn: array first .
+	self assert: (encodingStream upToAll: array second) equals: array third.
+
 ]
 
 { #category : 'testing' }
@@ -133,6 +134,18 @@ ZnCharacterStreamTests >> testSimpleUTF8WriteStream [
 	self 
 		assert: stream wrappedStream contents
 		equals: bytes asByteArray
+]
+
+{ #category : 'testing' }
+ZnCharacterStreamTests >> testUtf8EncodingStreamPosition [
+	| string bytes stream res |
+	string := 'eißendeße'.
+	bytes := ZnUTF8Encoder new encodeString: string.
+	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
+	res := stream next; next; next.
+	self assert: res equals: $ß.
+	self assert: stream halt position equals: 3.
+	
 ]
 
 { #category : 'testing' }
