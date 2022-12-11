@@ -144,7 +144,7 @@ ZnCharacterStreamTests >> testUtf8EncodingStreamPosition [
 	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
 	res := stream next; next; next.
 	self assert: res equals: $ß.
-	self assert: stream halt position equals: 3.
+	self assert: stream position equals: 3.
 	
 ]
 
