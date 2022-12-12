@@ -743,10 +743,13 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamEncoded: anEncoding [
-
 	^ ZnCharacterReadStream
 		on: self binaryReadStream
 		encoding: anEncoding
+		stringClass:
+			(String isInUnicodeComparisonMode
+				ifTrue: [ Unicode7 ]
+				ifFalse: [ String ])
 ]
 
 { #category : 'streams' }

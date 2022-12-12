@@ -13,12 +13,24 @@ Part of Zinc HTTP Components.
 Class {
 	#name : 'ZnCharacterReadStream',
 	#superclass : 'ZnEncodedReadStream',
+	#instVars : [
+		'stringClass'
+	],
 	#category : 'Zinc-Character-Encoding-Core'
 }
 
+{ #category : 'instance creation' }
+ZnCharacterReadStream class >> on: wrappedStream encoding: encoding stringClass: stringClass [
+	^ self new
+		on: wrappedStream;
+		encoding: encoding;
+		stringClass: stringClass;
+		yourself
+]
+
 { #category : 'accessing' }
 ZnCharacterReadStream >> collectionSpecies [
-	^ String
+	^ self stringClass
 ]
 
 { #category : 'accessing' }
@@ -89,6 +101,16 @@ ZnCharacterReadStream >> readInto: collection startingAt: offset count: requeste
 				startingAt: offset + 1
 				count: requestedCount - 1) + 1 ]
 
+]
+
+{ #category : 'accessing' }
+ZnCharacterReadStream >> stringClass [
+	^ stringClass ifNil: [ stringClass := String ]
+]
+
+{ #category : 'accessing' }
+ZnCharacterReadStream >> stringClass: object [
+	stringClass := object
 ]
 
 { #category : 'accessing' }
