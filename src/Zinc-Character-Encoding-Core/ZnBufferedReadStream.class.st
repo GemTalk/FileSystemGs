@@ -403,13 +403,12 @@ ZnBufferedReadStream >> uint8 [
 { #category : 'accessing' }
 ZnBufferedReadStream >> upTo: value [ 
 	"Read upto but not including value and return them as a collection.
-	If value is not found, return the entire contents of the stream.
-	This could be further optimzed."
+	If value is not found, return the entire contents of the stream."
 	
 	^ self collectionSpecies 
-		streamContents: [ :writeStream |
-			[ self atEnd or: [ (self peek) = value ] ] whileFalse: [ 
-				writeStream nextPut: self next ] ]
+		streamContents: [ :writeStream | | ch |
+			[ self atEnd or: [ (ch := self next) = value ] ] whileFalse: [ 
+				writeStream nextPut: ch ] ]
 ]
 
 { #category : 'accessing' }
@@ -421,9 +420,12 @@ aCollection isEmpty ifTrue: [ ^aCollection ].
 startPos := self position.
 "upTo: will stop before aCollection first"
 x := self upTo: aCollection first.
-(self atEnd or: [aCollection size = 1 ])
-	ifTrue: [ ^ x ].
-self next. "move past the matching char from upTo:"
+self atEnd
+	ifTrue: [ 
+		aCollection size <= 1
+			ifTrue: [ ^ x ].
+		self position: startPos.
+		^ self upToEnd].
 2 to: aCollection size do: [:i | | y |
 	(y := self peek) = (aCollection at: i)
 		ifTrue: [ self next ]

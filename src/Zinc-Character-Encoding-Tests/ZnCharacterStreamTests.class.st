@@ -113,6 +113,18 @@ ZnCharacterStreamTests >> testReadStream [
 ]
 
 { #category : 'testing' }
+ZnCharacterStreamTests >> testReadUpTo [
+	| string |
+	string := '0123456789'.
+	{(self eightBitReadStreamOn: string).
+	(self utf8ReadStreamOn: string)}
+		do: [ :stream | 
+			self assert: (stream upTo: $5) equals: '01234'.
+			self assert: stream upToEnd equals: '6789'.
+			self assert: stream atEnd ]
+]
+
+{ #category : 'testing' }
 ZnCharacterStreamTests >> testSimpleUTF8ReadStream [
 	| string bytes stream |
 	string := 'élève en Français'.
@@ -134,18 +146,6 @@ ZnCharacterStreamTests >> testSimpleUTF8WriteStream [
 	self 
 		assert: stream wrappedStream contents
 		equals: bytes asByteArray
-]
-
-{ #category : 'testing' }
-ZnCharacterStreamTests >> testUtf8EncodingStreamPosition [
-	| string bytes stream res |
-	string := 'eißendeße'.
-	bytes := ZnUTF8Encoder new encodeString: string.
-	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
-	res := stream next; next; next.
-	self assert: res equals: $ß.
-	self assert: stream position equals: 3.
-	
 ]
 
 { #category : 'testing' }
@@ -206,6 +206,22 @@ ZnCharacterStreamTests >> testUpTo [
 ZnCharacterStreamTests >> testUpToAll [
 	#(
 		('' '' '')
+		('a' '' '')
+		('a' 'a' '')
+		('a' 'b' 'a')
+		('ab' '' '')
+		('ab' 'a' '')
+		('ab' 'b' 'a')
+		('ab' 'c' 'ab')
+		('ab' 'ab' '')
+		('abc' '' '')
+		('abc' 'a' '')
+		('abc' 'b' 'a')
+		('abc' 'c' 'ab')
+		('abc' 'd' 'abc')
+		('abc' 'ab' '')
+		('abc' 'bc' 'a')
+		('abc' 'cd' 'abc')
 		('' 'ß' '')
 		('' 'ße' '')
 		('ß' '' '')
@@ -228,22 +244,6 @@ ZnCharacterStreamTests >> testUpToAll [
 		('eißen' 'ßend' 'eißen')
 		('eißendeße' 'ße' 'ei')
 		('abcdefgh' 'cd' 'ab')
-		('a' '' '')
-		('a' 'a' '')
-		('a' 'b' 'a')
-		('ab' '' '')
-		('ab' 'a' '')
-		('ab' 'b' 'a')
-		('ab' 'c' 'ab')
-		('ab' 'ab' '')
-		('abc' '' '')
-		('abc' 'a' '')
-		('abc' 'b' 'a')
-		('abc' 'c' 'ab')
-		('abc' 'd' 'abc')
-		('abc' 'ab' '')
-		('abc' 'bc' 'a')
-		('abc' 'cd' 'abc')
 	) do: [ :array | self assertUpToAll: array ]
 ]
 
@@ -270,6 +270,30 @@ ZnCharacterStreamTests >> testUpToAllTwice [
 	self assert: (eightBitStream upToAll: '123') equals: a.
 	self assert: (eightBitStream upToAll: '123') equals: b
 
+]
+
+{ #category : 'testing' }
+ZnCharacterStreamTests >> test8BitEncodingStreamPosition [
+	| string bytes stream res |
+	string := 'eiSendeSe'.
+	bytes := Zn8BITEncoder new encodeString: string.
+	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
+	res := stream next; next; next.
+	self assert: res equals: $S.
+	self assert: stream position equals: 3.
+	
+]
+
+{ #category : 'testing' }
+ZnCharacterStreamTests >> testUtf8EncodingStreamPosition [
+	| string bytes stream res |
+	string := 'eißendeße'.
+	bytes := ZnUTF8Encoder new encodeString: string.
+	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
+	res := stream next; next; next.
+	self assert: res equals: $ß.
+	self assert: stream position equals: 3.
+	
 ]
 
 { #category : 'testing' }
