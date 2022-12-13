@@ -1,23 +1,17 @@
 Class {
 	#name : 'ZnUTF8CharacterEncoderTests',
-	#superclass : 'ZnCharacterEncoderTests',
+	#superclass : 'ZnAbstractCharacterEncoderTests',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'private' }
 ZnUTF8CharacterEncoderTests >> _encoder [
-
-	^ ZnUTF8Encoder new
+	^ ZnUTF8Encoder new stringClass: self _sourceClass
 ]
 
 { #category : 'private' }
 ZnUTF8CharacterEncoderTests >> _encoderId [
 	^ #utf8
-]
-
-{ #category : 'private' }
-ZnUTF8CharacterEncoderTests >> _sourceClass [
-	^ Unicode7
 ]
 
 { #category : 'private' }

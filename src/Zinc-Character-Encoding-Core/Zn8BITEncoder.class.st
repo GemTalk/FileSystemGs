@@ -39,10 +39,11 @@ Zn8BITEncoder class >> knownEncodingIdentifiers [
 ]
 
 { #category : 'instance creation' }
-Zn8BITEncoder class >> newForEncoding: string [
-	"No further parametrization needed"
-	
-	^ self new
+Zn8BITEncoder class >> newForEncoding: string stringClass: stringClass [
+	"Return a new character encoder object for an encoding described by string.
+	Search for a subclass that handles it and delegate (subclassResponsibility)."
+
+	^ self new stringClass: stringClass
 ]
 
 { #category : 'converting' }
@@ -65,7 +66,7 @@ Zn8BITEncoder >> decodeAsCodePoints: bytes [
 Zn8BITEncoder >> decodeBytes: bytes [
 	"Decode bytes and return the resulting string"
 
-	^ String withBytes: bytes
+	^ self stringClass withBytes: bytes
 ]
 
 { #category : 'converting' }

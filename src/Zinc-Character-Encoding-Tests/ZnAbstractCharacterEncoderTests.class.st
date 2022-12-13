@@ -6,23 +6,31 @@ Part of FileSystem
 Test cases for character encoding
 "
 Class {
-	#name : 'ZnCharacterEncoderTests',
+	#name : 'ZnAbstractCharacterEncoderTests',
 	#superclass : 'TestCase',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'accessing' }
-ZnCharacterEncoderTests class >> asciiCharacterSource [
+ZnAbstractCharacterEncoderTests class >> asciiCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '    '
 ]
 
+{ #category : 'Testing' }
+ZnAbstractCharacterEncoderTests class >> isAbstract [
+  "Override to true if a TestCase subclass is Abstract and should not have
+	TestCase instances built from it"
+
+  ^ self sunitName = #'ZnAbstractCharacterEncoderTests'
+]
+
 { #category : 'accessing' }
-ZnCharacterEncoderTests class >> latin1CharacterSource [
+ZnAbstractCharacterEncoderTests class >> latin1CharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '       ', 'éèçüäßñ'
 ]
 
 { #category : 'accessing' }
-ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
+ZnAbstractCharacterEncoderTests class >> stringOfSize: size fromSource: source [
 	"self stringOfSize: 1024 fromSource: self unicodeCharacterSource"
 	
 	^ String new: size streamContents: [ :out | 
@@ -30,30 +38,24 @@ ZnCharacterEncoderTests class >> stringOfSize: size fromSource: source [
 ]
 
 { #category : 'accessing' }
-ZnCharacterEncoderTests class >> unicodeCharacterSource [
+ZnAbstractCharacterEncoderTests class >> unicodeCharacterSource [
 	^ ($A to: $Z), ($a to: $z), ($0 to: $9), '.-_/*+=|,;?!$&<>^%#', '         ', 'éèçüäßñα', '€∏'
 ]
 
-{ #category : 'Testing' }
-ZnCharacterEncoderTests class >> isAbstract [
-  "Override to true if a TestCase subclass is Abstract and should not have
-	TestCase instances built from it"
-
-  ^ self sunitName = #'ZnCharacterEncoderTests'
-]
-
 { #category : 'private' }
-ZnCharacterEncoderTests >> _encoderId [
+ZnAbstractCharacterEncoderTests >> _encoderId [
 		self subclassResponsibility
 ]
 
 { #category : 'private' }
-ZnCharacterEncoderTests >> _sourceClass [
-		self subclassResponsibility
+ZnAbstractCharacterEncoderTests >> _sourceClass [
+	^ String isInUnicodeComparisonMode
+		ifTrue: [ Unicode7 ]
+		ifFalse: [ String ]
 ]
 
 { #category : 'public' }
-ZnCharacterEncoderTests >> assert: anObject unicodeEquals: otherObj [
+ZnAbstractCharacterEncoderTests >> assert: anObject unicodeEquals: otherObj [
 	"allow comparison of unicode and legacy strings"
 
 	self
@@ -62,7 +64,7 @@ ZnCharacterEncoderTests >> assert: anObject unicodeEquals: otherObj [
 ]
 
 { #category : 'public' }
-ZnCharacterEncoderTests >> assertCharacterCollection: anObject equals: otherObj [
+ZnAbstractCharacterEncoderTests >> assertCharacterCollection: anObject equals: otherObj [
 	"allow comparison between unitcode and legacy strings in legacy mode"
 
 	self
@@ -71,12 +73,12 @@ ZnCharacterEncoderTests >> assertCharacterCollection: anObject equals: otherObj 
 ]
 
 { #category : 'private' }
-ZnCharacterEncoderTests >> decodeBytes: bytes with: encoder [
+ZnAbstractCharacterEncoderTests >> decodeBytes: bytes with: encoder [
 	self subclassResponsibility
 ]
 
 { #category : 'private' }
-ZnCharacterEncoderTests >> encodeString: string with: encoder [
+ZnAbstractCharacterEncoderTests >> encodeString: string with: encoder [
 "
 	^ ByteArray streamContents: [ :stream |
 		stream nextPutAll: string encodeAsUTF8 ]
@@ -88,7 +90,7 @@ ZnCharacterEncoderTests >> encodeString: string with: encoder [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
+ZnAbstractCharacterEncoderTests >> testCodePointEncodingDecoding [
 	| encoder input output |
 	input := {}.
 	'Düsseldorf Königsallee' do: [:each | input add: each codePoint ].
@@ -104,7 +106,7 @@ ZnCharacterEncoderTests >> testCodePointEncodingDecoding [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testConvencienceMethods [
+ZnAbstractCharacterEncoderTests >> testConvencienceMethods [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
@@ -116,7 +118,7 @@ ZnCharacterEncoderTests >> testConvencienceMethods [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
+ZnAbstractCharacterEncoderTests >> testKnownEncodingIdentifiers [
 	| all minimal asciiString |
 	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
 	minimal := #(utf8) asSet.
@@ -134,7 +136,7 @@ ZnCharacterEncoderTests >> testKnownEncodingIdentifiers [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
+ZnAbstractCharacterEncoderTests >> testNextPutAllStartingAtToStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
@@ -152,7 +154,7 @@ ZnCharacterEncoderTests >> testNextPutAllStartingAtToStream [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
+ZnAbstractCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' 'çç' ) do: [ :each |
@@ -172,7 +174,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStream [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
+ZnAbstractCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
 	input := 'élève'.
@@ -185,7 +187,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamAtEnd [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
+ZnAbstractCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 	| input encoder bytes readStream string read |
 	encoder := ZnUTF8Encoder new.
 	input := '_élève_'.
@@ -207,7 +209,7 @@ ZnCharacterEncoderTests >> testReadIntoStartingAtCountFromStreamWithOffset [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testStringEncoding [
+ZnAbstractCharacterEncoderTests >> testStringEncoding [
 	| encoder string |
 	encoder := ZnUTF8Encoder new.
 	string := 'élève en Français'.
@@ -218,7 +220,7 @@ ZnCharacterEncoderTests >> testStringEncoding [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8Back [
+ZnAbstractCharacterEncoderTests >> testUTF8Back [
 	| encoder stream |
 	encoder := ZnUTF8Encoder new.
 	stream := (encoder encodeString: 'Les élèves Françaises') readStream.
@@ -233,7 +235,7 @@ ZnCharacterEncoderTests >> testUTF8Back [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8Boundaries [
+ZnAbstractCharacterEncoderTests >> testUTF8Boundaries [
 	"Test encoding and decoding of the characters at the boundaries between 1, 2, 3, and 4 multi-byte sequences.
 	Values taken from http://en.wikipedia.org/wiki/Utf8#Description with the new RFC 3629 limit"
 	
@@ -252,7 +254,7 @@ ZnCharacterEncoderTests >> testUTF8Boundaries [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8Encoder [
+ZnAbstractCharacterEncoderTests >> testUTF8Encoder [
 	"The examples are taken from http://en.wikipedia.org/wiki/UTF-8#Description"
 	
 	| encoder inputBytes outputBytes inputString outputString |
@@ -266,7 +268,7 @@ ZnCharacterEncoderTests >> testUTF8Encoder [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8EncoderAuto [
+ZnAbstractCharacterEncoderTests >> testUTF8EncoderAuto [
 	| encoder inputString bytes outputString |
 	encoder := ZnUTF8Encoder new.
 	inputString := String withAll: ((1 to: 3072) collect: [ :each | Character codePoint: each ]).
@@ -276,7 +278,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderAuto [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8EncoderByteCount [	
+ZnAbstractCharacterEncoderTests >> testUTF8EncoderByteCount [	
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	self assert: (encoder encodedByteCountFor: $$) = 1.
@@ -286,7 +288,7 @@ ZnCharacterEncoderTests >> testUTF8EncoderByteCount [
 ]
 
 { #category : 'testing' }
-ZnCharacterEncoderTests >> testUTF8EncoderWide [
+ZnAbstractCharacterEncoderTests >> testUTF8EncoderWide [
 	| encoder |
 	encoder := ZnUTF8Encoder new.
 	{ 'abc'. 'élève en Français'. 'Pra-ská' copy at: 4 put: (Character codePoint: 382); yourself. '' }

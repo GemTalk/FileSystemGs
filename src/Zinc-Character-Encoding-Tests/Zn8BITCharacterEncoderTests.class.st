@@ -1,13 +1,12 @@
 Class {
 	#name : 'Zn8BITCharacterEncoderTests',
-	#superclass : 'ZnCharacterEncoderTests',
+	#superclass : 'ZnAbstractCharacterEncoderTests',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'private' }
 Zn8BITCharacterEncoderTests >> _encoder [
-
-	^ Zn8BITEncoder new
+	^ Zn8BITEncoder new stringClass: self _sourceClass
 ]
 
 { #category : 'private' }

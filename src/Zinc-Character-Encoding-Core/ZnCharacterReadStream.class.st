@@ -34,6 +34,11 @@ ZnCharacterReadStream >> collectionSpecies [
 ]
 
 { #category : 'accessing' }
+ZnCharacterReadStream >> encoder [
+	^ encoder ifNil: [ encoder := super encoder stringClass: self stringClass ]
+]
+
+{ #category : 'accessing' }
 ZnCharacterReadStream >> match: subCollection [ 
 	"Set the access position of the receiver to be past the next occurrence of the subCollection. Answer whether subCollection is found.  No wildcards, and case does matter."
 	| pattern startMatch |

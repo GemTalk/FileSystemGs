@@ -68,7 +68,7 @@ ZnBufferedReadStream >> closed [
 ZnBufferedReadStream >> collectionSpecies [
 	^ stream isBinary
 		ifTrue: [ ByteArray ]
-		ifFalse: [ String ]
+		ifFalse: [ stream stringClass ]
 ]
 
 { #category : 'accessing' }

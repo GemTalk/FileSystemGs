@@ -43,30 +43,37 @@ ZnAbstractCharacterStreamTests >> assertUpToAll: theArray [
 
 { #category : 'private' }
 ZnAbstractCharacterStreamTests >> convertStringsToStringClass: theArray [
-	| literalSringClass |
-	literalSringClass := '' class.
 	^ theArray
 		collect: [ :str | 
 			str class == Character
 				ifTrue: [ str ]
 				ifFalse: [ 
-					literalSringClass == self stringClass
-						ifTrue: [ str ]
-						ifFalse: [ 
-							self stringClass == Unicode7
-								ifTrue: [ str decodeFromUTF8 ]
-								ifFalse: [ str asString ] ] ] ]
+					self stringClass == Unicode7
+						ifTrue: [ (str encodeWith: #utf8) decodeFromUTF8 ]
+						ifFalse: [ str asString ] ] ]
+]
+
+{ #category : 'private' }
+ZnAbstractCharacterStreamTests >> convertStringToStringClass: aString [
+	^ self stringClass == Unicode7
+		ifTrue: [ (aString encodeWith: #utf8) decodeFromUTF8 ]
+		ifFalse: [ aString asString ]
 ]
 
 { #category : 'testing' }
 ZnAbstractCharacterStreamTests >> eightBitReadStreamOn: string [
 	| bytes stream |
-	bytes := Zn8BITEncoder new encodeString: string.
-	stream := ZnBufferedReadStream on: (ZnCharacterReadStream
-		on: bytes readStreamPortable
-		encoding: #'8bit').
+	bytes := Zn8BITEncoder new
+		stringClass: self stringClass;
+		encodeString: string.
+	stream := ZnBufferedReadStream
+		on:
+			(ZnCharacterReadStream
+				on: bytes readStreamPortable
+				encoding: #'8bit'
+				stringClass: self stringClass).
 	stream sizeBuffer: string size.
-	^stream
+	^ stream
 ]
 
 { #category : 'private' }
@@ -158,12 +165,12 @@ ZnAbstractCharacterStreamTests >> testReadStream [
 { #category : 'testing' }
 ZnAbstractCharacterStreamTests >> testReadUpTo [
 	| string |
-	string := '0123456789'.
+	string := self convertStringToStringClass: '0123456789'.
 	{(self eightBitReadStreamOn: string).
 	(self utf8ReadStreamOn: string)}
 		do: [ :stream | 
-			self assert: (stream upTo: $5) equals: '01234'.
-			self assert: stream upToEnd equals: '6789'.
+			self assert: (stream upTo: $5) equals: (self convertStringToStringClass: '01234').
+			self assert: stream upToEnd equals: (self convertStringToStringClass: '6789').
 			self assert: stream atEnd ]
 ]
 
@@ -194,10 +201,10 @@ ZnAbstractCharacterStreamTests >> testSimpleUTF8WriteStream [
 { #category : 'testing' }
 ZnAbstractCharacterStreamTests >> testUpTo [
 	| char1 char2 string1 string2 |
-  char1 := (Character codePoint: 257). 
-	string1 := '', char1. "DoubleByteString"
+	char1 := (Character codePoint: 257). 
+	string1 := self convertStringToStringClass:  '', char1. "DoubleByteString"
 	char2 := (Character codePoint:16rffff1).
-	string2 :=  '', char2. "QuadByteString"
+	string2 :=  self convertStringToStringClass: '', char2. "QuadByteString"
 	{
 		"extended ASCII String"
 		{''     . $ß . ''   } .
@@ -294,24 +301,24 @@ ZnAbstractCharacterStreamTests >> testUpToAll [
 ZnAbstractCharacterStreamTests >> testUpToAllTwice [
 	| string utf8Stream stream eightBitStream a b |
 
-	string := 'eißendeße'.
+	string := self convertStringToStringClass: 'eißendeße'.
 	stream :=  string readStreamPortable.
 	eightBitStream := self eightBitReadStreamOn: string.
 	utf8Stream := self utf8ReadStreamOn: string.
 
-	self assert: (stream upToAll: 'ße') equals: 'ei'.
-	self assert: (eightBitStream upToAll: 'ße') equals: 'ei'.
-	self assert: (utf8Stream upToAll: 'ße') equals: 'ei'.
+	self assert: (stream upToAll: (self convertStringToStringClass: 'ße')) equals: (self convertStringToStringClass: 'ei').
+	self assert: (eightBitStream upToAll: (self convertStringToStringClass: 'ße')) equals: (self convertStringToStringClass: 'ei').
+	self assert: (utf8Stream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'ei').
 
-	self assert: (stream upToAll: 'ße') equals: 'nde'.
-	self assert: (eightBitStream upToAll: 'ße') equals: 'nde'.
-	self assert: (utf8Stream upToAll: 'ße') equals: 'nde'.
+	self assert: (stream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'nde').
+	self assert: (eightBitStream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'nde').
+	self assert: (utf8Stream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'nde').
 
-	a := 'ABC', (Character codePoint: 128), (Character codePoint: 255).
-	b := '', (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
-	eightBitStream := self eightBitReadStreamOn: ( a, '123', b, '123').
-	self assert: (eightBitStream upToAll: '123') equals: a.
-	self assert: (eightBitStream upToAll: '123') equals: b
+	a := (self convertStringToStringClass: 'ABC'), (Character codePoint: 128), (Character codePoint: 255).
+	b := (self convertStringToStringClass: ''), (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
+	eightBitStream := self eightBitReadStreamOn: { a. (self convertStringToStringClass: '123'). b. (self convertStringToStringClass: '123')}.
+	self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: a.
+	self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: b
 
 ]
 
@@ -351,11 +358,15 @@ ZnAbstractCharacterStreamTests >> testUTF8ReadStreamReadInto [
 { #category : 'testing' }
 ZnAbstractCharacterStreamTests >> utf8ReadStreamOn: string [
 	| bytes stream |
-	bytes := ZnUTF8Encoder new encodeString: string.
-	stream := ZnBufferedReadStream on: (ZnCharacterReadStream
-		on: bytes readStreamPortable
-		encoding: #utf8
-		stringClass: self stringClass).
+	bytes := ZnUTF8Encoder new
+		stringClass: self stringClass;
+		encodeString: string.
+	stream := ZnBufferedReadStream
+		on:
+			(ZnCharacterReadStream
+				on: bytes readStreamPortable
+				encoding: #'utf8'
+				stringClass: self stringClass).
 	stream sizeBuffer: string size.
-	^stream
+	^ stream
 ]
