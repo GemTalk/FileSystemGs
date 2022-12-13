@@ -24,8 +24,10 @@ ZnAbstractCharacterStreamTests >> assertUpTo: theArray [
 	| array encodingStream |
 	array := self convertStringsToStringClass: theArray.
 	self assert: (array first readStream upTo: array second) equals: array third.
-	encodingStream := self eightBitReadStreamOn: array first.
-	self assert: (encodingStream upTo: array second) equals: array third.
+	({String . Unicode7} includes: (array at: 1) class)
+		ifTrue: [ 
+			encodingStream := self eightBitReadStreamOn: array first.
+			self assert: (encodingStream upTo: array second) equals: array third ].
 	encodingStream := self utf8ReadStreamOn: array first.
 	self assert: (encodingStream upTo: array second) equals: array third
 ]
@@ -35,10 +37,13 @@ ZnAbstractCharacterStreamTests >> assertUpToAll: theArray [
 	| array encodingStream |
 	array := self convertStringsToStringClass: theArray.
 	self assert: (array first readStream upToAll: array second) equals: array third.
-	encodingStream := self eightBitReadStreamOn: array first.
-	self assert: (encodingStream upToAll: array second) equals: array third.
-	encodingStream := self utf8ReadStreamOn: array first .
-	self assert: (encodingStream upToAll: array second) equals: array third.
+	({String.
+	Unicode7} includes: (array at: 1) class)
+		ifTrue: [ 
+			encodingStream := self eightBitReadStreamOn: array first.
+			self assert: (encodingStream upToAll: array second) equals: array third ].
+	encodingStream := self utf8ReadStreamOn: array first.
+	self assert: (encodingStream upToAll: array second) equals: array third
 ]
 
 { #category : 'private' }
@@ -82,15 +87,20 @@ ZnAbstractCharacterStreamTests >> stringClass [
 ]
 
 { #category : 'testing' }
-ZnAbstractCharacterStreamTests >> test8BitEncodingStreamPosition [
-	| string bytes stream res |
-	string := 'eiSendeSe'.
-	bytes := Zn8BITEncoder new encodeString: string.
-	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
+ZnAbstractCharacterStreamTests >> test8BitEncodingStreamPositionForString [
+	| string char bytes stream res |
+	string := 'eißendeße'.
+	char := $ß.
+	bytes := Zn8BITEncoder new 
+		stringClass: self stringClass;
+		encodeString: string.
+	stream := ZnCharacterReadStream 
+		on: bytes readStreamPortable
+		encoding: #'8bit'
+		stringClass: self stringClass.
 	res := stream next; next; next.
-	self assert: res equals: $S.
+	self assert: res equals: char.
 	self assert: stream position equals: 3.
-	
 ]
 
 { #category : 'testing' }
@@ -323,7 +333,41 @@ ZnAbstractCharacterStreamTests >> testUpToAllTwice [
 ]
 
 { #category : 'testing' }
-ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPosition [
+ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForDoubleByteString [
+	| string char bytes stream res |
+	char := (Character codePoint: 257). 
+	string := self convertStringToStringClass: ('ei', char).
+	bytes := ZnUTF8Encoder new 
+		stringClass: self stringClass;
+		encodeString: string.
+	stream := ZnCharacterReadStream 
+		on: bytes readStreamPortable
+		encoding: #'utf8'
+		stringClass: self stringClass.
+	res := stream next; next; next.
+	self assert: res equals: char.
+	self assert: stream position equals: 3.
+]
+
+{ #category : 'testing' }
+ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForQuadByteString [
+	| string char bytes stream res |
+	char := (Character codePoint:16rffff1).
+	string :=  self convertStringToStringClass: ('ei', char).
+	bytes := ZnUTF8Encoder new 
+		stringClass: self stringClass;
+		encodeString: string.
+	stream := ZnCharacterReadStream 
+		on: bytes readStreamPortable
+		encoding: #'utf8'
+		stringClass: self stringClass.
+	res := stream next; next; next.
+	self assert: res equals: char.
+	self assert: stream position equals: 3.
+]
+
+{ #category : 'testing' }
+ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForString [
 	| string bytes stream res |
 	string := 'eißendeße'.
 	bytes := ZnUTF8Encoder new encodeString: string.
