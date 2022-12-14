@@ -119,9 +119,24 @@ FsBinaryFileStream >> position [
 ]
 
 { #category : 'positioning' }
-FsBinaryFileStream >> position: aPosition  [
+FsBinaryFileStream >> position: aPosition [ 
 
 	^descriptor position: aPosition 
+]
+
+{ #category : 'reading' }
+FsBinaryFileStream >> readInto: aCollection startingAt: startIndex count: n [
+	"Read n objects into the given collection. 
+	Return number of elements that have been read."
+
+	| max |
+	max := (self size - self position) min: n.
+	aCollection 
+		replaceFrom: startIndex 
+		to: startIndex + max - 1
+		with: (self next: max)
+		startingAt: 1.
+	^ max
 ]
 
 { #category : 'positioning' }
