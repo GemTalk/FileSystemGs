@@ -10,7 +10,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'readStream',
-		'writeStream'
+		'writeStream',
+		'stringClass'
 	],
 	#category : 'Zinc-Character-Encoding-Core'
 }
@@ -21,6 +22,11 @@ ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding [
 	^ self new
 		on: wrappedStream encoding: encoding;
 		yourself
+]
+
+{ #category : 'instance creation' }
+ZnCharacterReadWriteStream class >> on: wrappedStream encoding: encoding stringClass: stringClass [
+	^ self new on: wrappedStream encoding: encoding stringClass: stringClass
 ]
 
 { #category : 'accessing' }
@@ -42,7 +48,7 @@ ZnCharacterReadWriteStream >> closed [
 
 { #category : 'accessing' }
 ZnCharacterReadWriteStream >> collectionSpecies [
-	^ String
+	^ self stringClass
 ]
 
 { #category : 'accessing' }
@@ -91,7 +97,22 @@ ZnCharacterReadWriteStream >> nextPutAll: aString [
 ZnCharacterReadWriteStream >> on: aStream encoding: encoding [
 	| encoder |
 	encoder := encoding asZnCharacterEncoder.
-	readStream := ZnCharacterReadStream on: aStream encoding: encoder.
+	readStream := ZnCharacterReadStream
+		on: aStream
+		encoding: encoder
+		stringClass: self stringClass.
+	writeStream := ZnCharacterWriteStream on: aStream encoding: encoder
+]
+
+{ #category : 'instance creation' }
+ZnCharacterReadWriteStream >> on: aStream encoding: encoding stringClass: aStringClass [
+	| encoder |
+	self stringClass: aStringClass.
+	encoder := encoding asZnCharacterEncoder.
+	readStream := ZnCharacterReadStream
+		on: aStream
+		encoding: encoder
+		stringClass: aStringClass.
 	writeStream := ZnCharacterWriteStream on: aStream encoding: encoder
 ]
 
@@ -141,6 +162,16 @@ ZnCharacterReadWriteStream >> skip: anInteger [
 ZnCharacterReadWriteStream >> space [
 	
 	writeStream space
+]
+
+{ #category : 'accessing' }
+ZnCharacterReadWriteStream >> stringClass [
+	^ stringClass ifNil: [ stringClass := String ]
+]
+
+{ #category : 'accessing' }
+ZnCharacterReadWriteStream >> stringClass: object [
+	stringClass := object
 ]
 
 { #category : 'accessing' }

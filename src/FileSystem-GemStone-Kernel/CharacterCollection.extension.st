@@ -20,12 +20,15 @@ CharacterCollection >> asResolvedBy: aFileSystem [
 { #category : '*filesystem-gemstone-kernel' }
 CharacterCollection >> asZnCharacterEncoder [
 	"Return a ZnCharacterEncoder instance using the receiver as identifier"
-	
-	" 'UTF-8' asZnCharacterEncoder "
-	
-	((self select: [ :each | each isAlphaNumeric ]) asLowercase) = 'utf8' ifFalse: [ self error: 'Only utf8 encoding supported'].
-	^ ZnUTF8Encoder new
 
+	" 'UTF-8' asZnCharacterEncoder "
+
+	(self select: [ :each | each isAlphaNumeric ]) asLowercase = 'utf8'
+		ifTrue: [ ^ ZnUTF8Encoder new ]
+		ifFalse: [ 
+			(self select: [ :each | each isAlphaNumeric ]) asLowercase = '8bit'
+				ifFalse: [ self error: 'only 8bit or  utf8 encoding supported' ] ].
+	^ Zn8BITEncoder new
 ]
 
 { #category : '*filesystem-gemstone-kernel' }

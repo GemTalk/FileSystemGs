@@ -42,10 +42,11 @@ ZnUTF8Encoder class >> knownEncodingIdentifiers [
 ]
 
 { #category : 'instance creation' }
-ZnUTF8Encoder class >> newForEncoding: string [
-	"No further parametrization needed"
-	
-	^ self new
+ZnUTF8Encoder class >> newForEncoding: string stringClass: stringClass [
+	"Return a new character encoder object for an encoding described by string.
+	Search for a subclass that handles it and delegate (subclassResponsibility)."
+
+	^ self new stringClass: stringClass
 ]
 
 { #category : 'converting' }

@@ -41,6 +41,9 @@ Part of Zinc HTTP Components.
 Class {
 	#name : 'ZnCharacterEncoder',
 	#superclass : 'Object',
+	#instVars : [
+		'stringClass'
+	],
 	#category : 'Zinc-Character-Encoding-Core'
 }
 
@@ -70,12 +73,25 @@ ZnCharacterEncoder class >> knownEncodingIdentifiers [
 ZnCharacterEncoder class >> newForEncoding: string [
 	"Return a new character encoder object for an encoding described by string.
 	Search for a subclass that handles it and delegate (subclassResponsibility)."
+
+	^ self
+		newForEncoding: string
+		stringClass:
+			(String isInUnicodeComparisonMode
+				ifTrue: [ Unicode7 ]
+				ifFalse: [ String ])
+]
+
+{ #category : 'instance creation' }
+ZnCharacterEncoder class >> newForEncoding: string stringClass: stringClass [
+	"Return a new character encoder object for an encoding described by string.
+	Search for a subclass that handles it and delegate (subclassResponsibility)."
 	
 	| concreteSubclass |
 	concreteSubclass := self allSubclasses 
 		detect: [ :each | each handlesEncoding: string ] 
 		ifNone: [ ^ self error: 'The ', string printString, ' is not currently supported.' ].
-	^ concreteSubclass newForEncoding: string
+	^ concreteSubclass newForEncoding: string stringClass: stringClass
 ]
 
 { #category : 'converting' }
@@ -156,4 +172,18 @@ ZnCharacterEncoder >> nextPut: character toStream: stream [
 	"We should use #codePoint but #asInteger is faster"
 	
 	self nextPutCodePoint: character asInteger toStream: stream
+]
+
+{ #category : 'accessing' }
+ZnCharacterEncoder >> stringClass [
+	^ stringClass
+		ifNil: [ 
+			stringClass := String isInUnicodeComparisonMode
+				ifTrue: [ Unicode7 ]
+				ifFalse: [ String ] ]
+]
+
+{ #category : 'accessing' }
+ZnCharacterEncoder >> stringClass: object [
+	stringClass := object
 ]
