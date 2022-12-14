@@ -743,9 +743,8 @@ AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamEncoded: anEncoding [
-	^ ZnCharacterReadStream
-		on: self binaryReadStream
-		encoding: anEncoding
+	^ self
+		readStreamEncoded: anEncoding
 		stringClass:
 			(String isInUnicodeComparisonMode
 				ifTrue: [ Unicode7 ]
@@ -756,6 +755,26 @@ AbstractFileReference >> readStreamEncoded: anEncoding [
 AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
 	| stream |
 	stream := self readStreamEncoded: anEncoding.
+	^ [ aBlock value: stream ] 
+		ensure: [ stream close ]
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> readStreamEncoded: anEncoding stringClass: stringClass [
+	| stream |
+	stream := self fileSystem isDiskFileSystem
+		ifTrue: [ ZnBufferedReadStream on: self binaryReadStream ]
+		ifFalse: [ self binaryReadStream ].
+	^ ZnCharacterReadStream
+		on: stream
+		encoding: anEncoding
+		stringClass: stringClass
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> readStreamEncoded: anEncoding stringClass: stringClass do: aBlock [
+	| stream |
+	stream := self readStreamEncoded: anEncoding stringClass: stringClass.
 	^ [ aBlock value: stream ] 
 		ensure: [ stream close ]
 ]
