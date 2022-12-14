@@ -78,8 +78,14 @@ Zn8BITEncoder >> encodedByteCountFor: character [
 
 { #category : 'convenience' }
 Zn8BITEncoder >> encodeString: string [
-	"Encode string and return the resulting Utf8 instance"
-	
+	"Encode string and return an array of bytes instance"
+
+	({String.
+	Unicode7} includes: string class)
+		ifFalse: [ 
+			self
+				error:
+					'Can only encode instances of String or Unicode7 ... single byte characters' ].
 	^ string asByteArray
 ]
 
