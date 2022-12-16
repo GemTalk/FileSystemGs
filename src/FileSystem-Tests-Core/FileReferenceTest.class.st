@@ -9,7 +9,7 @@ This test case assumes that #tearDown will appropriately cleanup the sandbox dir
 "
 Class {
 	#name : 'FileReferenceTest',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#type : 'variable',
 	#instVars : [
 		'sandbox'

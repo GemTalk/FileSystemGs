@@ -7,7 +7,7 @@ Test Cases for FsMemoryOpeningOptions
 "
 Class {
 	#name : 'FsMemoryOpeningOptionsTest',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#category : 'FileSystem-Tests-Memory'
 }
 

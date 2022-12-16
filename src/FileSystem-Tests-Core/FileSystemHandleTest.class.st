@@ -7,7 +7,7 @@ SUnit tests for FileSystemHandle
 "
 Class {
 	#name : 'FileSystemHandleTest',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#instVars : [
 		'filesystem',
 		'handle',

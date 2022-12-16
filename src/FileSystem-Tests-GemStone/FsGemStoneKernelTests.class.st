@@ -7,7 +7,7 @@ Test cases against various GemStone behaviors.
 "
 Class {
 	#name : 'FsGemStoneKernelTests',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#category : 'FileSystem-Tests-GemStone'
 }
 

@@ -7,7 +7,7 @@ SUnit tests for file system paths
 "
 Class {
 	#name : 'PathTest',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#type : 'variable',
 	#category : 'FileSystem-Tests-Core'
 }

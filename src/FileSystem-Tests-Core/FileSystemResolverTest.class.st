@@ -7,7 +7,7 @@ SUnit tests for FileSystemResolver
 "
 Class {
 	#name : 'FileSystemResolverTest',
-	#superclass : 'TestCase',
+	#superclass : 'GsTestCase',
 	#instVars : [
 		'resolver'
 	],
