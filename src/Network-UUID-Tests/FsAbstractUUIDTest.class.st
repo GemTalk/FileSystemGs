@@ -7,7 +7,7 @@ Abstract UUID test cases
 "
 Class {
 	#name : 'FsAbstractUUIDTest',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'currentUuidGeneratorClass'
 	],

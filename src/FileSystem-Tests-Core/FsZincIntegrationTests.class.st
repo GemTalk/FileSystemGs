@@ -7,7 +7,7 @@ SUnit tests for random zinc stream integration issues.
 "
 Class {
 	#name : 'FsZincIntegrationTests',
-	#superclass : 'GsTestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'sandbox'
 	],

@@ -7,7 +7,7 @@ SUnit test for FileLocator
 "
 Class {
 	#name : 'FileLocatorTest',
-	#superclass : 'GsTestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'locator'
 	],

@@ -1,6 +1,6 @@
 Class {
 	#name : 'FsFileDescriptorRegistryTest',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'sandbox'
 	],

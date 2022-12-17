@@ -7,7 +7,7 @@ Test cases for FsFileDescriptor
 "
 Class {
 	#name : 'FsFileDescriptorTest',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'stdin',
 		'stdout',

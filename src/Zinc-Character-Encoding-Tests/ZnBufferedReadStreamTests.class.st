@@ -7,7 +7,7 @@ I am ZnBufferedReadStreamTests.
 "
 Class {
 	#name : 'ZnBufferedReadStreamTests',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 

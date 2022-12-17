@@ -7,7 +7,7 @@ Test cases for FsUnixFileOpeningOptions
 "
 Class {
 	#name : 'FsUnixFileOpeningOptionsTest',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#category : 'FileDescriptor-Tests'
 }
 

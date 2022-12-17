@@ -10,7 +10,7 @@ I directly test
 "
 Class {
 	#name : 'FileSystemTest',
-	#superclass : 'GsTestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'filesystem',
 		'toDelete'
