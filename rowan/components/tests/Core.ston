@@ -5,6 +5,7 @@ RwSimpleProjectLoadComponentV2 {
 	#componentNames : [ ],
 	#packageNames : [
 		'FileDescriptor-Tests',
+		'FileDescriptor-Tests-GemStone-Kernel',
 		'FileSystem-Tests-Attributes',
 		'FileSystem-Tests-Core',
 		'FileSystem-Tests-Disk',
