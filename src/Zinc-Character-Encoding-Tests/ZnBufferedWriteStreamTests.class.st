@@ -7,7 +7,7 @@ Test cases for ZnBufferedWriteStream
 "
 Class {
 	#name : 'ZnBufferedWriteStreamTests',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 

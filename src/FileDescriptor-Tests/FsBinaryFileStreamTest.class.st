@@ -1,6 +1,6 @@
 Class {
 	#name : 'FsBinaryFileStreamTest',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'sandbox'
 	],

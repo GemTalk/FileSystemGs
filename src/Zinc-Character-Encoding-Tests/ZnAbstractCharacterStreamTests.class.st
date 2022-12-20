@@ -7,7 +7,7 @@ Test cases for ZnCharacterStream
 "
 Class {
 	#name : 'ZnAbstractCharacterStreamTests',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 

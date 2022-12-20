@@ -40,7 +40,7 @@ SystemResolver >> _extent: extentIndex [
 	extentNames _isArray
 		ifTrue: [  
 			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
-			extentName := extentNames ]
+			extentName := extentNames at: extentIndex ]
 		ifFalse: [ 
 			extentIndex ~= 1 ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (1)'  ].
 			extentName := extentNames ].

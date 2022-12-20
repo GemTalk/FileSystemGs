@@ -9,7 +9,7 @@ As Pharo doesn't provide a mechanism to set the attributes, pick a few well know
 "
 Class {
 	#name : 'FileReferenceAttributeTests',
-	#superclass : 'GsTestCase',
+	#superclass : 'FsTestCase',
 	#instVars : [
 		'reference',
 		'afterCreationTime',

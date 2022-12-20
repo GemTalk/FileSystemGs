@@ -7,7 +7,7 @@ Test cases for character encoding
 "
 Class {
 	#name : 'ZnAbstractCharacterEncoderTests',
-	#superclass : 'TestCase',
+	#superclass : 'FsTestCase',
 	#category : 'Zinc-Character-Encoding-Tests'
 }
 
