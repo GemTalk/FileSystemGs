@@ -54,6 +54,12 @@ ZnBufferedReadStream >> atEnd [
 	
 ]
 
+{ #category : 'accessing' }
+ZnBufferedReadStream >> buffer [
+
+	^ buffer
+]
+
 { #category : 'initialize-release' }
 ZnBufferedReadStream >> close [
 	stream close
