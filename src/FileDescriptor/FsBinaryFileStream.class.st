@@ -94,6 +94,16 @@ FsBinaryFileStream >> next: count [
 ]
 
 { #category : 'writing' }
+FsBinaryFileStream >> next: anInteger putAll: aCollection startingAt: startIndex [
+	"Store the next anInteger elements from the given collection."
+
+	(startIndex == 1 and: [ anInteger == aCollection size ])
+		ifTrue: [ ^ self nextPutAll: aCollection ].
+	^ self
+		nextPutAll: (aCollection copyFrom: startIndex to: startIndex + anInteger - 1)
+]
+
+{ #category : 'writing' }
 FsBinaryFileStream >> nextPut: aByte [
 
 	self nextPutAll: (ByteArray with: aByte)
