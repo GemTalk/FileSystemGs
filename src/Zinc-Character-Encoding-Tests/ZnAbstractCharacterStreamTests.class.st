@@ -326,11 +326,13 @@ ZnAbstractCharacterStreamTests >> testUpToAllTwice [
 	use8BitStream ifTrue: [ self assert: (eightBitStream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'nde') ].
 	self assert: (utf8Stream upToAll: (self convertStringToStringClass:'ße')) equals: (self convertStringToStringClass: 'nde').
 
-	a := (self convertStringToStringClass: 'ABC'), (Character codePoint: 128), (Character codePoint: 255).
-	b := (self convertStringToStringClass: ''), (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
-	eightBitStream := self eightBitReadStreamOn: { a. (self convertStringToStringClass: '123'). b. (self convertStringToStringClass: '123')}.
-	self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: a.
-	self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: b
+  self stringClass == Unicode7
+    ifFalse:
+      [a := (self convertStringToStringClass: 'ABC'), (Character codePoint: 128), (Character codePoint: 255).
+      b := (self convertStringToStringClass: ''), (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
+      eightBitStream := self eightBitReadStreamOn: { a. (self convertStringToStringClass: '123'). b. (self convertStringToStringClass: '123')}.
+      self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: a.
+      self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: b].
 
 ]
 

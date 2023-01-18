@@ -424,30 +424,29 @@ ZnBufferedReadStream >> upTo: value [
 ]
 
 { #category : 'accessing' }
-ZnBufferedReadStream >> upToAll: aCollection [ 
-"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
-
-| startPos endMatch result x |
-aCollection isEmpty ifTrue: [ ^aCollection ].
-startPos := self position.
-"upTo: will stop before aCollection first"
-x := self upTo: aCollection first.
-self atEnd
-	ifTrue: [ 
-		aCollection size <= 1
-			ifTrue: [ ^ x ].
-		self position: startPos.
-		^ self upToEnd].
-2 to: aCollection size do: [:i | | y |
-	(y := self peek) = (aCollection at: i)
-		ifTrue: [ self next ]
-		ifFalse: [ self position: startPos.
-		^ self upToEnd ] ].
-endMatch := self position.
-self position: startPos.
-result := self next: endMatch - startPos - aCollection size.
-self position: endMatch.
-^ result
+ZnBufferedReadStream >> upToAll: aCollection [
+	"Answer a subcollection from the current access position to the occurrence (if any, but not inclusive) of aCollection. If aCollection is not in the stream, answer the entire rest of the stream."
+	
+	^self collectionSpecies
+		streamContents:
+			[ :out |
+			| partialMatch pattern matched |
+			partialMatch := self collectionSpecies new.
+			pattern := aCollection readStream.
+			matched := false.
+			([ matched or: [ self atEnd or: [ pattern atEnd ] ] ]) whileFalse: [
+				| ch |
+				(ch := self next) = pattern next
+					ifTrue:
+						[pattern atEnd
+							ifTrue: [ matched := true ]
+							ifFalse: [partialMatch add: ch]]
+					ifFalse: [
+						pattern reset.
+						out nextPutAll: partialMatch.
+						partialMatch := self collectionSpecies new.
+						out nextPut: ch ] ].
+			matched ifFalse: [ out nextPutAll: partialMatch ] ]
 ]
 
 { #category : 'accessing' }
