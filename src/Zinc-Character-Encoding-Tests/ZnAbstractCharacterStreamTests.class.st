@@ -330,7 +330,7 @@ ZnAbstractCharacterStreamTests >> testUpToAllTwice [
     ifFalse:
       [a := (self convertStringToStringClass: 'ABC'), (Character codePoint: 128), (Character codePoint: 255).
       b := (self convertStringToStringClass: ''), (Character codePoint: 150), (Character codePoint: 192), (Character codePoint: 224).
-      eightBitStream := self eightBitReadStreamOn: { a. (self convertStringToStringClass: '123'). b. (self convertStringToStringClass: '123')}.
+      eightBitStream := self eightBitReadStreamOn: ( a, (self convertStringToStringClass: '123'), b, (self convertStringToStringClass: '123')).
       self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: a.
       self assert: (eightBitStream upToAll: (self convertStringToStringClass: '123')) equals: b].
 
