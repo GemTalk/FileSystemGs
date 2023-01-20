@@ -163,7 +163,7 @@ Path class >> parent [
 { #category : 'instance creation' }
 Path class >> parents: anInteger [
 	| path |
-	path := self new: anInteger.
+	path := RelativePath new: anInteger.
 	1 to: anInteger do: [:i | path at: i put: '..'].
 	^ path
 ]
@@ -187,8 +187,10 @@ Path class >> root [
 Path class >> with: aString [
 	"Answer an instance of the receiver representing the supplied string.
 	This should only be sent to one of the concrete subclasses, e.g. AbsolutePath and RelativePath"
-	| inst parsedCollection |
 
+	| inst parsedCollection |
+	self == Path
+		ifTrue: [self error: '#with: should only be sent to a concrete subclass of Path'].
 	parsedCollection := self delimeter split: aString.
 	parsedCollection := self removeRedundantSegments: parsedCollection.
 	inst := self new: parsedCollection size.
@@ -200,9 +202,12 @@ Path class >> with: aString [
 { #category : 'private' }
 Path class >> withAll: aCollection [
 	"Answer an instance of the receiver representing the supplied collection of strings.
-	This should only be sent to one of the concrete subclasses, e.g. AbsolutePath and RelativePath"
-	| inst parsedCollection |
+	This should only be sent to one of the concrete subclasses, e.g. AbsolutePath and RelativePath.
+	If sent to the abstract Path class, a RelativePath is instantiated."
 
+	| inst parsedCollection |
+	self == Path
+		ifTrue: [self error: '#with: should only be sent to a concrete subclass of Path'].
 	parsedCollection := OrderedCollection new: (aCollection size max: 10).
 	aCollection do: [ :each |
 		parsedCollection addAll: (self delimeter split: each) ].

@@ -395,6 +395,19 @@ PathTest >> testParentResolution [
 
 ]
 
+{ #category : 'tests-class side' }
+PathTest >> testParents [
+
+	| result |
+	result := Path parents: 1.
+	self
+		assert: result class
+		equals: RelativePath.
+	self
+		assert: result printString
+		equals: 'Path * ''..'''
+]
+
 { #category : 'tests' }
 PathTest >> testParentUpTo [
 	| a b c |
@@ -756,6 +769,77 @@ PathTest >> testWindowsAbsolutePathName [
 	self assert: (Path from: 'A:\') isAbsolute.
 	self assert: (Path from: 'c:\') isAbsolute.
 	self assert: (Path from: 'c:\test') isAbsolute.
+]
+
+{ #category : 'tests-class side' }
+PathTest >> testWith [
+	"Ensure we always get a concrete subclass of Path"
+
+	| pathClasses instance |
+	self
+		should: [Path with: '/hello/world']
+		raise: Error.
+	self
+		should: [Path with: 'hello/world']
+		raise: Error.
+
+	instance := AbsolutePath with: '/hello/world'.
+	self
+		assert: instance class
+		equals: AbsolutePath.
+	self
+		assert: instance pathString
+		equals: '/hello/world'.
+	instance := AbsolutePath with: 'hello/world'.
+	self
+		assert: instance class
+		equals: AbsolutePath.
+	self
+		assert: instance pathString
+		equals: '/hello/world'.
+
+	instance := RelativePath with: '/hello/world'.
+	self
+		assert: instance class
+		equals: RelativePath.
+	self
+		assert: instance pathString
+		equals: 'hello/world'.
+	instance := RelativePath with: 'hello/world'.
+	self
+		assert: instance class
+		equals: RelativePath.
+	self
+		assert: instance pathString
+		equals: 'hello/world'.
+]
+
+{ #category : 'tests-class side' }
+PathTest >> testWithAll [
+	"Ensure we always get a concrete subclass of Path"
+
+	| components instance |
+	components := #( 'hello' 'world' ).
+
+	self
+		should: [Path withAll: components]
+		raise: Error.
+
+	instance := AbsolutePath withAll: components.
+	self
+		assert: instance class
+		equals: AbsolutePath.
+	self
+		assert: instance pathString
+		equals: '/hello/world'.
+
+	instance := RelativePath withAll: components.
+	self
+		assert: instance class
+		equals: RelativePath.
+	self
+		assert: instance pathString
+		equals: 'hello/world'.
 ]
 
 { #category : 'tests' }
