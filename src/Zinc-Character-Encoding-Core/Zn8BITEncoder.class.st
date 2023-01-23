@@ -69,11 +69,13 @@ Zn8BITEncoder >> decodeBytes: bytes [
 	^ self stringClass withBytes: bytes
 ]
 
-{ #category : 'converting' }
-Zn8BITEncoder >> encodedByteCountFor: character [
-	"Return how many bytes are needed to encode character"
-		
-	^ 1
+{ #category : 'convenience' }
+Zn8BITEncoder >> encodedByteCountForCodePoint: codePoint [
+	"Return the exact number of bytes it would take to encode codePoint as a byte array"
+
+	^codePoint < 256
+		ifTrue: [1]
+		ifFalse: [self errorOutsideRange]
 ]
 
 { #category : 'convenience' }

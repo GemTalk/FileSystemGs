@@ -496,11 +496,6 @@ AbstractFileReference >> hash [
 	^ self path  hash
 ]
 
-{ #category : 'accessing' }
-AbstractFileReference >> humanReadableSize [
-	^ self size humanReadableSIByteSize
-]
-
 { #category : 'controlling' }
 AbstractFileReference >> ifAbsent: aBlock [
 	"Return self, or evaluate the block if I do not exist"

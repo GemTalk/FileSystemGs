@@ -91,6 +91,17 @@ ZnUTF8Encoder >> encodedByteCountFor: character [
 ]
 
 { #category : 'convenience' }
+ZnUTF8Encoder >> encodedByteCountForCodePoint: codePoint [
+	"Return the exact number of bytes it would take to encode codePoint as a byte array"
+
+	codePoint < 128 ifTrue: [ ^ 1 ].
+	codePoint < 2048 ifTrue: [ ^ 2 ].
+	codePoint < 65535 ifTrue: [ ^ 3 ].
+	codePoint <= self maximumUTFCode ifTrue: [ ^ 4 ].
+	self errorOutsideRange
+]
+
+{ #category : 'convenience' }
 ZnUTF8Encoder >> encodedByteCountForCodePoints: codePoints [
 	"Return the exact number of bytes it would take to encode codePoints as a byte array"
 
@@ -119,6 +130,11 @@ ZnUTF8Encoder >> errorIllegalContinuationByte [
 { #category : 'error handling' }
 ZnUTF8Encoder >> errorIllegalLeadingByte [
 	^ self error: 'Illegal leading byte for utf-8 encoding'
+]
+
+{ #category : 'error handling' }
+ZnUTF8Encoder >> errorIncomplete [
+	^self error: 'Incomplete input for character decoding'
 ]
 
 { #category : 'error handling' }

@@ -57,9 +57,7 @@ FileSystemHandle >> at: offset write: buffer startingAt: start count: count [
 FileSystemHandle >> basicOpen [
 	"get the raw stream description from the filesystem's store"
 
-	^self fileSystem 
-		openStreamDescription: reference path
-		writable: writable
+	self subclassResponsibility
 ]
 
 { #category : 'streams' }

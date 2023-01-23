@@ -41,7 +41,8 @@ MemoryHandle >> at: index read: aCollection startingAt: start count: count [
 
 { #category : 'public' }
 MemoryHandle >> at: first write: aCollection startingAt: start count: count [ 
-	writable ifFalse: [ self primitiveFailed ].
+
+	writable ifFalse: [ self error: 'Attempted to write to read-only file.' ].
 	entry at: first write: aCollection startingAt: start count: count.
 ]
 

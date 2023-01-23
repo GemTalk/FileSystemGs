@@ -130,10 +130,20 @@ ZnCharacterEncoder >> encodedByteCountFor: character [
 ]
 
 { #category : 'convenience' }
+ZnCharacterEncoder >> encodedByteCountForCodePoint: codePoint [
+	"Return the exact number of bytes it would take to encode codePoint as a byte array"
+
+	self subclassResponsibility
+]
+
+{ #category : 'convenience' }
 ZnCharacterEncoder >> encodedByteCountForCodePoints: codePoints [
 	"Return the exact number of bytes it would take to encode codePoints as a byte array"
 
-	^self subclassResponsibility: #encodedByteCountForCodePoints:
+	^ codePoints 
+		inject: 0 
+		into: [ :sum :each |
+			sum + (self encodedByteCountForCodePoint: each) ]
 ]
 
 { #category : 'convenience' }
@@ -141,6 +151,17 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 	"Return the exact number of bytes it would take to encode string as a byte array"
 
 	^self subclassResponsibility: #encodedByteCountForCodePoints:
+]
+
+{ #category : 'handling errors' }
+ZnCharacterEncoder >> errorOutsideRange [
+
+	^ self error: 'Character code point outside encoder range'
+]
+
+{ #category : 'accessing' }
+ZnCharacterEncoder >> maximumUTFCode [
+	^ 16r10FFFF
 ]
 
 { #category : 'convenience' }
