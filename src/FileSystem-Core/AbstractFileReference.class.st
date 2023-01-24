@@ -350,7 +350,8 @@ AbstractFileReference >> directories [
 
 { #category : 'enumerating' }
 AbstractFileReference >> directoryNames [
-	^ self directories collect: #basename
+
+	^ self directories collect: [:each | each basename]
 ]
 
 { #category : 'operations' }
@@ -424,7 +425,7 @@ AbstractFileReference >> extensions [
 
 { #category : 'enumerating' }
 AbstractFileReference >> fileNames [
-	^ self files collect: #basename
+	^ self files collect: [:each | each basename]
 ]
 
 { #category : 'enumerating' }

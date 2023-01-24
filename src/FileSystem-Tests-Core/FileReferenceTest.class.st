@@ -624,6 +624,24 @@ FileReferenceTest >> testDeviceId [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testDirectoryNames [
+
+	| a b directoryNames |
+	self
+		assert: sandbox directoryNames size
+		equals: 0.
+	a := self createDirectory: 'a'.
+	b := self createDirectory: 'b'.
+	directoryNames := sandbox directoryNames.
+	self
+		assert: directoryNames size
+		equals: 2.
+	self
+		assert: (directoryNames includes: 'a');
+		assert: (directoryNames includes: 'b')
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testEnsureDelete [
 
 	| plonk |
@@ -705,6 +723,24 @@ FileReferenceTest >> testExists [
 	self assert: alpha exists.
 	alpha delete.
 	self deny: alpha exists
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testFileNames [
+
+	| childA childB fileNames |
+	self
+		assert: sandbox fileNames size
+		equals: 0.
+	childA := self createFile: 'childA'.
+	childB := self createFile: 'childB'.
+	fileNames := sandbox fileNames.
+	self
+		assert: fileNames size
+		equals: 2.
+	self
+		assert: (fileNames includes: 'childA');
+		assert: (fileNames includes: 'childB')
 ]
 
 { #category : 'tests' }
