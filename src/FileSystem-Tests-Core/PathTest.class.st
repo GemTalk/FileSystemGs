@@ -12,6 +12,22 @@ Class {
 	#category : 'FileSystem-Tests-Core'
 }
 
+{ #category : 'asserting' }
+PathTest >> assert: aString
+equalsString: bString [
+
+	self
+		assert: (aString compareTo: bString collator: nil)
+		equals: 0
+]
+
+{ #category : 'asserting' }
+PathTest >> assert: anObject
+isKindOf: aClass [
+
+	^self assert: (anObject isKindOf: aClass)
+]
+
 { #category : 'tests' }
 PathTest >> testAbsolutePath [
 
@@ -738,6 +754,31 @@ PathTest >> testSlash [
 	actual := path / 'griffle'.
 	self assert: actual class equals: path class.
 	self assert: (actual printWithDelimiter: $/) equals: 'plonk/griffle'
+]
+
+{ #category : 'test-conversion-from-string' }
+PathTest >> testStringAsPath [
+	"Ensure various string classes can be converted to path."
+
+	| strings |
+	strings := {
+		'/'.
+		'/', (Character codePoint: 16r05D0).
+		'/', (Character codePoint: 16r2A6A5).
+		'/' asUnicodeString.
+		'/' asUnicodeString, (Character codePoint: 16r05D0).
+		'/' asUnicodeString, (Character codePoint: 16r2A6A5).
+	}.
+	strings
+		do:
+			[:string | | path |
+			path := string asPath.
+			self
+				assert: path
+				isKindOf: Path.
+			self
+				assert: path pathString
+				equalsString: string]
 ]
 
 { #category : 'tests' }

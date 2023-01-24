@@ -7,6 +7,18 @@ CharacterCollection >> asFileReference [
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
+CharacterCollection >> asPath [
+	"convert myself to a path"
+	"Examples:
+		'.' asPath
+		'~/Desktop' asPath
+		'/home/foo' asPath
+		'../../foo.bar' asPath"
+
+	^ FileSystem disk resolve: self
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 CharacterCollection >> asPathWith: anObject [ 
 	^ anObject pathFromString: self
 ]
