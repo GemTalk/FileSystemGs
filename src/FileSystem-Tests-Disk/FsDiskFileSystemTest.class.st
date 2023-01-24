@@ -61,9 +61,16 @@ FsDiskFileSystemTest >> testMoveMemoryToDisk [
 
 { #category : 'tests' }
 FsDiskFileSystemTest >> testWorkingDirectory [
-	| ref x y |
-	"self fail." "Should this use GsFile?"
-	ref := filesystem workingDirectory.
-	x := GsFile serverRealPath: (GsFile _expandEnvVariable: 'PWD' isClient:false).
-	self assert: (x beginsWith: (y := ref pathString))
+
+	| initialWD tempWD |
+	initialWD := filesystem workingDirectory.
+	tempWD := FileLocator temp asFileReference.
+	filesystem setWorkingDirectory: tempWD path.
+	[self
+		assert: filesystem workingDirectory
+		equals: tempWD]
+		ensure: [filesystem setWorkingDirectory: initialWD path].
+	self
+		assert: filesystem workingDirectory
+		equals: initialWD
 ]
