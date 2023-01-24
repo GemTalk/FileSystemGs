@@ -59,6 +59,18 @@ FsFileDescriptorRegistry class >> resetCurrent [
 		ifAbsent: []
 ]
 
+{ #category : 'private-testing' }
+FsFileDescriptorRegistry >> _list [
+
+	^list
+]
+
+{ #category : 'private-testing' }
+FsFileDescriptorRegistry >> _private_test_only_list [
+
+	^list
+]
+
 { #category : 'mourning' }
 FsFileDescriptorRegistry >> deregisterAt: index [
 	"Removing an Ephemeron from the Registry requires the same

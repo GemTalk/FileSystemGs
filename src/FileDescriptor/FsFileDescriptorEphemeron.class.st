@@ -31,6 +31,18 @@ index: anIndex [
 		yourself
 ]
 
+{ #category : 'private-testing' }
+FsFileDescriptorEphemeron >> _private_test_only_fileDescriptor [
+
+	^fileDescriptor
+]
+
+{ #category : 'private-testing' }
+FsFileDescriptorEphemeron >> _private_test_only_index [
+
+	^index
+]
+
 { #category : 'public' }
 FsFileDescriptorEphemeron >> deregister [
 	"When a FileDescriptor is closed, it is expected to send this message."

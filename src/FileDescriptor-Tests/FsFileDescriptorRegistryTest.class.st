@@ -30,7 +30,7 @@ contents: contentsString [
 { #category : 'accessing' }
 FsFileDescriptorRegistryTest >> ephemeronFor: aFileDescriptor [
 
-	^self registry _list detect: [:each | each _isSmallInteger not and: [each _fileDescriptor = aFileDescriptor]]
+	^self registry _private_test_only_list detect: [:each | each _isSmallInteger not and: [each _private_test_only_fileDescriptor = aFileDescriptor]]
 ]
 
 { #category : 'accessing' }
@@ -50,9 +50,9 @@ FsFileDescriptorRegistryTest >> registry [
 { #category : 'testing' }
 FsFileDescriptorRegistryTest >> registryIncludes: anEphemeron [
 
-	^anEphemeron _index
-		ifNotNil: [:index | (self registry _list at: index) = anEphemeron]
-		ifNil: [self registry _list includes: anEphemeron "Ensure we do not include the Ephemeron even if we no longer have an index."]
+	^anEphemeron _private_test_only_index
+		ifNotNil: [:index | (self registry _private_test_only_list at: index) = anEphemeron]
+		ifNil: [self registry _private_test_only_list includes: anEphemeron "Ensure we do not include the Ephemeron even if we no longer have an index."]
 ]
 
 { #category : 'running' }
