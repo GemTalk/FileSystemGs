@@ -12,9 +12,6 @@ The encoding is consistent with topaz 'fileformat 8BIT' (see section 1.3 Handlin
 Class {
 	#name : 'Zn8BITEncoder',
 	#superclass : 'ZnCharacterEncoder',
-	#classVars : [
-		'Default'
-	],
 	#category : 'Zinc-Character-Encoding-Core'
 }
 
@@ -23,7 +20,7 @@ Zn8BITEncoder class >> default [
 	"Return a cached instance of the most commonly used encoder,
 	which is faster than going via #newForEncoding: that does a subclass search"
 	
-	^ Default ifNil: [ Default := self new ]
+	^self new
 ]
 
 { #category : 'accessing' }

@@ -15,18 +15,13 @@ I use the ICU library to encode strings and decode ByteArray and Utf8 instances 
 Class {
 	#name : 'ZnUTF8Encoder',
 	#superclass : 'ZnCharacterEncoder',
-	#classVars : [
-		'Default'
-	],
 	#category : 'Zinc-Character-Encoding-Core'
 }
 
 { #category : 'accessing' }
 ZnUTF8Encoder class >> default [
-	"Return a cached instance of the most commonly used encoder,
-	which is faster than going via #newForEncoding: that does a subclass search"
 	
-	^ Default ifNil: [ Default := self new ]
+	^self new
 ]
 
 { #category : 'accessing' }
