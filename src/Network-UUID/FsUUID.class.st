@@ -8,16 +8,8 @@ Class which represents a UUID. Prefixed to prevent nameing clashes.
 Class {
 	#name : 'FsUUID',
 	#superclass : 'ByteArray',
-	#classVars : [
-		'GeneratorClass'
-	],
 	#category : 'Network-UUID'
 }
-
-{ #category : 'private' }
-FsUUID class >> _generatorClass [
-  ^ GeneratorClass
-]
 
 { #category : 'instance creation' }
 FsUUID class >> fromString: aString [
@@ -30,14 +22,24 @@ FsUUID class >> fromString: aString [
 
 { #category : 'accessing' }
 FsUUID class >> generatorClass [
-  self _generatorClass ifNil: [ ^ FsFastUUIDGenerator ].
-  ^ self _generatorClass
+
+	^SessionTemps current
+		at: self generatorClassKey
+		ifAbsentPut: [FsFastUUIDGenerator]
 ]
 
 { #category : 'accessing' }
 FsUUID class >> generatorClass: aClass [
-  GeneratorClass := aClass.
-  aClass ifNotNil: [ aClass initialize ]
+
+	^SessionTemps current
+		at: self generatorClassKey
+		put: aClass
+]
+
+{ #category : 'accessing' }
+FsUUID class >> generatorClassKey [
+
+	^#'FsUUID_generatorClass_key'
 ]
 
 { #category : 'instance creation' }

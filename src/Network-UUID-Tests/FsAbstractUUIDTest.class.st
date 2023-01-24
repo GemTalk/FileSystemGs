@@ -30,7 +30,7 @@ FsAbstractUUIDTest >> generatorClass [
 { #category : 'running' }
 FsAbstractUUIDTest >> setUp [
   super setUp.
-  currentUuidGeneratorClass := FsUUID _generatorClass.
+  currentUuidGeneratorClass := FsUUID generatorClass.
   FsUUID generatorClass: self generatorClass
 ]
 
