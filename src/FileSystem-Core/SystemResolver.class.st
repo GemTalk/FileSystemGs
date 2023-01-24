@@ -8,28 +8,8 @@ I resolve origins that are related to the currently running Smalltalk system, us
 Class {
 	#name : 'SystemResolver',
 	#superclass : 'FileSystemResolver',
-	#classVars : [
-		'UserLocalDirectory'
-	],
 	#category : 'FileSystem-Core'
 }
-
-{ #category : 'accessing' }
-SystemResolver class >> defaultLocalDirectoryName [
-	^ 'pharo-local'
-]
-
-{ #category : 'accessing' }
-SystemResolver class >> userLocalDirectory [
-	^ UserLocalDirectory ifNil: [ 
-		(FileLocator imageDirectory / self defaultLocalDirectoryName) resolve  ]
-
-]
-
-{ #category : 'accessing' }
-SystemResolver class >> userLocalDirectory: aFileReference [
-	UserLocalDirectory := aFileReference
-]
 
 { #category : 'private' }
 SystemResolver >> _extent: extentIndex [
