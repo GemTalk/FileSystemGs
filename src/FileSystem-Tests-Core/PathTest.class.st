@@ -13,15 +13,6 @@ Class {
 }
 
 { #category : 'asserting' }
-PathTest >> assert: aString
-equalsString: bString [
-
-	self
-		assert: (aString compareTo: bString collator: nil)
-		equals: 0
-]
-
-{ #category : 'asserting' }
 PathTest >> assert: anObject
 isKindOf: aClass [
 
@@ -765,10 +756,13 @@ PathTest >> testStringAsPath [
 		'/'.
 		'/', (Character codePoint: 16r05D0).
 		'/', (Character codePoint: 16r2A6A5).
-		'/' asUnicodeString.
-		'/' asUnicodeString, (Character codePoint: 16r05D0).
-		'/' asUnicodeString, (Character codePoint: 16r2A6A5).
 	}.
+	StringConfiguration isInUnicodeComparisonMode
+		ifTrue:
+			[strings
+				add: '/' asUnicodeString;
+				add: '/' asUnicodeString, (Character codePoint: 16r05D0);
+				add: '/' asUnicodeString, (Character codePoint: 16r2A6A5)].
 	strings
 		do:
 			[:string | | path |
@@ -778,7 +772,7 @@ PathTest >> testStringAsPath [
 				isKindOf: Path.
 			self
 				assert: path pathString
-				equalsString: string]
+				equals: string]
 ]
 
 { #category : 'tests' }
