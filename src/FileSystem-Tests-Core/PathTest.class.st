@@ -757,7 +757,7 @@ PathTest >> testStringAsPath [
 		'/', (Character codePoint: 16r05D0).
 		'/', (Character codePoint: 16r2A6A5).
 	}.
-	StringConfiguration isInUnicodeComparisonMode
+	String isInUnicodeComparisonMode
 		ifTrue:
 			[strings
 				add: '/' asUnicodeString;

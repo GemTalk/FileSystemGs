@@ -105,25 +105,25 @@ FileReference >> asString [
 ]
 
 { #category : 'streams' }
-FileReference >> binaryReadStream [
+FileReference >> binaryReadStreamOptions: options [
 
 	| fileDescriptor |
 	self exists
 		ifFalse: [^FileDoesNotExistException signalWith: self].
 	self isFile
 		ifFalse: [^FsFileRequired signalWith: self pathString].
-	fileDescriptor := self openOptions: self defaultOptionsForRead.
+	fileDescriptor := self openOptions: options.
 	^fileDescriptor binaryReadStream
 ]
 
 { #category : 'streams' }
-FileReference >> binaryWriteStream [
+FileReference >> binaryWriteStreamOptions: options [
 	"Answer a binary write stream on the receiver"
 
 	| fileDescriptor |
 	(self exists and: [self isFile not])
 		ifTrue: [^FsFileRequired signalWith: self].
-	fileDescriptor := self openOptions: self defaultOptionsForWrite.
+	fileDescriptor := self openOptions: options.
 	^ZnBufferedWriteStream on: fileDescriptor binaryWriteStream
 ]
 
@@ -168,22 +168,6 @@ FileReference >> copyWithPath: newPath [
 { #category : 'accessing' }
 FileReference >> creationTime [ 
 	^ filesystem creationTimeOf: self path
-]
-
-{ #category : 'accessing' }
-FileReference >> defaultOptionsForRead [
-	"Return the default options used when reading a file."
-
-	^self fileOpeningOptionsClass readOnly
-]
-
-{ #category : 'accessing' }
-FileReference >> defaultOptionsForWrite [
-	"Return the default options used when writing a file."
-
-	^self fileOpeningOptionsClass writeOnly
-		create;
-		yourself
 ]
 
 { #category : 'operations' }
@@ -477,12 +461,6 @@ FileReference >> printOn: aStream [
 	filesystem printPath: path on: aStream
 ]
 
-{ #category : 'streams' }
-FileReference >> readStream [
-
-	^ self readStreamEncoded: 'utf8'
-]
-
 { #category : 'operations' }
 FileReference >> renameTo: newBasename [
 	
@@ -567,10 +545,4 @@ gid: gid [
 		file: self path
 		uid: uid
 		gid: gid
-]
-
-{ #category : 'streams' }
-FileReference >> writeStream [
-	
-	^ self writeStreamEncoded: 'utf8'
 ]

@@ -79,3 +79,9 @@ MemoryFileWriteStream >> size [
 MemoryFileWriteStream >> stream [
 	^ stream ifNil: [ stream := WriteStreamPortable on: file bytes from: 1 to: file size ]
 ]
+
+{ #category : 'accessing' }
+MemoryFileWriteStream >> truncate [
+
+	file truncateTo: self position
+]

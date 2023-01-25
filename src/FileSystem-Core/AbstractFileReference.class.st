@@ -95,6 +95,18 @@ AbstractFileReference >> allFiles [
 	^self allChildrenSelect: [:each | each isFile]
 ]
 
+{ #category : 'streams' }
+AbstractFileReference >> appendingWriteStreamDo: aBlock [
+	"Create a write stream but ensure the file is truncated before evaluating the argument."
+
+	| options stream |
+	options := self defaultOptionsForWrite.
+	options append.
+	stream := self writeStreamOptions: options.
+	[aBlock value: stream]
+		ensure: [stream flush; close]
+]
+
 { #category : 'converting' }
 AbstractFileReference >> asAbsolute [ 
 	self subclassResponsibility
@@ -156,36 +168,41 @@ AbstractFileReference >> basenameWithoutExtension: anExtension [
 
 { #category : 'streams' }
 AbstractFileReference >> binaryReadStream [
-	^ self subclassResponsibility
+
+	^self resolve binaryReadStreamOptions: self defaultOptionsForRead
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> binaryReadStreamDo: aBlock [
+
 	| stream |
 	stream := self binaryReadStream.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
+	^[aBlock value: stream]
+		ensure: [stream close]
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> binaryReadStreamDo: doBlock ifAbsent: absentBlock [
-	^ self isFile 
-		ifTrue: [ self binaryReadStreamDo: doBlock ]
-		ifFalse: absentBlock
+AbstractFileReference >> binaryReadStreamDo: doBlock
+ifAbsent: absentBlock [
+
+	^self isFile
+		ifTrue: [self binaryReadStreamDo: doBlock]
+		ifFalse: [absentBlock value]
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> binaryReadStreamIfAbsent: absentBlock [
-	^ self isFile
-		ifTrue: [ self binaryReadStream ]
-		ifFalse: absentBlock
+
+	^self isFile
+		ifTrue: [self binaryReadStream]
+		ifFalse: [absentBlock value]
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> binaryWriteStream [
 	"Answer a binary write stream on the receiver"
 
-	^ self subclassResponsibility
+	^ self resolve binaryWriteStreamOptions: self defaultOptionsForWrite.
 ]
 
 { #category : 'streams' }
@@ -193,17 +210,18 @@ AbstractFileReference >> binaryWriteStreamDo: aBlock [
 	"Pass a binary write stream on the receiver to the supplied block, and ensure that the stream is closed after evaluation."
 
 	| stream |
-
 	stream := self binaryWriteStream.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
+	^[aBlock value: stream]
+		ensure: [stream close]
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> binaryWriteStreamDo: doBlock ifPresent: presentBlock [
-	^ self isFile
-		ifTrue: presentBlock
-		ifFalse: [ self binaryWriteStreamDo: doBlock ]
+AbstractFileReference >> binaryWriteStreamDo: doBlock
+ifPresent: presentBlock [
+
+	^self isFile
+		ifTrue: [presentBlock value]
+		ifFalse: [self binaryWriteStreamDo: doBlock]
 ]
 
 { #category : 'delegated' }
@@ -295,6 +313,30 @@ AbstractFileReference >> createFile [
 { #category : 'accessing' }
 AbstractFileReference >> creationTime [
 	^ self resolve creationTime 
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> defaultOptionsForRead [
+	"Return the default options used when reading a file."
+
+	^self fileOpeningOptionsClass readOnly
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> defaultOptionsForWrite [
+	"Return the default options used when writing a file."
+
+	^self fileOpeningOptionsClass writeOnly
+		create;
+		yourself
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> defaultStringClassForReading [
+
+	^String isInUnicodeComparisonMode
+		ifTrue: [Unicode7]
+		ifFalse: [String]
 ]
 
 { #category : 'operations' }
@@ -426,6 +468,12 @@ AbstractFileReference >> extensions [
 { #category : 'enumerating' }
 AbstractFileReference >> fileNames [
 	^ self files collect: [:each | each basename]
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> fileOpeningOptionsClass [
+
+	^self resolve fileOpeningOptionsClass
 ]
 
 { #category : 'enumerating' }
@@ -681,7 +729,8 @@ AbstractFileReference >> openingOptionsClass [
 
 { #category : 'streams' }
 AbstractFileReference >> openWritable: aBoolean [
-	^ self resolve openWritable: aBoolean
+
+	^self resolve openWritable: aBoolean
 ]
 
 { #category : 'delegated' }
@@ -718,69 +767,66 @@ AbstractFileReference >> permissions [
 
 { #category : 'streams' }
 AbstractFileReference >> readStream [
-	self subclassResponsibility
+
+	^self readStreamEncoded: 'utf8'
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamDo: aBlock [
+
 	| stream |
 	stream := self readStream.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
-
+	^[aBlock value: stream]
+		ensure: [stream close]
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamDo: doBlock ifAbsent: absentBlock [
-	^ self isFile 
-		ifTrue: [ self readStreamDo: doBlock ]
-		ifFalse: absentBlock
+
+	^self isFile 
+		ifTrue: [self readStreamDo: doBlock]
+		ifFalse: [absentBlock value]
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamEncoded: anEncoding [
-	^ self
+
+	^self
 		readStreamEncoded: anEncoding
-		stringClass:
-			(String isInUnicodeComparisonMode
-				ifTrue: [ Unicode7 ]
-				ifFalse: [ String ])
+		options: self defaultOptionsForRead
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> readStreamEncoded: anEncoding do: aBlock [
+AbstractFileReference >> readStreamEncoded: anEncoding
+do: aBlock [
+
 	| stream |
 	stream := self readStreamEncoded: anEncoding.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
+	^[aBlock value: stream] 
+		ensure: [stream close]
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> readStreamEncoded: anEncoding stringClass: stringClass [
-	| stream |
+AbstractFileReference >> readStreamEncoded: anEncoding
+options: openingOptions [
+
+	| binaryStream stream |
+	binaryStream := self binaryReadStreamOptions: openingOptions.
 	stream := self fileSystem isDiskFileSystem
-		ifTrue: [ ZnBufferedReadStream on: self binaryReadStream ]
-		ifFalse: [ self binaryReadStream ].
+		ifTrue: [ZnBufferedReadStream on: binaryStream]
+		ifFalse: [binaryStream].
 	^ ZnCharacterReadStream
 		on: stream
 		encoding: anEncoding
-		stringClass: stringClass
-]
-
-{ #category : 'streams' }
-AbstractFileReference >> readStreamEncoded: anEncoding stringClass: stringClass do: aBlock [
-	| stream |
-	stream := self readStreamEncoded: anEncoding stringClass: stringClass.
-	^ [ aBlock value: stream ] 
-		ensure: [ stream close ]
+		stringClass: self defaultStringClassForReading
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> readStreamIfAbsent: absentBlock [
-	^ self isFile
-		ifTrue: [ self readStream ]
-		ifFalse: absentBlock
 
+	^self isFile
+		ifTrue: [self readStream]
+		ifFalse: [absentBlock value]
 ]
 
 { #category : 'navigating' }
@@ -847,10 +893,12 @@ AbstractFileReference >> size [
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> streamWritable: writable do: aBlock [
-	^ writable 
-		ifTrue: [ self writeStreamDo: aBlock ]
-		ifFalse: [ self readStreamDo: aBlock ]
+AbstractFileReference >> streamWritable: writable
+do: aBlock [
+
+	^writable
+		ifTrue: [self writeStreamDo: aBlock]
+		ifFalse: [self readStreamDo: aBlock]
 ]
 
 { #category : 'accessing' }
@@ -905,7 +953,8 @@ AbstractFileReference >> withPath: newPath [
 
 { #category : 'streams' }
 AbstractFileReference >> writeStream [
-	self subclassResponsibility
+	
+	^self writeStreamEncoded: 'utf8'
 ]
 
 { #category : 'streams' }
@@ -914,38 +963,59 @@ AbstractFileReference >> writeStreamDo: aBlock [
 	| stream |
 	stream := self writeStream.
 	^[aBlock value: stream]
-		ensure:
-			[stream
-				flush;
-				close]
+		ensure: [stream flush; close]
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> writeStreamDo: doBlock ifPresent: presentBlock [
-	^ self isFile
-		ifTrue: presentBlock
-		ifFalse: [ self writeStreamDo: doBlock ]
+AbstractFileReference >> writeStreamDo: doBlock
+ifPresent: presentBlock [
+
+	^self isFile
+		ifTrue: [presentBlock value]
+		ifFalse: [self writeStreamDo: doBlock]
 ]
 
 { #category : 'streams' }
 AbstractFileReference >> writeStreamEncoded: anEncoding [
 
-	^ ZnCharacterWriteStream
-		on: self binaryWriteStream
+	^self
+		writeStreamEncoded: anEncoding
+		options: self defaultOptionsForWrite
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> writeStreamEncoded: anEncoding
+do: aBlock [
+
+	| stream |
+	stream := self writeStreamEncoded: anEncoding.
+	^[aBlock value: stream]
+		ensure: [stream flush; close]
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> writeStreamEncoded: anEncoding
+options: openingOptions [
+
+	| binaryStream |
+	binaryStream := self binaryWriteStreamOptions: openingOptions.
+	^ZnCharacterWriteStream
+		on: binaryStream
 		encoding: anEncoding
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> writeStreamEncoded: anEncoding do: aBlock [
-	| stream |
-	stream := self writeStreamEncoded: anEncoding.
-	^ [ aBlock value: stream ]
-		ensure: [ stream close ]
+AbstractFileReference >> writeStreamIfPresent: presentBlock [
+
+	^self isFile 
+		ifTrue: [presentBlock value]
+		ifFalse: [self writeStream]
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> writeStreamIfPresent: presentBlock [
-	^ self isFile 
-		ifTrue: presentBlock
-		ifFalse: [ self writeStream ]
+AbstractFileReference >> writeStreamOptions: openingOptions [
+	
+	^self
+		writeStreamEncoded: 'utf8'
+		options: openingOptions
 ]

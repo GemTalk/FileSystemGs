@@ -33,6 +33,13 @@ FsFileOpeningOptions class >> writeOnly [
 	^ self new writeOnly
 ]
 
+{ #category : 'options' }
+FsFileOpeningOptions >> append [
+	"Append to the file being opened."
+
+	self signalImproperOperation: 'Opening a file in append mode is not supported.'
+]
+
 { #category : 'private' }
 FsFileOpeningOptions >> improperOperationExceptionClass [
 	"GemStone-specific; will need factoring to platform-specific package upon first port."
@@ -50,4 +57,11 @@ FsFileOpeningOptions >> signalImproperOperation: messageText [
 FsFileOpeningOptions >> signalLateAccessChange [
 
 	self signalImproperOperation: 'Access mode must be set before adding any other options.'
+]
+
+{ #category : 'options' }
+FsFileOpeningOptions >> truncate [
+	"Truncate the file being opened."
+
+	self signalImproperOperation: 'Truncating a file on open is not supported.'
 ]

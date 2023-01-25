@@ -153,6 +153,19 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testAppendingWriteStream [
+	"See subclass implementations if supported."
+
+	| ref |
+	ref := self
+		createFile: 'test-file'
+		contents: '12345'.
+	self
+		should: [ref appendingWriteStreamDo: [:stream | stream nextPutAll: 'x']]
+		raise: ImproperOperation
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
@@ -1320,6 +1333,19 @@ FileReferenceTest >> testTempFilePrefixSuffix [
 	fileRef := FileReference newTempFilePrefix: 'FileReference' suffix: 'Test'.
 	self assert: (fileRef isKindOf: FileReference).
 	self assert: fileRef exists not.
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testTruncatedWriteStream [
+
+	| ref |
+	ref := self
+		createFile: 'test-file'
+		contents: '12345'.
+	ref truncatedWriteStreamDo: [:stream | stream nextPutAll: 'x'].
+	self
+		assert: ref contents
+		equals: 'x'.
 ]
 
 { #category : 'tests' }

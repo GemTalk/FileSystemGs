@@ -256,18 +256,6 @@ FileLocator >> asPath [
 	^self resolve asPath
 ]
 
-{ #category : 'streams-compatibility' }
-FileLocator >> binaryReadStream [
-	^ self resolve binaryReadStream
-]
-
-{ #category : 'streams-compatibility' }
-FileLocator >> binaryWriteStream [
-	"Answer a binary write stream on the receiver"
-
-	^ self resolve binaryWriteStream
-]
-
 { #category : 'copying' }
 FileLocator >> copyWithPath: newPath [
 	^ self class origin: origin path: newPath
@@ -328,11 +316,6 @@ FileLocator >> printOn: aStream [
 	fs printPath: path on: aStream
 ]
 
-{ #category : 'streams' }
-FileLocator >> readStream [
-	^ self resolve readStream 
-]
-
 { #category : 'operations' }
 FileLocator >> renameTo: newBasename [
 	
@@ -354,9 +337,4 @@ FileLocator >> resolveString: aString [
 	filesystem := (self class resolver resolve: origin) fileSystem.
 	thePath := filesystem pathFromString: aString.
 	^ self withPath: (path resolvePath: thePath)
-]
-
-{ #category : 'streams' }
-FileLocator >> writeStream [
-	^ self resolve writeStream 
 ]
