@@ -104,6 +104,23 @@ FileLocatorTest >> testFileSystem [
 	self assert: (locator fileSystem isKindOf: FileSystem)
 ]
 
+{ #category : 'resolution tests' }
+FileLocatorTest >> testFromPathIfNone [
+
+	| marker path |
+	marker := Object new.
+	path := '/foo' asPath.	
+	locator := FileLocator fromPath: path ifNone: [marker].
+	self
+		assert: locator
+		equals: marker.
+	path := '/tmp' asPath.
+	locator := FileLocator fromPath: path ifNone: [marker].
+	self
+		assert: locator
+		equals: FileLocator temp
+]
+
 { #category : 'compatibility tests' }
 FileLocatorTest >> testGid [
 

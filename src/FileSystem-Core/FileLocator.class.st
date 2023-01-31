@@ -118,6 +118,15 @@ FileLocator class >> fromPath: aPath ifNone: notFoundBlock [
 	^ notFoundBlock value
 ]
 
+{ #category : 'instance creation' }
+FileLocator class >> fromString: aString ifNone: notFoundBlock [
+	"Returns a file locator if aString converted as path is a reference to a supported origin or is a child of an origin.
+	If no locator matches, return the result of the evaluation of notFoundBlock.
+	Should not be called direcly. Prefer the use of Path or String>>#asFileLocatorOrReference "
+	
+	^self fromPath: aString asPath ifNone: notFoundBlock
+]
+
 { #category : 'gemstone-origins' }
 FileLocator class >> gemLogDirectory [
 	"locator for the log directory (parent directory of gemLog)"
