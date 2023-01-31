@@ -77,6 +77,40 @@ FsDiskFileReferenceTest >> testAppendingWriteStream [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testBinaryWriteStream [
+
+	| file directory stream |
+	file := sandbox / 'file'.
+	directory := self createDirectory: 'directory'.
+
+	"Ensure file is created by #binaryWriteStream."
+	stream := file binaryWriteStream.
+	stream
+		nextPutAll: #[72 101 108 108 111 44 32 70 105 108 101 83 121 115 116 101 109 33];
+		flush;
+		close.
+	self assert: file isFile.
+	self
+		assert: file contents
+		equals: 'Hello, FileSystem!'.
+
+	"Ensure #writeStream begins at start of file and truncates the file."
+	stream := file binaryWriteStream.
+	stream
+		nextPutAll: #[65 66 67];
+		flush;
+		close.
+	self
+		assert: file contents
+		equals: 'ABClo, FileSystem!'.
+
+	"Ensure #writeStream send to a directory raises an exception."
+	self
+		should: [directory writeStream]
+		raise: FsFileRequired
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testDeviceId [
 
 	self
@@ -288,4 +322,40 @@ FsDiskFileReferenceTest >> testUid [
 	self
 		assert: sandbox uid
 		isKindOf: Integer
+]
+
+{ #category : 'tests' }
+FsDiskFileReferenceTest >> testWriteStream [
+
+	| file directory stream |
+	file := sandbox / 'file'.
+	directory := self createDirectory: 'directory'.
+
+	"Ensure file is created by #writeStream."
+	stream := file writeStream.
+	stream
+		nextPutAll: 'abcdef';
+		flush;
+		close.
+	self assert: file isFile.
+	self
+		assert: file contents
+		equals: 'abcdef'.
+
+	"Ensure #writeStream begins at start of file."
+	"Should the following fails in against the memory file system.
+	Should we ensure this behaves the same in all file systems?"
+	stream := file writeStream.
+	stream
+		nextPutAll: '123';
+		flush;
+		close.
+	self
+		assert: file contents
+		equals: '123def'.
+
+	"Ensure #writeStream send to a directory raises an exception."
+	self
+		should: [directory writeStream]
+		raise: FsFileRequired
 ]

@@ -66,8 +66,6 @@ FsBinaryFileStream >> descriptor: aFileDescriptor [
 { #category : 'writing' }
 FsBinaryFileStream >> flush [
 	"NOP"
-
-	self truncate
 ]
 
 { #category : 'testing' }
