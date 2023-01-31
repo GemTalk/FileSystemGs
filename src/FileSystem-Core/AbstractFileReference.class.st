@@ -95,18 +95,6 @@ AbstractFileReference >> allFiles [
 	^self allChildrenSelect: [:each | each isFile]
 ]
 
-{ #category : 'streams' }
-AbstractFileReference >> appendingWriteStreamDo: aBlock [
-	"Create a write stream but ensure the file is truncated before evaluating the argument."
-
-	| options stream |
-	options := self defaultOptionsForWrite.
-	options append.
-	stream := self writeStreamOptions: options.
-	[aBlock value: stream]
-		ensure: [stream flush; close]
-]
-
 { #category : 'converting' }
 AbstractFileReference >> asAbsolute [ 
 	self subclassResponsibility
@@ -906,16 +894,6 @@ AbstractFileReference >> targetPath [
 	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."
 
 	^self resolve targetPath
-]
-
-{ #category : 'streams' }
-AbstractFileReference >> truncatedWriteStreamDo: aBlock [
-	"Create a write stream but ensure the file is truncated before evaluating the argument."
-
-	self writeStreamDo:
-		[:stream |
-		stream truncate.
-		aBlock value: stream]
 ]
 
 { #category : 'accessing' }
