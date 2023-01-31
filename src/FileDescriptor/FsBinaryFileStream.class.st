@@ -170,7 +170,14 @@ FsBinaryFileStream >> skip: anInteger [
 FsBinaryFileStream >> truncate [
 	"Truncate the file to the current position."
 
-	descriptor truncateTo: self position
+	descriptor truncateTo: 0
+]
+
+{ #category : 'writing' }
+FsBinaryFileStream >> truncateTo: position [
+	"Truncate the file to the provided position."
+
+	descriptor truncateTo: position
 ]
 
 { #category : 'reading' }

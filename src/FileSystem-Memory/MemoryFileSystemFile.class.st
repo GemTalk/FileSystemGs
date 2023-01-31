@@ -158,7 +158,7 @@ MemoryFileSystemFile >> sizeIncrement [
 
 { #category : 'accessing' }
 MemoryFileSystemFile >> truncate [
-	self truncateTo: size
+	self truncateTo: 0
 ]
 
 { #category : 'accessing' }

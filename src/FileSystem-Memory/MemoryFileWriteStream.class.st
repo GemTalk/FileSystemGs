@@ -83,5 +83,7 @@ MemoryFileWriteStream >> stream [
 { #category : 'accessing' }
 MemoryFileWriteStream >> truncate [
 
-	file truncateTo: self position
+	file truncateTo: 0.
+	stream := nil.
+	self stream
 ]

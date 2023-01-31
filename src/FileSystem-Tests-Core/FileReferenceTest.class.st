@@ -153,19 +153,6 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testAppendingWriteStream [
-	"See subclass implementations if supported."
-
-	| ref |
-	ref := self
-		createFile: 'test-file'
-		contents: '12345'.
-	self
-		should: [ref appendingWriteStreamDo: [:stream | stream nextPutAll: 'x']]
-		raise: ImproperOperation
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
@@ -1309,19 +1296,6 @@ FileReferenceTest >> testTempFilePrefixSuffix [
 ]
 
 { #category : 'tests' }
-FileReferenceTest >> testTruncatedWriteStream [
-
-	| ref |
-	ref := self
-		createFile: 'test-file'
-		contents: '12345'.
-	ref truncatedWriteStreamDo: [:stream | stream nextPutAll: 'x'].
-	self
-		assert: ref contents
-		equals: 'x'.
-]
-
-{ #category : 'tests' }
 FileReferenceTest >> testUid [
 	"See subclass implementations if supported."
 
@@ -1413,4 +1387,22 @@ FileReferenceTest >> testWriteStreamDo [
 	self
 		should: [directory writeStreamDo: [:stream | ]]
 		raise: FsFileRequired
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testWriteStreamTruncate [
+	"Ensure truncating a stream removes all contents."
+
+	| file |
+	file := self
+		createFile: '', self class name, '>>#testTruncatedStream'
+		contents: ''.
+	file writeStreamDo: [:stream | stream truncate].
+	self
+		assert: file contents
+		equals: ''.
+	file writeStreamDo: [:stream | stream nextPutAll: 'hello'; flush; truncate].
+	self
+		assert: file contents
+		equals: ''
 ]

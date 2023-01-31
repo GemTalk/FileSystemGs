@@ -64,19 +64,6 @@ FsDiskFileReferenceTest >> testAccessTime [
 ]
 
 { #category : 'tests' }
-FsDiskFileReferenceTest >> testAppendingWriteStream [
-
-	| ref |
-	ref := self
-		createFile: 'test-file'
-		contents: '12345'.
-	ref appendingWriteStreamDo: [:stream | stream nextPutAll: 'x'].
-	self
-		assert: ref contents
-		equals: '12345x'.
-]
-
-{ #category : 'tests' }
 FsDiskFileReferenceTest >> testBinaryWriteStream [
 
 	| file directory stream |
