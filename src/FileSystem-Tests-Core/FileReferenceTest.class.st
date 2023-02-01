@@ -1305,6 +1305,40 @@ FileReferenceTest >> testUid [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testUnicodeFilenames [
+	"Test various unicode file names"
+
+	| names |
+	names := {
+		'file'.
+		(Character codePoint: 16r263A) asString.
+		(Character codePoint: 16r1F600) asString.
+	}.
+	String isInUnicodeComparisonMode
+		ifTrue:
+			[names
+				add: 'file' asUnicodeString;
+				add: (Character codePoint: 16r263A) asUnicodeString;
+				add: (Character codePoint: 16r1F600) asUnicodeString].
+	names
+		do:
+			[:name | | ref |
+			ref := self
+				createFile: name
+				contents: name.
+			self
+				assert: ref exists;
+				assert: (sandbox files includes: ref).
+			self
+				assert: ref basename
+				equals: name.
+			self
+				assert: ref contents
+				equals: name.
+			ref delete]
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testUpToAll [
 
 	| testString fileRef |
