@@ -8,21 +8,17 @@ DiskFileSystem is not a standard class in FileSystem. GemStone's implementation 
 Class {
 	#name : 'FsDiskFileSystem',
 	#superclass : 'FileSystem',
-	#instVars : [
-		'store'
-	],
-	#gs_options : [
-		'dbTransient'
-	],
 	#category : 'FileSystem-Disk'
 }
 
 { #category : 'instance creation' }
 FsDiskFileSystem class >> store: aStore [
+	"FsDiskFileSystem dynamically obtains the correct store. This ensures committed instances
+	do not cause runtime errors due to instance-level caches. Instances created with
+	SystemUser may not be alterable in DataCurator for instance.
+	Use FsDiskFileSystem class>>#new instead."
 
-	^self basicNew
-		store: aStore;
-		yourself
+	^self shouldNotImplement: #store:
 ]
 
 { #category : 'testing' }
@@ -35,12 +31,5 @@ FsDiskFileSystem >> isDiskFileSystem [
 FsDiskFileSystem >> store [
 	"Returns the associated store, ensuring it is recreated if necessary."
 
-	^store ifNil: [store := DiskStore activeClass createDefault]
-]
-
-{ #category : 'private-accessing' }
-FsDiskFileSystem >> store: aStore [
-	"Set the store instance variable taking into account lifetime considerations."
-
-	store := aStore
+	^DiskStore current
 ]

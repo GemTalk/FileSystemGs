@@ -32,7 +32,9 @@ DiskStore class >> activeClass [
 
 { #category : 'current' }
 DiskStore class >> cacheKey [
-	^ #'GsCurrentDiskFileSystem'
+	"The key used to lookup the DiskStore singleton in SessionTemps."
+
+	^#'GsCurrentDiskStore'
 ]
 
 { #category : 'current' }
@@ -43,15 +45,16 @@ DiskStore class >> createDefault [
 
 { #category : 'current' }
 DiskStore class >> current [
-	^ self currentFileSystem store
+
+	^SessionTemps current
+		at: self cacheKey
+		ifAbsentPut: [self createDefault]
 ]
 
 { #category : 'current' }
 DiskStore class >> currentFileSystem [
 
-	^SessionTemps current
-		at: self cacheKey
-		ifAbsentPut: [FsDiskFileSystem store: self createDefault]
+	^FileSystem disk
 ]
 
 { #category : 'public' }
@@ -82,7 +85,9 @@ on: anArch [
 { #category : 'current' }
 DiskStore class >> resetCurrent [
 
-	SessionTemps current removeKey: self cacheKey
+	SessionTemps current
+		removeKey: self cacheKey
+		ifAbsent: []
 ]
 
 { #category : 'comparing' }

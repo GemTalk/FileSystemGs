@@ -14,7 +14,7 @@ Class {
 { #category : 'initialize-release' }
 FsDiskFileSystemTest >> createFileSystem [
 
-	^FsDiskFileSystem store: (DiskStore createDefault)
+	^FsDiskFileSystem new
 ]
 
 { #category : 'tests' }
