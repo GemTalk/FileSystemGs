@@ -810,7 +810,7 @@ PathTest >> testWindowsAbsolutePathName [
 PathTest >> testWith [
 	"Ensure we always get a concrete subclass of Path"
 
-	| pathClasses instance |
+	| instance |
 	self
 		should: [Path with: '/hello/world']
 		raise: Error.
