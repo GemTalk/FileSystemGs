@@ -34,6 +34,16 @@ FileSystemResolverTest >> createResolver [
 	self subclassResponsibility 
 ]
 
+{ #category : 'asserting' }
+FileSystemResolverTest >> denyOriginResolves: aSymbol [
+
+	| reference |
+	reference := resolver resolve: aSymbol.
+	self
+		assert: reference
+		equals: nil
+]
+
 { #category : 'running' }
 FileSystemResolverTest >> setUp [
 	super setUp.

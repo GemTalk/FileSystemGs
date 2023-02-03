@@ -42,11 +42,6 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
-{ #category : 'adding' }
-FileLocator class >> addResolver: aResolver [
-	self resolver addResolver: aResolver
-]
-
 { #category : 'origins' }
 FileLocator class >> cache [
 	^ self origin: #cache
@@ -174,6 +169,7 @@ FileLocator class >> resolver [
 
 	^SystemResolver new
 		addResolver: PlatformResolver forCurrentPlatform;
+		addResolver: EnvironmentResolver new;
 		yourself
 ]
 

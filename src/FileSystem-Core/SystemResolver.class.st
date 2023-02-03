@@ -67,7 +67,7 @@ SystemResolver >> imageDirectory [
 
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #(image imageDirectory extent1 extent1Directory tranlog dbfScratchDir workingDirectory rowanProjectsHome )
+	^ #(image imageDirectory extent1 extent1Directory tranlog dbfScratchDir workingDirectory )
 ]
 
 { #category : 'origins' }
