@@ -8,15 +8,20 @@ Abstract superclass for errno errors
 Class {
 	#name : 'FsUnixError',
 	#superclass : 'Error',
-	#classInstVars : [
-		'classesByNumber'
-	],
 	#category : 'LibC'
 }
 
+{ #category : 'class initialization' }
+FsUnixError class >> classLookupTable [
+
+	^SessionTemps current
+		at: #'GsCurrentUnixErrorClassLookupTable'
+		ifAbsentPut: [self initializeClassLookupTable]
+]
+
 { #category : 'accessing' }
 FsUnixError class >> errorClassForErrorNumber: errorNumber [
-	^ classesByNumber at: errorNumber
+	^self classLookupTable at: errorNumber
 ]
 
 { #category : 'accessing' }
@@ -25,23 +30,24 @@ FsUnixError class >> errorNumber [
 ]
 
 { #category : 'class initialization' }
-FsUnixError class >> initialize [
-	"UnixError initialize"
+FsUnixError class >> initializeClassLookupTable [
+	"Create a table used to lookup a the UnixError class based on errno."
 
-	| organizer mySubclasses |
-	classesByNumber := KeyValueDictionary new.
+	| table organizer mySubclasses |
+	table := KeyValueDictionary new.
 	organizer := ClassOrganizer newWithRoot: self.
 	mySubclasses := organizer allSubclassesOf: self.
 	mySubclasses
 		do: [ :subclass | 
 			| errorNumber existing |
 			errorNumber := subclass errorNumber.
-			existing := classesByNumber at: errorNumber ifAbsent: [  ].
+			existing := table at: errorNumber ifAbsent: [  ].
 			existing
 				ifNotNil: [ :otherClass | 
 					Error
 						signal:
 							subclass printString , ' and ' , otherClass printString
 								, ' both attempting to use error number ' , errorNumber printString ].
-			classesByNumber at: errorNumber put: subclass ]
+			table at: errorNumber put: subclass ].
+	^table
 ]
