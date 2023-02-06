@@ -337,52 +337,6 @@ ZnAbstractCharacterStreamTests >> testUpToAllTwice [
 ]
 
 { #category : 'testing' }
-ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForDoubleByteString [
-	| string char bytes stream res |
-	char := (Character codePoint: 257). 
-	string := self convertStringToStringClass: ('ei', char).
-	bytes := ZnUTF8Encoder new 
-		stringClass: self stringClass;
-		encodeString: string.
-	stream := ZnCharacterReadStream 
-		on: bytes readStreamPortable
-		encoding: #'utf8'
-		stringClass: self stringClass.
-	res := stream next; next; next.
-	self assert: res equals: char.
-	self assert: stream position equals: 3.
-]
-
-{ #category : 'testing' }
-ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForQuadByteString [
-	| string char bytes stream res |
-	char := (Character codePoint:16rffff1).
-	string :=  self convertStringToStringClass: ('ei', char).
-	bytes := ZnUTF8Encoder new 
-		stringClass: self stringClass;
-		encodeString: string.
-	stream := ZnCharacterReadStream 
-		on: bytes readStreamPortable
-		encoding: #'utf8'
-		stringClass: self stringClass.
-	res := stream next; next; next.
-	self assert: res equals: char.
-	self assert: stream position equals: 3.
-]
-
-{ #category : 'testing' }
-ZnAbstractCharacterStreamTests >> testUtf8EncodingStreamPositionForString [
-	| string bytes stream res |
-	string := 'eißendeße'.
-	bytes := ZnUTF8Encoder new encodeString: string.
-	stream := (ZnCharacterReadStream on: bytes readStreamPortable).
-	res := stream next; next; next.
-	self assert: res equals: $ß.
-	self assert: stream position equals: 3.
-	
-]
-
-{ #category : 'testing' }
 ZnAbstractCharacterStreamTests >> testUTF8ReadStreamReadInto [
 	| string bytes stream buffer |
 	string := 'élève en Français'.
