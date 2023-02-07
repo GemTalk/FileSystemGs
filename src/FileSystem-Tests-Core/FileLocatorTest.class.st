@@ -114,7 +114,7 @@ FileLocatorTest >> testFromPathIfNone [
 	self
 		assert: locator
 		equals: marker.
-	path := '/tmp' asPath.
+	path := FileLocator temp resolve asPath.
 	locator := FileLocator fromPath: path ifNone: [marker].
 	self
 		assert: locator

@@ -55,7 +55,11 @@ MacOSResolver >> systemLibrary [
 { #category : 'origins' }
 MacOSResolver >> temp [
 
-	^FileSystem disk root / 'tmp'
+	| tempPath |
+	tempPath := System gemEnvironmentVariable: 'TMPDIR'.
+	(tempPath beginsWith: '/private')
+		ifFalse: [tempPath := '/private', tempPath]. "Avoid using symlink. /tmp, /var are symlinked to /private/tmp and /private/var."
+	^FileSystem disk root resolve: tempPath
 ]
 
 { #category : 'origins' }
