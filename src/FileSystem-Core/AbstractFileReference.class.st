@@ -723,7 +723,8 @@ AbstractFileReference >> openWritable: aBoolean [
 
 { #category : 'delegated' }
 AbstractFileReference >> parent [
-	^ self withPath: self resolve path parent
+
+	^self resolve parent
 ]
 
 { #category : 'delegated' }

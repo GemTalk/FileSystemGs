@@ -245,8 +245,11 @@ FileLocatorTest >> testOriginBasename [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testParent [
-	locator := FileLocator extent1.
-	self assert: locator parent resolve = FileLocator extent1Directory resolve
+
+	| parent |
+	locator := FileLocator workingDirectory.
+	parent := locator parent.
+	self assert: (parent contains: locator)
 ]
 
 { #category : 'resolution tests' }

@@ -434,6 +434,12 @@ FileReference >> openWritable: isWritable [
 	^self openOptions: options
 ]
 
+{ #category : 'delegated' }
+FileReference >> parent [
+
+	^self withPath: self path parent
+]
+
 { #category : 'printing' }
 FileReference >> pathString [
 	"Return the full path name of the receiver."
