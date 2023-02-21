@@ -94,7 +94,7 @@ FileLocatorTest >> testEqual [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testExtension [
-	locator := FileLocator extent1Directory, 'bak'.
+	locator := FileLocator workingDirectory, 'bak'.
 	self assert: (locator basename endsWith: '.bak')
 ]
 

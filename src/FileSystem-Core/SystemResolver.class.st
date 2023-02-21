@@ -16,7 +16,7 @@ SystemResolver >> _extent: extentIndex [
 	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
 
 	| extentNames extentName |
-	extentNames := System stoneConfigurationReport at: #DBF_EXTENT_NAMES.
+	extentNames := System stoneConfigurationAt: #DBF_EXTENT_NAMES.
 	extentNames _isArray
 		ifTrue: [  
 			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
@@ -55,7 +55,7 @@ SystemResolver >> supportedOrigins [
 SystemResolver >> tranlog [
 	"Answer the path to the current tranlog"
 
-	^ self  resolveString: (System stoneConfigurationReport at: #StnCurrentTranLogNames)
+	^ self  resolveString: (System stoneConfigurationAt: #StnCurrentTranLogNames)
 ]
 
 { #category : 'origins' }
