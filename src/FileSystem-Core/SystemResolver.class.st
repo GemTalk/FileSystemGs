@@ -16,7 +16,7 @@ SystemResolver >> _extent: extentIndex [
 	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
 
 	| extentNames extentName |
-	extentNames := System stoneConfigurationReport at: #DBF_EXTENT_NAMES.
+	extentNames := System stoneConfigurationAt: #DBF_EXTENT_NAMES.
 	extentNames _isArray
 		ifTrue: [  
 			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
@@ -25,13 +25,6 @@ SystemResolver >> _extent: extentIndex [
 			extentIndex ~= 1 ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (1)'  ].
 			extentName := extentNames ].
 	^ self  resolveString: extentName
-]
-
-{ #category : 'origins' }
-SystemResolver >> dbfScratchDir [
-	"Answer the path to the DBF_SCRATCH_DIR"
-
-	^ self  resolveString: (System stoneConfigurationReport at: #DBF_SCRATCH_DIR)
 ]
 
 { #category : 'origins' }
@@ -53,28 +46,16 @@ SystemResolver >> gemLogDirectory [
 	^ self  resolveString: (System gemLogPath)
 ]
 
-{ #category : 'origins' }
-SystemResolver >> image [
-
-	^ self dbfScratchDir
-]
-
-{ #category : 'origins' }
-SystemResolver >> imageDirectory [
-
-	^ self dbfScratchDir
-]
-
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #(image imageDirectory extent1 extent1Directory tranlog dbfScratchDir workingDirectory )
+	^ #( extent1 extent1Directory tranlog workingDirectory )
 ]
 
 { #category : 'origins' }
 SystemResolver >> tranlog [
 	"Answer the path to the current tranlog"
 
-	^ self  resolveString: (System stoneConfigurationReport at: #StnCurrentTranLogNames)
+	^ self  resolveString: (System stoneConfigurationAt: #StnCurrentTranLogNames)
 ]
 
 { #category : 'origins' }

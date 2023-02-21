@@ -723,7 +723,8 @@ AbstractFileReference >> openWritable: aBoolean [
 
 { #category : 'delegated' }
 AbstractFileReference >> parent [
-	^ self withPath: self resolve path parent
+
+	^self resolve parent
 ]
 
 { #category : 'delegated' }
@@ -901,13 +902,6 @@ AbstractFileReference >> uid [
 	"Return the user id associated with this file."
 
 	^self resolve uid
-]
-
-{ #category : 'accessing' }
-AbstractFileReference >> uri [
-	"Convert my path into a file:// type url. For odd characters use %20 notation."
-
-	^ self asUrl
 ]
 
 { #category : 'navigating' }

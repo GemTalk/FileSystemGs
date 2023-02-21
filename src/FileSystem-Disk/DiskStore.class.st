@@ -117,11 +117,9 @@ DiskStore >> checkName: aFileName fixErrors: fixErrors [
 	| maxLength |
 	aFileName size = 0 ifTrue: [self error: 'zero length file name'].
 	maxLength := self maxFileNameLength.
-	aFileName size > maxLength ifTrue: [
-		fixErrors
-			ifTrue: [^ aFileName contractTo: maxLength]
-			ifFalse: [self error: 'file name is too long']].
-	^ aFileName
+	aFileName size > maxLength
+		ifTrue: [self error: 'file name is too long'].
+	^aFileName
 ]
 
 { #category : 'public' }

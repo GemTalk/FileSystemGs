@@ -26,7 +26,7 @@ FsDiskFileSystemTest >> testEqual [
 
 { #category : 'tests' }
 FsDiskFileSystemTest >> testIsDirectory [
-	self assert: (filesystem isDirectory: FileLocator imageDirectory resolve path)
+	self assert: (filesystem isDirectory: FileLocator workingDirectory resolve path)
 ]
 
 { #category : 'tests' }
