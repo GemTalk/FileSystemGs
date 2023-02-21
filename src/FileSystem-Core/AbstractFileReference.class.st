@@ -903,13 +903,6 @@ AbstractFileReference >> uid [
 	^self resolve uid
 ]
 
-{ #category : 'accessing' }
-AbstractFileReference >> uri [
-	"Convert my path into a file:// type url. For odd characters use %20 notation."
-
-	^ self asUrl
-]
-
 { #category : 'navigating' }
 AbstractFileReference >> withExtension: aString [
 	^ self withPath: (self path withExtension: aString)

@@ -120,7 +120,7 @@ FsUUID >> asString36 [
 	| num candidate |
 	num := 0.
 	1 to: self size do: [:i | num := num + ((256 raisedTo: i - 1) * (self at: i))].
-	candidate := num printStringBase: 36.
+	candidate := num printStringRadix: 36.
 	^((candidate beginsWith: '36r')
 			ifTrue: [candidate copyFrom: 4 to: candidate size]
 			ifFalse: [candidate]) asLowercase

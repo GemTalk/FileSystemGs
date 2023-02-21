@@ -20,7 +20,8 @@ Class {
 
 { #category : 'accessing' }
 FileSystemStore class >> delimiter [
-	^ self shouldBeImplemented 
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'instance creation' }
