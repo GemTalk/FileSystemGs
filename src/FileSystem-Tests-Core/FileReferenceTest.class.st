@@ -96,7 +96,7 @@ FileReferenceTest >> fileSystem [
 FileReferenceTest >> sandboxName [
 	"name of the sandbox directory"
 
-	^self subclassResponsibility
+	^String new, self class name, '-', self selector, '-Sandbox'
 ]
 
 { #category : 'tests' }

@@ -11,13 +11,6 @@ Class {
 	#category : 'FileSystem-Tests-Memory'
 }
 
-{ #category : 'accessing' }
-FsMemoryFileReferenceTest >> sandboxName [
-	"name of the sandbox directory"
-
-	^'MemoryFileReferenceTest-Sandbox'
-]
-
 { #category : 'running' }
 FsMemoryFileReferenceTest >> setUp [
 

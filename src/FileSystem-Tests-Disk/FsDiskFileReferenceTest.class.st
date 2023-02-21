@@ -27,13 +27,6 @@ FsDiskFileReferenceTest >> characterDeviceReference [
 	^self fileSystem referenceTo: '/dev/null'
 ]
 
-{ #category : 'accessing' }
-FsDiskFileReferenceTest >> sandboxName [
-	"name of the sandbox directory"
-
-	^'DiskFileReferenceTest-Sandbox'
-]
-
 { #category : 'running' }
 FsDiskFileReferenceTest >> setUp [
 
