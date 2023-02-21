@@ -1,7 +1,7 @@
 Class {
 	#name : 'ZnLegacyCharacterStreamTests',
 	#superclass : 'ZnAbstractCharacterStreamTests',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'private' }

@@ -8,7 +8,7 @@ Test cases for ZnBufferedWriteStream
 Class {
 	#name : 'ZnBufferedWriteStreamTests',
 	#superclass : 'FsTestCase',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'testing' }

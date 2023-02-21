@@ -15,7 +15,7 @@ I use the ICU library to encode strings and decode ByteArray and Utf8 instances 
 Class {
 	#name : 'ZnUTF8Encoder',
 	#superclass : 'ZnCharacterEncoder',
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
 
 { #category : 'accessing' }

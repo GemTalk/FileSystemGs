@@ -16,7 +16,7 @@ RwSimpleProjectLoadComponentV2 {
 		'FileSystem-Path',
 		'FileSystem-GemStone-Kernel',
 		'LibC',
-		'Zinc-Character-Encoding-Core',
+		'FileSystem-Zinc-Character-Encoding-Core',
 		'Network-UUID'
 	],
 	#comment : 'Basic configuration for FileSystemGs. All packages are expected to be loaded into Globals by SystemUser'

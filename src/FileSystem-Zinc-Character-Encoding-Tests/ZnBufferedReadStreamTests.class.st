@@ -8,7 +8,7 @@ I am ZnBufferedReadStreamTests.
 Class {
 	#name : 'ZnBufferedReadStreamTests',
 	#superclass : 'FsTestCase',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'testing' }

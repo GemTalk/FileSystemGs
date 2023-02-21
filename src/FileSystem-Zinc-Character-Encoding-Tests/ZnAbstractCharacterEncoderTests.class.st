@@ -8,7 +8,7 @@ Test cases for character encoding
 Class {
 	#name : 'ZnAbstractCharacterEncoderTests',
 	#superclass : 'FsTestCase',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'accessing' }

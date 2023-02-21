@@ -23,7 +23,7 @@ Class {
 		'writeStream',
 		'lastRead'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
 
 { #category : 'instance creation' }

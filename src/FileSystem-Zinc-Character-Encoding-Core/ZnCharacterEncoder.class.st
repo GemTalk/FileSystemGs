@@ -44,7 +44,7 @@ Class {
 	#instVars : [
 		'stringClass'
 	],
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
 
 { #category : 'accessing' }

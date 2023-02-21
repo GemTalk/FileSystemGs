@@ -15,7 +15,7 @@ https://en.wikipedia.org/wiki/Two%27s_complement
 Class {
 	#name : 'ZnBufferedStreamByteTests',
 	#superclass : 'FsTestCase',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'accessing' }

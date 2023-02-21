@@ -1,7 +1,7 @@
 Class {
 	#name : 'ZnUTF8CharacterEncoderTests',
 	#superclass : 'ZnAbstractCharacterEncoderTests',
-	#category : 'Zinc-Character-Encoding-Tests'
+	#category : 'FileSystem-Zinc-Character-Encoding-Tests'
 }
 
 { #category : 'private' }

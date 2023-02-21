@@ -12,7 +12,7 @@ The encoding is consistent with topaz 'fileformat 8BIT' (see section 1.3 Handlin
 Class {
 	#name : 'Zn8BITEncoder',
 	#superclass : 'ZnCharacterEncoder',
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
 
 { #category : 'accessing' }

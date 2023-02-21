@@ -9,7 +9,7 @@ RwSimpleProjectLoadComponentV2 {
 		'FileSystem-Tests-Core',
 		'FileSystem-Tests-Disk',
 		'FileSystem-Tests-Memory',
-		'Zinc-Character-Encoding-Tests',
+		'FileSystem-Zinc-Character-Encoding-Tests',
 		'Network-UUID-Tests',
 		'FileSystem-Tests-GemStone'
 	],
