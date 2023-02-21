@@ -52,13 +52,6 @@ FileLocator class >> cwd [
 	^ self workingDirectory
 ]
 
-{ #category : 'gemstone-origins' }
-FileLocator class >> dbfScratchDir [
-	"Answer the path to the DBF_SCRATCH_DIR"
-
-	^ self origin: #dbfScratchDir
-]
-
 { #category : 'origins' }
 FileLocator class >> desktop [
 	^ self origin: #desktop
@@ -132,20 +125,6 @@ FileLocator class >> gemLogDirectory [
 { #category : 'origins' }
 FileLocator class >> home [
 	^ self origin: #home
-]
-
-{ #category : 'gemstone-origins' }
-FileLocator class >> image [
-	"commonly used, so we need to define it, but the closest that GemStone comes is the #dbfScratchDir"
-
-	^ self dbfScratchDir
-]
-
-{ #category : 'gemstone-origins' }
-FileLocator class >> imageDirectory [
-	"commonly used, so we need to define it, but the closest that GemStone comes is the #dbfScratchDir"
-
-	^ self dbfScratchDir
 ]
 
 { #category : 'instance creation' }
@@ -228,7 +207,8 @@ FileLocator class >> userLibrary [
 
 { #category : 'origins' }
 FileLocator class >> workingDirectory [
-	^ FileSystem disk referenceTo: RelativePath new
+
+	^self origin: #workingDirectory
 ]
 
 { #category : 'comparing' }

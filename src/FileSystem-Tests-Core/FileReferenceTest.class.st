@@ -421,7 +421,7 @@ FileReferenceTest >> testContains [
 	self
 		deny: (secondAlpha contains: beta);
 		assert: (secondAlpha contains: beta path).
-	locator := FileLocator image.
+	locator := FileLocator workingDirectory.
 	self
 		assert: (locator resolve parent contains: locator);
 		deny: (alpha contains: locator)
@@ -430,8 +430,8 @@ FileReferenceTest >> testContains [
 { #category : 'tests' }
 FileReferenceTest >> testContainsLocator [
 	| ref |
-	ref := FileLocator imageDirectory resolve parent.
-	self assert: (ref contains: FileLocator image)
+	ref := FileLocator workingDirectory resolve parent.
+	self assert: (ref contains: FileLocator workingDirectory)
 ]
 
 { #category : 'tests' }
@@ -883,7 +883,7 @@ FileReferenceTest >> testIsAbsolute [
 
 	self
 		assert: (sandbox / 'plonk') isAbsolute;
-		deny: FileLocator workingDirectory resolve isAbsolute
+		deny: (self fileSystem referenceTo: '..') isAbsolute
 ]
 
 { #category : 'tests' }
@@ -976,7 +976,7 @@ FileReferenceTest >> testIsRegular [
 FileReferenceTest >> testIsRelative [
 
 	self
-		assert: FileLocator workingDirectory resolve isRelative;
+		assert: (self fileSystem referenceTo: '..') isRelative;
 		deny: (sandbox / 'plonk') isRelative
 ]
 

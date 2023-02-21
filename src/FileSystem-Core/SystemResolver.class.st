@@ -28,13 +28,6 @@ SystemResolver >> _extent: extentIndex [
 ]
 
 { #category : 'origins' }
-SystemResolver >> dbfScratchDir [
-	"Answer the path to the DBF_SCRATCH_DIR"
-
-	^ self  resolveString: (System stoneConfigurationReport at: #DBF_SCRATCH_DIR)
-]
-
-{ #category : 'origins' }
 SystemResolver >> extent1 [
 
 	^ self _extent: 1
@@ -53,21 +46,9 @@ SystemResolver >> gemLogDirectory [
 	^ self  resolveString: (System gemLogPath)
 ]
 
-{ #category : 'origins' }
-SystemResolver >> image [
-
-	^ self dbfScratchDir
-]
-
-{ #category : 'origins' }
-SystemResolver >> imageDirectory [
-
-	^ self dbfScratchDir
-]
-
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #(image imageDirectory extent1 extent1Directory tranlog dbfScratchDir workingDirectory )
+	^ #( extent1 extent1Directory tranlog workingDirectory )
 ]
 
 { #category : 'origins' }

@@ -197,8 +197,8 @@ PathTest >> testContains [
 { #category : 'tests' }
 PathTest >> testContainsLocator [
 	| ancestor descendent |
-	ancestor := FileLocator imageDirectory resolve path.
-	descendent := FileLocator image / 'griffle'.
+	ancestor := FileLocator workingDirectory resolve path.
+	descendent := FileLocator workingDirectory / 'griffle'.
 	self deny: (ancestor contains: descendent).
 	self deny: (descendent contains: ancestor)
 ]
