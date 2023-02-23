@@ -16,7 +16,7 @@ FsDiskFileReferenceTest >> blockDeviceReference [
 	"Return a reference to a block device."
 
 	| devices |
-	devices := #( '/dev/sda' '/dev/disk0' '/dev/nvme0' '/dev/mmcblk0' '/dev/loop0' ) collect: [:each | self fileSystem referenceTo: each].
+	devices := #( '/dev/sda' '/dev/disk0' '/dev/nvme0' '/dev/mmcblk0' '/dev/loop0' '/dev/vda' ) collect: [:each | self fileSystem referenceTo: each].
 	^devices detect: [:each | each exists] ifNone: [self assert: false]
 ]
 
