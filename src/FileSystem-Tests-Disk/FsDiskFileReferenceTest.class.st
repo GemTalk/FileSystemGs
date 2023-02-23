@@ -33,7 +33,7 @@ FsDiskFileReferenceTest >> setUp [
 	| fileSystem |
 	super setUp.
 	fileSystem := FileSystem disk.
-	sandbox := FileLocator temp asFileReference / self sandboxName.
+	sandbox := FileLocator workingDirectory asFileReference / self sandboxName.
 	self
 		assert: sandbox fileSystem
 		equals: fileSystem.
@@ -272,7 +272,7 @@ FsDiskFileReferenceTest >> testSetAsWorkingDirectory [
 	| diskStore initialWD targetWD file |
 	diskStore := FileSystem disk.
 	initialWD := diskStore workingDirectory.
-	targetWD := FileLocator temp resolve.
+	targetWD := sandbox.
 	self
 		assert: targetWD
 		isKindOf: FileReference.
