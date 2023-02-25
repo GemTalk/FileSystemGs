@@ -48,8 +48,8 @@ FileReferenceAttributeTests >> reference [
 FileReferenceAttributeTests >> setUp [
 
 	| ws bufferedStream |
-	reference := FileLocator temp asFileReference
-		/ ('FileAttributesTests-' , FsFastUUIDGenerator next asString , '.txt').
+	reference := FileLocator workingDirectory asFileReference
+		/ ('FileAttributesTests-' , GsUuidV4 new asInteger asString , '.txt').
 	beforeCreationTime := DateAndTime now.
 	self shortDelay.
 	ws := reference writeStream.
@@ -119,14 +119,14 @@ FileReferenceAttributeTests >> testIsCharacter [
 FileReferenceAttributeTests >> testIsDirectory [
 
 	self deny: self reference isDirectory.
-	self assert: FileLocator temp isDirectory.
+	self assert: FileLocator workingDirectory isDirectory.
 ]
 
 { #category : 'tests' }
 FileReferenceAttributeTests >> testIsFile [
 
 	self assert: self reference isFile.
-	self deny: FileLocator temp isFile.
+	self deny: FileLocator workingDirectory isFile.
 ]
 
 { #category : 'tests' }

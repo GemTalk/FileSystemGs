@@ -16,7 +16,7 @@ FsDiskFileReferenceTest >> blockDeviceReference [
 	"Return a reference to a block device."
 
 	| devices |
-	devices := #( '/dev/sda' '/dev/disk0' '/dev/nvme0' '/dev/mmcblk0' '/dev/loop0' ) collect: [:each | self fileSystem referenceTo: each].
+	devices := #( '/dev/sda' '/dev/disk0' '/dev/nvme0' '/dev/mmcblk0' '/dev/loop0' '/dev/vda' ) collect: [:each | self fileSystem referenceTo: each].
 	^devices detect: [:each | each exists] ifNone: [self assert: false]
 ]
 
@@ -33,7 +33,7 @@ FsDiskFileReferenceTest >> setUp [
 	| fileSystem |
 	super setUp.
 	fileSystem := FileSystem disk.
-	sandbox := FileLocator temp asFileReference / self sandboxName.
+	sandbox := FileLocator workingDirectory asFileReference / self sandboxName.
 	self
 		assert: sandbox fileSystem
 		equals: fileSystem.
@@ -272,7 +272,7 @@ FsDiskFileReferenceTest >> testSetAsWorkingDirectory [
 	| diskStore initialWD targetWD file |
 	diskStore := FileSystem disk.
 	initialWD := diskStore workingDirectory.
-	targetWD := FileLocator temp resolve.
+	targetWD := sandbox.
 	self
 		assert: targetWD
 		isKindOf: FileReference.

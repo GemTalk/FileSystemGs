@@ -60,7 +60,7 @@ FsFileDescriptorRegistryTest >> setUp [
 	"initialize sandbox"
 
 	super setUp.
-	sandbox := FileLocator temp asFileReference / 'FsFileDescriptorRegistryTest-Sandbox'
+	sandbox := FileLocator workingDirectory asFileReference / 'FsFileDescriptorRegistryTest-Sandbox'
 ]
 
 { #category : 'running' }

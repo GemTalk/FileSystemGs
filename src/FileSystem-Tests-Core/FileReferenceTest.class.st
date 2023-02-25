@@ -1080,8 +1080,9 @@ FileReferenceTest >> testPosition [
 		createFile: 'file-size-10'
 		contents: '1234567890'.
 	binaryStream := file binaryReadStream.
-	binaryStream position: 5.
-	self assert: binaryStream next equals: $6 codePoint
+	[binaryStream position: 5.
+	self assert: binaryStream next equals: $6 codePoint]
+		ensure: [binaryStream close]
 ]
 
 { #category : 'tests' }
