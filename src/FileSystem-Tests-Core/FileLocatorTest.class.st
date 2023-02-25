@@ -25,7 +25,7 @@ isKindOf: aClass [
 FileLocatorTest >> exampleLocator [
 
 	| example |
-	example := FileLocator temp.
+	example := FileLocator workingDirectory.
 	self
 		assert: example
 		isKindOf: FileLocator.
@@ -114,11 +114,11 @@ FileLocatorTest >> testFromPathIfNone [
 	self
 		assert: locator
 		equals: marker.
-	path := FileLocator temp resolve asPath.
+	path := FileLocator workingDirectory resolve asPath.
 	locator := FileLocator fromPath: path ifNone: [marker].
 	self
 		assert: locator
-		equals: FileLocator temp
+		equals: FileLocator workingDirectory
 ]
 
 { #category : 'compatibility tests' }
@@ -134,7 +134,7 @@ FileLocatorTest >> testIfExistsIfAbsent [
 
 	| marker file result |
 	marker := Object new.
-	file := FileLocator temp / 'ifExists-ifAbsent'.
+	file := FileLocator workingDirectory / 'ifExists-ifAbsent'.
 	file ensureDelete.
 
 	[self deny: file exists.
@@ -176,7 +176,7 @@ FileLocatorTest >> testIfExistsIfAbsent [
 FileLocatorTest >> testInode [
 
 	| temp |
-	temp := FileLocator temp.
+	temp := FileLocator workingDirectory.
 	self
 		assert: temp inode
 		isKindOf: Integer
@@ -215,10 +215,10 @@ FileLocatorTest >> testIsRoot [
 FileLocatorTest >> testMoveTo [
 	| old new |
 	[
-		old := FileLocator temp / 'testMoveTo_old'.
+		old := FileLocator workingDirectory / 'testMoveTo_old'.
 		old ensureCreateFile.
 		
-		new := FileLocator temp / 'testMoveTo_new'.
+		new := FileLocator workingDirectory / 'testMoveTo_new'.
 		old moveTo: new.
 		
 		self deny: old exists.
@@ -233,14 +233,14 @@ FileLocatorTest >> testMoveTo [
 FileLocatorTest >> testNumberOfHardLinks [
 
 	| temp |
-	temp := FileLocator temp.
+	temp := FileLocator workingDirectory.
 	self assert: temp numberOfHardLinks > 0
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testOriginBasename [
-	locator := FileLocator temp.
-	self assert: locator basename = FileLocator temp resolve basename
+	locator := FileLocator workingDirectory.
+	self assert: locator basename = FileLocator workingDirectory resolve basename
 ]
 
 { #category : 'compatibility tests' }
@@ -264,7 +264,7 @@ FileLocatorTest >> testResolveAbsoluteReference [
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveCompoundString [
 	| result compound |
-	locator := FileLocator temp / 'plonk'.
+	locator := FileLocator workingDirectory / 'plonk'.
 	compound := 'griffle', locator fileSystem delimiter asString, 'nurp'.
 	result := locator resolve: compound.
 	self assert: result class = locator class.
@@ -275,7 +275,7 @@ FileLocatorTest >> testResolveCompoundString [
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolvePath [
 	| result path |
-	locator := FileLocator temp / 'plonk'.
+	locator := FileLocator workingDirectory / 'plonk'.
 	result := locator resolve: (Path * 'griffle').
 	path := (Path * 'plonk') / 'griffle'.
 	self assert: result class = locator class.
@@ -286,7 +286,7 @@ FileLocatorTest >> testResolvePath [
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveRelativeReference [
 	| result reference |
-	locator := FileLocator temp / 'plonk'.
+	locator := FileLocator workingDirectory / 'plonk'.
 	reference := FileSystem memory * 'griffle'.
 	result := locator resolve: reference.
 	self assert: result class equals: locator class.
@@ -297,7 +297,7 @@ FileLocatorTest >> testResolveRelativeReference [
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveString [
 	| result path |
-	locator := FileLocator temp / 'plonk'.
+	locator := FileLocator workingDirectory / 'plonk'.
 	result := locator resolve: 'griffle'.
 	path := (Path * 'plonk') / 'griffle'.
 	self assert: result class = locator class.
@@ -307,15 +307,17 @@ FileLocatorTest >> testResolveString [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testSlash [
-	locator := FileLocator temp / 'griffle'.
-	self assert: locator = (FileLocator temp / 'griffle')
+
+	self
+		assert: (FileLocator workingDirectory / 'griffle')
+		equals: (FileLocator workingDirectory / 'griffle')
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testTargetPath [
 
 	self
-		should: [FileLocator temp targetPath]
+		should: [FileLocator workingDirectory targetPath]
 		raise: FileAttributeNotSupported
 ]
 
@@ -329,12 +331,12 @@ FileLocatorTest >> testUid [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testWithExtensionAddsExtension [
-	locator := FileLocator temp / 'griffle'.
+	locator := FileLocator workingDirectory / 'griffle'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testWithExtensionReplacesExtension [
-	locator := FileLocator temp / 'griffle.nurp'.
+	locator := FileLocator workingDirectory / 'griffle.nurp'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'
 ]

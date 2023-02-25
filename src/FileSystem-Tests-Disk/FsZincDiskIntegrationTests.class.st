@@ -24,7 +24,7 @@ FsZincDiskIntegrationTests >> setUp [
 	| fileSystem |
 	super setUp.
 	fileSystem := FileSystem disk.
-	sandbox := FileLocator temp asFileReference / self sandboxName.
+	sandbox := FileLocator workingDirectory asFileReference / self sandboxName.
 	self
 		assert: sandbox fileSystem
 		equals: fileSystem.

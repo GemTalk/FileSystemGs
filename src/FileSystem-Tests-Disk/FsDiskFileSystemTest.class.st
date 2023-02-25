@@ -64,7 +64,8 @@ FsDiskFileSystemTest >> testWorkingDirectory [
 
 	| initialWD tempWD |
 	initialWD := filesystem workingDirectory.
-	tempWD := FileLocator temp asFileReference.
+	tempWD := initialWD / 'FsDIskFileSystemTest-testWorkingDirectory-Sandbox'.
+	tempWD ensureCreateDirectory.
 	filesystem setWorkingDirectory: tempWD path.
 	[self
 		assert: filesystem workingDirectory

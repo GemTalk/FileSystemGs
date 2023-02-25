@@ -41,7 +41,7 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 	
 	tmpDir := FileLocator temp asFileReference.
 	[ 
-		random := FsUUID new asInteger asString.
+		random := GsUuidV4 new asInteger asString.
 		fileName := prefix , random , suffix.
 		(tmpDir / fileName) exists ] whileTrue.
 	^ tmpDir / fileName

@@ -10,7 +10,6 @@ RwSimpleProjectLoadComponentV2 {
 		'FileSystem-Tests-Disk',
 		'FileSystem-Tests-Memory',
 		'FileSystem-Zinc-Character-Encoding-Tests',
-		'Network-UUID-Tests',
 		'FileSystem-Tests-GemStone'
 	],
 	#comment : 'Basic configuration for FileSystemGs. All packages are expected to be loaded into Globals by SystemUser'
