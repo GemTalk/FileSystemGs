@@ -7,7 +7,7 @@ I am an abstract superclass for errors that may occur during filesystem operatio
 "
 Class {
 	#name : 'FileSystemError',
-	#superclass : 'Error',
+	#superclass : 'FsError',
 	#instVars : [
 		'reference'
 	],

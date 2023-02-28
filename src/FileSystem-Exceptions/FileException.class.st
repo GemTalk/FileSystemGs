@@ -7,7 +7,7 @@ Common superclass for exceptions while using file streams
 "
 Class {
 	#name : 'FileException',
-	#superclass : 'Error',
+	#superclass : 'FsError',
 	#instVars : [
 		'fileName'
 	],
