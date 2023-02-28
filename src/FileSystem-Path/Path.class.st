@@ -27,7 +27,7 @@ Class {
 Path class >> * aString [
 	"Answer a relative path with aString as its sole segment. For example,
 	Path * 'griffle' will produce the same result as ./griffle in a unix shell.
-	The selector #* was chosen for it's visual similarity to $."
+	The selector #* was chosen for its visual similarity to $."
 	
 	"Note: aString is not parsed, so supplying a string like '/griffle/plonk'
 	will not create an absolute path."
@@ -37,7 +37,7 @@ Path class >> * aString [
 
 { #category : 'instance creation' }
 Path class >> / aString [
-	"Answer an absolute path with aString as it's sole segment. The selector
+	"Answer an absolute path with aString as its sole segment. The selector
 	was chosen to allow path construction with Smalltalk syntax, which 
 	neverthelesss resembles paths as they appear in a unix shell. Eg.
 	Path / 'griffle' / 'plonk'."
