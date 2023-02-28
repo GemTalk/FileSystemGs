@@ -1,5 +1,5 @@
 Class {
-	#name : 'FsPermissionDenied',
+	#name : 'FilePermissionDenied',
 	#superclass : 'FileSystemError',
 	#category : 'FileSystem-Exceptions'
 }

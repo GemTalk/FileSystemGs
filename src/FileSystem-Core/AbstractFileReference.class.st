@@ -237,7 +237,7 @@ AbstractFileReference >> childNames [
 	fileSystem
 		childNamesAt: reference path
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: reference path]
-		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | names add: name].
 	^names
 ]
@@ -476,7 +476,7 @@ AbstractFileReference >> files [
 	fileSystem
 		fileNamesAt: parentPath
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: parentPath]
-		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | files add: (self withPath: parentPath / name)].
 	^files
 ]

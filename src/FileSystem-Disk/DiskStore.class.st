@@ -483,7 +483,7 @@ options: options [
 						ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
 						ifFalse: [self signalDirectoryDoesNotExist: parent]].
 
-					[:ex | ex resignalAs: (FsPermissionDenied reference: aFileReference)]
+					[:ex | ex resignalAs: (FilePermissionDenied reference: aFileReference)]
 				}.
 	^FsFileDescriptor fd: fd
 ]
@@ -523,7 +523,7 @@ DiskStore >> setWorkingDirectory: aPath [
 		on: FsENOENT
 		do: [:ex | DirectoryDoesNotExist signal: aPath]]
 		on: FsENOTDIR
-		do: [:ex | FsDirectoryRequired signal: aPath].
+		do: [:ex | DirectoryRequired signal: aPath].
 	^true
 ]
 
