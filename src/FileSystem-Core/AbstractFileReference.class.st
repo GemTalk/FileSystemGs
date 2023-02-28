@@ -708,13 +708,6 @@ AbstractFileReference >> numberOfHardLinks [
 	^self resolve numberOfHardLinks
 ]
 
-{ #category : 'accessing' }
-AbstractFileReference >> openingOptionsClass [
-	"Returns the appropriate subclass of FsFileOpeningOptions for this entity."
-
-	^self resolve openingOptionsClass
-]
-
 { #category : 'streams' }
 AbstractFileReference >> openWritable: aBoolean [
 
