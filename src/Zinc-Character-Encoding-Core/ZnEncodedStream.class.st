@@ -9,7 +9,7 @@ Part of Zinc HTTP Components
 "
 Class {
 	#name : 'ZnEncodedStream',
-	#superclass : 'Object',
+	#superclass : 'ZnStream',
 	#instVars : [
 		'stream',
 		'encoder'

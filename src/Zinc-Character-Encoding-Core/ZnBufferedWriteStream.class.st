@@ -16,7 +16,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : 'ZnBufferedWriteStream',
-	#superclass : 'Object',
+	#superclass : 'ZnStream',
 	#instVars : [
 		'stream',
 		'buffer',

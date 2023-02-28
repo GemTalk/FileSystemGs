@@ -7,7 +7,7 @@ I am a read-write character stream. I am mainly used to open the Pharo source an
 "
 Class {
 	#name : 'ZnCharacterReadWriteStream',
-	#superclass : 'Object',
+	#superclass : 'ZnStream',
 	#instVars : [
 		'readStream',
 		'writeStream',

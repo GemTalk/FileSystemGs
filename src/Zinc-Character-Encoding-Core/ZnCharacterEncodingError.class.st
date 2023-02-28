@@ -12,6 +12,6 @@ Part of Zinc HTTP Components
 "
 Class {
 	#name : 'ZnCharacterEncodingError',
-	#superclass : 'Error',
+	#superclass : 'ZnError',
 	#category : 'Zinc-Character-Encoding-Core'
 }
