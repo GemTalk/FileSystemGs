@@ -94,6 +94,12 @@ ZnCharacterEncoder class >> newForEncoding: string stringClass: stringClass [
 	^ concreteSubclass newForEncoding: string stringClass: stringClass
 ]
 
+{ #category : 'comparing' }
+ZnCharacterEncoder >> = anEncoder [
+
+	^self class == anEncoder class and: [self stringClass == anEncoder stringClass]
+]
+
 { #category : 'converting' }
 ZnCharacterEncoder >> asZnCharacterEncoder [
 	^ self
@@ -157,6 +163,12 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 ZnCharacterEncoder >> errorOutsideRange [
 
 	^ self error: 'Character code point outside encoder range'
+]
+
+{ #category : 'hashing' }
+ZnCharacterEncoder >> hash [
+
+	^self class hash bitXor: stringClass hash
 ]
 
 { #category : 'accessing' }
