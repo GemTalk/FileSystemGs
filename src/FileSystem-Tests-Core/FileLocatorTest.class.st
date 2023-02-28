@@ -310,7 +310,10 @@ FileLocatorTest >> testSlash [
 
 	self
 		assert: (FileLocator workingDirectory / 'griffle')
-		equals: (FileLocator workingDirectory / 'griffle')
+		equals: (FileLocator workingDirectory / 'griffle').
+	self
+		assert: (FileLocator workingDirectory / '')
+		equals: FileLocator workingDirectory
 ]
 
 { #category : 'compatibility tests' }

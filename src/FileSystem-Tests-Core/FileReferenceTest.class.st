@@ -1274,6 +1274,9 @@ FileReferenceTest >> testSlash [
 	alpha := sandbox / 'alpha'.
 	self
 		assert: alpha parent
+		equals: sandbox.
+	self
+		assert: sandbox / ''
 		equals: sandbox
 ]
 

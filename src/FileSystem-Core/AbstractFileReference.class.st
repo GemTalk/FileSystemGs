@@ -21,9 +21,13 @@ AbstractFileReference >> , extension [
 
 { #category : 'navigating' }
 AbstractFileReference >> / aString [
-	"aString is either a file or path.  If aString is relative, it is appended to the receiver, if it is absolute, an instance of the receiver with the path is answered"
+	"aString is either a file or path.  If aString is relative, it is appended to the receiver, if it is absolute, an instance of the receiver with the path is answered.
+	To mimick the behavior of unix, if aString is empty, ignore it.
+	/tmp// is equivalent to /tmp/."
 
-	^ self withPath: (self path resolvePath: (self fileSystem pathFromString: aString))
+	^aString = ''
+		ifTrue: [self copy]
+		ifFalse: [self withPath: (self path resolvePath: (self fileSystem pathFromString: aString))]
 ]
 
 { #category : 'comparing' }
