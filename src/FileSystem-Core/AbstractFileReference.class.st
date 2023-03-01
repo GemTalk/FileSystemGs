@@ -99,6 +99,19 @@ AbstractFileReference >> allFiles [
 	^self allChildrenSelect: [:each | each isFile]
 ]
 
+{ #category : 'streams' }
+AbstractFileReference >> appendStreamDo: aBlock [
+	"Pass a write stream to aBlock which appends to the backing file.
+	Using FileOpeningOptions is likely the better choice but it is not
+	supported by memory-based file systems yet."
+
+	self
+		writeStreamDo:
+			[:stream |
+			stream setToEnd.
+			aBlock value: stream]
+]
+
 { #category : 'converting' }
 AbstractFileReference >> asAbsolute [ 
 	self subclassResponsibility

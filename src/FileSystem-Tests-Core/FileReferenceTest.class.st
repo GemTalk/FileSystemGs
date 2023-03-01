@@ -153,6 +153,23 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testAppendStreamDo [
+
+	| ref |
+	ref := sandbox / 'testAppendStreamDo.file'.
+	self deny: ref exists.
+	ref appendStreamDo: [:stream | stream nextPutAll: '1234'].
+	self assert: ref exists.
+	self
+		assert: ref contents
+		equals: '1234'.
+	ref appendStreamDo: [:stream | stream nextPutAll: '5678'].
+	self
+		assert: ref contents
+		equals: '12345678'
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
