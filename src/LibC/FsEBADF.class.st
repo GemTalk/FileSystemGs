@@ -15,3 +15,11 @@ Class {
 FsEBADF class >> errorNumber [
 	^ 9
 ]
+
+{ #category : 'Instance initialization' }
+FsEBADF >> initialize [
+  super initialize .
+  gsNumber := ERR_FsEBADF .
+
+]
+

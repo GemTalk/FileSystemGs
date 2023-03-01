@@ -15,3 +15,10 @@ Class {
 	#superclass : 'ZnError',
 	#category : 'Zinc-Character-Encoding-Core'
 }
+
+{ #category : 'Instance initialization' }
+ZnCharacterEncodingError >> initialize [
+  super initialize .
+  gsNumber := ERR_ZnCharacterEncodingError .
+
+]

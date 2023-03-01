@@ -13,10 +13,16 @@ Class {
 
 { #category : 'private' }
 SystemResolver >> _extent: extentIndex [
-	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
+	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: 
+     (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex,
+   or in (System gemConfigurationAt: #GEM_SOLO_EXTENT) for a solo session."
 
 	| extentNames extentName |
-	extentNames := System stoneConfigurationAt: #DBF_EXTENT_NAMES.
+  GsSession isSolo ifTrue:[
+    extentNames := System gemConfigurationAt: #GEM_SOLO_EXTENT .
+  ] ifFalse:[
+	  extentNames := System stoneConfigurationAt: #DBF_EXTENT_NAMES.
+  ].
 	extentNames _isArray
 		ifTrue: [  
 			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
@@ -48,7 +54,11 @@ SystemResolver >> gemLogDirectory [
 
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	^ #( extent1 extent1Directory tranlog workingDirectory )
+  GsSession isSolo ifTrue:[
+	  ^ #( workingDirectory extent1 extent1Directory )
+  ] ifFalse:[
+	  ^ #( workingDirectory extent1 extent1Directory tranlog )
+  ]
 ]
 
 { #category : 'origins' }

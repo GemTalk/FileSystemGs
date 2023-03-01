@@ -10,3 +10,11 @@ Class {
 	#superclass : 'FileSystemError',
 	#category : 'FileSystem-Exceptions'
 }
+
+{ #category : 'Instance initialization' }
+DirectoryRequired >> initialize [
+  super initialize .
+  gsNumber := ERR_DirectoryRequired .
+
+]
+

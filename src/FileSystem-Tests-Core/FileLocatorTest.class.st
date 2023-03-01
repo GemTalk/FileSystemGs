@@ -8,9 +8,7 @@ SUnit test for FileLocator
 Class {
 	#name : 'FileLocatorTest',
 	#superclass : 'FsTestCase',
-	#instVars : [
-		'locator'
-	],
+	#instVars : [ ],
 	#category : 'FileSystem-Tests-Core'
 }
 
@@ -34,50 +32,55 @@ FileLocatorTest >> exampleLocator [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testAsAbsolute [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: locator asAbsolute = locator
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testBasename [
+  | locator |
 	locator := FileLocator workingDirectory / 'griffle'.
 	self assert: locator basename = 'griffle'
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testCommaAddsExtension [
+  | locator |
 	locator := FileLocator workingDirectory / 'griffle'.
 	self assert: (locator , 'plonk') basename = 'griffle.plonk'
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testCommaAddsExtensionAgain [
+  | locator |
 	locator := FileLocator workingDirectory / 'griffle.plonk'.
 	self assert: (locator , 'nurp') basename = 'griffle.plonk.nurp'
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testContainsLocator [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: (locator contains: locator / 'griffle').
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testContainsPath [
-	
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: (locator contains: (locator resolve / 'griffle') path).
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testContainsReference [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: (locator contains: (locator resolve / 'griffle')).
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testDeviceId [
-
 	self
 		assert: self exampleLocator deviceId
 		isKindOf: Integer
@@ -94,26 +97,25 @@ FileLocatorTest >> testEqual [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testExtension [
+  | locator |
 	locator := FileLocator workingDirectory, 'bak'.
 	self assert: (locator basename endsWith: '.bak')
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testFileSystem [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: (locator fileSystem isKindOf: FileSystem)
 ]
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testFromPathIfNone [
-
-	| marker path |
+	| marker path locator |
 	marker := Object new.
 	path := '/foo' asPath.	
 	locator := FileLocator fromPath: path ifNone: [marker].
-	self
-		assert: locator
-		equals: marker.
+	self assert: locator identical: marker.
 	path := FileLocator workingDirectory resolve asPath.
 	locator := FileLocator fromPath: path ifNone: [marker].
 	self
@@ -131,7 +133,6 @@ FileLocatorTest >> testGid [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testIfExistsIfAbsent [
-
 	| marker file result |
 	marker := Object new.
 	file := FileLocator workingDirectory / 'ifExists-ifAbsent'.
@@ -184,25 +185,28 @@ FileLocatorTest >> testInode [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testIsAbsolute [
+  | locator |
 	locator := FileLocator root.
 	self assert: locator isAbsolute
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testIsNotRoot [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self deny: locator isRoot
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testIsRelative [
+  | locator |
 	locator := FileLocator root.
 	self deny: locator isRelative
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testIsRoot [
-
+  | locator |
 	self deny: FileLocator workingDirectory isRoot.
 	self assert: FileLocator root isRoot.
 
@@ -239,14 +243,14 @@ FileLocatorTest >> testNumberOfHardLinks [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testOriginBasename [
+  | locator |
 	locator := FileLocator workingDirectory.
 	self assert: locator basename = FileLocator workingDirectory resolve basename
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testParent [
-
-	| parent |
+	| parent locator |
 	locator := FileLocator workingDirectory.
 	parent := locator parent.
 	self assert: (parent contains: locator)
@@ -254,7 +258,7 @@ FileLocatorTest >> testParent [
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveAbsoluteReference [
-	| result reference |
+	| result reference locator |
 	locator := FileLocator workingDirectory / 'plonk'.
 	reference := FileSystem memory / 'griffle'.
 	result := locator resolve: reference.
@@ -263,7 +267,7 @@ FileLocatorTest >> testResolveAbsoluteReference [
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveCompoundString [
-	| result compound |
+	| result compound locator |
 	locator := FileLocator workingDirectory / 'plonk'.
 	compound := 'griffle', locator fileSystem delimiter asString, 'nurp'.
 	result := locator resolve: compound.
@@ -274,7 +278,7 @@ FileLocatorTest >> testResolveCompoundString [
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolvePath [
-	| result path |
+	| result path locator |
 	locator := FileLocator workingDirectory / 'plonk'.
 	result := locator resolve: (Path * 'griffle').
 	path := (Path * 'plonk') / 'griffle'.
@@ -285,7 +289,7 @@ FileLocatorTest >> testResolvePath [
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveRelativeReference [
-	| result reference |
+	| result reference locator |
 	locator := FileLocator workingDirectory / 'plonk'.
 	reference := FileSystem memory * 'griffle'.
 	result := locator resolve: reference.
@@ -296,7 +300,7 @@ FileLocatorTest >> testResolveRelativeReference [
 
 { #category : 'resolution tests' }
 FileLocatorTest >> testResolveString [
-	| result path |
+	| result path locator |
 	locator := FileLocator workingDirectory / 'plonk'.
 	result := locator resolve: 'griffle'.
 	path := (Path * 'plonk') / 'griffle'.
@@ -334,12 +338,14 @@ FileLocatorTest >> testUid [
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testWithExtensionAddsExtension [
+  | locator |
 	locator := FileLocator workingDirectory / 'griffle'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'
 ]
 
 { #category : 'compatibility tests' }
 FileLocatorTest >> testWithExtensionReplacesExtension [
+  | locator |
 	locator := FileLocator workingDirectory / 'griffle.nurp'.
 	self assert: (locator withExtension: 'plonk') basename = 'griffle.plonk'
 ]

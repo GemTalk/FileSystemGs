@@ -29,12 +29,14 @@ FileAlreadyExistsException >> file [
 
 { #category : 'accessing' }
 FileAlreadyExistsException >> file: aFile [
-	
-	file := aFile
+	file := aFile .
+  messageText := 'a FileAlreadyExistsException occurred, ' , aFile basename
+
 ]
 
-{ #category : 'accessing' }
-FileAlreadyExistsException >> messageText [
+{ #category : 'Instance initialization' }
+FileAlreadyExistsException >> initialize [
+  super initialize .
+  gsNumber := ERR_FileAlreadyExistsException .
 
-	^ 'File already exists: ', file basename
 ]

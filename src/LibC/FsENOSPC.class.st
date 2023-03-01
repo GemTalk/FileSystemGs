@@ -15,3 +15,11 @@ Class {
 FsENOSPC class >> errorNumber [
 	^ 28
 ]
+
+{ #category : 'Instance initialization' }
+FsENOSPC >> initialize [
+  super initialize .
+  gsNumber := ERR_FsENOSPC .
+
+]
+

@@ -10,3 +10,10 @@ Class {
 	#superclass : 'Error',
 	#category : 'Zinc-Character-Encoding-Core'
 }
+
+{ #category : 'Instance initialization' }
+ZnError >> initialize [
+  super initialize .
+  gsNumber := ERR_ZnError .
+
+]

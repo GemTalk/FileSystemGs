@@ -16,7 +16,7 @@ Class {
 
 { #category : 'instance creation' }
 FileSystemError class >> reference: aReference [
-	^ self basicNew initializeWithReference: aReference
+	^ self new initializeWithReference: aReference
 ]
 
 { #category : 'instance creation' }
@@ -27,7 +27,14 @@ FileSystemError class >> signalWith: aReference [
 { #category : 'initialize-release' }
 FileSystemError >> initializeWithReference: aReference [
 	reference := aReference.
-	messageText := aReference printString
+	messageText := 'a', self class name , ' occurred, ', aReference printString
+]
+
+{ #category : 'Instance initialization' }
+FileSystemError >> initialize [
+  super initialize .
+  gsNumber := ERR_FileSystemError .
+
 ]
 
 { #category : 'testing' }

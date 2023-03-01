@@ -58,3 +58,10 @@ FileException >> messageText [
 		ifTrue: [ fileName printString ]
 		ifFalse: [ messageText ]
 ]
+
+{ #category : 'Instance initialization' }
+FileException >> initialize [
+  super initialize .
+  gsNumber := ERR_FileException .
+
+]

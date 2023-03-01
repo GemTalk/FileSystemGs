@@ -28,5 +28,8 @@ SystemResolverTest >> testExtent1Directory [
 
 { #category : 'testing' }
 SystemResolverTest >> testTranlog [
-	self assertOriginResolves: #tranlog
+  GsSession isSolo ifFalse:[
+     self assertOriginResolves: #tranlog
+  ]
+ 
 ]

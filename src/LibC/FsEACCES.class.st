@@ -15,3 +15,10 @@ Class {
 FsEACCES class >> errorNumber [
 	^13
 ]
+
+{ #category : 'Instance initialization' }
+FsEACCES >> initialize [
+  super initialize .
+  gsNumber := ERR_FsEACCES .
+
+]

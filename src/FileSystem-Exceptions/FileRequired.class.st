@@ -10,3 +10,11 @@ Class {
 	#superclass : 'FileException',
 	#category : 'FileSystem-Exceptions'
 }
+
+{ #category : 'Instance initialization' }
+FileRequired >> initialize [
+  super initialize .
+  gsNumber := ERR_FileRequired .
+
+]
+
