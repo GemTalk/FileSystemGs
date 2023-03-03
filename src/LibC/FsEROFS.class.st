@@ -15,3 +15,10 @@ Class {
 FsEROFS class >> errorNumber [
 	^ 30
 ]
+
+{ #category : 'Instance initialization' }
+FsEROFS >> initialize [
+  super initialize .
+  gsNumber := ERR_FsEROFS .
+
+]

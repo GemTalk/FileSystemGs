@@ -111,7 +111,7 @@ FileReference >> binaryReadStreamOptions: options [
 	self exists
 		ifFalse: [^FileDoesNotExistException signalWith: self].
 	self isFile
-		ifFalse: [^FsFileRequired signalWith: self pathString].
+		ifFalse: [^FileRequired signalWith: self pathString].
 	fileDescriptor := self openOptions: options.
 	^fileDescriptor binaryReadStream
 ]
@@ -122,7 +122,7 @@ FileReference >> binaryWriteStreamOptions: options [
 
 	| fileDescriptor |
 	(self exists and: [self isFile not])
-		ifTrue: [^FsFileRequired signalWith: self].
+		ifTrue: [^FileRequired signalWith: self].
 	fileDescriptor := self openOptions: options.
 	^ZnBufferedWriteStream on: fileDescriptor binaryWriteStream
 ]
@@ -349,7 +349,7 @@ FileReference >> isReadable [
 	"Return true if the file can be read by this user."
 
 	^[self binaryReadStreamDo: [:stream | true]]
-		on: FsPermissionDenied
+		on: FilePermissionDenied
 		do: [:ex | ex return: false]
 ]
 
@@ -387,7 +387,7 @@ FileReference >> isWritable [
 	"Return true if the file can be written by this user."
 
 	^[self binaryWriteStreamDo: [:stream | true]]
-		on: FsPermissionDenied
+		on: FilePermissionDenied
 		do: [:ex | ex return: false]
 ]
 

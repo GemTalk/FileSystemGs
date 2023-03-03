@@ -3,7 +3,7 @@ Part of FileSystem
 
 =========
 
-I am an abstract superclass for FileLocator and FileReference. By implementing most of the methods on myself most code duplucation between the locator and the reference can be avoided
+I am an abstract superclass for FileLocator and FileReference. By implementing most of the methods on myself most code duplication between the locator and the reference can be avoided
 "
 Class {
 	#name : 'AbstractFileReference',
@@ -21,9 +21,13 @@ AbstractFileReference >> , extension [
 
 { #category : 'navigating' }
 AbstractFileReference >> / aString [
-	"aString is either a file or path.  If aString is relative, it is appended to the receiver, if it is absolute, an instance of the receiver with the path is answered"
+	"aString is either a file or path.  If aString is relative, it is appended to the receiver, if it is absolute, an instance of the receiver with the path is answered.
+	To mimick the behavior of unix, if aString is empty, ignore it.
+	/tmp// is equivalent to /tmp/."
 
-	^ self withPath: (self path resolvePath: (self fileSystem pathFromString: aString))
+	^aString = ''
+		ifTrue: [self copy]
+		ifFalse: [self withPath: (self path resolvePath: (self fileSystem pathFromString: aString))]
 ]
 
 { #category : 'comparing' }
@@ -93,6 +97,19 @@ AbstractFileReference >> allFiles [
 	"Return all the files (not directories) recursively nested in the receiver."
 
 	^self allChildrenSelect: [:each | each isFile]
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> appendStreamDo: aBlock [
+	"Pass a write stream to aBlock which appends to the backing file.
+	Using FileOpeningOptions is likely the better choice but it is not
+	supported by memory-based file systems yet."
+
+	self
+		writeStreamDo:
+			[:stream |
+			stream setToEnd.
+			aBlock value: stream]
 ]
 
 { #category : 'converting' }
@@ -237,7 +254,7 @@ AbstractFileReference >> childNames [
 	fileSystem
 		childNamesAt: reference path
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: reference path]
-		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | names add: name].
 	^names
 ]
@@ -476,7 +493,7 @@ AbstractFileReference >> files [
 	fileSystem
 		fileNamesAt: parentPath
 		ifAbsent: [fileSystem signalDirectoryDoesNotExist: parentPath]
-		ifNotDirectory: [FsDirectoryRequired signalWith: reference]
+		ifNotDirectory: [DirectoryRequired signalWith: reference]
 		do: [:name | files add: (self withPath: parentPath / name)].
 	^files
 ]
@@ -706,13 +723,6 @@ AbstractFileReference >> numberOfHardLinks [
 	"Returns the number of hard links to this file."
 
 	^self resolve numberOfHardLinks
-]
-
-{ #category : 'accessing' }
-AbstractFileReference >> openingOptionsClass [
-	"Returns the appropriate subclass of FsFileOpeningOptions for this entity."
-
-	^self resolve openingOptionsClass
 ]
 
 { #category : 'streams' }

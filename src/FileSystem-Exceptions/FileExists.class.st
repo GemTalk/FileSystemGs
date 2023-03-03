@@ -10,3 +10,10 @@ Class {
 	#superclass : 'FileSystemError',
 	#category : 'FileSystem-Exceptions'
 }
+
+{ #category : 'Instance initialization' }
+FileExists >> initialize [
+  super initialize .
+  gsNumber := ERR_FileExists .
+
+]

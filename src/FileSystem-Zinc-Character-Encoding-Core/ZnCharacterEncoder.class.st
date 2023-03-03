@@ -40,7 +40,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : 'ZnCharacterEncoder',
-	#superclass : 'Object',
+	#superclass : 'ZnObject',
 	#instVars : [
 		'stringClass'
 	],
@@ -92,6 +92,12 @@ ZnCharacterEncoder class >> newForEncoding: string stringClass: stringClass [
 		detect: [ :each | each handlesEncoding: string ] 
 		ifNone: [ ^ self error: 'The ', string printString, ' is not currently supported.' ].
 	^ concreteSubclass newForEncoding: string stringClass: stringClass
+]
+
+{ #category : 'comparing' }
+ZnCharacterEncoder >> = anEncoder [
+
+	^self class == anEncoder class and: [self stringClass == anEncoder stringClass]
 ]
 
 { #category : 'converting' }
@@ -157,6 +163,12 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 ZnCharacterEncoder >> errorOutsideRange [
 
 	^ self error: 'Character code point outside encoder range'
+]
+
+{ #category : 'hashing' }
+ZnCharacterEncoder >> hash [
+
+	^self class hash bitXor: stringClass hash
 ]
 
 { #category : 'accessing' }

@@ -43,6 +43,13 @@ ZnAbstractCharacterEncoderTests class >> unicodeCharacterSource [
 ]
 
 { #category : 'private' }
+ZnAbstractCharacterEncoderTests >> _encoder [
+	"Return a new instance of the associated encoder."
+
+	self subclassResponsibility
+]
+
+{ #category : 'private' }
 ZnAbstractCharacterEncoderTests >> _encoderId [
 		self subclassResponsibility
 ]
@@ -115,6 +122,34 @@ ZnAbstractCharacterEncoderTests >> testConvencienceMethods [
 	
 	#( 'ccc' 'ççç' 'c' 'ç' 'çc' 'cç' ) do: [ :each |
 		self assertCharacterCollection: (encoder decodeBytes: (encoder encodeString: each)) equals: each ]
+]
+
+{ #category : 'testing' }
+ZnAbstractCharacterEncoderTests >> testEquality [
+
+	| e1 e2 |
+	e1 := self _encoder.
+	e2 := self _encoder.
+	self
+		assert: e1
+		equals: e2.
+	self
+		deny: e1
+		identical: e2
+]
+
+{ #category : 'testing' }
+ZnAbstractCharacterEncoderTests >> testHash [
+
+	| e1 e2 |
+	e1 := self _encoder.
+	e2 := self _encoder.
+	self
+		assert: e1 hash
+		equals: e2 hash.
+	self
+		deny: e1
+		identical: e2
 ]
 
 { #category : 'testing' }

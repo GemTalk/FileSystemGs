@@ -15,3 +15,11 @@ Class {
 FsEINTR class >> errorNumber [
 	^ 4
 ]
+
+{ #category : 'Instance initialization' }
+FsEINTR >> initialize [
+  super initialize .
+  gsNumber := ERR_FsEINTR .
+
+]
+

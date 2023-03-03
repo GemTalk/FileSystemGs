@@ -7,7 +7,7 @@ Common superclass for exceptions while using file streams
 "
 Class {
 	#name : 'FileException',
-	#superclass : 'Error',
+	#superclass : 'FsError',
 	#instVars : [
 		'fileName'
 	],
@@ -57,4 +57,11 @@ FileException >> messageText [
 	^ messageText isNil
 		ifTrue: [ fileName printString ]
 		ifFalse: [ messageText ]
+]
+
+{ #category : 'Instance initialization' }
+FileException >> initialize [
+  super initialize .
+  gsNumber := ERR_FileException .
+
 ]

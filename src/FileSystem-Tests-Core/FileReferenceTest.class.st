@@ -153,6 +153,23 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testAppendStreamDo [
+
+	| ref |
+	ref := sandbox / 'testAppendStreamDo.file'.
+	self deny: ref exists.
+	ref appendStreamDo: [:stream | stream nextPutAll: '1234'].
+	self assert: ref exists.
+	self
+		assert: ref contents
+		equals: '1234'.
+	ref appendStreamDo: [:stream | stream nextPutAll: '5678'].
+	self
+		assert: ref contents
+		equals: '12345678'
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testAsAbsoluteConverted [
 	"Converts a relative reference to absolute, and asserts
 	that it's absolute and still has the same path."
@@ -266,7 +283,7 @@ FileReferenceTest >> testBinaryReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -332,10 +349,10 @@ FileReferenceTest >> testChildDirectories [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: FsDirectoryRequired
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -358,10 +375,10 @@ FileReferenceTest >> testChildFiles [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [gamma children]
-		raise: FsDirectoryRequired
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -384,10 +401,10 @@ FileReferenceTest >> testChildren [
 		should: [epsilon children]
 		raise: DirectoryDoesNotExist.
 
-	"Ensure FsDirectoryRequired is signaled when sent to something that isn't a directory."
+	"Ensure DirectoryRequired is signaled when sent to something that isn't a directory."
 	self
 		should: [beta children]
-		raise: FsDirectoryRequired
+		raise: DirectoryRequired
 ]
 
 { #category : 'tests' }
@@ -1105,7 +1122,7 @@ FileReferenceTest >> testReadStream [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -1125,7 +1142,7 @@ FileReferenceTest >> testReadStreamDo [
 	directory := self createDirectory: 'directory'.
 	self
 		should: [directory readStreamDo: [:stream |]]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -1274,6 +1291,9 @@ FileReferenceTest >> testSlash [
 	alpha := sandbox / 'alpha'.
 	self
 		assert: alpha parent
+		equals: sandbox.
+	self
+		assert: sandbox / ''
 		equals: sandbox
 ]
 
@@ -1421,7 +1441,7 @@ FileReferenceTest >> testWriteStreamDo [
 	"Ensure #writeStreamDo: send to a directory raises an exception."
 	self
 		should: [directory writeStreamDo: [:stream | ]]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }

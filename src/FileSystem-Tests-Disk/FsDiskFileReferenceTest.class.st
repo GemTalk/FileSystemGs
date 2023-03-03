@@ -87,7 +87,7 @@ FsDiskFileReferenceTest >> testBinaryWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -287,10 +287,10 @@ FsDiskFileReferenceTest >> testSetAsWorkingDirectory [
 	file := self createFile: 'hello-world'.
 	self
 		should: [file setAsWorkingDirectory]
-		raise: FsDirectoryRequired.
+		raise: DirectoryRequired.
 	self
 		should: [self characterDeviceReference setAsWorkingDirectory]
-		raise: FsDirectoryRequired.
+		raise: DirectoryRequired.
 	self
 		should: ['/does/not/exist' asFileReference setAsWorkingDirectory]
 		raise: DirectoryDoesNotExist
@@ -337,5 +337,5 @@ FsDiskFileReferenceTest >> testWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]

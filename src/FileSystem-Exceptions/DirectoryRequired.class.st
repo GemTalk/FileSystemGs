@@ -3,17 +3,18 @@ Part of FileSystem
 
 =========
 
-I am raised on an attempt to delete a directory when is not empty.
+Notify that this operation requires a Directory
 "
 Class {
-	#name : 'DirectoryIsNotEmpty',
+	#name : 'DirectoryRequired',
 	#superclass : 'FileSystemError',
 	#category : 'FileSystem-Exceptions'
 }
 
 { #category : 'Instance initialization' }
-DirectoryIsNotEmpty >> initialize [
+DirectoryRequired >> initialize [
   super initialize .
-  gsNumber := ERR_DirectoryIsNotEmpty .
+  gsNumber := ERR_DirectoryRequired .
 
 ]
+

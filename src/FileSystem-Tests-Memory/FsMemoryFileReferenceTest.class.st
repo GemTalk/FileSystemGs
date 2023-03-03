@@ -58,7 +58,7 @@ FsMemoryFileReferenceTest >> testBinaryWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]
 
 { #category : 'tests' }
@@ -199,5 +199,5 @@ FsMemoryFileReferenceTest >> testWriteStream [
 	"Ensure #writeStream send to a directory raises an exception."
 	self
 		should: [directory writeStream]
-		raise: FsFileRequired
+		raise: FileRequired
 ]

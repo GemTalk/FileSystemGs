@@ -16,3 +16,11 @@ FsENOTDIR class >> errorNumber [
 
 	^20
 ]
+
+{ #category : 'Instance initialization' }
+FsENOTDIR >> initialize [
+  super initialize .
+  gsNumber := ERR_FsENOTDIR .
+
+]
+

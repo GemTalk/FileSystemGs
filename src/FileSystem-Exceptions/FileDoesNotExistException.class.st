@@ -21,3 +21,10 @@ Class {
 	#superclass : 'FileException',
 	#category : 'FileSystem-Exceptions'
 }
+
+{ #category : 'Instance initialization' }
+FileDoesNotExistException >> initialize [
+  super initialize .
+  gsNumber := ERR_FileDoesNotExistException .
+
+]
