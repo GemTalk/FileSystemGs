@@ -8,5 +8,5 @@ ZnObject serves as a common superclass for Zinc encoders and streams. Direct usa
 Class {
 	#name : 'ZnObject',
 	#superclass : 'Object',
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }

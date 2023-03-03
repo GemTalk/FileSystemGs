@@ -8,5 +8,5 @@ ZnStream serves as a common superclass for all Zinc stream classes. Direct usage
 Class {
 	#name : 'ZnStream',
 	#superclass : 'ZnObject',
-	#category : 'Zinc-Character-Encoding-Core'
+	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
