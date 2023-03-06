@@ -7,7 +7,7 @@ Error raised when attempting to operate on an invalid FsFileDescriptor
 "
 Class {
 	#name : 'FsFileDescriptorInvalid',
-	#superclass : 'Error',
+	#superclass : 'FsError',
 	#instVars : [
 		'fileDescriptor'
 	],
