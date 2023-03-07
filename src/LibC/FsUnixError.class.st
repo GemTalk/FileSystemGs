@@ -51,3 +51,10 @@ FsUnixError class >> initializeClassLookupTable [
 			table at: errorNumber put: subclass ].
 	^table
 ]
+
+{ #category : 'initialize' }
+FsUnixError >> initialize [
+
+	super initialize.
+	gsNumber := ERR_FsUnixError
+]

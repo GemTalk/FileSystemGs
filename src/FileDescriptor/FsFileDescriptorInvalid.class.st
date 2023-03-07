@@ -36,6 +36,13 @@ FsFileDescriptorInvalid >> fileDescriptor: aFileDescriptor [
 	fileDescriptor := aFileDescriptor
 ]
 
+{ #category : 'initializing' }
+FsFileDescriptorInvalid >> initialize [
+
+	super initialize.
+	gsNumber := ERR_FsFileDescriptorInvalid
+]
+
 { #category : 'accessing' }
 FsFileDescriptorInvalid >> messageText [
 
