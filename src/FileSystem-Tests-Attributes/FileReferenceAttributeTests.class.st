@@ -44,6 +44,12 @@ FileReferenceAttributeTests >> reference [
 	^reference
 ]
 
+{ #category : 'testing' }
+FileReferenceAttributeTests >> referenceSupportsAtime [
+
+	^((System performOnServer: 'mount | grep "^$(df -Pk ''', self reference pathString, ''' | head -n 2 | tail -n 1 | cut -f 1 -d '' '') "') includesString: 'noatime') not
+]
+
 { #category : 'initializing' }
 FileReferenceAttributeTests >> setUp [
 
@@ -78,10 +84,11 @@ FileReferenceAttributeTests >> tearDown [
 FileReferenceAttributeTests >> testAccessTime [
 
 	| initialAccessTime |
+	self referenceSupportsAtime "Skip if noatime is configured"
+		ifFalse: [^self].
 	initialAccessTime := self reference accessTime.
 	(Delay forMilliseconds: 10) wait.
-	"By default, it seems linux is configured to update access time
-	only if it is older than modification time."
+	"This dance deals w/ relatime"
 	self reference binaryWriteStream nextPutAll: #[1 2 3 4]; close.
 	self reference binaryReadStream next: 1; close.
 	self assert: self reference accessTime > initialAccessTime
