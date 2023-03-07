@@ -12,7 +12,6 @@ RwSimpleProjectLoadComponentV2 {
 		'FileSystem-Disk',
 		'FileSystem-Exceptions',
 		'FileSystem-Memory',
-		'FileSystem-Obsolete',
 		'FileSystem-Path',
 		'FileSystem-GemStone-Kernel',
 		'LibC',
