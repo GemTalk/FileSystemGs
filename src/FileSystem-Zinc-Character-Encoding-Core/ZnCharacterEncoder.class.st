@@ -120,6 +120,18 @@ ZnCharacterEncoder >> decodeAsCodePoints: bytes [
 ]
 
 { #category : 'convenience' }
+ZnCharacterEncoder >> decodeBytes: bytes [
+	"Decode bytes and return the resulting string"
+
+	| byteStream |
+	byteStream := bytes readStream.
+	^ String
+		streamContents: [ :stream | 
+			[ byteStream atEnd ]
+				whileFalse: [ stream nextPut: (self nextFromStream: byteStream) ] ]
+]
+
+{ #category : 'convenience' }
 ZnCharacterEncoder >> encodeCodePoints: codePoints [
 	"Encode codePoints and return the resulting byte array"
 	
@@ -157,6 +169,14 @@ ZnCharacterEncoder >> encodedByteCountForString: string [
 	"Return the exact number of bytes it would take to encode string as a byte array"
 
 	^self subclassResponsibility: #encodedByteCountForCodePoints:
+]
+
+{ #category : 'handling errors' }
+ZnCharacterEncoder >> error: messageString [
+	"Raises an error.  This method is intended for use in raising
+ application-defined or user-defined errors. Returns the receiver."
+
+	^ ZnCharacterEncodingError signal: messageString
 ]
 
 { #category : 'handling errors' }
