@@ -441,11 +441,6 @@ AbstractFileReference >> ensureDeleteAllChildren [
 	self deleteAllChildren
 ]
 
-{ #category : 'enumerating' }
-AbstractFileReference >> entries [
-	^ self resolve entries
-]
-
 { #category : 'delegated' }
 AbstractFileReference >> exists [
 	"Return true if the file reference exist (e.g., if there is a file on the hard disk pointed by the file reference)

@@ -28,11 +28,6 @@ MemoryFileSystemDirectory >> ensureCreateFile: aFileName [
 		put: (MemoryFileSystemFile named: aFileName)
 ]
 
-{ #category : 'accessing' }
-MemoryFileSystemDirectory >> entries [
-	^ entries
-]
-
 { #category : 'enumeration' }
 MemoryFileSystemDirectory >> fileEntriesDo: aBlock [
 	
