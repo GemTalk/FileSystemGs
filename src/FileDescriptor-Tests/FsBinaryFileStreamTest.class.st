@@ -22,7 +22,7 @@ contents: contentBytes [
 { #category : 'accessing' }
 FsBinaryFileStreamTest >> sandboxName [
 
-	^'FsFibaryFileStreamTest-Sandbox'
+	^'', self class name, '-', self selector, '-Sandbox'
 ]
 
 { #category : 'running' }

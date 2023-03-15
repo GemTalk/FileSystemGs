@@ -77,7 +77,8 @@ FileReferenceAttributeTests >> shortDelay [
 { #category : 'initializing' }
 FileReferenceAttributeTests >> tearDown [
 
-	reference delete
+	reference delete.
+	super tearDown
 ]
 
 { #category : 'tests' }
