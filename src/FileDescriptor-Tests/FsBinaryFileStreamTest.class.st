@@ -55,7 +55,7 @@ FsBinaryFileStreamTest >> testContents [
 		createFile: 'testContents'
 		contents: contents.
 	stream := ref binaryReadStream.
-	self
+	[self
 		assert: stream next
 		equals: 84.
 	self
@@ -63,7 +63,8 @@ FsBinaryFileStreamTest >> testContents [
 		equals: #[104 101 115].
 	self
 		assert: stream contents
-		equals: contents
+		equals: contents]
+		ensure: [stream close]
 ]
 
 { #category : 'running' }
@@ -74,7 +75,8 @@ FsBinaryFileStreamTest >> testNext [
 		createFile: 'testNext'
 		contents: ByteArray new.
 	stream := ref binaryReadStream.
-	self
+	[self
 		assert: stream next
-		equals: nil
+		equals: nil]
+		ensure: [stream close]
 ]

@@ -47,7 +47,10 @@ FileReferenceAttributeTests >> reference [
 { #category : 'testing' }
 FileReferenceAttributeTests >> referenceSupportsAtime [
 
-	^((System performOnServer: 'mount | grep "^$(df -Pk ''', self reference pathString, ''' | head -n 2 | tail -n 1 | cut -f 1 -d '' '') "') includesString: 'noatime') not
+	| mountOptions |
+	mountOptions :=  System performOnServer: 'mount | grep "^$(df -Pk ''', self reference pathString, ''' | head -n 2 | tail -n 1 | cut -f 1 -d '' '') "'.
+	"Including NFS since we do not know the remote mount options."
+	^((mountOptions includesString: 'noatime') or: [mountOptions includesString: 'nfs']) not
 ]
 
 { #category : 'initializing' }

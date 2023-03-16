@@ -47,7 +47,7 @@ FsZincIntegrationTests >> testUTF8EncoderBackOnFileStream [
 		createFile: 'testUTF8EncoderBackOnFileStream'
 		contents: 'Les élèves Françaises'.
 	stream := ref binaryReadStream. "Create a file-backed read-stream vs a string-backed stream like in ZnCharacterEncoderTests>>#testUTF8Back."
-	encoder := ZnUTF8Encoder new.
+	[encoder := ZnUTF8Encoder new.
 	self
 		should: [encoder backOnStream: stream]
 		raise: Error.
@@ -63,5 +63,6 @@ FsZincIntegrationTests >> testUTF8EncoderBackOnFileStream [
 	13 timesRepeat: [ encoder backOnStream: stream ].
 	self
 		assert: (encoder nextFromStream: stream)
-		equals: $s
+		equals: $s]
+    ensure: [stream close]
 ]
