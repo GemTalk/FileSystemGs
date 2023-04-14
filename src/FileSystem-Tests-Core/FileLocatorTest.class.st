@@ -8,7 +8,6 @@ SUnit test for FileLocator
 Class {
 	#name : 'FileLocatorTest',
 	#superclass : 'FsTestCase',
-	#instVars : [ ],
 	#category : 'FileSystem-Tests-Core'
 }
 
@@ -116,11 +115,11 @@ FileLocatorTest >> testFromPathIfNone [
 	path := '/foo' asPath.	
 	locator := FileLocator fromPath: path ifNone: [marker].
 	self assert: locator identical: marker.
-	path := FileLocator workingDirectory resolve asPath.
+	path := FileLocator temp resolve asPath.
 	locator := FileLocator fromPath: path ifNone: [marker].
 	self
 		assert: locator
-		equals: FileLocator workingDirectory
+		equals: FileLocator temp
 ]
 
 { #category : 'compatibility tests' }

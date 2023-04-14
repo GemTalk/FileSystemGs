@@ -410,9 +410,13 @@ AbstractFileReference >> ensureCreateDirectory [
 { #category : 'operations' }
 AbstractFileReference >> ensureCreateFile [
 	"Create if necessary a file for the receiver. If the parent does not exist creates it"
+
+	| fileDescriptor |
+	(self exists and: [self isFile not])
+		ifTrue: [].
 	self parent ensureCreateDirectory.
-	self writeStream close.
-	
+	fileDescriptor := self openOptions: self defaultOptionsForWrite.
+	fileDescriptor close
 ]
 
 { #category : 'operations' }
@@ -439,11 +443,6 @@ AbstractFileReference >> ensureDeleteAllChildren [
 	
 	self exists ifFalse: [ ^ self  ].
 	self deleteAllChildren
-]
-
-{ #category : 'enumerating' }
-AbstractFileReference >> entries [
-	^ self resolve entries
 ]
 
 { #category : 'delegated' }
