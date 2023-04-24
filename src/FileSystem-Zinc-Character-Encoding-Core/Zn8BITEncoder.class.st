@@ -5,9 +5,7 @@ Part of FileSystem
 
 I implement the encoding and decoding of Extended ASCII (8 bit character encoding) that produces instances of class String.
 
-The encoding is consistent with topaz 'fileformat 8BIT' (see section 1.3 Handling text outside the ASCII range in the topaz manual[1]  for more details).
-
-[1] https://downloads.gemtalksystems.com/docs/GemStone64/3.6.x/GS64-Topaz-3.6/GS64-Topaz-3.6.htm?https://downloads.gemtalksystems.com/docs/GemStone64/3.6.x/GS64-Topaz-3.6/1-Tutorial.htm#pgfId-1130673
+The encoding is consistent with topaz 'fileformat 8BIT' (see 'Handling text outside the ASCII range' in the topaz manual for more details).
 "
 Class {
 	#name : 'Zn8BITEncoder',

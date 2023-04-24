@@ -7,22 +7,9 @@ I am a late-bound reference. I refer to a file or directory in relation to a wel
 
 Usage
 ----------
-FileLocator vmDirectory parent pathString
-	> '/Applications'
-
-
 FileLocator desktop.
 FileLocator desktop basename.
-
 FileLocator home basename.
-FileLocator image.
-FileLocator vmBinary asAbsolute pathString 
-	>  '/Applications/CogVM.app/Contents/MacOS/CogVM'
-FileLocator vmBinary pathString 
-	> '/Applications/CogVM.app/Contents/MacOS/CogVM'
-		
-
-
 
 
 Implementation
