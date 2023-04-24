@@ -7,14 +7,14 @@ RwSimpleProjectLoadComponentV2 {
 		'tests/Core'
 	],
 	#packageNames : [
-		'FileDescriptor',
+		'FileSystem-FileDescriptor',
 		'FileSystem-Core',
 		'FileSystem-Disk',
 		'FileSystem-Exceptions',
 		'FileSystem-Memory',
 		'FileSystem-Path',
 		'FileSystem-GemStone-Kernel',
-		'LibC',
+		'FileSystem-LibC',
 		'FileSystem-Zinc-Character-Encoding-Core'
 	],
 	#comment : 'Basic configuration for FileSystemGs. All packages are expected to be loaded into Globals by SystemUser'

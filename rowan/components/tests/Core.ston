@@ -4,7 +4,7 @@ RwSimpleProjectLoadComponentV2 {
 	#projectNames : [ ],
 	#componentNames : [ ],
 	#packageNames : [
-		'FileDescriptor-Tests',
+		'FileSystem-FileDescriptor-Tests',
 		'FileSystem-Tests-Attributes',
 		'FileSystem-Tests-Core',
 		'FileSystem-Tests-Disk',
