@@ -44,6 +44,14 @@ isKindOf: aClass [
 ]
 
 { #category : 'support' }
+FileReferenceTest >> binaryContentsOf: aReference [
+
+	| contents |
+	aReference binaryReadStreamDo: [:stream | contents := stream contents].
+	^contents
+]
+
+{ #category : 'support' }
 FileReferenceTest >> createDirectory: aString [
 
 	| reference |
@@ -153,6 +161,26 @@ FileReferenceTest >> testAllDirectories [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testAppendStream [
+
+	| ref stream |
+	ref := sandbox / 'testAppendStream.file'.
+	self deny: ref exists.
+	stream := ref appendStream.
+	[stream nextPutAll: '1234']
+		ensure: [stream close].
+	self
+		assert: ref contents
+		equals: '1234'.
+	stream := ref appendStream.
+	[stream nextPutAll: '5678']
+		ensure: [stream close].
+	self
+		assert: ref contents
+		equals: '12345678'.
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testAppendStreamDo [
 
 	| ref |
@@ -167,6 +195,46 @@ FileReferenceTest >> testAppendStreamDo [
 	self
 		assert: ref contents
 		equals: '12345678'
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testAppendStreamEncoded [
+
+	| ref stream |
+	ref := sandbox / 'testAppendStreamEncoded.file'.
+	self deny: ref exists.
+	stream := ref appendStreamEncoded: 'utf8'.
+	[stream nextPutAll: '1234']
+		ensure: [stream close].
+	self
+		assert: (self binaryContentsOf: ref)
+		equals: #[49 50 51 52].
+	stream := ref appendStreamEncoded: '8bit'.
+	[stream nextPutAll: '5678']
+		ensure: [stream close].
+	self
+		assert:(self binaryContentsOf: ref)
+		equals: #[49 50 51 52 53 54 55 56].
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testAppendStreamEncodedDo [
+
+	| ref  |
+	ref := sandbox / 'testAppendStreamEncoded.file'.
+	self deny: ref exists.
+	ref
+		appendStreamEncoded: 'utf8'
+		do: [:stream | stream nextPutAll: '1234'].
+	self
+		assert: (self binaryContentsOf: ref)
+		equals: #[49 50 51 52].
+	ref
+		appendStreamEncoded: 'utf8'
+		do: [:stream | stream nextPutAll: '5678'].
+	self
+		assert:(self binaryContentsOf: ref)
+		equals: #[49 50 51 52 53 54 55 56].
 ]
 
 { #category : 'tests' }

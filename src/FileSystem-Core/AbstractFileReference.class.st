@@ -100,16 +100,46 @@ AbstractFileReference >> allFiles [
 ]
 
 { #category : 'streams' }
-AbstractFileReference >> appendStreamDo: aBlock [
-	"Pass a write stream to aBlock which appends to the backing file.
-	Using FileOpeningOptions is likely the better choice but it is not
-	supported by memory-based file systems yet."
+AbstractFileReference >> appendStream [
+	"Returns a stream which, if written to, will append any written
+	data to the end of the file."
 
-	self
-		writeStreamDo:
-			[:stream |
-			stream setToEnd.
-			aBlock value: stream]
+	^self appendStreamEncoded: self defaultEncoding
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> appendStreamDo: aBlock [
+	"Pass a write stream to aBlock which appends to the backing file."
+
+	| stream |
+	stream := self appendStream.
+	^[aBlock value: stream]
+		ensure: [stream flush; close]
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> appendStreamEncoded: encoding [
+	"Returns a stream which, if written to, will append any written
+	data to the end of the file. The specified encoding should be
+	used for any data written to the stream.
+
+	Using FileOpeningOptions is likely the better choice but it is not
+	supported by memory-based file systems yet"
+
+	^(self writeStreamEncoded: encoding)
+		setToEnd;
+		yourself
+]
+
+{ #category : 'streams' }
+AbstractFileReference >> appendStreamEncoded: encoding
+do: aBlock [
+	"Pass a write stream to aBlock which appends to the backing file."
+
+	| stream |
+	stream := self appendStreamEncoded: encoding.
+	^[aBlock value: stream]
+		ensure: [stream flush; close]
 ]
 
 { #category : 'converting' }
@@ -318,6 +348,12 @@ AbstractFileReference >> createFile [
 { #category : 'accessing' }
 AbstractFileReference >> creationTime [
 	^ self resolve creationTime 
+]
+
+{ #category : 'accessing' }
+AbstractFileReference >> defaultEncoding [
+
+	^'utf8'
 ]
 
 { #category : 'accessing' }
@@ -766,7 +802,7 @@ AbstractFileReference >> permissions [
 { #category : 'streams' }
 AbstractFileReference >> readStream [
 
-	^self readStreamEncoded: 'utf8'
+	^self readStreamEncoded: self defaultEncoding
 ]
 
 { #category : 'streams' }
@@ -935,7 +971,7 @@ AbstractFileReference >> withPath: newPath [
 { #category : 'streams' }
 AbstractFileReference >> writeStream [
 	
-	^self writeStreamEncoded: 'utf8'
+	^self writeStreamEncoded: self defaultEncoding
 ]
 
 { #category : 'streams' }
@@ -997,6 +1033,6 @@ AbstractFileReference >> writeStreamIfPresent: presentBlock [
 AbstractFileReference >> writeStreamOptions: openingOptions [
 	
 	^self
-		writeStreamEncoded: 'utf8'
+		writeStreamEncoded: self defaultEncoding
 		options: openingOptions
 ]
