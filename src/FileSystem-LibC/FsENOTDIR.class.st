@@ -3,6 +3,10 @@ Part of FileSystem
 
 =========
 
+This class is private and subject to revision or removal. The FileSystem-LibC package is still under active development.
+
+=========
+
 Not a directory
 "
 Class {
@@ -23,4 +27,3 @@ FsENOTDIR >> initialize [
   gsNumber := ERR_FsENOTDIR .
 
 ]
-

@@ -3,6 +3,10 @@ Part of FileSystem
 
 =========
 
+This class is private and subject to revision or removal. The FileSystem-LibC package is still under active development.
+
+=========
+
 Abstract superclass for classes representing structures in external memory.
 Typically, these are represented in C as struct types. They have named fields of various types.
 Subclasses of this class provide the ability to read and write individual fields, and to allocate and free

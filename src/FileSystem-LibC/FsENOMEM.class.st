@@ -3,6 +3,10 @@ Part of FileSystem
 
 =========
 
+This class is private and subject to revision or removal. The FileSystem-LibC package is still under active development.
+
+=========
+
 Out of memory
 "
 Class {
@@ -22,4 +26,3 @@ FsENOMEM >> initialize [
   gsNumber := ERR_FsENOMEM .
 
 ]
-

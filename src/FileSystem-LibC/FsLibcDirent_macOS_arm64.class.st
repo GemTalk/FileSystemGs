@@ -3,6 +3,10 @@ Part of FileSystem
 
 =========
 
+This class is private and subject to revision or removal. The FileSystem-LibC package is still under active development.
+
+=========
+
 arm64-specific dirent.h modifications
 "
 Class {

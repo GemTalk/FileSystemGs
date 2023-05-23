@@ -3,6 +3,10 @@ Part of FileSystem
 
 =========
 
+This class is private and subject to revision or removal. The FileSystem-LibC package is still under active development.
+
+=========
+
 Abstract superclass for ""Smalltalk-ized"" wrappers around auto-generated classes that come from the various header files for functions in libc.
 The primary functions of the wrappers are:
 * Better keyword selectors than the auto-generated ones
