@@ -21,6 +21,7 @@ int main() {
   int result = mkdir("/tmp/test.dir", 0777);
   result = fstat(0, root);
   result = stat("/", root);
+  result = lstat("/", root);
 
   StructDetail(struct stat);
   MemberDetail(struct stat, root, st_dev);

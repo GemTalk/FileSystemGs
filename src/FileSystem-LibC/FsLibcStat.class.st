@@ -15,6 +15,7 @@ Class {
 	#instVars : [
 		'fstat',
 		'stat',
+		'lstat',
 		'mkdir'
 	],
 	#category : 'FileSystem-LibC'
@@ -22,6 +23,12 @@ Class {
 
 { #category : 'functions' }
 FsLibcStat >> fstat: fd [
+
+	self subclassResponsibility
+]
+
+{ #category : 'functions' }
+FsLibcStat >> lstat: pathString [
 
 	self subclassResponsibility
 ]

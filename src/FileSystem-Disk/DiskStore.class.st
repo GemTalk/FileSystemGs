@@ -164,7 +164,7 @@ DiskStore >> delete: path [
 	(self exists: path)
 		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
 	pathString := self stringFromPath: path.
-	(self isDirectory: path)
+	(self lstat: path) isDirectory
 		ifTrue: [self libcUnistd rmdir: pathString]
 		ifFalse: [self libcUnistd unlinkPath: pathString]
 ]
@@ -261,7 +261,7 @@ fileNamesDo: aBlock [
 DiskStore >> exists: aPath [
 
 	| stat |
-	stat := [self stat: aPath]
+	stat := [self lstat: aPath]
 		on: FileDoesNotExistException
 		do: [:ex | ^false].
 	^true
@@ -405,11 +405,11 @@ DiskStore >> isSocket: aPath [
 		do: [:ex | ex return: false]
 ]
 
-{ #category : 'public' }
+{ #category : 'testing' }
 DiskStore >> isSymlink: aPath [
 
 	aPath isRoot ifTrue: [^false].
-	^[(self stat: aPath) isSymlink]
+	^[(self lstat: aPath) isSymlink]
 		on: FileDoesNotExistException
 		do: [:ex | ex return: false]
 ]
@@ -442,6 +442,16 @@ DiskStore >> libcStdio [
 DiskStore >> libcUnistd [
 
 	^libcUnistd
+]
+
+{ #category : 'public' }
+DiskStore >> lstat: aPath [
+
+	| pathString |
+	pathString := self stringFromPath: aPath.
+	^[self libcStat lstat: pathString]
+		on: FsENOENT
+		do: [:ex | self signalFileDoesNotExist: aPath]
 ]
 
 { #category : 'public' }

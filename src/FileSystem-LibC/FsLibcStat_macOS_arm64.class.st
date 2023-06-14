@@ -23,6 +23,13 @@ FsLibcStat_macOS_arm64 >> fstatName [
 ]
 
 { #category : 'accessing' }
+FsLibcStat_macOS_arm64 >> lstatName [
+	"Returns the name of the lstat function"
+
+	^'lstat'
+]
+
+{ #category : 'accessing' }
 FsLibcStat_macOS_arm64 >> statName [
 	"Returns the name of the stat function"
 

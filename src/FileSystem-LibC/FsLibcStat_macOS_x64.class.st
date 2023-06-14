@@ -23,6 +23,13 @@ FsLibcStat_macOS_x64 >> fstatName [
 ]
 
 { #category : 'accessing' }
+FsLibcStat_macOS_x64 >> lstatName [
+	"Returns the name of the lstat function"
+
+	^'lstat$INODE64'
+]
+
+{ #category : 'accessing' }
 FsLibcStat_macOS_x64 >> statName [
 	"Returns the name of the stat function"
 

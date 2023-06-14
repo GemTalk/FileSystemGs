@@ -45,6 +45,28 @@ FsLibcStat_Linux >> libraryName [
 ]
 
 { #category : 'functions' }
+FsLibcStat_Linux >> lstat: pathString [
+
+	| statStruct errnoHolder status |
+	lstat == nil
+		ifTrue:
+			[lstat := CCallout
+				library: library
+				name: '__lxstat'
+				result: #'int32'
+				args: #(#'int32' #'const char*' #'ptr')
+				varArgsAfter: -1].
+	statStruct := self statStructClass new.
+	errnoHolder := { 0 }.
+	status := lstat
+		callWith: { 0 "_STAT_VER". pathString encodeAsUTF8. statStruct bytes. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^statStruct
+]
+
+{ #category : 'functions' }
 FsLibcStat_Linux >> mkdir: pathString [
 
 	| errnoHolder status |

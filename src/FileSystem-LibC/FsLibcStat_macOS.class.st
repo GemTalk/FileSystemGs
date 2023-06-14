@@ -52,6 +52,35 @@ FsLibcStat_macOS >> libraryName [
 ]
 
 { #category : 'functions' }
+FsLibcStat_macOS >> lstat: pathString [
+
+	| statStruct errnoHolder status |
+	lstat == nil
+		ifTrue:
+			[lstat := CCallout
+				library: library
+				name: self lstatName
+				result: #'int32'
+				args: #(#'const char*' #'ptr')
+				varArgsAfter: -1].
+	statStruct := FsStatStruct_macOS new.
+	errnoHolder := { 0 }.
+	status := lstat
+		callWith: { pathString encodeAsUTF8. statStruct bytes. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^statStruct
+]
+
+{ #category : 'accessing' }
+FsLibcStat_macOS >> lstatName [
+	"Returns the name of the lstat function"
+
+	self subclassResponsibility
+]
+
+{ #category : 'functions' }
 FsLibcStat_macOS >> mkdir: pathString [
 
 	| errnoHolder status |
