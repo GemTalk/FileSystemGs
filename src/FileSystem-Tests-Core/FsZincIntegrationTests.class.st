@@ -40,6 +40,20 @@ FsZincIntegrationTests >> sandboxName [
 ]
 
 { #category : 'running' }
+FsZincIntegrationTests >> testStreamIsEmpty [
+
+	| ref |
+	ref := self
+		createFile: 'testStreamIsEmpty'
+		contents: ''.
+	ref
+		readStreamDo: [:stream | self assert: stream isEmpty];
+		writeStreamDo: [:stream | self assert: stream isEmpty];
+		writeStreamDo: [:stream | stream nextPutAll: 'Hello'. self deny: stream isEmpty];
+		readStreamDo: [:stream | self deny: stream isEmpty]
+]
+
+{ #category : 'running' }
 FsZincIntegrationTests >> testUTF8EncoderBackOnFileStream [
 
 	| ref stream encoder |

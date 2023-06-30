@@ -134,6 +134,13 @@ ZnBufferedWriteStream >> isBinary [
 ]
 
 { #category : 'testing' }
+ZnBufferedWriteStream >> isEmpty [
+	"Return true if no data is present."
+
+	^self position = 0
+]
+
+{ #category : 'testing' }
 ZnBufferedWriteStream >> isStream [
 
 	^ true

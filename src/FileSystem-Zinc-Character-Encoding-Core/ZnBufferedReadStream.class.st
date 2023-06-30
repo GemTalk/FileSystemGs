@@ -128,6 +128,13 @@ ZnBufferedReadStream >> isBinary [
 ]
 
 { #category : 'testing' }
+ZnBufferedReadStream >> isEmpty [
+	"Return true if the stream has no available data."
+
+	^self atEnd
+]
+
+{ #category : 'testing' }
 ZnBufferedReadStream >> isStream [
 	^ true
 ]

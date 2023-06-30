@@ -63,6 +63,13 @@ ZnEncodedStream >> encoding: encoding [
 ]
 
 { #category : 'testing' }
+ZnEncodedStream >> isEmpty [
+	"Return true if no data is present."
+
+	^stream isEmpty
+]
+
+{ #category : 'testing' }
 ZnEncodedStream >> isStream [
   ^ true
 ]
