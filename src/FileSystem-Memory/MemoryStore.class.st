@@ -258,7 +258,7 @@ MemoryStore >> fileSystemClass [
 
 { #category : 'printing' }
 MemoryStore >> forReferencePrintOn: aStream [
-	aStream nextPutAll: 'memory://'
+	aStream nextPutAll: 'FileReference memory'
 ]
 
 { #category : 'initialization' }

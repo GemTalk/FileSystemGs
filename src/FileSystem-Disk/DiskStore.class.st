@@ -315,7 +315,7 @@ DiskStore >> fileSystemClass [
 
 { #category : 'printing' }
 DiskStore >> forReferencePrintOn: aStream [
-	aStream nextPutAll: 'File @ '
+	aStream nextPutAll: 'FileReference disk'
 ]
 
 { #category : 'public-attributes' }

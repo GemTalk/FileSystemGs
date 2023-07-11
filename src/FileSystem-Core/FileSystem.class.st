@@ -30,6 +30,15 @@ FileSystem class >> store: aStore [
 ]
 
 { #category : 'navigating' }
+FileSystem >> @ aPathString [
+	"Return a relative reference."
+	
+	^(aPathString beginsWith: self delimiter asString)
+		ifTrue: [self referenceTo: (Path / aPathString)]
+		ifFalse: [self referenceTo: (Path * aPathString)]
+]
+
+{ #category : 'navigating' }
 FileSystem >> * anObject [
 	"Return a relative reference."
 	

@@ -30,9 +30,23 @@ FileReference class >> / aString [
 	^ FileSystem disk / aString
 ]
 
+{ #category : 'accessing' }
+FileReference class >> disk [
+	"Returns the disk-based FileSystem instance."
+
+	^FileSystem disk
+]
+
 { #category : 'instance creation' }
 FileReference class >> fileSystem: aFilesystem path: aPath [
 	^ self new setFileSystem: aFilesystem path: aPath
+]
+
+{ #category : 'accessing' }
+FileReference class >> memory [
+	"Returns a memory-based FileSystem instance."
+
+	^FileSystem memory
 ]
 
 { #category : 'instance creation' }
@@ -463,8 +477,11 @@ FileReference >> permissions: permissions [
 
 { #category : 'printing' }
 FileReference >> printOn: aStream [
+
 	filesystem forReferencePrintOn: aStream.
-	filesystem printPath: path on: aStream
+	aStream nextPut: ' @ '''.
+	filesystem printPath: path on: aStream.
+	aStream nextPut: ''''
 ]
 
 { #category : 'operations' }

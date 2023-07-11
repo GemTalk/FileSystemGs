@@ -101,6 +101,14 @@ FileReferenceTest >> fileSystem [
 ]
 
 { #category : 'accessing' }
+FileReferenceTest >> fsType [
+
+	^self fileSystem isDiskFileSystem
+		ifTrue: ['disk']
+		ifFalse: ['memory'].
+]
+
+{ #category : 'accessing' }
 FileReferenceTest >> sandboxName [
 	"name of the sandbox directory"
 
@@ -262,21 +270,18 @@ FileReferenceTest >> testAsJson [
 	"Ensure that a resonable JSON string is generated for instances
 	with both AbsolutePath and RelativePath paths."
 
-	| fsType reference expected |
-	fsType := self fileSystem isDiskFileSystem
-		ifTrue: ['disk']
-		ifFalse: ['memory'].
+	| reference expected |
 	reference := FileReference
 		fileSystem: self fileSystem
 		path: Path / 'absolute' / 'path'.
-	expected := '{"path":"/absolute/path","filesystem":"', fsType, '"}'.
+	expected := '{"path":"/absolute/path","filesystem":"', self fsType, '"}'.
 	self
 		assert: reference asJson
 		equals: expected.
 	reference := FileReference
 		fileSystem: self fileSystem
 		path: Path * 'relative' / 'path'.
-	expected := '{"path":"relative/path","filesystem":"', fsType, '"}'.
+	expected := '{"path":"relative/path","filesystem":"', self fsType, '"}'.
 	self
 		assert: reference asJson
 		equals: expected
@@ -1193,6 +1198,27 @@ FileReferenceTest >> testPosition [
 	[binaryStream position: 5.
 	self assert: binaryStream next equals: $6 codePoint]
 		ensure: [binaryStream close]
+]
+
+{ #category : 'tests' }
+FileReferenceTest >> testPrintString [
+
+	| ref expected |
+	ref := FileReference
+		fileSystem: self fileSystem
+		path: Path / 'absolute' / 'path'.
+	expected := 'FileReference ', self fsType, ' @ ''/absolute/path'''.
+	self
+		assert: ref printString
+		equals: expected.
+
+	ref := FileReference
+		fileSystem: self fileSystem
+		path: Path * 'relative' / 'path'.
+	expected := 'FileReference ', self fsType, ' @ ''relative/path'''.
+	self
+		assert: ref printString
+		equals: expected.
 ]
 
 { #category : 'tests' }
