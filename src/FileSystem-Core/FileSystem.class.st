@@ -465,6 +465,15 @@ FileSystem >> permissions: aResolvable [
 ]
 
 { #category : 'printing' }
+FileSystem >> printJsonOn: aStream [
+	"Print a JSON representation on the provided stream.
+	For FileSystem this is defined as ""disk"" for disk-based
+	instances and ""memory"" for memory-based instances."
+
+	self subclassResponsibility
+]
+
+{ #category : 'printing' }
 FileSystem >> printPath: aPath on: aStream [
 
 	self store printPath: aPath on: aStream

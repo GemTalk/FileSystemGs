@@ -519,6 +519,18 @@ Path >> pathString [
 ]
 
 { #category : 'printing' }
+Path >> printJsonOn: aStream [
+	"Print the receiving instance in JSON format.
+	For Path, this is defined as the #pathString
+	surrounded by double quotes."
+
+	aStream
+		nextPut: $";
+		nextPutAll: self pathString;
+		nextPut: $"
+]
+
+{ #category : 'printing' }
 Path >> printOn: aStream [ 
 	self printOn: aStream delimiter: self delimiter.
 

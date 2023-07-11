@@ -28,6 +28,15 @@ FsMemoryFileSystem >> isMemoryFileSystem [
 	^true
 ]
 
+{ #category : 'printing' }
+FsMemoryFileSystem >> printJsonOn: aStream [
+	"Print a JSON representation on the provided stream.
+	For FileSystem this is defined as ""disk"" for disk-based
+	instances and ""memory"" for memory-based instances."
+
+	aStream nextPutAll: '"memory"'
+]
+
 { #category : 'accessing' }
 FsMemoryFileSystem >> store [
 	"Subclasses all must have a store but subclasses options differ.

@@ -27,6 +27,15 @@ FsDiskFileSystem >> isDiskFileSystem [
 	^true
 ]
 
+{ #category : 'printing' }
+FsDiskFileSystem >> printJsonOn: aStream [
+	"Print a JSON representation on the provided stream.
+	For FileSystem this is defined as ""disk"" for disk-based
+	instances and ""memory"" for memory-based instances."
+
+	aStream nextPutAll: '"disk"'
+]
+
 { #category : 'accessing' }
 FsDiskFileSystem >> store [
 	"Returns the associated store, ensuring it is recreated if necessary."

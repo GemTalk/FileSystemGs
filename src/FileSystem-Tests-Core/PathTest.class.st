@@ -71,6 +71,26 @@ PathTest >> testAbsoluteWithParents [
 ]
 
 { #category : 'tests' }
+PathTest >> testAsJson [
+
+	| path |
+	path := Path / 'absolute' / 'path'.
+	self
+		assert: path
+		isKindOf: AbsolutePath.
+	self
+		assert: path asJson
+		equals: '"/absolute/path"'.
+	path := Path * 'relative' / 'path'.
+	self
+		assert: path
+		isKindOf: RelativePath.
+	self
+		assert: path asJson
+		equals: '"relative/path"'
+]
+
+{ #category : 'tests' }
 PathTest >> testAsReference [
 	| path reference |
 	path := Path * 'plonk'.

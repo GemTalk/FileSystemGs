@@ -258,6 +258,31 @@ FileReferenceTest >> testAsAbsoluteIdentity [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testAsJson [
+	"Ensure that a resonable JSON string is generated for instances
+	with both AbsolutePath and RelativePath paths."
+
+	| fsType reference expected |
+	fsType := self fileSystem isDiskFileSystem
+		ifTrue: ['disk']
+		ifFalse: ['memory'].
+	reference := FileReference
+		fileSystem: self fileSystem
+		path: Path / 'absolute' / 'path'.
+	expected := '{"path":"/absolute/path","filesystem":"', fsType, '"}'.
+	self
+		assert: reference asJson
+		equals: expected.
+	reference := FileReference
+		fileSystem: self fileSystem
+		path: Path * 'relative' / 'path'.
+	expected := '{"path":"relative/path","filesystem":"', fsType, '"}'.
+	self
+		assert: reference asJson
+		equals: expected
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testAsReference [
 	| ref |
 	ref := sandbox / 'plonk'.
