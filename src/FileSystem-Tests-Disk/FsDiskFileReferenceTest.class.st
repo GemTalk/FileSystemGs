@@ -99,6 +99,38 @@ FsDiskFileReferenceTest >> testDeviceId [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testEnsureDeleteAllDoesNotFollowSymlinks [
+	"sandbox
+		|_targetDirectory
+			|_someFile
+		|_someDirectory
+			|_symlink
+	Ensure that when another-directory is send #ensureDeleteAll,
+	symlink is deleted. In the process, ensure it does not delete
+	symlink-target-directory or some-file."
+
+	| targetDirectory someFile someDirectory symlink |
+	targetDirectory := self createDirectory: 'targetDirectory'.
+	someFile := self
+		createFile: 'targetDirectory/someFile'
+		contents: 'someFile contents'.
+	someDirectory := self createDirectory: 'someDirectory'.
+	symlink := someDirectory / 'symlink'.
+	symlink symlinkTo: targetDirectory.
+	self
+		assert: targetDirectory exists;
+		assert: someFile exists;
+		assert: someDirectory exists;
+		assert: symlink exists.
+	someDirectory ensureDeleteAll.
+	self
+		assert: targetDirectory exists;
+		assert: someFile exists;
+		deny: someDirectory exists;
+		deny: symlink exists.
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testFileOpeningOptionsClass [
 	"This test shoud be handled in a subclass"
 

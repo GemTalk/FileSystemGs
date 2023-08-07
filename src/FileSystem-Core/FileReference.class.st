@@ -189,7 +189,7 @@ FileReference >> delete [
 	"Deletes the referenced file or directory. If the directory is not empty, 
 	raises an error. Use #deleteAll to delete with the children."
 
-	(self isDirectory and: [self hasChildren]) 
+	(self isSymlink not and: [self isDirectory and: [self hasChildren]]) 
 		ifTrue: [DirectoryIsNotEmpty signalWith: self].
 	filesystem delete: path
 ]
@@ -205,11 +205,13 @@ FileReference >> deleteAll [
 		whileFalse:
 			[| each |
 			each := toTraverse removeLast.
-			each isDirectory
-				ifTrue:
-					[toTraverse addAll: each children.
-					toDelete addLast: each]
-				ifFalse: [each delete]].
+			(each isSymlink or: [each isFile])
+				ifTrue: [each delete]
+				ifFalse: [each isDirectory
+								ifTrue:
+									[toTraverse addAll: each children.
+									toDelete addLast: each]
+								ifFalse: [FsError signal: self pathString asString, ' is not a file, symlink, or directory. Deletion is not supported.']]].
 	toDelete reverseDo: [:each | each delete]
 ]
 
