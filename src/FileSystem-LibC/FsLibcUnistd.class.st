@@ -23,7 +23,8 @@ Class {
 		'write',
 		'chown',
 		'chdir',
-		'pread'
+		'pread',
+		'symlink'
 	],
 	#category : 'FileSystem-LibC'
 }
@@ -208,6 +209,29 @@ FsLibcUnistd >> rmdir: pathString [
 	errnoHolder := { 0 }.
 	result := rmdir
 		callWith: { pathString encodeAsUTF8 }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'functions' }
+FsLibcUnistd >> symlink: linkPathString
+toTarget: targetPathString [
+	"Create a symlink from linkPathString to targetPathString."
+
+	| errnoHolder result |
+	symlink == nil
+		ifTrue:
+			[symlink := CCallout
+				library: library
+				name: 'symlink'
+				result: #'int32'
+				args: #(#'const char*' #'const char*')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := symlink
+		callWith: { targetPathString encodeAsUTF8. linkPathString encodeAsUTF8. }
 		errno: errnoHolder.
 	result == -1
 		ifTrue: [self handleErrno: errnoHolder first].

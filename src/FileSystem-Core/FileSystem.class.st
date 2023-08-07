@@ -613,6 +613,18 @@ FileSystem >> stringFromPath: aPath [
 	^self store stringFromPath: aPath
 ]
 
+{ #category : 'public-operations' }
+FileSystem >> symlink: linkPathString
+toTarget: targetPathString [
+	"Create a symlink to the targetPathString
+	at the location specified by linkPathString.
+	Note: The caller is expected to provide
+	path strings. Other resolvables are not
+	supported."
+
+	self subclassResponsibility
+]
+
 { #category : 'public' }
 FileSystem >> targetPathOf: aResolvable [
 	"Return a path of the actual file location.

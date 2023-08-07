@@ -42,3 +42,17 @@ FsDiskFileSystem >> store [
 
 	^DiskStore current
 ]
+
+{ #category : 'public-operations' }
+FsDiskFileSystem >> symlink: linkPathString
+toTarget: targetPathString [
+	"Create a symlink to the targetPathString
+	at the location specified by linkPathString.
+	Note: The caller is expected to provide
+	path strings. Other resolvables are not
+	supported."
+
+	self store
+		symlink: linkPathString
+		toTarget: targetPathString
+]

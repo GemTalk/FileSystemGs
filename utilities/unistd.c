@@ -30,6 +30,7 @@ int main() {
   result = pread(-1, NULL, 0, 0);
 
   result = chdir("/this/should/not/exist");
+  result = symlink("/this/path/is/not/valid", "/this/path/is/also/not/valid");
 
   return result;
 }

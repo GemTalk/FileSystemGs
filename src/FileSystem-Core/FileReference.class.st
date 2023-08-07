@@ -543,6 +543,18 @@ FileReference >> size [
 	^ filesystem sizeOf: path
 ]
 
+{ #category : 'operations' }
+FileReference >> symlinkTo: aReference [
+	"Create a symlink, in the location of the receiver,
+	that points to the argument reference."
+
+	self exists
+		ifTrue: [FileExists signal: self].
+	filesystem
+		symlink: self pathString
+		toTarget: aReference pathString
+]
+
 { #category : 'accessing' }
 FileReference >> targetPath [
 	"Return the part for this file. If this file is a symbolic link, return the path of the file being pointed at."

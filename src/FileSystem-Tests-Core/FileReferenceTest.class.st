@@ -1417,6 +1417,49 @@ FileReferenceTest >> testSlash [
 ]
 
 { #category : 'compatibility tests' }
+FileReferenceTest >> testSymlinkTo [
+	"Test creating symlinks."
+	"Not all FileSystems support symlinks.
+	By default we should ensure attempts to create
+	symlinks signal an error."
+
+	| target symlink |
+	"Existing file"
+	target := self
+		createFile: 'testSymlinkTo-file'
+		contents: 'this is a file'.
+	symlink := sandbox / 'testSymlinkTo-file-symlink'.
+	self
+		should: [symlink symlinkTo: target]
+		raise: Error.
+
+	"Existing directory"
+	target := self createDirectory: 'testSymlinkTo-directory'.
+	symlink := sandbox / 'testSymlinkTo-directory-symlink'.
+	self
+		should: [symlink symlinkTo: target]
+		raise: Error.
+
+	"Target which does not exist."
+	target := sandbox / 'creating' / 'this' / 'will' / 'break' / 'testSymlinkTo'.
+	symlink := sandbox / 'dne-symlink'.
+	self
+		should: [symlink symlinkTo: target]
+		raise: Error.
+
+	"Ensure an appropropriate error if the symlink location has already exists."
+	target := self
+		createFile: 'testSymlinkTo-symlink-reference-already-exists'
+		contents: 'The symlink reference will already exist'.
+	symlink := self
+		createFile: 'testSymlinkTo-symlink'
+		contents: 'This is already a file.'.
+	self
+		should: [symlink symlinkTo: target]
+		raise: FileExists
+]
+
+{ #category : 'compatibility tests' }
 FileReferenceTest >> testTargetPath [
 	"See subclass implementations"
 

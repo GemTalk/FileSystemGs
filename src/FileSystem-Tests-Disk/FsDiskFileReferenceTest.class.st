@@ -296,6 +296,55 @@ FsDiskFileReferenceTest >> testSetAsWorkingDirectory [
 		raise: DirectoryDoesNotExist
 ]
 
+{ #category : 'compatibility tests' }
+FsDiskFileReferenceTest >> testSymlinkTo [
+	"Test creating symlinks."
+	"Not all FileSystems support symlinks.
+	By default we should ensure attempts to create
+	symlinks signal an error."
+
+	| target symlink |
+	"Existing file"
+	target := self
+		createFile: 'testSymlinkTo-file'
+		contents: 'this is a file'.
+	symlink := sandbox / 'testSymlinkTo-file-symlink'.
+	symlink symlinkTo: target.
+	self assert: symlink isSymlink.
+	self assert: symlink isFile.
+	self deny: symlink isDirectory.
+	self
+		assert: target contents
+		equals: symlink contents.
+
+	"Existing directory"
+	target := self createDirectory: 'testSymlinkTo-directory'.
+	symlink := sandbox / 'testSymlinkTo-directory-symlink'.
+	symlink symlinkTo: target.
+	self assert: symlink isSymlink.
+	self deny: symlink isFile.
+	self assert: symlink isDirectory.
+
+	"Target which does not exist."
+	target := sandbox / 'creating' / 'this' / 'will' / 'break' / 'testSymlinkTo'.
+	symlink := sandbox / 'dne-symlink'.
+	symlink symlinkTo: target.
+	self assert: symlink isSymlink.
+	self deny: symlink isFile.
+	self deny: symlink isDirectory.
+
+	"Ensure an appropropriate error if the symlink location has already exists."
+	target := self
+		createFile: 'testSymlinkTo-symlink-reference-already-exists'
+		contents: 'The symlink reference will already exist'.
+	symlink := self
+		createFile: 'testSymlinkTo-symlink'
+		contents: 'This is already a file.'.
+	self
+		should: [symlink symlinkTo: target]
+		raise: FileExists
+]
+
 { #category : 'tests' }
 FsDiskFileReferenceTest >> testUid [
 

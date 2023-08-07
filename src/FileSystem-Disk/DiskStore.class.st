@@ -554,6 +554,22 @@ DiskStore >> stat: aPath [
 		do: [:ex | self signalFileDoesNotExist: aPath]
 ]
 
+{ #category : 'public-operations' }
+DiskStore >> symlink: linkPathString
+toTarget: targetPathString [
+	"Create a symlink to the targetPathString
+	at the location specified by linkPathString."
+
+	[[self libcUnistd
+		symlink: linkPathString
+		toTarget: targetPathString]
+		on: FsEACCES
+		do: [:ex | FilePermissionDenied signalWith: linkPathString asFileReference]]
+		on: FsEEXIST
+		do: [:ex | FileExists signaWith: linkPathString asFileReference].
+	^true
+]
+
 { #category : 'public-attributes' }
 DiskStore >> uidOf: aPath [
 	"Return the user id associated with this file."

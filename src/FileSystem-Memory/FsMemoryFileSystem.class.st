@@ -51,3 +51,15 @@ FsMemoryFileSystem >> store: aStore [
 
 	store := aStore
 ]
+
+{ #category : 'public-operations' }
+FsMemoryFileSystem >> symlink: linkPathString
+toTarget: targetPathString [
+	"Create a symlink to the targetPathString
+	at the location specified by linkPathString.
+	Note: The caller is expected to provide
+	path strings. Other resolvables are not
+	supported."
+
+	self error: 'Symlinks are not supported by memory-based FileSystem instances.'
+]
