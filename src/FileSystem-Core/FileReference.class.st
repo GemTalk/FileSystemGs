@@ -550,8 +550,6 @@ FileReference >> symlinkTo: aReference [
 	"Create a symlink, in the location of the receiver,
 	that points to the argument reference."
 
-	self exists
-		ifTrue: [FileExists signal: self].
 	filesystem
 		symlink: self pathString
 		toTarget: aReference pathString

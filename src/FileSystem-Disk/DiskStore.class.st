@@ -566,7 +566,7 @@ toTarget: targetPathString [
 		on: FsEACCES
 		do: [:ex | FilePermissionDenied signalWith: linkPathString asFileReference]]
 		on: FsEEXIST
-		do: [:ex | FileExists signaWith: linkPathString asFileReference].
+		do: [:ex | FileExists signalWith: linkPathString asFileReference].
 	^true
 ]
 
