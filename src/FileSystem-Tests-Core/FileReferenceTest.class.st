@@ -1456,7 +1456,7 @@ FileReferenceTest >> testSymlinkTo [
 		contents: 'This is already a file.'.
 	self
 		should: [symlink symlinkTo: target]
-		raise: FileExists
+		raise: Error
 ]
 
 { #category : 'compatibility tests' }
