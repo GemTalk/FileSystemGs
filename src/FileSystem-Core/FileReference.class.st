@@ -581,3 +581,21 @@ gid: gid [
 		uid: uid
 		gid: gid
 ]
+
+{ #category : 'private' }
+FileReference >> _topazAsString [
+  "Used by topaz for object and frame display"
+  | stream res str isDir |
+  stream := PrintStream on: String new .
+  filesystem forReferencePrintOn: stream .
+  res := stream contents , ' @ '.
+  res addAll:((isDir := self isDirectory) ifTrue:[ 'aDir ' ] ifFalse:[ 'aFile ']).
+  stream := PrintStream on: (str := String new) .
+  filesystem printPath: path on: stream.
+  (isDir not and:[ str size > 60 ])
+    ifTrue:[ res addAll: ' ... '; addAll: (str copyFrom: str size - 40 to: str size)]
+   ifFalse:[ res addAll: str ].
+  ^ res
+
+]
+
