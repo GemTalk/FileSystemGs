@@ -109,3 +109,10 @@ FsDirentStruct >> isFile [
 
 	^self d_type == self dt_reg
 ]
+
+{ #category : 'testing' }
+FsDirentStruct >> isUnknown [
+	"Is the type of this entry unknown?"
+
+	^self d_type == self dt_unknown
+]

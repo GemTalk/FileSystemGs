@@ -188,10 +188,12 @@ directoryNamesDo: aBlock [
 		ifAbsent: absentBlock
 		ifNotDirectory: notDirectoryBlock
 		entriesDo:
-			[:entry | | name |
+			[:entry | | name isDirectory |
 			name := entry basename.
-			(entry isDirectory and: [(name = '.' or: [name = '..']) not])
-				ifTrue: [aBlock value: name]]
+			isDirectory := entry isUnknown
+				ifTrue: [(self lstat: aPath / entry basename) isDirectory]
+				ifFalse: [entry isDirectory].
+			(isDirectory and: [(name = '.' or: [name = '..']) not]) ifTrue: [aBlock value: name]]
 ]
 
 { #category : 'private' }
@@ -251,10 +253,12 @@ fileNamesDo: aBlock [
 		ifAbsent: absentBlock
 		ifNotDirectory: notDirectoryBlock
 		entriesDo:
-			[:entry | | name |
+			[:entry | | name isFile |
 			name := entry basename.
-			entry isFile
-				ifTrue: [aBlock value: name]]
+			isFile := entry isUnknown
+				ifTrue: [(self lstat: aPath / entry basename) isFile]
+				ifFalse: [entry isFile].
+			isFile ifTrue: [aBlock value: name]]
 ]
 
 { #category : 'testing' }
