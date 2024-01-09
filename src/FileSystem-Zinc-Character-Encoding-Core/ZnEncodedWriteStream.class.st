@@ -19,6 +19,13 @@ ZnEncodedWriteStream >> << collection [
 ]
 
 { #category : 'accessing' }
+ZnEncodedWriteStream >> close [
+
+	self flush.
+	^super close
+]
+
+{ #category : 'accessing' }
 ZnEncodedWriteStream >> flush [
 	stream flush
 ]

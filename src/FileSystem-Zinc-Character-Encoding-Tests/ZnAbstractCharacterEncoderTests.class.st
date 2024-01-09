@@ -139,6 +139,21 @@ ZnAbstractCharacterEncoderTests >> testEquality [
 ]
 
 { #category : 'testing' }
+ZnAbstractCharacterEncoderTests >> testFlushOnClose [
+
+	| mock stream |
+	mock := FsMockStream new.
+	stream := ZnCharacterWriteStream
+		on: mock
+		encoder: self _encoder.
+	self assert: mock actionSequence isEmpty.
+	stream close.
+	self
+		assert: mock actionSequence
+		equals: { {#flush}. {#close} }
+]
+
+{ #category : 'testing' }
 ZnAbstractCharacterEncoderTests >> testHash [
 
 	| e1 e2 |

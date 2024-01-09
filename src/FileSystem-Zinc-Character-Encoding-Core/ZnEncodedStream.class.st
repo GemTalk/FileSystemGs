@@ -30,6 +30,16 @@ ZnEncodedStream class >> on: wrappedStream [
 ]
 
 { #category : 'instance creation' }
+ZnEncodedStream class >> on: wrappedStream
+encoder: anEncoder [
+
+	^self new
+		on: wrappedStream;
+		encoder: anEncoder;
+		yourself
+]
+
+{ #category : 'instance creation' }
 ZnEncodedStream class >> on: wrappedStream encoding: encoding [
 	^ self new
 		on: wrappedStream;
