@@ -9,6 +9,14 @@ Integer >> << shiftAmount [
 ]
 
 { #category : '*filesystem-gemstone-kernel' }
+Integer >> >> shiftAmount [
+	"right shift"
+
+	shiftAmount < 0 ifTrue: [self error: 'negative arg'].
+	^ self bitShift: 0 - shiftAmount
+]
+
+{ #category : '*filesystem-gemstone-kernel' }
 Integer >> digitAt: n [
 	"Answer the value of an apparent byte-indexable field in the receiver,
 	 analogous to the large integers, which are organized as bytes."
