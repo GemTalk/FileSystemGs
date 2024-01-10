@@ -132,18 +132,23 @@ DiskStore >> createDirectory: path [
 	| pathString parent |
 	pathString := self stringFromPath: path.
 	[self libcStat mkdir: pathString]
-		on: FsUnixError
+		onException: { FsEACCES. FsUnixError }
 		do:
-			[:ex |
-			(self exists: path)
-				ifTrue:
-					[^(self isFile: path)
-						ifTrue: [self signalFileExists: path]
-						ifFalse: [self signalDirectoryExists: path]].
-			parent := path parent.
-			(self isDirectory: parent)
-				ifFalse: [^self signalDirectoryDoesNotExist: parent].
-			ex pass]
+			{
+			
+				[:ex | ex resignalAs: (FilePermissionDenied reference: path asFileReference)].
+
+				[:ex |
+				(self exists: path)
+					ifTrue:
+						[^(self isFile: path)
+							ifTrue: [self signalFileExists: path]
+							ifFalse: [self signalDirectoryExists: path]].
+				parent := path parent.
+				(self isDirectory: parent)
+					ifFalse: [^self signalDirectoryDoesNotExist: parent].
+				ex pass].
+			}
 ]
 
 { #category : 'accessing' }

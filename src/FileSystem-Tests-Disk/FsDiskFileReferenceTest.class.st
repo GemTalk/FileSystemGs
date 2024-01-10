@@ -91,6 +91,19 @@ FsDiskFileReferenceTest >> testBinaryWriteStream [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testCreateDirectoryInReadOnlyDirectory [
+
+	| readOnlyDirectory targetDirectory |
+	readOnlyDirectory := self createDirectory: 'read-only'.
+	targetDirectory := readOnlyDirectory / 'target'.
+	readOnlyDirectory permissions: (FileSystemPermission posixPermissions: 8r555).
+	self
+		should: [targetDirectory createDirectory]
+		raise: FilePermissionDenied.
+	readOnlyDirectory delete
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testDeviceId [
 
 	self
