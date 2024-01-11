@@ -13,19 +13,19 @@ Class {
 	#category : 'FileSystem-Zinc-Character-Encoding-Core'
 }
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> << collection [
 	^ self nextPutAll: collection
 ]
 
-{ #category : 'accessing' }
+{ #category : 'closing' }
 ZnEncodedWriteStream >> close [
 
 	self flush.
 	^super close
 ]
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> flush [
 	stream flush
 ]
@@ -35,7 +35,7 @@ ZnEncodedWriteStream >> isBinary [
 	^ false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> next: count putAll: collection [	
 	self 
 		next: count 
@@ -43,7 +43,7 @@ ZnEncodedWriteStream >> next: count putAll: collection [
 		startingAt: 1
 ]
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> next: count putAll: collection startingAt: offset [
 	"Write count items from collection starting at offset.
 	This is an inefficient abstract implementation writing one by one."
@@ -52,13 +52,22 @@ ZnEncodedWriteStream >> next: count putAll: collection startingAt: offset [
 		self nextPut: (collection at: offset + each) ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> nextPut: anObject [
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
+{ #category : 'writing' }
 ZnEncodedWriteStream >> nextPutAll: collection [
 
 	stream nextPutAll: (self encoder encodeString: collection)
+]
+
+{ #category : 'writing' }
+ZnEncodedWriteStream >> nextPutAllBytes: aCharacterCollection [
+
+	"See Stream>>#nextPutAllBytes: comment.
+	Alias for #nextPutAll:"
+
+	^self nextPutAll: aCharacterCollection
 ]

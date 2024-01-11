@@ -36,7 +36,7 @@ Part of Zinc HTTP Components.
 "
 Class {
 	#name : 'ZnCharacterEncoder',
-	#superclass : 'ZnObject',
+	#superclass : 'Object',
 	#instVars : [
 		'stringClass'
 	],
