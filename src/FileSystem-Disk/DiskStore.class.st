@@ -195,9 +195,9 @@ directoryNamesDo: aBlock [
 		entriesDo:
 			[:entry | | name isDirectory |
 			name := entry basename.
-			isDirectory := entry isUnknown
-				ifTrue: [(self lstat: aPath / entry basename) isDirectory]
-				ifFalse: [entry isDirectory].
+			isDirectory := entry isDirectory
+						or: [(entry isUnknown or: [entry isSymlink])
+								and: [(self stat: aPath / entry basename) isDirectory]].
 			(isDirectory and: [(name = '.' or: [name = '..']) not]) ifTrue: [aBlock value: name]]
 ]
 
@@ -260,9 +260,9 @@ fileNamesDo: aBlock [
 		entriesDo:
 			[:entry | | name isFile |
 			name := entry basename.
-			isFile := entry isUnknown
-				ifTrue: [(self lstat: aPath / entry basename) isFile]
-				ifFalse: [entry isFile].
+			isFile := entry isFile
+						or: [(entry isUnknown or: [entry isSymlink])
+								and: [(self stat: aPath / entry basename) isFile]].
 			isFile ifTrue: [aBlock value: name]]
 ]
 

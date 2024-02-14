@@ -144,6 +144,46 @@ FsDiskFileReferenceTest >> testEnsureDeleteAllDoesNotFollowSymlinks [
 ]
 
 { #category : 'tests' }
+FsDiskFileReferenceTest >> testEnsureSymlinksAreReturnedFromDirectories [
+	"This test ensures that when a parent directory returns its
+	list of directories, the result includes the set of symlinks
+	in the directory which refer to directories."
+
+	| targetDirectory symlink directories |
+	targetDirectory := sandbox / 'target-directory'.
+	targetDirectory ensureCreateDirectory.
+	symlink := sandbox / 'symlink'.
+	symlink symlinkTo: targetDirectory.
+	directories := sandbox directories.
+	self
+		assert: directories
+		includes: targetDirectory.
+	self
+		assert: directories
+		includes: symlink
+]
+
+{ #category : 'tests' }
+FsDiskFileReferenceTest >> testEnsureSymlinksAreReturnedFromFiles [
+	"This test ensures that when a parent directory returns its
+	list of files, the result includes the set of symlinks in the
+	directory which refer to files."
+
+	| targetFile symlink files |
+	targetFile := sandbox / 'target-file'.
+	targetFile ensureCreateDirectory.
+	symlink := sandbox / 'symlink'.
+	symlink symlinkTo: targetFile.
+	files := sandbox directories.
+	self
+		assert: files
+		includes: targetFile.
+	self
+		assert: files
+		includes: symlink
+]
+
+{ #category : 'tests' }
 FsDiskFileReferenceTest >> testFileOpeningOptionsClass [
 	"This test shoud be handled in a subclass"
 

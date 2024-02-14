@@ -111,6 +111,13 @@ FsDirentStruct >> isFile [
 ]
 
 { #category : 'testing' }
+FsDirentStruct >> isSymlink [
+	"Does this struct represent a symlink?"
+
+	^self d_type == self dt_lnk
+]
+
+{ #category : 'testing' }
 FsDirentStruct >> isUnknown [
 	"Is the type of this entry unknown?"
 
