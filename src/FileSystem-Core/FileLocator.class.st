@@ -300,7 +300,9 @@ FileLocator >> renameTo: newBasename [
 
 { #category : 'navigating' }
 FileLocator >> resolve [
-	^ (self class resolver resolve: origin) resolve: path
+
+	^(self class resolver resolve: origin)
+		ifNotNil: [:ref | ref resolve: path]
 ]
 
 { #category : 'navigating' }

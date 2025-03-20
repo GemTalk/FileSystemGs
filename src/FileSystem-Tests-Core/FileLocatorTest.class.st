@@ -183,6 +183,17 @@ FileLocatorTest >> testInode [
 ]
 
 { #category : 'compatibility tests' }
+FileLocatorTest >> testInvalidOrigin [
+	"Tests origin values that are not valid"
+
+	| locator |
+	locator := FileLocator origin: #'GS_FLT_DO_NOT_SET_THIS_VARIABLE'.
+	self
+		assert: locator resolve
+		equals: nil
+]
+
+{ #category : 'compatibility tests' }
 FileLocatorTest >> testIsAbsolute [
   | locator |
 	locator := FileLocator root.
