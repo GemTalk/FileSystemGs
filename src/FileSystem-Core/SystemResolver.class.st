@@ -11,61 +11,20 @@ Class {
 	#category : 'FileSystem-Core'
 }
 
-{ #category : 'private' }
-SystemResolver >> _extent: extentIndex [
-	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: 
-     (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex,
-   or in (System gemConfigurationAt: #GEM_SOLO_EXTENT) for a solo session."
-
-	| extentNames extentName |
-  GsSession isSolo ifTrue:[
-    extentNames := System gemConfigurationAt: #GEM_SOLO_EXTENT .
-  ] ifFalse:[
-	  extentNames := System stoneConfigurationAt: #DBF_EXTENT_NAMES.
-  ].
-	extentNames _isArray
-		ifTrue: [  
-			extentIndex > extentNames size ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (', extentNames size printString, ')'  ].
-			extentName := extentNames at: extentIndex ]
-		ifFalse: [ 
-			extentIndex ~= 1 ifTrue: [  self error: 'Requested extent index (', extentIndex printString, ') exceeds number of extents present in system (1)'  ].
-			extentName := extentNames ].
-	^ self  resolveString: extentName
-]
-
-{ #category : 'origins' }
-SystemResolver >> extent1 [
-
-	^ self _extent: 1
-]
-
-{ #category : 'origins' }
-SystemResolver >> extent1Directory [
-
-	^ self extent1 parent
-]
-
 { #category : 'origins' }
 SystemResolver >> gemLogDirectory [
 	"Answer the path to the gem log directory"
 
-	^ self  resolveString: (System gemLogPath)
+	| pathString |
+	pathString := System gemLogPath.
+	^pathString = ''
+		ifTrue: [nil]
+		ifFalse: [self  resolveString: pathString]
 ]
 
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-  GsSession isSolo ifTrue:[
-	  ^ #( workingDirectory extent1 extent1Directory )
-  ] ifFalse:[
-	  ^ #( workingDirectory extent1 extent1Directory tranlog )
-  ]
-]
-
-{ #category : 'origins' }
-SystemResolver >> tranlog [
-	"Answer the path to the current tranlog"
-
-	^ self  resolveString: (System stoneConfigurationAt: #StnCurrentTranLogNames)
+	 ^ #( workingDirectory gemLogDirectory )
 ]
 
 { #category : 'origins' }

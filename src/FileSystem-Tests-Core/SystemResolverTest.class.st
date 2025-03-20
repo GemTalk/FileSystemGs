@@ -17,19 +17,13 @@ SystemResolverTest >> createResolver [
 ]
 
 { #category : 'testing' }
-SystemResolverTest >> testExtent1 [
-	self assertOriginResolves: #extent1
+SystemResolverTest >> testGemLogDirectory [
+
+	System gemLogPath = ''
+		ifFalse: [self assertOriginResolves: #gemLogDirectory]
 ]
 
 { #category : 'testing' }
-SystemResolverTest >> testExtent1Directory [
-	self assertOriginResolves: #extent1Directory
-]
-
-{ #category : 'testing' }
-SystemResolverTest >> testTranlog [
-  GsSession isSolo ifFalse:[
-     self assertOriginResolves: #tranlog
-  ]
- 
+SystemResolverTest >> testWorkingDirectory [
+	self assertOriginResolves: #workingDirectory
 ]
