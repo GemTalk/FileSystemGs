@@ -22,9 +22,18 @@ SystemResolver >> gemLogDirectory [
 		ifFalse: [self  resolveString: pathString]
 ]
 
+{ #category : 'private' }
+SystemResolver >> gemLogDirectoryDefined [
+
+	^System gemLogPath ~= ''
+]
+
 { #category : 'resolving' }
 SystemResolver >> supportedOrigins [
-	 ^ #( workingDirectory gemLogDirectory )
+
+	^self gemLogDirectoryDefined
+		ifTrue: [#( workingDirectory gemLogDirectory )]
+		ifFalse: [#( workingDirectory )]
 ]
 
 { #category : 'origins' }
