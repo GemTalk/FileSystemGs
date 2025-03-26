@@ -1416,6 +1416,14 @@ FileReferenceTest >> testSlash [
 		equals: sandbox
 ]
 
+{ #category : 'tests' }
+FileReferenceTest >> testStringConversionWithInvalidEnvironmentVariable [
+
+	self
+		should: ['$GS_FRT_DNE/lib' asFileReference]
+		raise: Error
+]
+
 { #category : 'compatibility tests' }
 FileReferenceTest >> testSymlinkTo [
 	"Test creating symlinks."

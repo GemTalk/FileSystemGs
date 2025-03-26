@@ -109,11 +109,15 @@ Path class >> from: aString delimiter: aDelimiterCharacter [
 
 	aString first = $$
 		ifTrue: [
-			| pathElements envVarString envVarElement |
+			| pathElements envVarString envVarElement envVarName |
 			"GemStone paths are allowed to start with an environment variable"
 			pathElements := aDelimiterCharacter split: aString.
 			envVarElement := (pathElements at: 1) .
-			envVarString := (System gemEnvironmentVariable: (envVarElement copyFrom: 2 to: envVarElement size)) decodeFromUTF8 asString.
+			envVarName := envVarElement copyFrom: 2 to: envVarElement size.
+			envVarName size == 0
+				ifTrue: [^Error signal: 'Environment variable unspecified in ', aString].
+			envVarString := System gemEnvironmentVariable: envVarName.
+			envVarString ifNil: [^Error signal: 'Environment variable undefined in ', aString].
 			pathClass :=  ((self isAbsolutePath: envVarString delimiter: aDelimiterCharacter) or: 
 									[self isAbsoluteWindowsPath: envVarString]) 
 				ifTrue: [ AbsolutePath ]

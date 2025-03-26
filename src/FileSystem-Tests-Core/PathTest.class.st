@@ -224,6 +224,68 @@ PathTest >> testContainsLocator [
 ]
 
 { #category : 'tests' }
+PathTest >> testEnvironmentVariable [
+	"Test paths created from an environment variable"
+
+	| var pathString path exception |
+	"absolute path"
+	var := 'GS_PT_ABSOLUTE'.
+	pathString := '$', var, '/lib'.
+	System
+		gemEnvironmentVariable: var
+		put: '/var'.
+	path := Path
+		from: pathString
+		delimiter: $/.
+	self assert: path isAbsolute.
+	self
+		assert: path pathString
+		equals: '/var/lib'.
+	
+	"relative path"
+	var := 'GS_PT_RELATIVE'.
+	pathString := '$', var, '/lib'.
+	System
+		gemEnvironmentVariable: var
+		put: 'var'.
+	path := Path
+		from: pathString
+		delimiter: $/.
+	self assert: path isRelative.
+	self
+		assert: path pathString
+		equals: 'var/lib'.
+
+	"unset environment variable"
+	var := 'GS_PT_UNSET'.
+	pathString := '$', var, '/lib'.
+	self
+		assert: (System gemEnvironmentVariable: var)
+		equals: nil.
+	exception := [Path from: pathString delimiter: $/]
+		on: Error
+		do: [:ex | ex return: ex].
+	self
+		assert: exception class
+		equals: Error.
+	self
+		assert: exception messageText
+		equals: 'Environment variable undefined in ', pathString.
+	
+	"missing environment variable name"
+	pathString := '$/lib'.
+	exception := [Path from: pathString delimiter: $/]
+		on: Error
+		do: [:ex | ex return: ex].
+	self
+		assert: exception class
+		equals: Error.
+	self
+		assert: exception messageText
+		equals: 'Environment variable unspecified in ', pathString.
+]
+
+{ #category : 'tests' }
 PathTest >> testEqual [
 	| a b |
 	a := Path * 'plonk'.
