@@ -49,26 +49,6 @@ FileLocator class >> documents [
 	^ self origin: #documents
 ]
 
-{ #category : 'gemstone-origins' }
-FileLocator class >> extent: extentIndex [
-	"Answer the path to the extent at extentIndex in DBF_EXTENT_NAMES: (System stoneConfigurationReport at: #DBF_EXTENT_NAMES) at: extentIndex"
-
-	^ self origin: ('extent', extentIndex printString) asSymbol
-]
-
-{ #category : 'gemstone-origins' }
-FileLocator class >> extent1 [
-	"Answer the path to the first exent extent"
-
-	^ self origin: #extent1
-]
-
-{ #category : 'gemstone-origins' }
-FileLocator class >> extent1Directory [
-
-	^ self origin: #extent1Directory
-]
-
 { #category : 'flushing' }
 FileLocator class >> flushCaches [
 	self resolver flushCaches
@@ -168,13 +148,6 @@ FileLocator class >> systemLibrary [
 { #category : 'origins' }
 FileLocator class >> temp [
 	^ self origin: #temp
-]
-
-{ #category : 'gemstone-origins' }
-FileLocator class >> tranlog [
-	"Answer the path to the current tranlog directory"
-
-	^ self origin: #tranlog
 ]
 
 { #category : 'mac-origins' }
