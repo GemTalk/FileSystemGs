@@ -2,7 +2,9 @@ CC := gcc
 CC_FLAGS := -Wall -Werror -c -fPIC
 OBJS := dirent.o fcntl.o stat.o stdio.o unistd.o
 
-lib: $(OBJS)
+all: libFileSystemGs.so
+
+libFileSystemGs.so: $(OBJS)
 	$(CC) $(OBJS) -shared -o libFileSystemGs.so
 
 dirent.o: dirent.c
