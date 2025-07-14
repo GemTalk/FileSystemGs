@@ -1,0 +1,274 @@
+"
+FsPrimitive provides an interface to the FileSystemGs C library. Primitive actions are made available via this class.
+"
+Class {
+	#name : 'FsUnixPrimitive',
+	#superclass : 'Object',
+	#instVars : [
+		'library',
+		'opendir',
+		'closedir',
+		'readdir',
+		'open',
+		'chmod',
+		'fstat',
+		'stat',
+		'lstat',
+		'mkdir',
+		'rename',
+		'close',
+		'getcwd',
+		'lseek',
+		'read',
+		'rmdir',
+		'ftruncate',
+		'unlink',
+		'write',
+		'chown',
+		'chdir',
+		'pread',
+		'symlink'
+	],
+	#gs_options : [
+		'instancesNonPersistent'
+	],
+	#category : 'FileSystem-LibC'
+}
+
+{ #category : 'instance creation' }
+FsUnixPrimitive class >> new [
+	^ super new
+		initialize;
+		yourself
+]
+
+{ #category : 'interface-fcntl' }
+FsUnixPrimitive >> chmod: pathString
+mode: mode [
+
+	| errnoHolder result |
+	chmod == nil
+		ifTrue: [chmod := CCallout
+			library: library
+			name: 'chmod'
+			result: #'int32'
+			args: #(#'const char*' #'uint32')
+			varArgsAfter: 2].
+	errnoHolder := { 0 }.
+	result := chmod
+		callWith: { pathString encodeAsUTF8. mode }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'interface-dirent' }
+FsUnixPrimitive >> closeDirectoryStream: dirPtr [
+
+	| errnoHolder result |
+	closedir == nil
+		ifTrue:
+			[closedir := CCallout
+				library: library
+				name: 'gs_fs_closedir'
+				result: #'int32'
+				args: #(#'ptr')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := closedir
+		callWith: { dirPtr }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'interface-stat' }
+FsUnixPrimitive >> fstat: fd [
+
+	| statStruct errnoHolder status |
+	fstat == nil
+		ifTrue:
+			[fstat := CCallout
+				library: library
+				name: 'gs_fs_fstat'
+				result: #'int32'
+				args: #(#'int32' #'ptr')
+				varArgsAfter: -1].
+	statStruct := self statStructClass new.
+	errnoHolder := { 0 }.
+	status := fstat
+		callWith: { fd. statStruct bytes. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^statStruct
+]
+
+{ #category : 'error handling' }
+FsUnixPrimitive >> handleErrno: errorNumber [
+	" Default handling of system errors: just signal the default exception class for the error.
+	Subclasses may override this method for specific errors that need other handling."
+
+	| errorClass |
+	errorClass := FsUnixError errorClassForErrorNumber: errorNumber.
+	^ errorClass signal
+]
+
+{ #category : 'initialization' }
+FsUnixPrimitive >> initialize [
+
+	library := CLibrary named: self libraryName
+]
+
+{ #category : 'accessing' }
+FsUnixPrimitive >> libraryName [
+	"Returns the name or path to the library that should be loaded."
+
+	^'libFileSystemGs.so'
+]
+
+{ #category : 'interface-stat' }
+FsUnixPrimitive >> lstat: pathString [
+
+	| statStruct errnoHolder status |
+	lstat == nil
+		ifTrue:
+			[lstat := CCallout
+				library: library
+				name: 'gs_fs_lstat'
+				result: #'int32'
+				args: #(#'const char*' #'ptr')
+				varArgsAfter: -1].
+	statStruct := self statStructClass new.
+	errnoHolder := { 0 }.
+	status := lstat
+		callWith: { pathString encodeAsUTF8. statStruct bytes. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^statStruct
+]
+
+{ #category : 'interface-stat' }
+FsUnixPrimitive >> mkdir: pathString [
+
+	| errnoHolder status |
+	mkdir == nil
+		ifTrue:
+			[mkdir := CCallout
+				library: library
+				name: 'gs_fs_mkdir'
+				result: #'int32'
+				args: #(#'const char*' #'uint32')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	status := mkdir
+		callWith: { pathString encodeAsUTF8. 8r0777. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^true
+]
+
+{ #category : 'interface-fcntl' }
+FsUnixPrimitive >> open: pathString flags: flagsInteger mode: modeInteger [
+
+	| errnoHolder result |
+	open == nil
+		ifTrue: [open := CCallout
+			library: library
+			name: 'open'
+			result: #'int32'
+			args: #(#'const char*' #'int32')
+			varArgsAfter: 2].
+	errnoHolder := { 0 }.
+	result := open
+		callWith: { pathString encodeAsUTF8. flagsInteger. #'int32'. modeInteger. }
+		errno: errnoHolder.
+	result == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'interface-dirent' }
+FsUnixPrimitive >> openDirectoryStreamWithPath: pathString [
+	"This result is not automatically freed.
+	The caller is expected to ensure
+	#closeDirectoryStream: is always called."
+
+	| result errnoHolder |
+	opendir == nil
+		ifTrue:
+			[opendir := CCallout
+				library: library
+				name: 'gs_fs_opendir'
+				result: #'ptr'
+				args: #(#'const char*')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	result := opendir
+		callWith: { pathString encodeAsUTF8 }
+		errno: errnoHolder.
+	result isNull
+		ifTrue: [self handleErrno: errnoHolder first].
+	^result
+]
+
+{ #category : 'interface-dirent' }
+FsUnixPrimitive >> readFromDirectoryStream: dirPointer [
+	"Answers a DirentStruct. It will answer true to #isNull if we've reached
+	the end of the directory stream. Should probably raise an end of stream
+	at this point instead."
+
+	| errnoHolder direntPtr isNull errno |
+	readdir == nil
+		ifTrue:
+			[readdir := CCallout
+				library: library
+				name: 'gs_fs_readdir'
+				result: #'ptr'
+				args: #(#'ptr')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	direntPtr := readdir
+		callWith: { dirPointer }
+		errno: errnoHolder.
+	isNull := direntPtr isNull.
+	errno := errnoHolder first.
+	isNull & (errno ~~ 0)
+		ifTrue: [self handleErrno: errno].
+	^isNull
+		ifTrue: [nil]
+		ifFalse: [FsDirentStruct_Linux forBytes: (CByteArray fromCPointer: direntPtr numBytes: FsDirentStruct_Linux structSize)]
+]
+
+{ #category : 'interface-stat' }
+FsUnixPrimitive >> stat: pathString [
+
+	| statStruct errnoHolder status |
+	stat == nil
+		ifTrue:
+			[stat := CCallout
+				library: library
+				name: 'gs_fs_stat'
+				result: #'int32'
+				args: #(#'const char*' #'ptr')
+				varArgsAfter: -1].
+	statStruct := self statStructClass new.
+	errnoHolder := { 0 }.
+	status := stat
+		callWith: { pathString encodeAsUTF8. statStruct bytes. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^statStruct
+]
+
+{ #category : 'interface-stat' }
+FsUnixPrimitive >> statStructClass [
+	"Temporary"
+
+	^FsStatStruct_Linux_x64
+]
