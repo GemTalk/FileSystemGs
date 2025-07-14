@@ -63,7 +63,7 @@ FsUnixPrimitive >> chdir: pathString [
 	^result
 ]
 
-{ #category : 'interface-fcntl' }
+{ #category : 'interface-stat' }
 FsUnixPrimitive >> chmod: pathString
 mode: mode [
 
