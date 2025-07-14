@@ -99,6 +99,6 @@ FsFileDescriptorRegistryTest >> testMourning [
 	self maximumReclamation.
 	self deny: (self registryIncludes: ephemeron).
 	self
-		should: [DiskStore current libcStat fstat: unixFd]
+		should: [DiskStore current fstat: unixFd]
 		raise: FsEBADF
 ]

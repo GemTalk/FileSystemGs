@@ -252,7 +252,7 @@ FsFileDescriptor >> size [
 { #category : 'private' }
 FsFileDescriptor >> stat [
 
-	^[DiskStore current libcStat fstat: self _fd]
+	^[DiskStore current fstat: self _fd]
 		on: FsEBADF
 		do: [:ex | ex resignalAs: self invalidException]
 ]

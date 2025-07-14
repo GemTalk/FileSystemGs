@@ -266,6 +266,12 @@ DiskStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'FileReference disk'
 ]
 
+{ #category : 'public' }
+DiskStore >> fstat: fd [
+
+	self subclassResponsibility
+]
+
 { #category : 'public-attributes' }
 DiskStore >> gidOf: aPath [
 	"Return the group id associated with this file."
@@ -360,18 +366,6 @@ DiskStore >> isSymlink: aPath [
 	^[(self lstat: aPath) isSymlink]
 		on: FileDoesNotExistException
 		do: [:ex | ex return: false]
-]
-
-{ #category : 'accessing' }
-DiskStore >> libcFcntl [
-
-	^libcFcntl
-]
-
-{ #category : 'accessing' }
-DiskStore >> libcStat [
-
-	^libcStat
 ]
 
 { #category : 'accessing' }

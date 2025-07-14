@@ -150,6 +150,12 @@ gid: gid [
 	^nil
 ]
 
+{ #category : 'public' }
+UnixStore >> fstat: fd [
+
+	^primitive fstat: fd
+]
+
 { #category : 'initializing' }
 UnixStore >> initialize [
 

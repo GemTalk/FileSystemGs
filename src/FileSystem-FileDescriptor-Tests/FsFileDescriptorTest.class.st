@@ -61,9 +61,8 @@ FsFileDescriptorTest >> testOpenStdout [
 { #category : 'BasicTests' }
 FsFileDescriptorTest >> testPosition [
 
-	| id fd size |
-	id := DiskStore current libcFcntl open: '/usr/bin/env' flags: 0 mode: 0.
-	fd := FsFileDescriptor fd: id.
+	| fd size |
+	fd := '/usr/bin/env' asFileReference openWritable: false.
 	self
 		assert: fd position
 		equals: 0.
@@ -87,9 +86,8 @@ FsFileDescriptorTest >> testPosition [
 { #category : 'BasicTests' }
 FsFileDescriptorTest >> testReadFromUsrBinEnv [
 
-	| id fd bytes |
-	id := DiskStore current libcFcntl open: '/usr/bin/env' flags: 0 mode: 0.
-	fd := FsFileDescriptor fd: id.
+	| fd bytes |
+	fd := '/usr/bin/env' asFileReference openWritable: false.
 	[bytes := fd read: 4] ensure: [fd close].
 	self
 		assert: bytes size
