@@ -129,49 +129,20 @@ DiskStore >> createDirectory: path [
 	If the path refers to an existing directory, raise DirectoryExists.
 	If the parent directory of the path does not exist, raise DirectoryDoesNotExist"
 
-	| pathString parent |
-	pathString := self stringFromPath: path.
-	[self libcStat mkdir: pathString]
-		onException: { FsEACCES. FsUnixError }
-		do:
-			{
-			
-				[:ex | ex resignalAs: (FilePermissionDenied reference: path asFileReference)].
-
-				[:ex |
-				(self exists: path)
-					ifTrue:
-						[^(self isFile: path)
-							ifTrue: [self signalFileExists: path]
-							ifFalse: [self signalDirectoryExists: path]].
-				parent := path parent.
-				(self isDirectory: parent)
-					ifFalse: [^self signalDirectoryDoesNotExist: parent].
-				ex pass].
-			}
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 DiskStore >> currentWorkingDirectoryPath [
 	"Answer an absolute Path for the current working directory of the VM."
 
-	| pathString |
-	pathString := self libcUnistd getcwd.
-	^Path
-		from: pathString
-		delimiter: self delimiter
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
 DiskStore >> delete: path [
 
-	| pathString |
-	(self exists: path)
-		ifFalse: [ ^ FileDoesNotExistException signalWith: path ].
-	pathString := self stringFromPath: path.
-	(self lstat: path) isDirectory
-		ifTrue: [self libcUnistd rmdir: pathString]
-		ifFalse: [self libcUnistd unlinkPath: pathString]
+	self subclassResponsibility
 ]
 
 { #category : 'public-attributes' }
@@ -208,24 +179,7 @@ ifNotDirectory: notDirectoryBlock
 entriesDo: aBlock [
 	"Enumerate through the entries in the provided directory."
 
-	| pathString dir dirent |
-	pathString := self stringFromPath: aPath.
-	dir := [self libcDirent openDirectoryStreamWithPath: pathString]
-		onException:
-			{
-				FsENOTDIR.
-				FsENOENT.
-			}
-		do:
-			{
-				[:ex | ^notDirectoryBlock value].
-				[:ex | ^absentBlock value].
-			}.
-	[[dirent := self libcDirent readFromDirectoryStream: dir.
-	dirent notNil]
-		whileTrue:
-			[aBlock value: dirent]]
-		ensure: [self libcDirent closeDirectoryStream: dir]
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
@@ -281,14 +235,7 @@ DiskStore >> file: aPath
 posixPermission: posixPermission [
 	"Set the permissions for the specified file."
 
-	| pathString |
-	pathString := self stringFromPath: aPath.
-	[self libcFcntl
-		chmod: pathString
-		mode: posixPermission]
-		on: FsENOENT
-		do: [:ex | FileDoesNotExistException signal: aPath].
-	^nil
+	self subclassResponsibility
 ]
 
 { #category : 'public-operations' }
@@ -297,15 +244,7 @@ uid: uid
 gid: gid [
 	"Set the uid and gid for the specified file."
 
-	| pathString |
-	pathString := self stringFromPath: aPath.
-	[self libcUnistd
-		chown: pathString
-		uid: uid
-		gid: gid]
-		on: FsENOENT
-		do: [:ex | FileDoesNotExistException signal: aPath].
-	^nil
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -424,12 +363,6 @@ DiskStore >> isSymlink: aPath [
 ]
 
 { #category : 'accessing' }
-DiskStore >> libcDirent [
-
-	^libcDirent
-]
-
-{ #category : 'accessing' }
 DiskStore >> libcFcntl [
 
 	^libcFcntl
@@ -442,12 +375,6 @@ DiskStore >> libcStat [
 ]
 
 { #category : 'accessing' }
-DiskStore >> libcStdio [
-
-	^libcStdio
-]
-
-{ #category : 'accessing' }
 DiskStore >> libcUnistd [
 
 	^libcUnistd
@@ -456,11 +383,7 @@ DiskStore >> libcUnistd [
 { #category : 'public' }
 DiskStore >> lstat: aPath [
 
-	| pathString |
-	pathString := self stringFromPath: aPath.
-	^[self libcStat lstat: pathString]
-		on: FsENOENT
-		do: [:ex | self signalFileDoesNotExist: aPath]
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
@@ -488,23 +411,7 @@ DiskStore >> numberOfHardLinksOf: aPath [
 DiskStore >> open: aFileReference
 options: options [
 
-	| fd |
-	fd := [self libcFcntl
-				open: aFileReference pathString
-				flags: options flags
-				mode: options modeBits]
-			onException: {FsENOENT. FsEACCES}
-			do:
-				{
-					[:ex | | parent |
-					parent := aFileReference parent.
-					parent exists
-						ifTrue: [self signalFileDoesNotExist: aFileReference fullPath]
-						ifFalse: [self signalDirectoryDoesNotExist: parent]].
-
-					[:ex | ex resignalAs: (FilePermissionDenied reference: aFileReference)]
-				}.
-	^FsFileDescriptor fd: fd
+	self subclassResponsibility
 ]
 
 { #category : 'public' }
@@ -518,12 +425,7 @@ DiskStore >> permissions: aPath [
 { #category : 'public' }
 DiskStore >> rename: sourcePath to: destinationPath [
 
-	| sourcePathString targetPathString |
-	sourcePathString := self stringFromPath: sourcePath.
-	targetPathString := self stringFromPath: destinationPath.
-	self libcStdio
-		rename: sourcePathString
-		to: targetPathString
+	self subclassResponsibility
 ]
 
 { #category : 'private' }
@@ -535,15 +437,7 @@ DiskStore >> rootNode [
 DiskStore >> setWorkingDirectory: aPath [
 	"Set the working directory to the path provided."
 
-	| pathString |
-	pathString := self stringFromPath: aPath.
-	[[self libcUnistd
-		chdir: pathString]
-		on: FsENOENT
-		do: [:ex | DirectoryDoesNotExist signal: aPath]]
-		on: FsENOTDIR
-		do: [:ex | DirectoryRequired signal: aPath].
-	^true
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
@@ -556,11 +450,7 @@ DiskStore >> sizeOf: aPath [
 { #category : 'public' }
 DiskStore >> stat: aPath [
 
-	| pathString |
-	pathString := self stringFromPath: aPath.
-	^[self libcStat stat: pathString]
-		on: FsENOENT
-		do: [:ex | self signalFileDoesNotExist: aPath]
+	self subclassResponsibility
 ]
 
 { #category : 'public-operations' }
@@ -569,14 +459,7 @@ toTarget: targetPathString [
 	"Create a symlink to the targetPathString
 	at the location specified by linkPathString."
 
-	[[self libcUnistd
-		symlink: linkPathString
-		toTarget: targetPathString]
-		on: FsEACCES
-		do: [:ex | FilePermissionDenied signalWith: linkPathString asFileReference]]
-		on: FsEEXIST
-		do: [:ex | FileExists signalWith: linkPathString asFileReference].
-	^true
+	self subclassResponsibility
 ]
 
 { #category : 'public-attributes' }

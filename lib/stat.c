@@ -9,7 +9,7 @@ int gs_fs_fstat(int fd, struct stat *statbuf) {
 }
 
 int gs_fs_lstat(const char *pathname, struct stat *statbuf) {
-  return stat(pathname, statbuf);
+  return lstat(pathname, statbuf);
 }
 
 int gs_fs_stat(const char *pathname, struct stat *statbuf) {
