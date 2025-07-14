@@ -50,7 +50,7 @@ mode: mode [
 	chmod == nil
 		ifTrue: [chmod := CCallout
 			library: library
-			name: 'chmod'
+			name: 'gs_fs_chmod'
 			result: #'int32'
 			args: #(#'const char*' #'uint32')
 			varArgsAfter: 2].
@@ -179,7 +179,7 @@ FsUnixPrimitive >> open: pathString flags: flagsInteger mode: modeInteger [
 	open == nil
 		ifTrue: [open := CCallout
 			library: library
-			name: 'open'
+			name: 'gs_fs_open'
 			result: #'int32'
 			args: #(#'const char*' #'int32')
 			varArgsAfter: 2].
@@ -242,6 +242,28 @@ FsUnixPrimitive >> readFromDirectoryStream: dirPointer [
 	^isNull
 		ifTrue: [nil]
 		ifFalse: [FsDirentStruct_Linux forBytes: (CByteArray fromCPointer: direntPtr numBytes: FsDirentStruct_Linux structSize)]
+]
+
+{ #category : 'interface-stdio' }
+FsUnixPrimitive >> rename: srcPathString
+to: dstPathString [
+
+	| errnoHolder status |
+	rename == nil
+		ifTrue:
+			[rename := CCallout
+				library: library
+				name: 'gs_fs_rename'
+				result: #'int32'
+				args: #(#'const char*' #'const char*')
+				varArgsAfter: -1].
+	errnoHolder := { 0 }.
+	status := rename
+		callWith: { srcPathString encodeAsUTF8. dstPathString encodeAsUTF8. }
+		errno: errnoHolder.
+	status == -1
+		ifTrue: [self handleErrno: errnoHolder first].
+	^true
 ]
 
 { #category : 'interface-stat' }
