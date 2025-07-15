@@ -26,14 +26,3 @@ FsLinuxStore_aarch64 >> fileOpeningOptionsClass [
 
 	^FsFileOpeningOptions_Linux_aarch64
 ]
-
-{ #category : 'initializing' }
-FsLinuxStore_aarch64 >> initialize [
-
-	super initialize.
-	libcDirent := FsLibcDirent_Linux new.
-	libcFcntl := FsLibcFcntl_Linux new.
-	libcUnistd := FsLibcUnistd_Linux new.
-	libcStat := FsLibcStat_Linux_aarch64 new.
-	libcStdio := FsLibcStdio_Linux new
-]

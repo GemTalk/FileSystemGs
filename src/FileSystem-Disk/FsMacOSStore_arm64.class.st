@@ -19,14 +19,3 @@ FsMacOSStore_arm64 class >> isActiveStore [
 		osIs: 'Darwin'
 		on: 'arm64'
 ]
-
-{ #category : 'initializing' }
-FsMacOSStore_arm64 >> initialize [
-
-	super initialize.
-	libcDirent := FsLibcDirent_macOS_arm64 new.
-	libcFcntl := FsLibcFcntl_macOS new.
-	libcUnistd := FsLibcUnistd_macOS new.
-	libcStat := FsLibcStat_macOS_arm64 new.
-	libcStdio := FsLibcStdio_macOS new
-]
