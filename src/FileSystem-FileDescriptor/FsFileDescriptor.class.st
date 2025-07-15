@@ -17,7 +17,7 @@ Class {
 	#instVars : [
 		'fd',
 		'ephemeron',
-		'libcUnistd'
+		'primitive'
 	],
 	#gs_options : [
 		'instancesNonPersistent'
@@ -80,7 +80,7 @@ FsFileDescriptor >> _close [
 	fd ifNil: [ ^ self ].
 	fdToClose := fd.
 	fd := nil.
-	[ libcUnistd close: fdToClose ]
+	[ primitive close: fdToClose ]
 		onException: { FsEBADF. FsEINTR}
 		do: {[ :ex | ex return ]. [:ex | ex retry]}
 ]
@@ -153,7 +153,8 @@ FsFileDescriptor >> fd: aFileDescriptorInteger [
 { #category : 'initialization' }
 FsFileDescriptor >> initialize [
 
-	libcUnistd := DiskStore current libcUnistd
+	super initialize.
+	primitive := DiskStore current primitiveInterface
 ]
 
 { #category : 'accessing' }
@@ -176,7 +177,7 @@ FsFileDescriptor >> peek [
 
 	| buffer numBytesRead |
 	buffer := CByteArray gcMalloc: 1.
-	numBytesRead := [libcUnistd
+	numBytesRead := [primitive
 		pread: self _fd
 		into: buffer
 		count: 1
@@ -192,7 +193,7 @@ FsFileDescriptor >> peek [
 FsFileDescriptor >> position [
 	"Returns the current position in the file."
 
-	^[libcUnistd
+	^[primitive
 		lseek: self _fd
 		offset: 0
 		whence: 8r1. "SEEK_CUR"]
@@ -204,7 +205,7 @@ FsFileDescriptor >> position [
 FsFileDescriptor >> position: newPosition [
 	"Returns the current position in the file."
 
-	^[libcUnistd
+	^[primitive
 		lseek: self _fd
 		offset: newPosition
 		whence: 8r0. "SEEK_SET"]
@@ -219,7 +220,7 @@ FsFileDescriptor >> read: count [
 
 	| buffer numBytesRead |
 	buffer := CByteArray gcMalloc: count.
-	numBytesRead := [libcUnistd
+	numBytesRead := [primitive
 		read: self _fd
 		into: buffer
 		count: buffer size]
@@ -235,7 +236,7 @@ FsFileDescriptor >> read: count [
 { #category : 'positioning' }
 FsFileDescriptor >> setToEnd [
 
-	^[libcUnistd
+	^[primitive
 		lseek: self _fd
 		offset: 0
 		whence: 8r2. "SEEK_END"]
@@ -261,7 +262,7 @@ FsFileDescriptor >> stat [
 FsFileDescriptor >> truncateTo: length [
 	"Truncate the open file to the specified length."
 
-	^[libcUnistd
+	^[primitive
 		ftruncate: self _fd
 		to: length]
 		on: FsEBADF
@@ -277,7 +278,7 @@ FsFileDescriptor >> write: aByteArray [
 	| buffer |
 	aByteArray _validateInstanceOf: ByteArray.
 	buffer := CByteArray withAll: aByteArray nullTerminate: false.
-	^[libcUnistd
+	^[primitive
 		write: self _fd
 		from: buffer
 		count: buffer size]

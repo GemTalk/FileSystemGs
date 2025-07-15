@@ -9,11 +9,6 @@ Class {
 	#name : 'DiskStore',
 	#superclass : 'FileSystemStore',
 	#instVars : [
-		'libcDirent',
-		'libcFcntl',
-		'libcUnistd',
-		'libcStat',
-		'libcStdio'
 	],
 	#gs_options : [
 		'instancesNonPersistent'
@@ -368,12 +363,6 @@ DiskStore >> isSymlink: aPath [
 		do: [:ex | ex return: false]
 ]
 
-{ #category : 'accessing' }
-DiskStore >> libcUnistd [
-
-	^libcUnistd
-]
-
 { #category : 'public' }
 DiskStore >> lstat: aPath [
 
@@ -414,6 +403,13 @@ DiskStore >> permissions: aPath [
 	| stat |
 	stat := self stat: aPath.
 	^FileSystemPermission posixPermissions: stat permission
+]
+
+{ #category : 'accessing' }
+DiskStore >> primitiveInterface [
+	"Returns the primitive interface used by this DiskStore"
+
+	self subclassResponsibility
 ]
 
 { #category : 'public' }

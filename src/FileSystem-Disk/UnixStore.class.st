@@ -196,6 +196,13 @@ options: options [
 	^FsFileDescriptor fd: fd
 ]
 
+{ #category : 'accessing' }
+UnixStore >> primitiveInterface [
+	"Returns self's instance of FsUnixPrimitive."
+
+	^primitive
+]
+
 { #category : 'public' }
 UnixStore >> rename: sourcePath to: destinationPath [
 
