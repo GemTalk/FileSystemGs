@@ -1,4 +1,5 @@
 #include <sys/stat.h>
+#include <sys/types.h>
 
 int gs_fs_chmod(const char *pathname, mode_t mode) {
   return chmod(pathname, mode);
