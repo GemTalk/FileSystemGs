@@ -5,4 +5,3 @@
 int gs_fs_open(const char *pathname, int flags, mode_t mode) {
   return open(pathname, flags, mode);
 }
-

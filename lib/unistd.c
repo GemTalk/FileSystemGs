@@ -1,3 +1,4 @@
+#include <sys/types.h>
 #include <unistd.h>
 
 int gs_fs_chdir(const char *path) {
@@ -47,4 +48,3 @@ int gs_fs_unlink(const char *path) {
 ssize_t gs_fs_write(int fd, const void *buf, size_t count) {
   return write(fd, buf, count);
 }
-

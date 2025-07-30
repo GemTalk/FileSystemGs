@@ -19,4 +19,3 @@ int gs_fs_stat(const char *pathname, struct stat *statbuf) {
 int gs_fs_mkdir(const char *pathname, mode_t mode) {
   return mkdir(pathname, mode);
 }
-

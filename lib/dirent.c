@@ -12,4 +12,3 @@ int gs_fs_closedir(DIR *dirp) {
 struct dirent *gs_fs_readdir(DIR *dirp) {
   return readdir(dirp);
 }
-
