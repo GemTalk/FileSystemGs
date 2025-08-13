@@ -3,16 +3,13 @@ Part of FileSystem
 
 =========
 
-I combine a filesystem and path, which is sufficient to refer to a concrete file or directory. I provide methods for navigating my filesystem, performing filesystem operations and opening and closing files.  I am the primary mechanism for working with files and directories. 
+FileReference is the primary entry point for file and directory operations using FileSystem. A FileReference represents a file or directory, which may nor may not exist on disk. File references can be created from Strings or using FileReference or FileSystem class methods.
+For example:
+      FileReference / '/gshost/test/foo.txt'
+      FileSystem disk / '/gshost/test/foo.txt'
+      '/gshost/test/foo.txt' asFileReference
 
-| working |
-working := FileSystem disk workingDirectory.
-working files 
-
-| disk |
-disk := FileSystem disk.
-disk root.                               	""a reference to the root directory""
-disk working.                         	""a reference to the working directory""
+FileReference provides access to information about a file and are used to create or delete files and directories. To read from or write to a file, use FileReference methods such as readStream or writeStream to open a read or write stream on the file.
 "
 Class {
 	#name : 'FileReference',
@@ -59,6 +56,23 @@ FileReference class >> newTempFilePrefix: prefix suffix: suffix [
 		fileName := prefix , random , suffix.
 		(tmpDir / fileName) exists ] whileTrue.
 	^ tmpDir / fileName
+]
+
+{ #category : 'private' }
+FileReference >> _topazAsString [
+  "Used by topaz for object and frame display"
+  | stream res str isDir |
+  stream := PrintStream on: String new .
+  filesystem forReferencePrintOn: stream .
+  res := stream contents , ' @ '.
+  res addAll:((isDir := self isDirectory) ifTrue:[ 'aDir ' ] ifFalse:[ 'aFile ']).
+  stream := PrintStream on: (str := String new) .
+  filesystem printPath: path on: stream.
+  (isDir not and:[ str size > 60 ])
+    ifTrue:[ res addAll: ' ... '; addAll: (str copyFrom: str size - 40 to: str size)]
+   ifFalse:[ res addAll: str ].
+  ^ res
+
 ]
 
 { #category : 'navigating' }
@@ -581,21 +595,3 @@ gid: gid [
 		uid: uid
 		gid: gid
 ]
-
-{ #category : 'private' }
-FileReference >> _topazAsString [
-  "Used by topaz for object and frame display"
-  | stream res str isDir |
-  stream := PrintStream on: String new .
-  filesystem forReferencePrintOn: stream .
-  res := stream contents , ' @ '.
-  res addAll:((isDir := self isDirectory) ifTrue:[ 'aDir ' ] ifFalse:[ 'aFile ']).
-  stream := PrintStream on: (str := String new) .
-  filesystem printPath: path on: stream.
-  (isDir not and:[ str size > 60 ])
-    ifTrue:[ res addAll: ' ... '; addAll: (str copyFrom: str size - 40 to: str size)]
-   ifFalse:[ res addAll: str ].
-  ^ res
-
-]
-

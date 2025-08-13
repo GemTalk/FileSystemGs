@@ -3,22 +3,19 @@ Part of FileSystem
 
 =========
 
-I am a late-bound reference. I refer to a file or directory in relation to a well-known location on the filesystem, called an origin. When asked to perform concrete operation, I look up the current location of my origin, and resolve my path against it. 
+FileLocator is part of FileSystem, providing an entry point for file and directory operations that are environment-independent.  A FileLocator refers to a file or directory in relation to a well-known location on the filesystem, called an origin. When asked to perform concrete operation, it looks up the location of its origin on the environment the code is running on, and resolve its relative path against that origin.
 
-Usage
-----------
-FileLocator desktop.
-FileLocator desktop basename.
-FileLocator home basename.
+Origins include general ones such as temp, root, and home. To see all origins, execute FileLocator supportedOrigins.
 
+Examples:
+To create a temporary file:
+    FileLocator temp / 'foo.out'
+To resolve a FileLocator in the current environment:
+    FileLocator home absolutePath
 
-Implementation
-------------------------
-origin 
-	A symbolic name for base reference I use to resolve myself.
-
-path
-	A relative path that is resolved against my origin""
+A FileLocator has two instance variables:
+    origin  - A symbolic name for the base reference.
+    path  - A RelativePath, that is resolved against the origin to determine the actual path for performing file and directory operations.
 "
 Class {
 	#name : 'FileLocator',

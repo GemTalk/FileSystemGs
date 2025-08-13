@@ -3,7 +3,9 @@ Part of FileSystem
 
 =========
 
-I represent a relative path (a position starting from Path workingDirectory)
+RelativePath is part of FileSystem, and represents a path relative to the current working directory. Instance creation is normally done by sending messages to Path, the superclass. RelativePath instance creation is based on the argument, so instance creation methods sent to this class specifying an absolute path will return an instance of AbsolutePath.
+
+See Path class comment for more information on kinds of Path.
 "
 Class {
 	#name : 'RelativePath',

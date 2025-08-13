@@ -3,7 +3,9 @@ Part of FileSystem
 
 =========
 
-I represent an absolute path (a position starting from Path root)
+AbsolutePath is part of FileSystem, and represents an absolution path, starting from the root directory (Path root). Instance creation is normally done by sending messages to Path, the superclass. AbsolutePath instance creation is based on the argument, so instance creation methods sent to this class specifying a relative path will return an instance of RelativePath.
+
+See Path class comment for more information on kinds of Path.
 "
 Class {
 	#name : 'AbsolutePath',

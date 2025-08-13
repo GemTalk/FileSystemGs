@@ -3,18 +3,21 @@ Part of FileSystem
 
 =========
 
-I'm a private and abstract filesystem path, independent of the string representation used to describe paths on a specific filesystem. I provide methods for navigating the filesystem hierarchy and working with absolute and relative paths. I only refer to a concrete file or directory with regard to a specific filesystem. Normally users should not use me directly. 
+Path is an abstract superclass for the concrete classes AbsolutePath and RelativePath, part of FileSystem. These classes represent paths on the filesystem, independent of the string representation used to describe paths on a specific filesystem. Paths are implemented as an Array of strings which are the names of directories and files. Protocol also allows you to work with file extensions.
 
-API instance creation:
+Instance creation:
+    from: -- parses the supplied string and create an absolute or relative path.
+    from:delimiter: -- parses the supplied string using the supplied delimiter.
+    / -- creates an absolute path from the supplied string.
+    * -- creates a relative path from the supplied string.
 
-- #from: parses the supplied string using the default delimeter
-- #from:delimiter: parses the supplied string using the supplied delimiter.
-- #/ creates an absolute path from the supplied string
-- #* creates a relative path from the supplied string
+For example:
+    Path / 'diskname/foo.out'
+    Path / 'diskname' / 'foo.out'
+    (Path from: '/diskname') / 'foo.out'
+    Path / 'diskname' / 'foo.out'
 
-API path manipulation:
-
-- #/ adds the supplied string to the receiver
+Path >>/ adds the supplied path or filename to the receiver.
 "
 Class {
 	#name : 'Path',

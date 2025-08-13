@@ -2,19 +2,17 @@
 Part of FileSystem
 
 =========
+The class FileSystem is part of the FileSystem subsystem, providing flexible interaction with filesystems.  FileSystem supports both disk and in-memory file systems.
 
-I present a low-level protocol for interacting with filesystems. I hold a reference to
-a store (a subinstance of FileSystemStore) which takes care of the details of performing 
-file and directory operations on the filesystem I represent. 
+FileSystem instances are not normally accessed directly. The main entry point for working with files and directories is FileReference.
 
-I am responsible for resolving all paths that
-I pass into my store. My store acts as a factory and offers platform specific actions.
+FileSystem class does provide several methods to access commonly used FileReferences, including:
+    FileSystem disk workingDirectory
+    FileSystem disk root
 
+FileSystem presents a low-level protocol for interacting with filesystems. It holds a reference to a store (an instance of FileSystemStore) which takes care of the details of performing file and directory operations on the filesystem.
 
-FileSystem instances know two methods that return a Reference object: workingDirectory and root.
-
-FileSystem disk workingDirectory
-FileSystem disk root
+FileSystem is also responsible for resolving all paths that are pass into its store. The store acts as a factory and offers platform specific actions.
 "
 Class {
 	#name : 'FileSystem',
