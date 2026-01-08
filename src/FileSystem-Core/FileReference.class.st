@@ -481,9 +481,9 @@ FileReference >> permissions: permissions [
 FileReference >> printOn: aStream [
 
 	filesystem forReferencePrintOn: aStream.
-	aStream nextPut: ' @ '''.
+	aStream nextPutAll: ' @ '''.
 	filesystem printPath: path on: aStream.
-	aStream nextPut: ''''
+	aStream nextPutAll: ''''
 ]
 
 { #category : 'operations' }
