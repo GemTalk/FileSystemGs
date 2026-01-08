@@ -1631,3 +1631,15 @@ FileReferenceTest >> testWriteStreamTruncate [
 		assert: file contents
 		equals: ''
 ]
+
+{ #category : 'tests' }
+FileReferenceTest >> testPrintOn [
+
+| testStream fileRef |
+testStream := PositionableStream on: 'Příliš žluťoučký kůň pěl ďábelské ódy'.
+fileRef := FileReference newTempFilePrefix: 'FileReferencePrintOn' suffix: 'Test'.
+[ self
+	shouldnt: [ fileRef printOn: testStream ]
+	raise: ImproperOperation ]
+ensure: [ fileRef ensureDelete]
+]
