@@ -1201,6 +1201,29 @@ FileReferenceTest >> testPosition [
 ]
 
 { #category : 'tests' }
+FileReferenceTest >> testPrintOn [
+
+	| getPrintOnResult ref expected |
+	getPrintOnResult := [:r | String streamContents: [:stream | r printOn: stream]].
+	
+	ref := FileReference
+		fileSystem: self fileSystem
+		path: Path / 'absolute' / 'path'.
+	expected := 'FileReference ', self fsType, ' @ ''/absolute/path'''.
+	self
+		assert: (getPrintOnResult value: ref)
+		equals: expected.
+
+	ref := FileReference
+		fileSystem: self fileSystem
+		path: Path * 'relative' / 'path'.
+	expected := 'FileReference ', self fsType, ' @ ''relative/path'''.
+	self
+		assert: (getPrintOnResult value: ref)
+		equals: expected.
+]
+
+{ #category : 'tests' }
 FileReferenceTest >> testPrintString [
 
 	| ref expected |
@@ -1630,16 +1653,4 @@ FileReferenceTest >> testWriteStreamTruncate [
 	self
 		assert: file contents
 		equals: ''
-]
-
-{ #category : 'tests' }
-FileReferenceTest >> testPrintOn [
-
-| testStream fileRef |
-testStream := PositionableStream on: 'Příliš žluťoučký kůň pěl ďábelské ódy'.
-fileRef := FileReference newTempFilePrefix: 'FileReferencePrintOn' suffix: 'Test'.
-[ self
-	shouldnt: [ fileRef printOn: testStream ]
-	raise: ImproperOperation ]
-ensure: [ fileRef ensureDelete]
 ]
