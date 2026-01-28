@@ -3,7 +3,7 @@ Part of FileSystem
 
 =========
 
-AbsolutePath is part of FileSystem, and represents an absolution path, starting from the root directory (Path root). Instance creation is normally done by sending messages to Path, the superclass. AbsolutePath instance creation is based on the argument, so instance creation methods sent to this class specifying a relative path will return an instance of RelativePath.
+AbsolutePath is part of FileSystem, and represents an absolute path, starting from the root directory (Path root). Instance creation is normally done by sending messages to Path, the superclass. AbsolutePath instance creation is based on the argument, so instance creation methods sent to this class specifying a relative path will return an instance of RelativePath.
 
 See Path class comment for more information on kinds of Path.
 "
