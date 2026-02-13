@@ -227,7 +227,7 @@ FsDiskFileReferenceTest >> testIsCharacter [
 
 	"Block devices are not available in all testing environments."
 	self blockDeviceReference
-		ifNotNil: [:ref | self assert: ref isCharacter].
+		ifNotNil: [:ref | self deny: ref isCharacter].
 	self
 		assert: self characterDeviceReference isCharacter;
 		deny: ((self createFile: 'not-character') isCharacter);
@@ -255,7 +255,7 @@ FsDiskFileReferenceTest >> testIsFifo [
 
 	"Block devices are not available in all testing environments."
 	self blockDeviceReference
-		ifNotNil: [:ref | self assert: ref isFifo].
+		ifNotNil: [:ref | self deny: ref isFifo].
 	self
 		deny: self characterDeviceReference isFifo;
 		deny: ((self createFile: 'not-fifo') isFifo);
@@ -287,7 +287,7 @@ FsDiskFileReferenceTest >> testIsRegular [
 
 	"Block devices are not available in all testing environments."
 	self blockDeviceReference
-		ifNotNil: [:ref | self assert: ref isRegular].
+		ifNotNil: [:ref | self deny: ref isRegular].
 	self
 		assert: ((self createFile: 'regular-file') isRegular);
 		deny: sandbox isRegular;
@@ -301,7 +301,7 @@ FsDiskFileReferenceTest >> testIsSocket [
 
 	"Block devices are not available in all testing environments."
 	self blockDeviceReference
-		ifNotNil: [:ref | self assert: ref isSocket].
+		ifNotNil: [:ref | self deny: ref isSocket].
 	self
 		deny: self characterDeviceReference isSocket;
 		deny: ((self createFile: 'not-fifo') isSocket);
