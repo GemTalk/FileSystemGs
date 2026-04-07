@@ -24,17 +24,17 @@ FileSystemError class >> signalWith: aReference [
 	^ (self reference: aReference) signal
 ]
 
-{ #category : 'initialize-release' }
-FileSystemError >> initializeWithReference: aReference [
-	reference := aReference.
-	messageText := 'a', self class name , ' occurred, ', aReference printString
-]
-
 { #category : 'Instance initialization' }
 FileSystemError >> initialize [
   super initialize .
   gsNumber := ERR_FileSystemError .
 
+]
+
+{ #category : 'initialize-release' }
+FileSystemError >> initializeWithReference: aReference [
+	reference := aReference.
+	messageText := 'a', self class name , ' occurred, ', aReference printString
 ]
 
 { #category : 'testing' }

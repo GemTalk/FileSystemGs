@@ -43,6 +43,13 @@ FileException >> fileName: aFileName [
 	fileName := aFileName
 ]
 
+{ #category : 'Instance initialization' }
+FileException >> initialize [
+  super initialize .
+  gsNumber := ERR_FileException .
+
+]
+
 { #category : 'exceptiondescription' }
 FileException >> isResumable [
 	"Determine whether an exception is resumable."
@@ -59,9 +66,3 @@ FileException >> messageText [
 		ifFalse: [ messageText ]
 ]
 
-{ #category : 'Instance initialization' }
-FileException >> initialize [
-  super initialize .
-  gsNumber := ERR_FileException .
-
-]
